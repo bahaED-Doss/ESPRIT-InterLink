@@ -14,7 +14,6 @@ public class Project {
     private String description;
     private Date startDate;
     private Date endDate;
-
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company; // Each project belongs to one company
