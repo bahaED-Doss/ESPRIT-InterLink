@@ -1,0 +1,11 @@
+.flexx{
+    display:flex !important;
+   align-items: center;
+   gap : 230px !important;
+    
+    justify-content: center !important;
+
+}
+.font-weight-bold{
+    font-family:cursive;
+}
