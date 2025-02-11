@@ -1,7 +1,7 @@
 package tn.esprit.interlink_back.entity;
 
 import jakarta.persistence.*;
-import tn.esprit.interlink_back.entity.Enums.requiredSkill;
+import tn.esprit.interlink_back.entity.requiredSkill;
 
 public class Intership {
     @Id
