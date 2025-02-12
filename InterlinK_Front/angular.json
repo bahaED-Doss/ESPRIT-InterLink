@@ -20,14 +20,23 @@
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
+           "assets": [
+        
               "src/assets"
+             
+         
             ],
             "styles": [
+              "src/assets/back/css/nucleo-icons.css",
+              "src/assets/back/css/nucleo-svg.css",
+              "src/assets/back/css/soft-ui-dashboard.css",
+              "src/assets/back/css/soft-ui-dashboard.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              
+              
+            ]
           },
           "configurations": {
             "production": {
@@ -83,13 +92,21 @@
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
-              "src/favicon.ico",
+            
+              
               "src/assets"
             ],
             "styles": [
+              "src/assets/back/css/nucleo-icons.css",
+              "src/assets/back/css/nucleo-svg.css",
+              "src/assets/back/css/soft-ui-dashboard.css",
+              "src/assets/back/css/soft-ui-dashboard.min.css",
               "src/styles.css"
+              
             ],
-            "scripts": []
+            "scripts": [
+              
+            ]
           }
         }
       }
