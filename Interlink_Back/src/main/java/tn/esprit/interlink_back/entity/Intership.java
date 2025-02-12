@@ -2,7 +2,7 @@ package tn.esprit.interlink_back.entity;
 
 import jakarta.persistence.*;
 import tn.esprit.interlink_back.entity.Enums.requiredSkill;
-
+@Entity
 public class Intership {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
