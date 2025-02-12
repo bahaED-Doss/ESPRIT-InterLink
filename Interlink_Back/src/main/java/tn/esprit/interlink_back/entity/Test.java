@@ -13,8 +13,8 @@ public class Test
 
     private  int interviewId;
 
-  
 
+    private String sameh;
     private String message;
     private String givinBy;
     private LocalDateTime createdAt = LocalDateTime.now();
