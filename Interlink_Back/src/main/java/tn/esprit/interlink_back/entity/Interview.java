@@ -21,9 +21,10 @@ public class Interview
     @JoinColumn(name = "project_manager_id", nullable = false)
     private ProjectManager projectManager; // Un Project Manager peut faire plusieurs entretiens
 
-    @ManyToOne
+
+    /*@ManyToOne
     @JoinColumn(name = "application_id", nullable = false)
-    private Application application; // L'entretien est lié à une candidature
+    private Application application; // L'entretien est lié à une candidature*/
 
 
 
