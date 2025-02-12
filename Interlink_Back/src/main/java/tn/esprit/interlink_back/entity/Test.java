@@ -12,12 +12,7 @@ public class Test
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private  int interviewId;
+    
 
-    Application application
-    Date date
-    String type
 
-    private String message;
-    private String givinBy;
-    private LocalDateTime createdAt = LocalDateTime.now();
 }
