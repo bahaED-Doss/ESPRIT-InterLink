@@ -1,9 +1,8 @@
 package tn.esprit.interlink_back.entity;
 
 import jakarta.persistence.*;
-import tn.esprit.interlink_back.entity.requiredSkill;
 
-public class Intership {
+public class Internship {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long IntershipId;

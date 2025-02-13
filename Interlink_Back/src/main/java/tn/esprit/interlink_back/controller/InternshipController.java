@@ -1,4 +1,4 @@
 package tn.esprit.interlink_back.controller;
 
-public class IntershipController {
+public class InternshipController {
 }
