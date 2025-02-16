@@ -39,6 +39,7 @@ public class Interview
     // Constructeurs
     public Interview() {}
 
+    
     public Interview(User student, ProjectManager projectManager, Application application, Date date, String type, String status, String lienReunion) {
         this.student = student;
         this.projectManager = projectManager;
