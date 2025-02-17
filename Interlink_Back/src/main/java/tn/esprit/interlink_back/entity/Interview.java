@@ -49,6 +49,7 @@ public class Interview
         this.status = status;
         this.lienReunion = lienReunion;
     }
+
     // Getters et Setters
     public int getInterviewId() {
 
