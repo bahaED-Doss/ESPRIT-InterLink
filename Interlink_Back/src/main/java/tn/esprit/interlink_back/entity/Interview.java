@@ -19,16 +19,15 @@ public class Interview
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id", nullable = false)
-    private Student student; // Chaque entretien est lié à un seul étudiant
+    private User student; // Chaque entretien est lié à un seul étudiant
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "project_manager_id", nullable = false)
     private ProjectManager projectManager; // Un Project Manager peut faire plusieurs entretiens
 
-
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "application_id", nullable = false)
-    private Application application; // L'entretien est lié à une candidature*/
+    private Application application; // L'entretien est lié à une candidature
 
 
 
@@ -44,7 +43,8 @@ public class Interview
     // Constructeurs
     public Interview() {}
 
-    public Interview(Student student, ProjectManager projectManager, Application application, Date date, String type, String status, String lienReunion) {
+
+    public Interview(User student, ProjectManager projectManager, Application application, Date date, String type, String status, String lienReunion) {
         this.student = student;
         this.projectManager = projectManager;
         this.application = application;
@@ -53,20 +53,23 @@ public class Interview
         this.status = status;
         this.lienReunion = lienReunion;
     }
+
     // Getters et Setters
     public int getInterviewId() {
+
         return interviewId;
     }
 
     public void setInterviewId(int interviewId) {
+
         this.interviewId = interviewId;
     }
 
-    public Student getStudent() {
+    public User getStudent() {
         return student;
     }
 
-    public void setStudent(Student student) {
+    public void setStudent(User student) {
         this.student = student;
     }
 
