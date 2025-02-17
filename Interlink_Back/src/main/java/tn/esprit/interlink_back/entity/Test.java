@@ -1,10 +1,15 @@
 package tn.esprit.interlink_back.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import tn.esprit.interlink_back.entity.Enums.TestType;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+@Entity
+@Table(name = "test_table") // Pour éviter un conflit avec le mot-clé SQL "TEST"
 public class Test
 {
     @Id
@@ -27,18 +32,21 @@ public class Test
     @Column(nullable = false)
     private TestType typeTest; // Type de test (Technique ou SoftSkill)
 
-    @Column
-    private int note; // Note obtenue au test
+    @Column(nullable = false)
+    private int note=0; // Note obtenue au test
+
+    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL)
+    private List<Question> questions = new ArrayList<>();
 
     // Constructeurs
     public Test() {}
 
-    public Test(User student, ProjectManager projectManager, Interview interview, TestType typeTest, int note) {
+    public Test(User student, ProjectManager projectManager, Interview interview, TestType typeTest) {
         this.student = student;
         this.projectManager = projectManager;
         this.interview = interview;
         this.typeTest = typeTest;
-        this.note = note;
+        this.note = 0;
     }
 
     // Getters et Setters
@@ -92,4 +100,3 @@ public class Test
 
 
 }
-
