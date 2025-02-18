@@ -1,11 +1,12 @@
 package tn.esprit.interlink_back.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import tn.esprit.interlink_back.entity.Enums.Sentiment;
 
 import java.time.LocalDateTime;
 
-
+@Data
 @Entity
 public class Feedback {
     @Id

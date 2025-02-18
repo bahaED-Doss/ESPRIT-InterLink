@@ -1,4 +1,4 @@
-package tn.esprit.interlink_back.entity;
+package tn.esprit.interlink_back.entity.Enums;
 
 public enum Role {
     STUDENT, HR, PROJECT_MANAGER
