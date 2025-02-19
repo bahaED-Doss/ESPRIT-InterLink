@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/Front/login/login.component';
@@ -24,6 +26,8 @@ import { WelcomeViewComponent } from './components/Front/welcome-view/welcome-vi
 import { InternshipsComponent } from './components/Front/internships/internships.component';
 import { StartProcessComponent } from './components/Front/start-process/start-process.component';
 import { SuggestionsHComponent } from './components/Front/suggestions-h/suggestions-h.component';
+import { CompanyListComponent } from './components/Front/company-list/company-list.component';
+import { CompanyFormComponent } from './components/Front/company-form/company-form.component';
 
 
 @NgModule({
@@ -39,7 +43,9 @@ import { SuggestionsHComponent } from './components/Front/suggestions-h/suggesti
     WelcomeViewComponent,
     InternshipsComponent,
     StartProcessComponent,
-    SuggestionsHComponent
+    SuggestionsHComponent,
+    CompanyListComponent,
+    CompanyFormComponent
    
     
     
@@ -56,7 +62,9 @@ import { SuggestionsHComponent } from './components/Front/suggestions-h/suggesti
     ProfileComponent,
     RtlComponent,
     SettingsComponent,
-    TablesComponent
+    TablesComponent,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -12,6 +12,8 @@ import { HomeFrontComponent } from './components/Front/home-front/home-front.com
 import { WelcomeViewComponent } from './components/Front/welcome-view/welcome-view.component';
 import { InternshipsComponent } from './components/Front/internships/internships.component';
 import { StartProcessComponent } from './components/Front/start-process/start-process.component';
+import { CompanyListComponent } from './components/Front/company-list/company-list.component';
+import { CompanyFormComponent } from './components/Front/company-form/company-form.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent,},
@@ -25,7 +27,11 @@ const routes: Routes = [
   { path: 'homeFront', component: HomeFrontComponent },
   { path: 'welcomeV', component: WelcomeViewComponent },
   { path: 'internships', component: InternshipsComponent },
-  { path: 'startProcess', component: StartProcessComponent }
+  { path: 'startProcess', component: StartProcessComponent },
+  { path: 'companyForm', component: CompanyFormComponent },
+  { path: 'companyList', component: CompanyListComponent }
+
+  
   
 ];
 

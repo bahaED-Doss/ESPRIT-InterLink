@@ -1,0 +1,33 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-4">
+    <h2 class="text-center">Company List</h2>
+    
+    <table class="table table-striped table-hover mt-3">
+      <thead class="table-dark">
+        <tr>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let company of companies">
+          <td>{{ company.name }}</td>
+          <td>{{ company.location }}</td>
+          <td>{{ company.email }}</td>
+          <td>{{ company.phone }}</td>
+          <td>
+            <button *ngIf="company.id !== undefined" (click)="deleteCompany(company.id!)">Delete</button>
+          </td>
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+   
+
+
+<app-footer></app-footer>

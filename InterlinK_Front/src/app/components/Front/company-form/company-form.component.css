@@ -1,0 +1,17 @@
+app-navbar {
+  display: block;
+  position: relative;
+  z-index: 10;
+  margin-bottom: 20px; /* Adds space below navbar */
+}
+
+.container {
+  max-width: 900px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px; /* Creates spacing between navbar and form */
+}
