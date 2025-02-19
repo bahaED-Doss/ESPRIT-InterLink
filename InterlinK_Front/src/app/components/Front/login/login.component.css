@@ -46,6 +46,39 @@ a {
 .form-step {
     transition: transform 0.6s;
     transform-style: preserve-3d;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    margin-left: -20px;
+    max-height: 80vh; /* Adjust height dynamically */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 20px;
+  }
+  .form-step::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+  .role-form{
+    margin-right: 40px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 1px; 
+    justify-content: center;
+    align-items: center;
+  }
+  .role-formbut{
+    margin-right: 40px !important;
+  }
+  .hr{
+    margin-top: 240px !important;
+    color: #1c1c1c !important;
+    font-size: 25px !important;
+    
+  }
+  .stu{
+    color: #1c1c1c !important;
+    font-size: 25px !important;
   }
   
   .flip {
@@ -53,8 +86,8 @@ a {
   }
 button {
 	border-radius: 20px;
-	border: 1px solid #f85639;
-	background-color: #f44b2d;
+	border: 1px solid #802020;
+	background-color: #802020;
 	color: #FFFFFF;
 	font-size: 12px;
 	font-weight: bold;
@@ -105,15 +138,21 @@ input {
 	position: relative;
 	overflow: hidden;
     margin-left: 24rem;
-    margin-top: 7rem;
+    margin-top: 6rem;
 	width: 788px;
 	max-width: 100%;
-	min-height: 520px;
+	min-height: 500px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
-
+.create{
+    font-size: 2.2rem !important;
+    color: #1c1c1c !important;
+}
+.small{
+    font-size: 14px !important;
+}
 .form-container {
 	position: absolute;
 	top: 0;
@@ -152,8 +191,8 @@ input {
     height: 33px; /* Ensure it's a square for proper centering */
     
     border-radius: 20px;
-	border: 1px solid #f85639;
-	background-color: #f44b2d;
+	border: 1px solid #802020;
+	background-color: #802020;
     margin-top: 10px;
 	color: #FFFFFF;
 	padding: 4px ;
@@ -197,16 +236,21 @@ input {
 	overflow: hidden;
 	transition: transform 0.6s ease-in-out;
 	z-index: 100;
+  
+}
+.overlay{
+  
 }
 
 .container.right-panel-active .overlay-container{
 	transform: translateX(-100%);
+  
 }
 
 .overlay {
 	background: url('/assets/images/loginBack3.png') no-repeat center center;
-	background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-	background: linear-gradient(to right, #FF4B2B, #FF416C);
+	background: -webkit-linear-gradient(to right, #bb3a23, #e22c57);
+	background: linear-gradient(to right, #aa301b, #e02c56);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
@@ -236,6 +280,24 @@ input {
 	width: 50%;
 	transform: translateX(0);
 	transition: transform 0.6s ease-in-out;
+  
+}
+.overlay-panel p{
+  font-size: 20px !important;
+  letter-spacing:1px !important;
+  line-height: 27px !important;
+  margin-top: -26px !important;
+}
+.overlay-panel img{
+  width: 216px !important;
+  height:  216px !important;
+  
+}
+.overlay-left p{
+  margin-top: 36px !important;
+}
+.overlay-left h1{
+  color: #f5f5f5 !important;
 }
 
 .overlay-left {
@@ -280,6 +342,7 @@ input {
     display: flex;
     justify-content:flex-end;
     margin-right: 20px;
+    margin-top: 5px;
     align-items: center;
     position: relative;
     cursor: pointer;
@@ -288,9 +351,14 @@ input {
     fill: var(--color);
   }
   .sign_inB:hover{
-    background-color: #e56b6b;
+    background-color: #ab2c2c;
     cursor: pointer;
 
+  }
+  .sign_inB{
+    font-size: 13px !important;
+    background-color: #991616;
+    border: #991616;
   }
   
   .contr .eye {

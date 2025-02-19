@@ -1,0 +1,10 @@
+<div class="profile-container">
+    <h1>HR Profile</h1>
+    <div *ngIf="user">
+      <p><strong>First Name:</strong> {{ user.firstName }}</p>
+      <p><strong>Last Name:</strong> {{ user.lastName }}</p>
+      <p><strong>Company Email:</strong> {{ user.email }}</p>
+      <p><strong>Company Name:</strong> {{ user.companyName }}</p>
+      <p><strong>Contact Number:</strong> {{ user.contactNumber }}</p>
+    </div>
+  </div>

@@ -1,0 +1,666 @@
+
+
+/*======================================
+    Hero Area CSS
+========================================*/
+.hero-area {
+    position: relative;
+    background: #f6f9fc;
+    overflow: hidden;
+    display: flex !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+  }
+  
+  .hero-area.style2 {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .hero-area.style2 .home-slider {
+    position: relative;
+    height: 700px;
+  }
+  
+  .hero-area.style2 .hero-inner {
+    height: auto;
+  }
+  
+  .hero-area.style2 .hero-inner .hero-text {
+    margin-top: 220px;
+  }
+  
+  .hero-area.style2 .hero-image {
+    text-align: center;
+    position: relative;
+    bottom: -140px;
+    right: 0;
+  }
+  
+  .hero-area.style2 .tns-controls {
+    width: 100%;
+  }
+  
+  .hero-area.style2 .tns-controls button {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 2;
+    color: #fff;
+    font-size: 17px;
+    background: #802020;
+    border: none;
+    padding: 2px 5px;
+    border-radius: 4px;
+    -webkit-transition: all .3s ease-out 0s;
+    transition: all .3s ease-out 0s;
+    position: absolute;
+    z-index: 99;
+    top: 50%;
+    margin-top: -25px;
+  }
+  
+  .hero-area.style2 .tns-controls button:hover {
+    background-color: #802020;
+    color: #fff;
+  }
+  
+  .hero-area.style2 .tns-controls button:first-child {
+    border-radius: 50%;
+    left: 30px;
+  }
+  
+  .hero-area.style2 .tns-controls button:last-child {
+    border-radius: 50%;
+    right: 30px;
+  }
+  
+  .hero-area.style3 .hero-inner {
+    height: 700px;
+  }
+  
+  .hero-area.style3 .hero-inner .hero-text {
+    margin-top: 190px;
+  }
+  
+  .hero-area.style3 .home-search {
+    margin-top: 180px;
+    padding: 40px;
+    border-radius: 5px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 1rem 3rem rgba(35, 38, 45, 0.15) !important;
+            box-shadow: 0 1rem 3rem rgba(35, 38, 45, 0.15) !important;
+  }
+  
+  .hero-area.style3 .home-search .button {
+    margin-top: 20px;
+  }
+  
+  .hero-area.style3 .home-search .button .btn {
+    width: 100%;
+  }
+  
+  .hero-area.style3 .home-search .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .hero-area.style3 .home-search .form-group label {
+    color: #802020;
+    display: block;
+    margin-bottom: 4px;
+  }
+  
+  .hero-area.style3 .home-search .form-group input {
+    height: 50px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 0px 20px;
+    font-size: 15px;
+    font-weight: 400;
+  }
+  
+  .hero-area.style3 .home-search .form-group .form-control {
+    height: 50px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 0px 20px;
+    font-size: 15px;
+    font-weight: 400;
+  }
+  
+  .hero-area.style3 .home-search .form-group .form-control option {
+    font-weight: 400 !important;
+  }
+  
+  .hero-area.style4 {
+    overflow: visible;
+    background-image: url("/assets/frontA/images/hero/home-page4.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+  }
+  
+  .hero-area.style4::before {
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #802020;
+    opacity: 0.9;
+  }
+  
+  .hero-area.style4::after {
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url("/assets/frontA/images/hero/small-patern.png");
+    opacity: 0.2;
+  }
+  
+  .hero-area.style4 .hero-inner {
+    height: auto !important;
+  }
+  
+  .hero-area.style4 .hero-inner .hero-text {
+    margin-top: 190px;
+    padding: 0;
+    text-align: center;
+    padding: 0px 98px;
+  }
+  
+  .hero-area.style4 .hero-inner .hero-text h1 {
+    color: #fff;
+  }
+  
+  .hero-area.style4 .hero-inner .hero-text p {
+    color: #fff;
+  }
+  
+  .hero-area.style4 .hero-inner .hero-text .button .btn {
+    background-color: #fff;
+    color: #802020;
+  }
+  
+  .hero-area.style4 .hero-inner .hero-text .button .btn:hover {
+    background-color: #802020;
+    color: #fff;
+  }
+  
+  .hero-area.style4 .hero-inner .hero-text .button .btn-alt {
+    background-color: #802020;
+    color: #fff;
+  }
+  
+  .hero-area.style4 .hero-inner .hero-text .button .btn-alt:hover {
+    background-color: #fff;
+    color: #802020;
+  }
+  
+  .hero-area.style4 .job-search-wrap-two {
+    padding: 40px;
+    border-radius: 5px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 1rem 3rem rgba(106, 0, 90, 0.15) !important;
+            box-shadow: 0 1rem 3rem rgba(0, 76, 255, 0.15) !important;
+    position: relative;
+    top: 102px;
+  }
+  
+  .hero-area .hero-inner {
+    height: 800px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 3;
+  }
+  
+  .hero-area .hero-text {
+    float: none;
+    margin-top: 230px;
+    padding-right: 50px;
+  }
+  
+  .hero-area .hero-text h1 {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 55px;
+    margin-bottom: 25px;
+  }
+  
+  .hero-area .hero-text h1 span {
+    font-weight: 300;
+  }
+  
+  .hero-area .hero-text p {
+    font-size: 15px;
+    line-height: 24px;
+  }
+  
+  .hero-area .hero-text .button {
+    margin-top: 35px;
+  }
+  
+  .hero-area .hero-text .button .btn {
+    margin-right: 10px;
+  }
+  
+  .hero-area .hero-text .button .btn:hover {
+    color: #fff;
+  }
+  
+  .hero-area .hero-text .button .btn:last-child {
+    margin-right: 0px;
+  }
+  
+  .hero-area .hero-video-head {
+    margin-top: 160px;
+  }
+  
+  .hero-area .hero-video-head .video-inner {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .hero-area .hero-video-head .video-inner::before {
+    position: absolute;
+    content: "";
+    right: -50px;
+    bottom: -90px;
+    height: 300px;
+    width: 300px;
+    background-image: url(/assets/frontA/images/hero/pattern.png);
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  
+  .hero-area .hero-video-head .video-inner img {
+    width: 100%;
+    border-radius: 10px 100px 10px 100px;
+  }
+  
+  .hero-area .hero-video-head .video-inner .hero-video {
+    height: 100px;
+    width: 100px;
+    line-height: 100px;
+    text-align: center;
+    color: #fff;
+    background-color: #802020;
+    font-size: 20px;
+    display: block;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+    z-index: 99;
+    padding-left: 5px;
+    -webkit-box-shadow: 0px 0px 30px #802020b3;
+            box-shadow: 0px 0px 30px #802020b3;
+  }
+  
+  .hero-area .hero-video-head .video-inner .hero-video:hover {
+    background-color: #fff;
+    color: #802020;
+  }
+  
+  .hero-area .video-inner .waves-block .waves {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: #fff;
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    border-radius: 100%;
+    -webkit-animation: waves 5s ease-in-out infinite;
+    animation: waves 4s ease-in-out infinite;
+    left: 50%;
+    margin-left: -75px;
+    top: 50%;
+    margin-top: -75px;
+    z-index: 1;
+  }
+  
+  .hero-area .video-inner .waves-block .wave-1 {
+    -webkit-animation-delay: 0s;
+    animation-delay: 0s;
+  }
+  
+  .hero-area .video-inner .waves-block .wave-2 {
+    -webkit-animation-delay: 1s;
+    animation-delay: 1s;
+  }
+  
+  .hero-area .video-inner .waves-block .wave-3 {
+    -webkit-animation-delay: 2s;
+    animation-delay: 2s;
+  }
+  
+  /* Video Animations */
+  @-webkit-keyframes waves {
+    0% {
+      -webkit-transform: scale(0.2, 0.2);
+      transform: scale(0.2, 0.2);
+      opacity: 0;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    }
+    50% {
+      opacity: 0.9;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+    }
+    100% {
+      -webkit-transform: scale(0.9, 0.9);
+      transform: scale(0.9, 0.9);
+      opacity: 0;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    }
+  }
+  
+  @keyframes waves {
+    0% {
+      -webkit-transform: scale(0.2, 0.2);
+      transform: scale(0.2, 0.2);
+      opacity: 0;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    }
+    50% {
+      opacity: 0.9;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+    }
+    100% {
+      -webkit-transform: scale(0.9, 0.9);
+      transform: scale(0.9, 0.9);
+      opacity: 0;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    }
+  }
+  
+  @-webkit-keyframes lineanim {
+    50% {
+      -webkit-transform: scaleY(1);
+      transform: scaleY(1);
+      -webkit-transform-origin: top left;
+      transform-origin: top left;
+    }
+    50.1% {
+      -webkit-transform-origin: bottom left;
+      transform-origin: bottom left;
+    }
+    100% {
+      -webkit-transform: scaleY(0);
+      transform: scaleY(0);
+      -webkit-transform-origin: bottom left;
+      transform-origin: bottom left;
+    }
+  }
+  
+  @keyframes lineanim {
+    50% {
+      -webkit-transform: scaleY(1);
+      transform: scaleY(1);
+      -webkit-transform-origin: top left;
+      transform-origin: top left;
+    }
+    50.1% {
+      -webkit-transform-origin: bottom left;
+      transform-origin: bottom left;
+    }
+    100% {
+      -webkit-transform: scaleY(0);
+      transform: scaleY(0);
+      -webkit-transform-origin: bottom left;
+      transform-origin: bottom left;
+    }
+  }
+  
+  .job-search-wrap-two .job-search-form {
+    border: 1px solid #e2e4ea;
+    background: #fff;
+    border-radius: 4px;
+  }
+  
+  .job-search-wrap-two .job-search-form form {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    width: 100%;
+    padding: 10px 10px 10px 0;
+  }
+  
+  .job-search-wrap-two .job-search-form form .single-field-item {
+    position: relative;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 37%;
+    flex: 0 0 37%;
+    max-width: 37%;
+    padding: 0 30px;
+    height: 100%;
+    margin-bottom: 0;
+  }
+  
+  .job-search-wrap-two .job-search-form form .single-field-item label {
+    display: block;
+    font-size: 15px;
+    color: #000;
+    font-weight: 600;
+    text-transform: capitalize;
+    margin: 0;
+  }
+  
+  .job-search-wrap-two .job-search-form form .single-field-item input {
+    width: 100%;
+    border: none;
+    color: #999;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 0;
+    height: auto;
+    line-height: inherit;
+  }
+  
+  .job-search-wrap-two .job-search-form form .submit-btn {
+    width: 100%;
+  }
+  
+  .job-search-wrap-two .job-search-form form .submit-btn .btn {
+    background-color: #802020;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+  }
+  
+  .job-search-wrap-two .job-search-form form .submit-btn .btn:hover {
+    -webkit-box-shadow: 0 1rem 3rem rgba(35, 38, 45, 0.15) !important;
+            box-shadow: 0 1rem 3rem rgba(35, 38, 45, 0.15) !important;
+    background-color: #802020;
+    color: #fff;
+    border-color: transparent;
+  }
+  
+  .job-search-wrap-two .job-search-form form .single-field-item:first-child::after {
+    position: absolute;
+    content: "";
+    height: 70%;
+    width: 1px;
+    background-color: #e2e4ea;
+    top: 50%;
+    right: 0;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+  
+  .keywords {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+  
+  .keywords ul li {
+    display: inline-block;
+  }
+  
+  .keywords ul li a {
+    font-size: 13px;
+    color: #999;
+    padding: 0 7px;
+    border: 1px solid #e4e5ec;
+    border-radius: 3px;
+    margin-bottom: 4px;
+    line-height: 22px;
+    margin-right: 0;
+  }
+  
+  .keywords ul li a:hover {
+    -webkit-box-shadow: 0 1rem 3rem rgba(35, 38, 45, 0.15) !important;
+            box-shadow: 0 1rem 3rem rgba(35, 38, 45, 0.15) !important;
+    background-color: #802020;
+    color: #fff;
+    border-color: transparent;
+  }
+  
+  .keywords ul li a {
+    font-size: 13px;
+    color: #999;
+    padding: 0 7px;
+    border: 1px solid #e4e5ec;
+    border-radius: 3px;
+    margin-bottom: 4px;
+    line-height: 22px;
+    margin-right: 0;
+  }
+  
+  .keywords.style-two .title {
+    font-size: 14px;
+    color: #802020;
+    margin-right: 10px;
+    line-height: 22px;
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
+    position: relative;
+    top: -2px;
+  }
+  
+  /*=============================
+      Pricing Table CSS
+  ===============================*/
+  .pricing-table {
+    background: #f6f9fc;
+    position: relative;
+  }
+  
+  .pricing-table .single-table {
+    background: #fff;
+    text-align: left;
+    position: relative;
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    padding: 55px 50px;
+    -webkit-box-shadow: 0 1rem 3rem rgba(35, 38, 45, 0.15) !important;
+            box-shadow: 0 1rem 3rem rgba(35, 38, 45, 0.15) !important;
+    overflow: hidden;
+    border-radius: 5px;
+  }
+  
+  .pricing-table .single-table .table-head {
+    position: relative;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #edeff2;
+  }
+  
+  .pricing-table .single-table .table-head::before {
+    position: absolute;
+    content: '';
+    background: #e4e8ed;
+    width: 15px;
+    height: 15px;
+    right: 0px;
+    bottom: -7px;
+    border-radius: 5px;
+  }
+  
+  .pricing-table .single-table .table-head .title {
+    font-size: 18px;
+    line-height: 26px;
+    color: #802020;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 19px;
+  }
+  
+  .pricing-table .single-table .table-head .amount {
+    font-size: 40px;
+    line-height: 56px;
+    font-weight: 700;
+    color: #802020;
+  }
+  
+  .pricing-table .single-table .table-head .duration {
+    color: #888;
+    font-size: 14px;
+    font-weight: 400;
+    display: inline-block;
+    margin-left: 7px;
+  }
+  
+  .pricing-table .single-table .table-list {
+    position: relative;
+    display: block;
+    margin-top: 35px;
+  }
+  
+  .pricing-table .single-table .table-list li {
+    position: relative;
+    display: block;
+    font-size: 14px;
+    line-height: 26px;
+    color: #802020;
+    font-weight: 400;
+    padding-left: 30px;
+    margin-bottom: 15px;
+  }
+  
+  .pricing-table .single-table .table-list li:last-child {
+    margin-bottom: 0;
+  }
+  
+  .pricing-table .single-table .table-list li::before {
+    position: absolute;
+    content: "\ea55";
+    font-family: 'lineIcons';
+    font-size: 7px;
+    color: #fff;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+    border-radius: 3px;
+    left: 0px;
+    top: 6px;
+    background-color: #802020;
+  }
+  
+  .pricing-table .single-table .button {
+    margin-top: 40px;
+  }
+  
+  .pricing-table .single-table .button .btn {
+    font-size: 13px;
+  }
+ 

@@ -1,0 +1,128 @@
+
+/* Steps Section Styles */
+.steps-container {
+    position: relative;
+    padding: 40px 0;
+    overflow: hidden;
+  }
+  
+  .steps-wrapper {
+    display: flex;
+    overflow-x: auto;
+    gap: 30px;
+    padding: 20px 40px;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .steps-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .step-item {
+    min-width: 250px;
+    text-align: center;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1rem 3rem rgba(35, 38, 45, 0.15);
+    transition: all 0.3s ease;
+  }
+  
+  .step-item:hover {
+    transform: translateY(-5px);
+  }
+  
+  .step-circle {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    border: 1px dashed #fff;
+    transition: all 0.4s ease;
+  }
+  
+  .step-circle.orange {
+    background-color: #FF6B35;
+  }
+  
+  .step-circle.red {
+    background-color: #E4002B;
+  }
+  
+  .step-circle i {
+    font-size: 24px;
+    color: #fff;
+  }
+  
+  .step-content h3 {
+    color: #081828;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .step-content p {
+    color: #7E8890;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  .navigation-arrows {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  
+  .nav-arrow {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #2042e3;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+  }
+  
+  .nav-arrow:hover {
+    background: #081828;
+  }
+  
+  .nav-arrow.prev {
+    left: 0;
+  }
+  
+  .nav-arrow.next {
+    right: 0;
+  }
+  
+  /* Responsive Styles */
+  @media only screen and (max-width: 767px) {
+    .steps-wrapper {
+      gap: 20px;
+      padding: 15px 30px;
+    }
+  
+    .step-item {
+      min-width: 200px;
+    }
+  }
+.container{
+  display:flex !important;
+  justify-content: space-around !important;
+  
+}
+.navigation-arrows button{
+  color: rgb(255, 255, 255) !important;
+  background-color:rgb(168, 25, 14) !important;
+  
+}
