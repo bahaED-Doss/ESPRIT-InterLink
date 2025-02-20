@@ -17,14 +17,29 @@ export class CompanyListComponent implements OnInit {
 
   loadCompanies(): void {
     this.companyService.getAllCompanies().subscribe(data => {
+      console.log("Companies received from API:", data); // Debugging
       this.companies = data;
     });
   }
+  
 
-  deleteCompany(id: number): void {
+  deleteCompany(id?: number): void {
+    console.log("Delete button clicked. ID:", id); // Debugging
+
+    if (id === undefined) {
+      console.error("Error: Company ID is undefined.");
+      return;
+    }
+
     if (confirm('Are you sure you want to delete this company?')) {
-      this.companyService.deleteCompany(id).subscribe(() => {
-        this.loadCompanies();
+      this.companyService.deleteCompany(id).subscribe({
+        next: () => {
+          console.log(`Company with ID ${id} deleted successfully.`);
+          this.loadCompanies(); // Refresh the list
+        },
+        error: (err) => {
+          console.error("Error deleting company:", err);
+        }
       });
     }
   }

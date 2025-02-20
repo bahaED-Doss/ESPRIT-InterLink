@@ -9,7 +9,7 @@ import tn.esprit.interlink_back.repository.ProjectRepository;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/projects")
+@RequestMapping("/projects")
 public class ProjectController {
 
     private final ProjectRepository projectRepository;

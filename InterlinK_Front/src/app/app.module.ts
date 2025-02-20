@@ -28,6 +28,8 @@ import { StartProcessComponent } from './components/Front/start-process/start-pr
 import { SuggestionsHComponent } from './components/Front/suggestions-h/suggestions-h.component';
 import { CompanyListComponent } from './components/Front/company-list/company-list.component';
 import { CompanyFormComponent } from './components/Front/company-form/company-form.component';
+import { ProjectFormComponent } from './components/Front/project-form/project-form.component';
+import { ProjectListComponent } from './components/Front/project-list/project-list.component';
 
 
 @NgModule({
@@ -45,7 +47,9 @@ import { CompanyFormComponent } from './components/Front/company-form/company-fo
     StartProcessComponent,
     SuggestionsHComponent,
     CompanyListComponent,
-    CompanyFormComponent
+    CompanyFormComponent,
+    ProjectFormComponent,
+    ProjectListComponent
    
     
     

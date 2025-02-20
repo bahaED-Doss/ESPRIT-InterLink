@@ -14,6 +14,9 @@ import { InternshipsComponent } from './components/Front/internships/internships
 import { StartProcessComponent } from './components/Front/start-process/start-process.component';
 import { CompanyListComponent } from './components/Front/company-list/company-list.component';
 import { CompanyFormComponent } from './components/Front/company-form/company-form.component';
+import { ProjectFormComponent } from './components/Front/project-form/project-form.component';
+import { ProjectListComponent } from './components/Front/project-list/project-list.component';
+
 
 const routes: Routes = [
   {path: '', component: HomeComponent,},
@@ -29,7 +32,10 @@ const routes: Routes = [
   { path: 'internships', component: InternshipsComponent },
   { path: 'startProcess', component: StartProcessComponent },
   { path: 'companyForm', component: CompanyFormComponent },
-  { path: 'companyList', component: CompanyListComponent }
+  { path: 'companyList', component: CompanyListComponent },
+  { path: 'projectForm', component: ProjectFormComponent },
+  { path: 'projectList', component: ProjectListComponent }
+
 
   
   

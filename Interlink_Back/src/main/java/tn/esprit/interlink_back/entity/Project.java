@@ -24,8 +24,8 @@ public class Project {
     private Company company; // Each project belongs to one company
 
     @ManyToOne
-    @JoinColumn(name = "project_manager_id")
-    private ProjectManager projectManager; // Each project is managed by one manager
+    @JoinColumn(name = "manager_id")
+    private User projectManager; // Each project is managed by one manager
 
 }
 

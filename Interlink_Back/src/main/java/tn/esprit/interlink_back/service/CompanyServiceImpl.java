@@ -5,7 +5,6 @@ import tn.esprit.interlink_back.entity.Company;
 import tn.esprit.interlink_back.repository.CompanyRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CompanyServiceImpl implements ICompanyService {
@@ -17,28 +16,27 @@ public class CompanyServiceImpl implements ICompanyService {
     }
 
     @Override
-    public List<Company> getAllCompanies() {
+    public List<Company> retrieveAllCompanies() {
         return companyRepository.findAll();
     }
 
     @Override
-    public Optional<Company> getCompanyById(Long id) {
-        return companyRepository.findById(id);
+    public Company retrieveCompany(Long id) {
+        return companyRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Company createCompany(Company company) {
+    public Company addCompany(Company company) {
         return companyRepository.save(company);
     }
 
     @Override
-    public Optional<Company> updateCompany(Long id, Company companyDetails) {
-        return companyRepository.findById(id).map(companyRepository::save);
+    public void removeCompany(Long id) {
+        companyRepository.deleteById(id);
     }
 
     @Override
-    public void deleteCompany(Long id) {
-        companyRepository.deleteById(id);
+    public Company modifyCompany(Company company) {
+        return companyRepository.save(company);
     }
 }
-

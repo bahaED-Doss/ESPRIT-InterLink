@@ -1,52 +1,42 @@
 package tn.esprit.interlink_back.controller;
 
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.interlink_back.entity.Company;
-import tn.esprit.interlink_back.repository.CompanyRepository;
+import tn.esprit.interlink_back.service.ICompanyService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/companies")
+@RequestMapping("/company")
 public class CompanyController {
 
-    private final CompanyRepository companyRepository;
-
-    public CompanyController(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
+    public final ICompanyService companyService;
+    public CompanyController(ICompanyService companyService) {
+        this.companyService = companyService;
     }
-
     @GetMapping("/retrieve-all-companies")
     public List<Company> getAllCompanies() {
-        return companyRepository.findAll();
+        return companyService.retrieveAllCompanies();
+    }
+
+    @GetMapping("/retrieve-company/{company-id}")
+    public Company retrieveCompany(@PathVariable("company-id") Long id) {
+        return companyService.retrieveCompany(id);
     }
 
     @PostMapping("/add-company")
-    public Company createCompany(@RequestBody Company company) {
-        return companyRepository.save(company);
-    }
-
-    @GetMapping("/company-by-id/{id}")
-    public ResponseEntity<Company> getCompanyById(@PathVariable Long id) {
-        return companyRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PutMapping("/modify-company/{id}")
-    public ResponseEntity<Company> updateCompany(@PathVariable Long id, @RequestBody Company companyDetails) {
-        return companyRepository.findById(id)
-                .map(company -> {
-                    return ResponseEntity.ok(companyRepository.save(company));
-                }).orElse(ResponseEntity.notFound().build());
+    public Company addCompany(@RequestBody Company company) {
+        System.out.println("Received Company: " + company);
+        return companyService.addCompany(company);
     }
 
     @DeleteMapping("/remove-company/{id}")
-    public ResponseEntity<?> deleteCompany(@PathVariable Long id) {
-        companyRepository.deleteById(id);
-        return ResponseEntity.ok().build();
+    public void removeCompany(@PathVariable("id") Long id) {
+        companyService.removeCompany(id);
+    }
+
+    @PutMapping("/modify-company")
+    public Company modifyCompany(@RequestBody Company company) {
+        return companyService.modifyCompany(company);
     }
 }
-
