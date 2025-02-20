@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-nav-back',
   standalone: true,
-  imports: [],
+  imports: [RouterOutlet,
+    RouterLink,
+    RouterLinkActive],
   templateUrl: './nav-back.component.html',
   styleUrls: ['./nav-back.component.css']
 })

@@ -31,6 +31,11 @@ import { TasksComponent } from './components/Front/tasks/tasks.component';
 import { WelcomeViewComponent } from './components/Front/welcome-view/welcome-view.component';
 import { ContactComponent } from './components/Front/contact/contact.component';
 import { AboutComponent } from './components/Front/about/about.component';
+import { NavbarStudentComponent } from './components/Front/navbar-student/navbar-student.component';
+import { NavbarHrComponent } from './components/Front/navbar-hr/navbar-hr.component';
+import { HomeHrComponent } from './components/Front/hrDashboard/home-hr/home-hr.component';
+import { ProfileHrComponent } from './components/Front/profile-hr/profile-hr.component';
+import { ProfileStudentComponent } from './components/Front/profile-student/profile-student.component';
 
 
 
@@ -55,6 +60,11 @@ import { AboutComponent } from './components/Front/about/about.component';
     TasksComponent,
     ContactComponent,
     AboutComponent,
+    NavbarStudentComponent,
+    NavbarHrComponent,
+    HomeHrComponent,
+    ProfileHrComponent,
+    ProfileStudentComponent,
     
     
     

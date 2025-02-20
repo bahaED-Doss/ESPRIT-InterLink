@@ -31,13 +31,9 @@
               "src/assets/back/css/nucleo-svg.css",
               "src/assets/back/css/soft-ui-dashboard.css",
               "src/assets/back/css/soft-ui-dashboard.min.css",
-              "src/styles.css",
+              "src/styles.css"
 
-              "src/assets/frontA/css/bootstrap.min.css",
-                "src/assets/frontA/css/animate.css",
-                "src/assets/frontA/css/glightbox.min.css",
-                "src/assets/frontA/css/tiny-slider.css",
-                 "src/assets/frontA/css/lineicons.2.0.css"
+              
             ],
             "scripts": [
               "src/assets/frontA/js/bootstrap.min.js",
@@ -113,12 +109,8 @@
               "src/assets/back/css/nucleo-svg.css",
               "src/assets/back/css/soft-ui-dashboard.css",
               "src/assets/back/css/soft-ui-dashboard.min.css",
-              "src/styles.css",
-              "src/assets/frontA/css/bootstrap.min.css",
-              "src/assets/frontA/css/animate.css",
-              "src/assets/frontA/css/glightbox.min.css",
-              "src/assets/frontA/css/tiny-slider.css",
-               "src/assets/frontA/css/lineicons.2.0.css"
+              "src/styles.css"
+             
               
             ],
             "scripts": [
