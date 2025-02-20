@@ -3,6 +3,8 @@ package tn.esprit.interlink_back.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import tn.esprit.interlink_back.entity.Application;
+import tn.esprit.interlink_back.entity.Enums.InterviewType;
+import tn.esprit.interlink_back.entity.Enums.StatusType;
 import tn.esprit.interlink_back.entity.Interview;
 import tn.esprit.interlink_back.entity.ProjectManager;
 import tn.esprit.interlink_back.entity.User;
@@ -22,12 +24,12 @@ public interface InterviewRepository extends JpaRepository<Interview, Integer>
     List<Interview> findByApplication(Application application);
 
     // Trouver tous les entretiens d'un type spécifique
-    List<Interview> findByType(String type);
+    List<Interview> findByInterviewType(InterviewType interviewType);
 
     //  Trouver tous les entretiens planifiés après une certaine date
     List<Interview> findByInterviewDateAfter(LocalDateTime date);
 
     //  Trouver tous les entretiens avec un statut spécifique (planifié, réalisé, annulé)
-    List<Interview> findByStatus(String status);
+    List<Interview> findByStatusType(StatusType statusType);
 
 }

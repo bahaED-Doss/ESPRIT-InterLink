@@ -42,8 +42,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
-
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version> <!-- Vérifiez si une version plus récente est disponible -->
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -172,6 +181,9 @@
 
 
     </dependencies>
+
+
+
 
     <build>
         <plugins>

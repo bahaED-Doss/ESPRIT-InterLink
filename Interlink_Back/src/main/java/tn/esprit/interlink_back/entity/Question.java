@@ -1,6 +1,7 @@
 package tn.esprit.interlink_back.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
 @Table(name = "question")// Assure un nom correct en base de données
 public class Question {
 
@@ -21,12 +23,8 @@ public class Question {
     @ManyToOne
     @JoinColumn(name = "test_id", nullable = false)
     private Test test;
-/*
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private TestType type;
 
- */
+
     @Column(nullable = false)
     private String contenu; // Le texte de la question
 
@@ -98,9 +96,14 @@ public class Question {
         }
     }
 
-    public int getNoteAttribuee() {
-        return noteAttribuee;
+
+    public String getReponse() {
+        return reponse;
     }
+    public void setReponse(String reponse) {
+        this.reponse = reponse;
+    }
+
 
 }
 

@@ -32,15 +32,17 @@ public class InterviewService
     }
 
     // update entretien
+    // update entretien
     public Interview updateInterview(int id, Interview newInterview) {
         return interviewRepository.findById(id).map(interview -> {
             interview.setInterviewDate(newInterview.getInterviewDate());
-            interview.setType(newInterview.getType());
-            interview.setStatus(newInterview.getStatus());
+            interview.setInterviewType(newInterview.getInterviewType());
+            interview.setStatusType(newInterview.getStatusType());
             interview.setLienReunion(newInterview.getLienReunion());
             return interviewRepository.save(interview);
         }).orElseThrow(() -> new RuntimeException("Interview avec ID " + id + " non trouvée"));
     }
+
 
     // Supprimer un entretien
     public void deleteInterview(int id) {

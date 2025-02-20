@@ -1,10 +1,14 @@
 package tn.esprit.interlink_back.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import tn.esprit.interlink_back.entity.Enums.TestType;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+@Entity
+@AllArgsConstructor
 public class Test
 {
     @Id
@@ -26,6 +30,10 @@ public class Test
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TestType typeTest; // Type de test (Technique ou SoftSkill)
+
+    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Question> questions = new ArrayList<>();
+
 
     @Column
     private int note; // Note obtenue au test
