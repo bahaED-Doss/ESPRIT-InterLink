@@ -1,10 +1,9 @@
 package tn.esprit.interlink_back.controller;
 
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.interlink_back.entity.Project;
-import tn.esprit.interlink_back.repository.ProjectRepository;
+import tn.esprit.interlink_back.service.IProjectService;
 
 import java.util.List;
 
@@ -12,41 +11,49 @@ import java.util.List;
 @RequestMapping("/projects")
 public class ProjectController {
 
-    private final ProjectRepository projectRepository;
+    private final IProjectService projectService;
 
-    public ProjectController(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
+    public ProjectController(IProjectService projectService) {
+        this.projectService = projectService;
     }
 
     @GetMapping("/retrieve-all-projects")
     public List<Project> getAllProjects() {
-        return projectRepository.findAll();
-    }
-
-    @PostMapping("/add-project")
-    public Project createProject(@RequestBody Project project) {
-        return projectRepository.save(project);
+        return projectService.retrieveAllProjects();
     }
 
     @GetMapping("/project-by-id/{id}")
     public ResponseEntity<Project> getProjectById(@PathVariable Long id) {
-        return projectRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Project project = projectService.retrieveProject(id);
+        return project != null ? ResponseEntity.ok(project) : ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/add-project")
+    public Project createProject(@RequestBody Project project) {
+        return projectService.addProject(project);
     }
 
     @PutMapping("/modify-project/{id}")
     public ResponseEntity<Project> updateProject(@PathVariable Long id, @RequestBody Project projectDetails) {
-        return projectRepository.findById(id)
-                .map(project -> {
-                    return ResponseEntity.ok(projectRepository.save(project));
-                }).orElse(ResponseEntity.notFound().build());
+        Project existingProject = projectService.retrieveProject(id);
+        if (existingProject == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Update project details and save
+        existingProject.setTitle(projectDetails.getTitle());
+        existingProject.setDescription(projectDetails.getDescription());
+        existingProject.setStartDate(projectDetails.getStartDate());
+        existingProject.setEndDate(projectDetails.getEndDate());
+        existingProject.setStatus(projectDetails.getStatus());
+        existingProject.setTechnologiesUsed(projectDetails.getTechnologiesUsed());
+
+        return ResponseEntity.ok(projectService.modifyProject(existingProject));
     }
 
     @DeleteMapping("/remove-project/{id}")
     public ResponseEntity<?> deleteProject(@PathVariable Long id) {
-        projectRepository.deleteById(id);
+        projectService.removeProject(id);
         return ResponseEntity.ok().build();
     }
 }
-

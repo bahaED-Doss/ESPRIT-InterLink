@@ -17,6 +17,7 @@ public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("companyId")
     private Long companyId;
 
     @JsonProperty("name")  // Ensures correct mapping
@@ -28,14 +29,24 @@ public class Company {
     @JsonProperty("email")
     private String email;
 
+    @JsonProperty("city")
+    private String city;
+
+    @JsonProperty("country")
+    private String country;
+
     @JsonProperty("phone")
     private String phone;
+
+    @JsonProperty("industrySector")
+    private String industrySector;
 
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Project> projects; // A company can have multiple projects
 
 
-
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    private List<User> employees; // HRs and other users linked to the company
 
 }

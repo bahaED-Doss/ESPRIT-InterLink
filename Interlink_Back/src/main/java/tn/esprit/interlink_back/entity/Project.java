@@ -1,31 +1,106 @@
 package tn.esprit.interlink_back.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 
+@Entity
+@Data
 @Getter
 @Setter
-@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("projectId")
     private Long projectId;
 
+    @JsonProperty("title")
     private String title;
+
+    @JsonProperty("description")
     private String description;
-    private Date startDate;
-    private Date endDate;
+
+    @JsonProperty("status")
+    private String status; // Status of the project (e.g., "Active", "Completed", "On-Hold")
+
+    @JsonProperty("technologiesUsed")
+    private String technologiesUsed; // Technologies used in the project (e.g., "Java, Spring Boot, Angular")
+
+    @JsonProperty("startDate")
+    private LocalDate startDate;
+
+    @JsonProperty("endDate")
+    private LocalDate endDate;
+
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company; // Each project belongs to one company
 
     @ManyToOne
     @JoinColumn(name = "manager_id")
-    private User projectManager; // Each project is managed by one manager
+    private ProjectManager projectManager; // Each project is managed by one manager
+
+    @ManyToMany
+    @JoinTable(
+            name = "project_student",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> students; // A project can have multiple students
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getTechnologiesUsed() {
+        return technologiesUsed;
+    }
+
+    public void setTechnologiesUsed(String technologiesUsed) {
+        this.technologiesUsed = technologiesUsed;
+    }
 
 }
-

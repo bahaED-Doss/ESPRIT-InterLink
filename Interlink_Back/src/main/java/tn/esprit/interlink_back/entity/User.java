@@ -29,20 +29,16 @@ public class User {
     private String espritEmail;
     private String phoneNumber;
 
-    // HR-specific fields
-    private String companyName;
-    private String companyIdentifier;
-    private String industrySector;
-    private String companyAddress;
-    private String city;
-    private String country;
-    private String companyEmail;
-    private String contactNumber;
+    // Company (For HR Users)
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
 
     // Project Manager-specific fields
     private String department;
     private int yearsOfExperience;
     private String professionalEmail;
+    private boolean status;
 
     // Constructors
     public User() {}
@@ -145,70 +141,6 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getCompanyIdentifier() {
-        return companyIdentifier;
-    }
-
-    public void setCompanyIdentifier(String companyIdentifier) {
-        this.companyIdentifier = companyIdentifier;
-    }
-
-    public String getIndustrySector() {
-        return industrySector;
-    }
-
-    public void setIndustrySector(String industrySector) {
-        this.industrySector = industrySector;
-    }
-
-    public String getCompanyAddress() {
-        return companyAddress;
-    }
-
-    public void setCompanyAddress(String companyAddress) {
-        this.companyAddress = companyAddress;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCompanyEmail() {
-        return companyEmail;
-    }
-
-    public void setCompanyEmail(String companyEmail) {
-        this.companyEmail = companyEmail;
-    }
-
-    public String getContactNumber() {
-        return contactNumber;
-    }
-
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
     }
 
     public String getDepartment() {

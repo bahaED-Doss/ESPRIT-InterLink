@@ -3,11 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Company {
-  id?: number;
+  companyId?: number;
   name: string;
   location: string;
   email: string;
+  city: string;
+  country: string;
   phone: string;
+  industrySector: string;
 }
 
 @Injectable({
@@ -22,8 +25,8 @@ export class CompanyService {
     return this.http.get<Company[]>(`${this.apiUrl}/retrieve-all-companies`);
   }
 
-  getCompanyById(id: number): Observable<Company> {
-    return this.http.get<Company>(`${this.apiUrl}/retrieve-company/${id}`);
+  getCompanyById(companyId: number): Observable<Company> {
+    return this.http.get<Company>(`${this.apiUrl}/retrieve-company/${companyId}`);
   }
 
   addCompany(company: Company): Observable<Company> {
@@ -31,10 +34,15 @@ export class CompanyService {
   }
 
   updateCompany(company: Company): Observable<Company> {
-    return this.http.put<Company>(`${this.apiUrl}/modify-company`, company);
+    return this.http.put<Company>(`${this.apiUrl}/modify-company/${company.companyId}`, company);
   }
+  
 
-  deleteCompany(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/remove-company/${id}`);
+  deleteCompany(companyId: number): Observable<void> {
+    console.log("Sending DELETE request for Company ID:", companyId); // 🔥 Log request
+    return this.http.delete<void>(`${this.apiUrl}/remove-company/${companyId}`);
   }
+  
+  
+  
 }

@@ -10,9 +10,9 @@ public class ProjectManager {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long managerId;
 
-    private String name;
-    private String email;
-    private String password;
+    private String department;
+    private int yearsOfExperience;
+    private String professionalEmail;
     private boolean status;
 
     @OneToMany(mappedBy = "projectManager", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

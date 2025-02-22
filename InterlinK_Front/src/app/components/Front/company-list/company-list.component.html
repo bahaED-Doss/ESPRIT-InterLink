@@ -6,7 +6,10 @@
         <th>Name</th>
         <th>Location</th>
         <th>Email</th>
+        <th>City</th>
+        <th>Country</th>
         <th>Phone</th>
+        <th>Industry Sector</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -15,11 +18,13 @@
         <td>{{ company.name }}</td>
         <td>{{ company.location }}</td>
         <td>{{ company.email }}</td>
+        <td>{{ company.city }}</td>
+        <td>{{ company.country }}</td>
         <td>{{ company.phone }}</td>
+        <td>{{ company.industrySector }}</td>
         <td>
-          <button class="btn btn-danger btn-sm" (click)="deleteCompany(company.id)">
-            Delete (ID: {{ company.id }})
-          </button>
+          <button class="btn btn-primary btn-sm me-2" (click)="editCompany(company)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteCompany(company)">Delete</button>
         </td>
       </tr>
     </tbody>

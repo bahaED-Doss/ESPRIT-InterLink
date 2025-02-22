@@ -1,1 +1,62 @@
-<p>project-form works!</p>
+<app-navbar></app-navbar>
+<!-- Start Hero Area -->
+<section class="hero-area">
+    <div class="hero-inner">
+        
+    </div>
+</section>
+<!--/ End Hero Area -->
+<!-- Start Hero Area -->
+<section class="hero-area">
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Project Details</h2>
+
+        <div class="card p-4 shadow" style="max-width: 600px; margin: 0 auto;">
+            <form (ngSubmit)="submitForm()" [formGroup]="addProject">
+                <div class="mb-3">
+                    <label class="form-label">Title:</label>
+                    <input type="text" class="form-control" formControlName="title" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Description:</label>
+                    <textarea class="form-control" formControlName="description" rows="3" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Start Date:</label>
+                    <input type="date" class="form-control" formControlName="startDate" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">End Date:</label>
+                    <input type="date" class="form-control" formControlName="endDate" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Company:</label>
+                    <select class="form-control" formControlName="company" required>
+                        <option *ngFor="let company of companies" [value]="company.id">{{ company.name }}</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Location:</label>
+                    <input type="text" class="form-control" formControlName="location" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Technology Stack:</label>
+                    <select class="form-control" formControlName="technologies" multiple>
+                        <option *ngFor="let tech of technologies" [value]="tech">{{ tech }}</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Save Project</button>
+            </form>
+        </div>
+    </div>
+</section>
+<!--/ End Hero Area -->
+
+<app-footer></app-footer>

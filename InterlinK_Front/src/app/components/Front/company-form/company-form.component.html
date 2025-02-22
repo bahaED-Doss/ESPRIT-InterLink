@@ -1,44 +1,109 @@
+<app-navbar></app-navbar>
 
-<app-navbar class="nav"></app-navbar>
+<!-- Start Hero Area -->
+<section class="hero-area">
+    <div class="hero-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                    <div class="inner-content">
+                        <div class="hero-text">
+                            <h1 class="wow fadeInUp" data-wow-delay=".3s">Help your company attract talented employees <br>by completing your company profile below</h1>
+                        </div>
+                        <div class="job-search-wrap-two mt-50 wow fadeInUp" data-wow-delay=".7s">
+                            <div class="job-search-form">
+                                <form action="#">
+                                    <div class="single-field-item keyword">
+                                        <label for="keyword">What</label>
+                                        <input id="keyword" placeholder="What jobs you want?" name="keyword" type="text">
+                                    </div>
+                                    <div class="single-field-item location">
+                                        <label for="location">Where</label>
+                                        <input id="location" class="input-field input-field-location" placeholder="Location" name="location" type="text">
+                                    </div>
+                                    <div class="submit-btn">
+                                        <button class="btn" type="submit">Search</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="trending-keywords mt-30">
+                                <div class="keywords style-two">
+                                    <span class="title">Popular Keywords:</span>
+                                    <ul>
+                                        <li><a href="#">Administrative</a></li>
+                                        <li><a href="#">Android</a></li>
+                                        <li><a href="#">app</a></li>
+                                        <li><a href="#">ASP.NET</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <div class="hero-video-head wow fadeInRight" data-wow-delay=".5s">
+                        <div class="video-inner">
+                            <img src="assets/frontA/images/hero/hero-image.png" alt="#">
+                            <div class="promo-video">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ End Hero Area -->
 
-
-<!-- Main Content Wrapper -->
- 
+<!-- Main content section -->
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Add / Edit Company details</h2>
+    <h2 class="text-center mb-4">Company Profile</h2>
 
     <div class="card p-4 shadow" style="max-width: 600px; margin: 0 auto;">
         <form (ngSubmit)="submitForm()" [formGroup]="addCompany">
-            <!-- Name Field -->
             <div class="mb-3">
-                <label for="name" class="form-label">Name:</label>
-                <input type="text" class="form-control" id="name" name="name" formControlName="name" required />
+                <label class="form-label">Name:</label>
+                <input type="text" class="form-control" formControlName="name" required />
             </div>
 
-            <!-- Location Field -->
             <div class="mb-3">
-                <label for="location" class="form-label">Location:</label>
-                <input type="text" class="form-control" id="location" name="location" formControlName="location" required />
+                <label class="form-label">Location:</label>
+                <input type="text" class="form-control" formControlName="location" required />
             </div>
 
-            <!-- Email Field -->
             <div class="mb-3">
-                <label for="email" class="form-label">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" formControlName="email" required />
+                <label class="form-label">Email:</label>
+                <input type="email" class="form-control" formControlName="email" required />
             </div>
 
-            <!-- Phone Field -->
             <div class="mb-3">
-                <label for="phone" class="form-label">Phone:</label>
-                <input type="text" class="form-control" id="phone" name="phone" formControlName="phone" required />
+                <label class="form-label">Country:</label>
+                <select class="form-control" formControlName="country" (change)="onCountryChange($event)">
+                    <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">City:</label>
+                <input type="text" class="form-control" formControlName="city" required />
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Phone:</label>
+                <input type="text" class="form-control" formControlName="phone" required />
             </div>
 
-            <!-- Submit Button -->
-            <div class="d-grid">
-                <button type="submit" class="btn btn-success">Save</button>
+            <div class="mb-3">
+                <label class="form-label">Industry Sector:</label>
+                <select class="form-control" formControlName="industrySector" required>
+                    <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
+                </select>
             </div>
+
+            <button type="submit" class="btn btn-success w-100">Save</button>
         </form>
     </div>
 </div>
+
 <app-company-list></app-company-list>
 <app-footer></app-footer>

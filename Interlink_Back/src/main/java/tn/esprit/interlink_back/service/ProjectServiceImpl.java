@@ -1,12 +1,10 @@
 package tn.esprit.interlink_back.service;
 
-
 import org.springframework.stereotype.Service;
 import tn.esprit.interlink_back.entity.Project;
 import tn.esprit.interlink_back.repository.ProjectRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProjectServiceImpl implements IProjectService {
@@ -18,28 +16,27 @@ public class ProjectServiceImpl implements IProjectService {
     }
 
     @Override
-    public List<Project> getAllProjects() {
+    public List<Project> retrieveAllProjects() {
         return projectRepository.findAll();
     }
 
     @Override
-    public Optional<Project> getProjectById(Long id) {
-        return projectRepository.findById(id);
+    public Project retrieveProject(Long id) {
+        return projectRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Project createProject(Project project) {
+    public Project addProject(Project project) {
         return projectRepository.save(project);
     }
 
     @Override
-    public Optional<Project> updateProject(Long id, Project projectDetails) {
-        return projectRepository.findById(id).map(projectRepository::save);
+    public Project modifyProject(Project project) {
+        return projectRepository.save(project);
     }
 
     @Override
-    public void deleteProject(Long id) {
+    public void removeProject(Long id) {
         projectRepository.deleteById(id);
     }
 }
-

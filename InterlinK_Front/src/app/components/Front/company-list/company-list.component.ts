@@ -8,6 +8,7 @@ import { CompanyService, Company } from 'src/app/services/company.service';
 })
 export class CompanyListComponent implements OnInit {
   companies: Company[] = [];
+  selectedCompany: Company | null = null; // Stores the company being edited
 
   constructor(private companyService: CompanyService) {}
 
@@ -17,25 +18,26 @@ export class CompanyListComponent implements OnInit {
 
   loadCompanies(): void {
     this.companyService.getAllCompanies().subscribe(data => {
-      console.log("Companies received from API:", data); // Debugging
+      console.log("API Response:", data); // Debugging step
       this.companies = data;
     });
   }
   
 
-  deleteCompany(id?: number): void {
-    console.log("Delete button clicked. ID:", id); // Debugging
-
-    if (id === undefined) {
-      console.error("Error: Company ID is undefined.");
+  deleteCompany(company: any): void {
+    console.log("Deleting Company:", company); // 🔥 Check what is passed
+    console.log("Company ID:", company?.companyId); // 🔥 Log the ID
+  
+    if (!company || !company.companyId) {
+      console.error("Error: companyId is undefined.");
       return;
     }
-
-    if (confirm('Are you sure you want to delete this company?')) {
-      this.companyService.deleteCompany(id).subscribe({
+  
+    if (confirm(`Are you sure you want to delete ${company.name}?`)) {
+      this.companyService.deleteCompany(company.companyId).subscribe({
         next: () => {
-          console.log(`Company with ID ${id} deleted successfully.`);
-          this.loadCompanies(); // Refresh the list
+          alert(`${company.name} deleted successfully`);
+          this.loadCompanies(); // Refresh list
         },
         error: (err) => {
           console.error("Error deleting company:", err);
@@ -43,4 +45,12 @@ export class CompanyListComponent implements OnInit {
       });
     }
   }
+  
+  
+
+  editCompany(company: any): void {
+    console.log("Editing Company:", company); // 🔥 Debugging Step
+    this.selectedCompany = { ...company }; // Copy company data for editing
+  }
+  
 }
