@@ -2,6 +2,7 @@ package tn.esprit.interlink_back.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.interlink_back.entity.Application;
 import tn.esprit.interlink_back.repository.ApplicationRepository;
@@ -11,6 +12,7 @@ import java.util.List;
 @Slf4j
 @Service
 public class ApplicationServiceImpl implements IApplicationService {
+    @Autowired
     ApplicationRepository applicationRepository;
 
     @Override
