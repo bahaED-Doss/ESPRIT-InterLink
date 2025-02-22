@@ -8,13 +8,15 @@ import tn.esprit.interlink_back.entity.Internship;
 import tn.esprit.interlink_back.service.InternshipServiceImpl;
 
 import java.util.List;
-@AllArgsConstructor
 @RestController
 @RequestMapping("/internships")
 public class InternshipController {
 
      InternshipServiceImpl internshipService;
-
+    @Autowired
+    public InternshipController(InternshipServiceImpl internshipService) {
+        this.internshipService = internshipService;
+    }
 
     @GetMapping("/retrieve-all-internships")
     public List<Internship> getAllInternships() {

@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -32,8 +33,8 @@ public class Internship {
     @Enumerated(EnumType.STRING)
     requiredSkill skill;
 
-    LocalDate startDate; // Date de début
-    LocalDate endDate; // Date de fin
+    Date startDate; // Date de début
+    Date endDate; // Date de fin
 
     String companyName; // Nom de l’entreprise
     int availableSpots; // Nombre de places disponibles

@@ -2,6 +2,7 @@ package tn.esprit.interlink_back.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.interlink_back.entity.Internship;
 import tn.esprit.interlink_back.repository.InternshipRepository;
@@ -12,7 +13,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Slf4j
 public class InternshipServiceImpl implements IInternshipService {
-
+@Autowired
       InternshipRepository internshipRepository;
 
     @Override
