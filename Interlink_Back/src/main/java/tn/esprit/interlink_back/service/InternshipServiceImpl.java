@@ -1,5 +1,7 @@
 package tn.esprit.interlink_back.service;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import tn.esprit.interlink_back.entity.Internship;
 import tn.esprit.interlink_back.repository.InternshipRepository;
@@ -7,13 +9,11 @@ import tn.esprit.interlink_back.repository.InternshipRepository;
 import java.util.List;
 import java.util.Optional;
 @Service
+@AllArgsConstructor
+@Slf4j
 public class InternshipServiceImpl implements IInternshipService {
 
-    private final InternshipRepository internshipRepository;
-
-    public InternshipServiceImpl(InternshipRepository internshipRepository) {
-        this.internshipRepository = internshipRepository;
-    }
+      InternshipRepository internshipRepository;
 
     @Override
     public List<Internship> getAllInternships() {

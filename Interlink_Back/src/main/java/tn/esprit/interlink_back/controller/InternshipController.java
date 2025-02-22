@@ -1,5 +1,6 @@
 package tn.esprit.interlink_back.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -7,16 +8,12 @@ import tn.esprit.interlink_back.entity.Internship;
 import tn.esprit.interlink_back.service.InternshipServiceImpl;
 
 import java.util.List;
-
+@AllArgsConstructor
 @RestController
-@RequestMapping("/api/internships")
+@RequestMapping("/internships")
 public class InternshipController {
 
-    private final InternshipServiceImpl internshipService;
-@Autowired
-    public InternshipController(InternshipServiceImpl internshipService) {
-        this.internshipService = internshipService;
-    }
+     InternshipServiceImpl internshipService;
 
 
     @GetMapping("/retrieve-all-internships")
@@ -41,7 +38,7 @@ public class InternshipController {
         return internship;
     }
 
-    @DeleteMapping("/remove-internship/{id}")
+    @DeleteMapping("/remove-internship/{internship-id}")
         public void deleteInternship(@PathVariable("internship-id") Long intId) {//@requestbody a5ater fma variable fi parametre
        internshipService.deleteInternship(intId);
     
