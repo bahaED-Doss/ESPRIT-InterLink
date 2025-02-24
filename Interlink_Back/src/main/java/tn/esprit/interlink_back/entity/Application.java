@@ -1,15 +1,15 @@
 package tn.esprit.interlink_back.entity;
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 import jakarta.persistence.*;
 
 import java.util.List;
-=======
+//=====
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
->>>>>>> 91ac1aa ( HomePage - template front)
+// >>>>>>> 91ac1aa ( HomePage - template front)
 @Entity
 public class Application {
     @Id

@@ -13,8 +13,9 @@ public class Medal {
     private String MImageUrl;
     private int count  ; // how many times the student got this medal
 
-    //@ManyToOne
-    //@JoinColumn(name = "student_id", nullable = false) // Medals belong to students
-    //private User student;
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false) // Medals belong to students
+
+    private User student;
 
 }

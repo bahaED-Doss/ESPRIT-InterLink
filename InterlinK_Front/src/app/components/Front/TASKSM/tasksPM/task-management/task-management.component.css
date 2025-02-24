@@ -1,0 +1,40 @@
+.section {
+    padding: 60px 0;
+  }
+  
+  .section-title {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  
+  .section-title span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .section-title h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  .section-title h2:after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background: #007bff;
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .mb-4 {
+    margin-bottom: 1.5rem;
+  }

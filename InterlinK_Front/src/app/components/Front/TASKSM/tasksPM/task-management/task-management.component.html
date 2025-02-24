@@ -1,0 +1,25 @@
+<div class="container">
+  <app-task-selection (projectSelected)="onProjectSelected($event)"></app-task-selection>
+
+  <button class="btn btn-success mb-4" 
+          (click)="openCreateTaskDrawer()" 
+          [disabled]="selectedProjectId === 0">
+    <i class="lni lni-plus"></i> Add New Task
+  </button>
+
+  <app-task-list 
+    [tasks]="tasks"
+    (editTask)="openEditTaskDrawer($event)"
+    (deleteTask)="deleteTask($event)">
+  </app-task-list>
+
+  <app-task-form 
+    [taskModel]="newTask"
+    [isEditing]="isEditing"
+    [isOpen]="isDrawerOpen"
+    [selectedProjectId]="selectedProjectId"
+    [selectedManagerId]="selectedManagerId"
+    (close)="closeTaskDrawer()"
+    (save)="saveTask($event)">
+  </app-task-form>
+</div>

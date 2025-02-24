@@ -21,11 +21,12 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskId;
+
     private String title;
     private String description;
     private Date deadline ;
     private LocalDateTime CreatedAt;
-    private float timer ;
+    private int timer ;
 
 
 
@@ -37,11 +38,13 @@ public class Task {
 
 
     @Enumerated(EnumType.STRING)
-    private TaskStatus status;
+    private TaskStatus status; // TO_DO , IN_PROGRESS , DONE
 
     @Enumerated(EnumType.STRING)
     private SatisfactionRating rating;  // 🔥, 👍, 🤔, ⚠️
 
+
+    /////////////////////////////////////////////////////////:---------////////
     @ManyToOne
     @JoinColumn(name = "manager_id")
     private User projectManager;
@@ -66,7 +69,7 @@ public class Task {
 
     public Task() {}
 
-    public Task(String title, String description, Date deadline, LocalDateTime createdAt, float timer, TaskPriority priority, TaskStatus status, SatisfactionRating rating, User projectManager, User student, List<Feedback> feedbacks, Project project) {
+    public Task(String title, String description, Date deadline, LocalDateTime createdAt, int timer, TaskPriority priority, TaskStatus status, SatisfactionRating rating, User projectManager, User student, List<Feedback> feedbacks, Project project) {
         this.title = title;
         this.description = description;
         this.deadline = deadline;
@@ -180,7 +183,7 @@ public class Task {
         CreatedAt = createdAt;
     }
 
-    public void setTimer(float timer) {
+    public void setTimer(int timer) {
         this.timer = timer;
     }
 }

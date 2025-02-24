@@ -1,18 +1,24 @@
+
 export interface Task {
-    taskId: number;
-    title: string;
-    description: string;
-    deadline: Date;
-    createdAt: Date;
-    timer: number;
-    priority: TaskPriority;
-    status: TaskStatus;
-    rating: SatisfactionRating;
-    projectManager: User;
-    student: User;
-    feedbacks: Feedback[];
-    project: Project;
-  }
+  taskId?: number;
+  title: string;
+  description: string;
+  deadline: Date;
+  createdAt?: Date;
+  timer?: number;
+  priority: 'LOW' | 'MEDIUM' | 'HIGH';
+  status?: 'TO_DO' | 'IN_PROGRESS' | 'DONE';
+  rating?: ' OUTSTANDING' | 'GOOD' | 'NEEDS_IMPROVEMENT' | 'REDO';
+  projectManager: {
+    id: number;
+  };
+  student?: any;
+  project: {
+    projectId: number;
+  };
+  feedbacks?: any[];
+  showDropdown?: boolean;
+}
   
   export interface User {
     userId: number;
@@ -53,3 +59,5 @@ export interface Task {
     STUDENT = 'STUDENT',
     PROJECT_MANAGER = 'PROJECT_MANAGER',
   }
+
+  

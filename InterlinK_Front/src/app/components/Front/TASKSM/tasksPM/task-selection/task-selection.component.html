@@ -1,0 +1,19 @@
+<div class="form-group">
+  <label for="manager">Select Project Manager</label>
+  <select id="manager" class="form-control" [(ngModel)]="selectedManagerId" (change)="onManagerChange()">
+    <option value="">Select a manager</option>
+    <option *ngFor="let manager of managers" [value]="manager.id">
+      {{manager.firstName}} {{manager.lastName}}
+    </option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="project">Select Project</label>
+  <select id="project" class="form-control" [(ngModel)]="selectedProjectId" (change)="onProjectChange()">
+    <option value="">Select a project</option>
+    <option *ngFor="let project of projects" [value]="project.projectId">
+      {{project.title}}
+    </option>
+  </select>
+</div>

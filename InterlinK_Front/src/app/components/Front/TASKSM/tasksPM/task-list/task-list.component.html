@@ -1,0 +1,95 @@
+<div class="row">
+  <div class="col-md-4">
+    <div class="kanban-column">
+      <h3>To Do</h3>
+      <div class="task-cards">
+        <div class="single-job" *ngFor="let task of getTasks('TO_DO'); trackBy: trackByTaskId">
+          <div class="job-content">
+            <div class="task-header">
+              <h4>{{ task.title }}</h4>
+              <div class="dropdown">
+                <button class="btn-options" (click)="toggleDropdown($event, task)">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu" [class.show]="task.showDropdown">
+                  <a (click)="onEditTask(task)"><i class="fas fa-edit"></i> Edit</a>
+                  <a (click)="onDeleteTask(task.taskId!)"><i class="fas fa-trash"></i> Delete</a>
+                </div>
+              </div>
+            </div>
+            <p>{{ task.description }}</p>
+            <div class="job-info">
+              <span><i class="lni lni-calendar"></i> {{ task.deadline | date }}</span>
+              <span><i class="lni lni-timer"></i> {{ task.timer }} hours</span>
+              <span class="status-badge todo">TO DO</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="kanban-column">
+      <h3>In Progress</h3>
+      <div class="task-cards">
+        <div class="single-job" *ngFor="let task of getTasks('IN_PROGRESS'); trackBy: trackByTaskId">
+          <div class="job-content">
+            <div class="task-header">
+              <h4>{{ task.title }}</h4>
+              <div class="dropdown">
+                <button class="btn-options" (click)="toggleDropdown($event, task)">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu" [class.show]="task.showDropdown">
+                  <a (click)="onEditTask(task)"><i class="fas fa-edit"></i> Edit</a>
+                  <a (click)="onDeleteTask(task.taskId!)"><i class="fas fa-trash"></i> Delete</a>
+                </div>
+              </div>
+            </div>
+            <p>{{ task.description }}</p>
+            <div class="job-info">
+              <span><i class="lni lni-calendar"></i> {{ task.deadline | date }}</span>
+              <span><i class="lni lni-timer"></i> {{ task.timer }} hours</span>
+              <span class="status-badge in-progress">IN PROGRESS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="kanban-column">
+      <h3>Done</h3>
+      <div class="task-cards">
+        <div class="single-job" *ngFor="let task of getTasks('DONE'); trackBy: trackByTaskId">
+          <div class="job-content">
+            <div class="task-header">
+              <h4>{{ task.title }}</h4>
+              <div class="dropdown">
+                <button class="btn-options" (click)="toggleDropdown($event, task)">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu" [class.show]="task.showDropdown">
+                  <a (click)="onEditTask(task)"><i class="fas fa-edit"></i> Edit</a>
+                  <a (click)="onDeleteTask(task.taskId!)"><i class="fas fa-trash"></i> Delete</a>
+                </div>
+              </div>
+            </div>
+            <p>{{ task.description }}</p>
+            <div class="job-info">
+              <span><i class="lni lni-calendar"></i> {{ task.deadline | date }}</span>
+              <span><i class="lni lni-timer"></i> {{ task.timer }} hours</span>
+              <span class="status-badge done">DONE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="tasks.length === 0" class="no-tasks">
+  No tasks found for this project.
+</div>

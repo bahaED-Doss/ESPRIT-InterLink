@@ -17,6 +17,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // Find users by role (e.g., all students, all HRs, etc.)
     List<User> findByRole(Role role);
 
+
+
     // Check if a user with the given email already exists (for registration validation)
     boolean existsByEmail(String email);
     // Find all users with a given first or last name

@@ -1,0 +1,88 @@
+/* Task Drawer Styles */
+.task-drawer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 300px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: right 0.3s ease;
+  z-index: 1050;
+}
+
+.task-drawer.open {
+  right: 0;
+}
+
+.drawer-header {
+  padding: 15px;
+  background-color: #007bff;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.drawer-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.drawer-header .close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.drawer-body {
+  padding: 15px;
+}
+
+.drawer-body .form-group {
+  margin-bottom: 15px;
+}
+
+.drawer-body .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.drawer-body .form-group input,
+.drawer-body .form-group select,
+.drawer-body .form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.drawer-footer {
+  padding: 15px;
+  text-align: right;
+}
+
+.drawer-footer .btn {
+  padding: 10px 20px;
+}
+
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 1040;
+}
+
+.drawer-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}

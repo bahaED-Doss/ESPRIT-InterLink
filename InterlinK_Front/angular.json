@@ -27,8 +27,7 @@
          
             ],
             "styles": [
-              "src/assets/back/css/nucleo-icons.css",
-              "src/assets/back/css/nucleo-svg.css",
+              
               "src/assets/back/css/soft-ui-dashboard.css",
               "src/assets/back/css/soft-ui-dashboard.min.css",
               "src/styles.css",
@@ -44,12 +43,14 @@
 
       ,
             "scripts": [
+              "src/assets/frontA/js/jquery.min.js",
               "src/assets/frontA/js/bootstrap.min.js",
               "src/assets/frontA/js/glightbox.min.js",
               "src/assets/frontA/js/jquery-counterup.min.js",
-              "src/assets/frontA/js/main.js",
+              
               "src/assets/frontA/js/tiny-slider.js",
               "src/assets/frontA/js/wow.min.js"
+              
               
               
             ]
@@ -83,6 +84,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {           
+      "proxyConfig": "proxy.conf.json"  
+                      },
           "configurations": {
             "production": {
               "browserTarget": "InterlinK_Front:build:production"
@@ -113,14 +117,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/assets/back/css/nucleo-icons.css",
-              "src/assets/back/css/nucleo-svg.css",
-              "src/assets/back/css/soft-ui-dashboard.css",
-              "src/assets/back/css/soft-ui-dashboard.min.css",
-              "src/styles.css",
-              "src/assets/frontA/css/bootstrap.min.css",
-              "src/assets/frontA/css/animate.css",
-              "src/assets/frontA/css/glightbox.min.css",
+              
               "src/assets/frontA/css/tiny-slider.css",
               "src/assets/frontA/css/lineicons.2.0.css",
               "src/assets/frontA/css/style.css"
@@ -130,7 +127,7 @@
             "src/assets/frontA/js/bootstrap.min.js",
             "src/assets/frontA/js/glightbox.min.js",
             "src/assets/frontA/js/jquery-counterup.min.js",
-            "src/assets/frontA/js/main.js",
+            
             "src/assets/frontA/js/tiny-slider.js",
             "src/assets/frontA/js/wow.min.js"
 ]

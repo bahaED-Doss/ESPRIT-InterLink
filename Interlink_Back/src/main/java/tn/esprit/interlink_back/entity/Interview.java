@@ -19,7 +19,7 @@ public class Interview
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "project_manager_id", nullable = false)
-    private ProjectManager projectManager; // Un Project Manager peut faire plusieurs entretiens
+    private User projectManager; // Un Project Manager peut faire plusieurs entretiens
 
     @ManyToOne
     @JoinColumn(name = "application_id", nullable = false)
@@ -40,7 +40,7 @@ public class Interview
     public Interview() {}
 
 
-    public Interview(User student, ProjectManager projectManager, Application application, Date date, String type, String status, String lienReunion) {
+    public Interview(User student, User projectManager, Application application, Date date, String type, String status, String lienReunion) {
         this.student = student;
         this.projectManager = projectManager;
         this.application = application;
@@ -69,11 +69,11 @@ public class Interview
         this.student = student;
     }
 
-    public ProjectManager getProjectManager() {
+    public User getProjectManager() {
         return projectManager;
     }
 
-    public void setProjectManager(ProjectManager projectManager) {
+    public void setProjectManager(User projectManager) {
         this.projectManager = projectManager;
     }
 
