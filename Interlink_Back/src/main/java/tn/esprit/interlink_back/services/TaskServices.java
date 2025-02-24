@@ -38,22 +38,33 @@ public class TaskServices implements ITaskSerevice {
 
     //  Create a task (Only MANAGERS can create tasks)
     public Task createTask(Long projectId, Task task, Long userId) {
+        // Add debug logging
+        System.out.println("Creating task with projectId=" + projectId + ", userId=" + userId);
+        System.out.println("Task payload: " + task);
+
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+
+        System.out.println("Found user: " + user);
 
         if (user.getRole() != Role.PROJECT_MANAGER) {
-            throw new RuntimeException("Only MANAGERS can create tasks.");
+            throw new RuntimeException("Only PROJECT_MANAGER can create tasks. Current role: " + user.getRole());
         }
 
         Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new RuntimeException("Project not found"));
+                .orElseThrow(() -> new RuntimeException("Project not found with ID: " + projectId));
+
+        System.out.println("Found project: " + project);
 
         task.setProject(project);
-        task.setStatus(TaskStatus.TO_DO);  //   status yebda   TO_DO
-        task.setCreatedAt(LocalDateTime.now()); // Automatically set creation time
-        task.setTimer(0); //  Timer yebda  0
+        task.setStatus(TaskStatus.TO_DO);
+        task.setCreatedAt(LocalDateTime.now());
+        task.setTimer(0);
 
-        return taskRepository.save(task);
+        Task savedTask = taskRepository.save(task);
+        System.out.println("Saved task: " + savedTask);
+
+        return savedTask;
     }
 
     //  Update Task  Status(Only STUDENTS can change status)

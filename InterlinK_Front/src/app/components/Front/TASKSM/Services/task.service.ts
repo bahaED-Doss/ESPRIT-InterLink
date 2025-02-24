@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Task } from '../models/task.model';
+import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,13 +21,23 @@ export class TaskService {
 
   // Create a new task
   createTask(projectId: number, managerId: number, task: Task): Observable<Task> {
-    console.log('Creating task:', { projectId, managerId, task });
-    return this.http.post<Task>(`${this.baseUrl}/projects/${projectId}/tasks/${managerId}`, task);
+    const url = `${this.baseUrl}/projects/${projectId}/tasks/${managerId}`;
+    
+    const payload = {
+      title: task.title,
+      description: task.description,
+      deadline: task.deadline,
+      priority: 'Second_Level',
+      projectManager: { id: managerId },
+      project: { projectId: projectId }
+    };
+
+    console.log('Request payload:', payload);
+    return this.http.post<Task>(url, payload);
   }
 
   // Get a specific task
   getTasks(projectId: number): Observable<Task[]> {
-    console.log(`Fetching tasks for project ${projectId}`);
     return this.http.get<Task[]>(`${this.baseUrl}/projects/${projectId}/tasks`);
   }
 
@@ -48,15 +59,23 @@ export class TaskService {
   
 
   getProjectManagers(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/project-managers`);
+    const url = `${this.baseUrl}/project-managers`;
+    console.log('Fetching managers from:', url);
+    return this.http.get<any[]>(url).pipe(
+      tap(response => console.log('Managers response:', response)),
+      catchError(error => {
+        console.error('Error fetching managers:', error);
+        return throwError(() => error);
+      })
+    );
   }
   
   getProjectsByManager(managerId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/managers/${managerId}/projects`);
+    return this.http.get<any[]>(`${this.baseUrl}/api/managers/${managerId}/projects`);
   }
 
   //const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  // return this.http.post<Task>(`${this.baseUrl}/projects/${projectId}/tasks`, payload, { headers });
+   //return this.http.post<Task>(`${this.baseUrl}/projects/${projectId}/tasks`, payload, { headers });
 
   
 }

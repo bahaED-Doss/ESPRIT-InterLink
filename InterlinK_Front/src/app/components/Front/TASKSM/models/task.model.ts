@@ -1,4 +1,3 @@
-
 export interface Task {
   taskId?: number;
   title: string;
@@ -6,9 +5,9 @@ export interface Task {
   deadline: Date;
   createdAt?: Date;
   timer?: number;
-  priority: 'LOW' | 'MEDIUM' | 'HIGH';
+  priority: 'Low' | 'Second_Level' | 'High';
   status?: 'TO_DO' | 'IN_PROGRESS' | 'DONE';
-  rating?: ' OUTSTANDING' | 'GOOD' | 'NEEDS_IMPROVEMENT' | 'REDO';
+  rating?: 'OUTSTANDING' | 'GOOD' | 'NEEDS_IMPROVEMENT' | 'REDO';
   projectManager: {
     id: number;
   };
@@ -37,9 +36,9 @@ export interface Task {
   }
   
   export enum TaskPriority {
-    LOW = 'LOW',
-    MEDIUM = 'MEDIUM',
-    HIGH = 'HIGH',
+    LOW = 'Low',
+    MEDIUM = 'second_Level',
+    HIGH = 'High',
   }
   
   export enum TaskStatus {
@@ -59,5 +58,3 @@ export interface Task {
     STUDENT = 'STUDENT',
     PROJECT_MANAGER = 'PROJECT_MANAGER',
   }
-
-  

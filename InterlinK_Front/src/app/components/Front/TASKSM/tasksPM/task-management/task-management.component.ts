@@ -50,38 +50,52 @@ export class TaskManagementComponent implements OnInit {
   }
 
   saveTask(task: Task) {
-    if (this.isEditing) {
-      this.updateTask(task);
-    } else {
-      this.createTask(task);
-    }
-  }
-
-  createTask(task: Task) {
-    console.log('Creating task with data:', {
-      projectId: this.selectedProjectId,
-      managerId: this.selectedManagerId,
-      task: task
-    });
-  
+    console.log('Saving task:', task);
+    
     this.taskService.createTask(
       this.selectedProjectId,
       this.selectedManagerId,
       task
     ).subscribe({
+      next: (response) => {
+        console.log('Task created:', response);
+        this.loadTasks();
+        this.closeTaskDrawer();
+      },
+      error: (error) => {
+        console.error('Error details:', error.error);
+      }
+    });
+  }
+
+  createTask(task: Task) {
+    const taskPayload: Task = {
+      title: task.title,
+      description: task.description,
+      deadline: task.deadline,
+      priority: task.priority,
+      projectManager: {
+        id: this.selectedManagerId
+      },
+      project: {
+        projectId: this.selectedProjectId
+      },
+      status: 'TO_DO',
+      timer: 0
+    };
+  
+    this.taskService.createTask(
+      this.selectedProjectId,
+      this.selectedManagerId,
+      taskPayload
+    ).subscribe({
       next: (createdTask) => {
         console.log('Task created successfully:', createdTask);
-        this.tasks.push(createdTask);
         this.loadTasks();
         this.closeTaskDrawer();
       },
       error: (error) => {
         console.error('Error creating task:', error);
-        console.error('Error details:', {
-          status: error.status,
-          message: error.message,
-          error: error.error
-        });
       }
     });
   }
@@ -91,7 +105,7 @@ export class TaskManagementComponent implements OnInit {
       title: '',
       description: '',
       deadline: new Date(),
-      priority: 'MEDIUM',
+      priority: 'Second_Level',
       projectManager: {
         id: this.selectedManagerId
       },

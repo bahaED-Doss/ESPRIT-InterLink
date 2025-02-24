@@ -31,15 +31,20 @@ export class TaskFormComponent implements OnInit {
   
   initForm() {
     this.taskForm = this.fb.group({
-      title: ['', Validators.required,Validators.minLength(3)],
-      description: ['', Validators.required,Validators.minLength(10)],
-      deadline: ['', Validators.required],
-      priority: ['MEDIUM', Validators.required]
+      title: ['', [Validators.required, Validators.minLength(3)]],
+      description: ['', [Validators.required, Validators.minLength(10)]],
+      deadline: ['', [Validators.required]],
+      priority: ['Second_Level', [Validators.required]]
     });
-    this.taskForm.valueChanges.subscribe(val => {
-      console.log('Form values changed:', val);
-      console.log('Form status:', this.taskForm.status);
-      console.log('Form errors:', this.getFormValidationErrors());
+  
+    this.taskForm.statusChanges.subscribe(status => {
+      console.log('Form State:', {
+        status,
+        valid: this.taskForm.valid,
+        dirty: this.taskForm.dirty,
+        touched: this.taskForm.touched,
+        values: this.taskForm.value
+      });
     });
   }
 
@@ -59,7 +64,7 @@ export class TaskFormComponent implements OnInit {
       title: '',
       description: '',
       deadline: new Date(),
-      priority: 'MEDIUM',
+      priority: 'Second_Level',
       projectManager: {
         id: this.selectedManagerId
       },
@@ -79,27 +84,23 @@ export class TaskFormComponent implements OnInit {
   }
   
   onSubmit() {
-    console.log('Form submitted');
-    console.log('Form state:', {
-      valid: this.taskForm.valid,
-      pristine: this.taskForm.pristine,
-      touched: this.taskForm.touched,
-      values: this.taskForm.value
-    });
-
     if (this.taskForm.valid) {
       const task: Task = {
-        title: this.taskForm.value.title,
-        description: this.taskForm.value.description,
-        deadline: new Date(this.taskForm.value.deadline),
-        priority: this.taskForm.value.priority,
-        projectManager: { id: this.selectedManagerId },
-        project: { projectId: this.selectedProjectId },
+        title: this.taskForm.get('title')?.value,
+        description: this.taskForm.get('description')?.value,
+        deadline: new Date(this.taskForm.get('deadline')?.value),
+        priority: this.taskForm.get('priority')?.value,
+        projectManager: { 
+          id: this.selectedManagerId 
+        },
+        project: { 
+          projectId: this.selectedProjectId 
+        },
         status: 'TO_DO',
         timer: 0
       };
       
-      console.log('Emitting task:', task);
+      console.log('Submitting task:', task);
       this.save.emit(task);
       this.close.emit();
     }
