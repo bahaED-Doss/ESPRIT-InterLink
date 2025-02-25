@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.*;
-import java.time.LocalDate;
+import tn.esprit.interlink_back.entity.Enums.Role;
+
 import java.util.Objects;
 
 @Entity

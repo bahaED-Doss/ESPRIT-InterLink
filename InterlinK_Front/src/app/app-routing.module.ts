@@ -8,6 +8,10 @@ import { RtlComponent } from './components/Back/rtl/rtl.component';
 import { ProfileComponent } from './components/Back/profile/profile.component';
 import { BillingComponent } from './components/Back/billing/billing.component';
 import { HomeBackComponent } from './components/Back/home-back/home-back.component';
+import { HomeFrontComponent } from './components/Front/home-front/home-front.component';
+import { WelcomeViewComponent } from './components/Front/welcome-view/welcome-view.component';
+import { InternshipsComponent } from './components/Front/internships/internships.component';
+import { StartProcessComponent } from './components/Front/start-process/start-process.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent,},
@@ -18,6 +22,11 @@ const routes: Routes = [
   { path: 'rtl', component: RtlComponent },
   { path: 'billing', component: BillingComponent },
   { path: 'tables', component: TablesComponent },
+  { path: 'homeFront', component: HomeFrontComponent },
+  { path: 'welcomeV', component: WelcomeViewComponent },
+  { path: 'internships', component: InternshipsComponent },
+  { path: 'startProcess', component: StartProcessComponent }
+  
 ];
 
 @NgModule({
