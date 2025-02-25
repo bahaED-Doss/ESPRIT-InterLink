@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1208ae2e-4b1d-47e1-ae88-781d426b595b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interlink_Back/src/main/java/tn/esprit/interlink_back/entity/Enums/StatusType.java" beforeDir="false" afterPath="$PROJECT_DIR$/Interlink_Back/src/main/java/tn/esprit/interlink_back/entity/Enums/StatusType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interlink_Back/src/main/java/tn/esprit/interlink_back/entity/Interview.java" beforeDir="false" afterPath="$PROJECT_DIR$/Interlink_Back/src/main/java/tn/esprit/interlink_back/entity/Interview.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interlink_Back/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Interlink_Back/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InterlinK_Front/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/angular.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InterlinK_Front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InterlinK_Front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,27 +36,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "HTTP Request.generated-requests | #3.executor": "Run",
-    "Maven.Interlink_Back [clean].executor": "Run",
-    "Maven.Interlink_Back [install].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.InterlinkBackApplication.executor": "Run",
-    "git-widget-placeholder": "sameh",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Asus-PC/Downloads/ESPRIT-InterLink-nourhenne",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;HTTP Request.generated-requests | #3.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Interlink_Back [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Interlink_Back [install].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.InterlinkBackApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;sameh&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Asus-PC/Downloads/ESPRIT-InterLink-nourhenne&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Spring Boot.InterlinkBackApplication">
     <configuration name="generated-requests | #3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="3" requestIdentifier="#3" runType="Run single request">
       <method v="2" />
