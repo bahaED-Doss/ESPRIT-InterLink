@@ -1,0 +1,65 @@
+<div class="g-sidenav-show bg-gray-100 d-flex">
+  
+  <!-- ASIDE (Menu latéral) -->
+  <app-aside class="sidebar"></app-aside>
+
+  <!-- CONTENU PRINCIPAL -->
+  <div class="main-content flex-grow-1">
+    
+      
+    <main class="position-relative max-height-vh-100 h-100 border-radius-lg">
+      <div class="container-fluid py-4">
+        
+          <!-- Formulaire d'ajout de stage -->
+          <div class="container">
+            <h2>Ajouter un Stage</h2>
+
+            <form (ngSubmit)="onSubmit()">
+              <div class="form-group">
+                <label for="title">Nom</label>
+                <input type="text" [(ngModel)]="internship.title" name="title" id="title" required class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="companyName">Entreprise</label>
+                <input type="text" [(ngModel)]="internship.companyName" name="companyName" id="companyName" required class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="localisation">Localisation</label>
+                <input type="text" [(ngModel)]="internship.localisation" name="localisation" id="localisation" required class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="startDate">Début</label>
+                <input type="date" [(ngModel)]="internship.startDate" name="startDate" id="startDate" required class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="endDate">Fin</label>
+                <input type="date" [(ngModel)]="internship.endDate" name="endDate" id="endDate" required class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="availableSpots">Places disponibles</label>
+                <input type="number" [(ngModel)]="internship.availableSpots" name="availableSpots" id="availableSpots" required class="form-control">
+              </div>
+
+              <button type="submit" class="btn btn-primary">Ajouter</button>
+              <button type="button" (click)="goBack()" class="btn btn-secondary">Retour</button>
+            </form>
+
+            <!-- Alert for success/error -->
+            <div *ngIf="message" class="alert" [ngClass]="{'alert-success': message.type === 'success', 'alert-danger': message.type === 'error'}">
+              {{ message.text }}
+            </div>
+          </div>
+        </div>
+      </main>
+  
+      <app-footer-back></app-footer-back>
+      <app-settings></app-settings>
+  
+    </div>
+  </div>
+  

@@ -1,0 +1,52 @@
+<div class="g-sidenav-show bg-gray-100 d-flex">
+  
+    <!-- ASIDE (Menu latéral) -->
+    <app-aside class="sidebar" style="width: 250px;"></app-aside>
+
+    <!-- CONTENU PRINCIPAL -->
+    <div class="main-content flex-grow-1">
+      
+       >
+
+        <main class="position-relative max-height-vh-100 h-100 border-radius-lg">
+          <div class="container-fluid py-4">
+            <div class="card shadow-sm p-4">
+              <h3 class="text-center text-primary mb-4">Détails du Stage</h3>
+
+              <div class="row">
+                <div class="col-12 col-md-6 mb-3">
+                  <strong>Nom:</strong> 
+                  <p>{{ internship?.title }}</p>
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                  <strong>Entreprise:</strong>
+                  <p>{{ internship?.companyName }}</p>
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                  <strong>Localisation:</strong>
+                  <p>{{ internship?.localisation }}</p>
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                  <strong>Début:</strong>
+                  <p>{{ internship?.startDate | date }}</p>
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                  <strong>Fin:</strong>
+                  <p>{{ internship?.endDate | date }}</p>
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                  <strong>Places disponibles:</strong>
+                  <p>{{ internship?.availableSpots }}</p>
+                </div>
+              </div>
+
+              
+            </div>
+          </div>
+        </main>
+
+        <app-footer-back></app-footer-back>
+        <app-settings></app-settings>
+
+    </div>
+</div>

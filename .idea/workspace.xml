@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="939ebcb9-41c4-4031-b579-c8bbb6506283" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interlink_Back/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Interlink_Back/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interlink_Back/src/main/java/tn/esprit/interlink_back/SecurityConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interlink_Back/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Interlink_Back/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="939ebcb9-41c4-4031-b579-c8bbb6506283" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -113,7 +108,7 @@
       <workItem from="1740042165548" duration="311000" />
       <workItem from="1740042486447" duration="11912000" />
       <workItem from="1740219063861" duration="16571000" />
-      <workItem from="1740318453842" duration="1200000" />
+      <workItem from="1740318453842" duration="3764000" />
     </task>
     <servers />
   </component>

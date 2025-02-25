@@ -36,6 +36,9 @@ import { NavbarHrComponent } from './components/Front/navbar-hr/navbar-hr.compon
 import { HomeHrComponent } from './components/Front/hrDashboard/home-hr/home-hr.component';
 import { ProfileHrComponent } from './components/Front/profile-hr/profile-hr.component';
 import { ProfileStudentComponent } from './components/Front/profile-student/profile-student.component';
+import { AddInternshipComponent } from './components/Back/internships-back/add-internship/add-internship.component';
+import { CommonModule } from '@angular/common';
+import { InternshipDetailsComponent } from './components/Back/internships-back/internship-details/internship-details.component';
 
 
 
@@ -65,7 +68,11 @@ import { ProfileStudentComponent } from './components/Front/profile-student/prof
     HomeHrComponent,
     ProfileHrComponent,
     ProfileStudentComponent,
+    InternshipsBackComponent,
+    AddInternshipComponent,
+    InternshipDetailsComponent,
     
+
     
     
   ],
@@ -76,7 +83,6 @@ import { ProfileStudentComponent } from './components/Front/profile-student/prof
     FormsModule ,
     HttpClientModule,
     AsideComponent,
-    InternshipsBackComponent,
     FooterBackComponent,
     HomeBackComponent,
     NavBackComponent,
@@ -84,8 +90,9 @@ import { ProfileStudentComponent } from './components/Front/profile-student/prof
    ApplicationsBackComponent,
     SettingsComponent,
     TablesComponent,
+    CommonModule,
     NgbModule
-  ],
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
