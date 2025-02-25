@@ -1,13 +1,8 @@
 package tn.esprit.interlink_back.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.Date;
 
-@Getter
-@Setter
 @Entity
 public class Project {
 
@@ -19,6 +14,7 @@ public class Project {
     private String description;
     private Date startDate;
     private Date endDate;
+
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company; // Each project belongs to one company

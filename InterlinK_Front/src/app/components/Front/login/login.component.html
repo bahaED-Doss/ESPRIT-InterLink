@@ -34,10 +34,10 @@
 
 <div class="container" id="container" #container>
 	<div class="form-container sign-up-container">
-		<form action="#" [formGroup]="signUpForm">
+		<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
 			<!-- Step 1: Basic Information -->
-			<div *ngIf="step === 1" class="form-step">
-			  <h1>Create Account</h1>
+			<div class="form-group form-step" *ngIf="step === 1" >
+			  <h1 class="create">Create Account</h1>
 			  
 			  <!-- Gender Selection -->
 			  <div class="wrap-input100 validate-input">
@@ -47,7 +47,7 @@
 				  <option value="female">Female</option>
 				</select>
 			  </div>
-		  
+			
 			  <!-- First Name and Last Name -->
 			  <div class="wrap-input100 validate-input">
 				<input class="input100" type="text" placeholder="First Name" formControlName="firstName" required>
@@ -55,19 +55,18 @@
 			  <div class="wrap-input100 validate-input">
 				<input class="input100" type="text" placeholder="Last Name" formControlName="lastName" required>
 			  </div>
-		  
+			
 			  <!-- Role Selection -->
 			  <div class="wrap-input100 validate-input">
 				<select class="input100" formControlName="role" required (change)="onRoleChange($event)">
 				  <option value="" disabled selected>Select Role</option>
 				  <option value="student">Student</option>
-				  <option value="rh">HR Representative</option>
-				  <option value="project-manager">Project Manager</option>
+				  <option value="HR">HR Representative</option>
 				</select>
 			  </div>
-		  
+			
 			  <!-- Next Button -->
-			  <button type="button" class="sign_inB" (click)="nextStep()" [disabled]="signUpForm.invalid">Next</button>
+			  <button type="button" class="sign_inB" (click)="nextStep()" [disabled]="!isStep1Valid()">Next</button>
 			</div>
 		  
 			<!-- Step 2: Role-Specific Information -->
@@ -75,9 +74,9 @@
 			  
 			  <!-- Student Form -->
 			  <div *ngIf="selectedRole === 'student'" class="role-form">
-				<h2 class="up">
+				<h2 class="up  stu">
 				  <button type="button" class="back-button sign_inB" (click)="previousStep()">←</button>
-				  Student Information
+				  Student Informations
 				</h2>
 				<div class="wrap-input100 validate-input">
 				  <select class="input100" formControlName="levelOfStudy" required>
@@ -87,7 +86,10 @@
 				  </select>
 				</div>
 				<div class="wrap-input100 validate-input">
-				  <input class="input100" type="email" placeholder="ESPRIT Email Address" formControlName="espritEmail" required>
+					<input class="input100" type="number" placeholder="Phone Number" formControlName="phoneNumber" required>
+				</div>
+				<div class="wrap-input100 validate-input">
+				  <input class="input100" type="email" placeholder="ESPRIT Email Address" formControlName="email" required>
 				</div>
 				<div class="wrap-input100 validate-input">
 				  <input class="input100" type="password" placeholder="Password" formControlName="password" required>
@@ -96,13 +98,12 @@
 				  <input class="input100" type="password" placeholder="Confirm Password" formControlName="confirmPassword" required>
 				</div>
 			  </div>
-		  
+			
 			  <!-- HR Form -->
-			  <div *ngIf="selectedRole === 'rh'" class="role-form">
-				
-				<h2 class="up">
-					<button type="button" class="back-button sign_inB" (click)="previousStep()">←</button>
-					HR Representative Information
+			  <div *ngIf="selectedRole === 'HR'" class="role-form">
+				<h2 class="up hr">
+				  <button type="button" class="back-button sign_inB" (click)="previousStep()">←</button>
+				  HR Representative Information
 				</h2>
 				<div class="wrap-input100 validate-input">
 				  <input class="input100" type="text" placeholder="Company Name" formControlName="companyName" required>
@@ -117,38 +118,23 @@
 				  <input class="input100" type="text" placeholder="Company Address" formControlName="companyAddress" required>
 				</div>
 				<div class="wrap-input100 validate-input">
-				  <input class="input100" type="email" placeholder="Company Email" formControlName="companyEmail" required>
-				</div>
-				<div class="wrap-input100 validate-input">
 				  <input class="input100" type="text" placeholder="Contact Number" formControlName="contactNumber" required>
 				</div>
-			  </div>
-		  
-			  <!-- Project Manager Form -->
-			  <div *ngIf="selectedRole === 'project-manager'" class="role-form">
-				<h2>
-				  <button type="button" class="back-button" (click)="previousStep()">←</button>
-				  Project Manager Information
-				</h2>
 				<div class="wrap-input100 validate-input">
-				  <input class="input100" type="text" placeholder="Department or Specialty" formControlName="department" required>
+				  <input class="input100" type="email" placeholder="Company Email" formControlName="email" required>
 				</div>
 				<div class="wrap-input100 validate-input">
-				  <input class="input100" type="text" placeholder="Company/Institution Name" formControlName="companyName" required>
+				  <input class="input100" type="password" placeholder="Password" formControlName="password" required>
 				</div>
 				<div class="wrap-input100 validate-input">
-				  <input class="input100" type="number" placeholder="Years of Experience" formControlName="yearsOfExperience" required>
-				</div>
-				<div class="wrap-input100 validate-input">
-				  <input class="input100" type="email" placeholder="Professional Email" formControlName="professionalEmail" required>
-				</div>
-				<div class="wrap-input100 validate-input">
-				  <input class="input100" type="text" placeholder="Contact Number" formControlName="contactNumber" required>
+				  <input class="input100" type="password" placeholder="Confirm Password" formControlName="confirmPassword" required>
 				</div>
 			  </div>
-		  
+			
+			  
+			
 			  <!-- Sign Up Button -->
-			  <button type="submit" class="sign_inB" [disabled]="signUpForm.invalid">Sign Up</button>
+			  <button type="submit" class="sign_inB role-formbut" [disabled]="signUpForm.invalid">Sign Up</button>
 			</div>
 		  </form>
 		
@@ -157,8 +143,8 @@
 <!-- SIGN IN FORM -->
 	</div>
 	<div class="form-container sign-in-container">
-		<form action="#">
-			<h1>Sign in</h1>
+		<form  (ngSubmit)="onLogin(loginForm)" #loginForm="ngForm">
+			<h1 class="create">Sign in</h1>
 			<div class="login100-form-social flex-c-m">
 				<button class="login100-form-social-item-google flex-c-m bg1 m-r-5" >
 				  <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262">
@@ -177,14 +163,14 @@
 				  <span>GitHub</span>
 			  </button>
 		  </div>
-			<span>or use your account</span>
+			<span class="small">or use your account</span>
 			<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-				<input class="input100" type="text" placeholder="Email" name="email"  required>
+				<input class="input100" type="text" placeholder="Email" name="email" ngModel   required>
 				
 				
 			  </div>
 			<div class="wrap-input100 validate-input eyePass" data-validate="Password is required">
-				<input class="input100" [type]="passwordFieldType" placeholder="Password" name="password" required>
+				<input class="input100" [type]="passwordFieldType" placeholder="Password" name="password" ngModel  required>
 				
 				
 				<!-- Eye Toggle -->
@@ -195,8 +181,8 @@
 				</label>
 			  </div>
 	  
-			<a href="#">Forgot your password?</a>
-			<button class="sign_inB">Sign In</button>
+			<a routerLink="/forgetPassword" routerLinkActive="active" ariaCurrentWhenActive="page" class="small">Forgot your password?</a>
+			<button class="sign_inB" type="submit">Sign In</button>
 		</form>
 	</div>
 	<div class="overlay-container">
@@ -207,7 +193,7 @@
 				<button class="ghost" id="signIn" #signInButton>Sign In</button>
 			</div>
 			<div class="overlay-panel overlay-right">
-				<h1>Hello!</h1>
+				<img class="logo1" src="assets/frontA/images/logo/1.png" alt="Logo" />  
 				<p>Enter your personal details and start your journey with us</p>
 				<button class="ghost" id="signUp" #signUpButton>Sign Up</button>
 			</div>

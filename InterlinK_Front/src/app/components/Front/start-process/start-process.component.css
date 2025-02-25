@@ -1,63 +1,64 @@
 
+
 /*======================================
     Apply Process CSS
 ========================================*/
 .apply-process {
-  background-color: #802020;
-  padding: 80px 0;
-}
-
-.apply-process .process-item {
-  padding-left: 92px;
-  position: relative;
-  padding-right: 25px;
-}
-
-.apply-process .process-item i {
-  font-size: 30px;
-  color: #fff;
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 65px;
-  width: 65px;
-  border: 1px dashed #fff;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 62px;
-  -webkit-transition: all 0.4s ease;
-  transition: all 0.4s ease;
-}
-
-.apply-process .process-item:hover i {
-  background-color: #fff;
-  color: #802020;
-  border-color: transparent;
-  -webkit-transform: rotate(360deg);
-          transform: rotate(360deg);
-}
-
-.apply-process .process-item h4 {
-  font-size: 18px;
-  color: #fff;
-  position: relative;
-  display: block;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-}
-
-.apply-process .process-item h4::before {
-  position: absolute;
-  content: '';
-  left: 0;
-  bottom: 0;
-  height: 2px;
-  width: 50px;
-  background-color: #fff;
-}
-
-.apply-process .process-item p {
-  color: #fff;
-  display: block;
-}
-
+    background-color: #802020;
+    padding: 80px 0;
+  }
+  
+  .apply-process .process-item {
+    padding-left: 92px;
+    position: relative;
+    padding-right: 25px;
+  }
+  
+  .apply-process .process-item i {
+    font-size: 30px;
+    color: #fff;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 65px;
+    width: 65px;
+    border: 1px dashed #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 62px;
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+  }
+  
+  .apply-process .process-item:hover i {
+    background-color: #fff;
+    color: #802020;
+    border-color: transparent;
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+  
+  .apply-process .process-item h4 {
+    font-size: 18px;
+    color: #fff;
+    position: relative;
+    display: block;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+  
+  .apply-process .process-item h4::before {
+    position: absolute;
+    content: '';
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 50px;
+    background-color: #fff;
+  }
+  
+  .apply-process .process-item p {
+    color: #fff;
+    display: block;
+  }
+  

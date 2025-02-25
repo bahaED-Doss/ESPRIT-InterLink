@@ -4,11 +4,12 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
-import tn.esprit.interlink_back.entity.Enums.Role;
-
+import jakarta.persistence.*;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
+@Table(name = "user") // Ensure the table name is "user"
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,24 +26,35 @@ public class User {
     private Role role;
 
     // Student-specific fields
+    @Column(nullable = true)
     private String levelOfStudy;
-    private String espritEmail;
+
+    @Column(nullable = true)
     private String phoneNumber;
 
     // HR-specific fields
+    @Column(nullable = true)
     private String companyName;
+    @Column(nullable = true)
     private String companyIdentifier;
+    @Column(nullable = true)
     private String industrySector;
+    @Column(nullable = true)
     private String companyAddress;
+    @Column(nullable = true)
     private String city;
+    @Column(nullable = true)
     private String country;
-    private String companyEmail;
+
+    @Column(nullable = true)
     private String contactNumber;
 
     // Project Manager-specific fields
+    @Column(nullable = true)
     private String department;
+    @Column(nullable = true)
     private int yearsOfExperience;
-    private String professionalEmail;
+
 
     // Constructors
     public User() {}
@@ -131,13 +143,7 @@ public class User {
         this.levelOfStudy = levelOfStudy;
     }
 
-    public String getEspritEmail() {
-        return espritEmail;
-    }
 
-    public void setEspritEmail(String espritEmail) {
-        this.espritEmail = espritEmail;
-    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -195,13 +201,7 @@ public class User {
         this.country = country;
     }
 
-    public String getCompanyEmail() {
-        return companyEmail;
-    }
 
-    public void setCompanyEmail(String companyEmail) {
-        this.companyEmail = companyEmail;
-    }
 
     public String getContactNumber() {
         return contactNumber;
@@ -227,13 +227,7 @@ public class User {
         this.yearsOfExperience = yearsOfExperience;
     }
 
-    public String getProfessionalEmail() {
-        return professionalEmail;
-    }
 
-    public void setProfessionalEmail(String professionalEmail) {
-        this.professionalEmail = professionalEmail;
-    }
 
     // ToString method
     @Override

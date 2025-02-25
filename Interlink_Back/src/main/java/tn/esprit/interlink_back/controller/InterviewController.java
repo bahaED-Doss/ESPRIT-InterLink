@@ -1,4 +1,4 @@
-package tn.esprit.interlink_back.entity.controller;
+package tn.esprit.interlink_back.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
