@@ -1,5 +1,6 @@
 package tn.esprit.interlink_back.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +15,6 @@ import java.util.Date;
 
 @Entity
 @Getter
-@Setter
 @AllArgsConstructor
 public class Interview
 {
@@ -25,25 +25,27 @@ public class Interview
     private int interviewId;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "student_id", nullable = false)
+    @JoinColumn(name = "student_id")
     private User student; // Chaque entretien est lié à un seul étudiant
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "project_manager_id", nullable = false)
+    @JoinColumn(name = "project_manager_id")
     private ProjectManager projectManager; // Un Project Manager peut faire plusieurs entretiens
 
     @ManyToOne
-    @JoinColumn(name = "application_id", nullable = false)
+    @JoinColumn(name = "application_id")
     private Application application; // L'entretien est lié à une candidature
 
     @Column(nullable = false)
     private Date interviewDate;
 
     @Enumerated(EnumType.STRING)
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     @Column(nullable = false)
     private InterviewType interviewType; // Type d’entretien (technique, meeting ..)
 
     @Enumerated(EnumType.STRING)
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     @Column(nullable = false)
     private StatusType statusType; // Statut de l’entretien (planifié, réalisé, annulé)
 
