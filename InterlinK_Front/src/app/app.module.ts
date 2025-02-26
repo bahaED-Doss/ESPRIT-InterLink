@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router'; // ✅ Import RouterModule
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -30,6 +31,8 @@ import { CompanyListComponent } from './components/Front/company-list/company-li
 import { CompanyFormComponent } from './components/Front/company-form/company-form.component';
 import { ProjectFormComponent } from './components/Front/project-form/project-form.component';
 import { ProjectListComponent } from './components/Front/project-list/project-list.component';
+import { ProjectDetailsComponent } from './components/Front/project-details/project-details.component';
+import { CompanyDetailsComponent } from './components/Front/company-details/company-details.component';
 
 
 @NgModule({
@@ -49,7 +52,9 @@ import { ProjectListComponent } from './components/Front/project-list/project-li
     CompanyListComponent,
     CompanyFormComponent,
     ProjectFormComponent,
-    ProjectListComponent
+    ProjectListComponent,
+    ProjectDetailsComponent,
+    CompanyDetailsComponent
    
     
     
@@ -68,7 +73,8 @@ import { ProjectListComponent } from './components/Front/project-list/project-li
     SettingsComponent,
     TablesComponent,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot([]) // ✅ Ensure RouterModule is properly set up
   ],
   providers: [],
   bootstrap: [AppComponent]

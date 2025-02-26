@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/services/project.service';
+import { Router } from '@angular/router'; 
+
+
 
 @Component({
   selector: 'app-project-list',
@@ -11,7 +14,7 @@ export class ProjectListComponent implements OnInit {
   skills: string[] = ['Project Management', 'Teamwork', 'Problem Solving', 'Agile Development'];
   technologies: string[] = ['Angular', 'Spring Boot', 'PostgreSQL', 'Docker'];
 
-  constructor(private projectService: ProjectService) {}
+  constructor(private projectService: ProjectService ,private router: Router) {}
 
   ngOnInit(): void {
     this.loadProjects();
@@ -25,6 +28,13 @@ export class ProjectListComponent implements OnInit {
         endDate: new Date(p.endDate)
       }));
     });
+  }
+  goToProjectDetails(projectId: number): void {
+    if (!this.router) {
+      console.error("Router is undefined!"); 
+      return;
+    }
+    this.router.navigate(['/projectDetails', projectId]); 
   }
 
   deleteProject(project: any): void {

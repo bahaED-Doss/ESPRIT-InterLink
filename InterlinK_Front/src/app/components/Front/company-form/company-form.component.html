@@ -26,17 +26,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="trending-keywords mt-30">
-                                <div class="keywords style-two">
-                                    <span class="title">Popular Keywords:</span>
-                                    <ul>
-                                        <li><a href="#">Administrative</a></li>
-                                        <li><a href="#">Android</a></li>
-                                        <li><a href="#">app</a></li>
-                                        <li><a href="#">ASP.NET</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -54,56 +44,56 @@
     </div>
 </section>
 <!--/ End Hero Area -->
-
 <!-- Main content section -->
 <div class="container mt-4">
     <h2 class="text-center mb-4">Company Profile</h2>
-
-    <div class="card p-4 shadow" style="max-width: 600px; margin: 0 auto;">
-        <form (ngSubmit)="submitForm()" [formGroup]="addCompany">
-            <div class="mb-3">
-                <label class="form-label">Name:</label>
-                <input type="text" class="form-control" formControlName="name" required />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Location:</label>
-                <input type="text" class="form-control" formControlName="location" required />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Email:</label>
-                <input type="email" class="form-control" formControlName="email" required />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Country:</label>
-                <select class="form-control" formControlName="country" (change)="onCountryChange($event)">
-                    <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
-                </select>
-            </div>
-            
-            <div class="mb-3">
-                <label class="form-label">City:</label>
-                <input type="text" class="form-control" formControlName="city" required />
-            </div>
-            
-            <div class="mb-3">
-                <label class="form-label">Phone:</label>
-                <input type="text" class="form-control" formControlName="phone" required />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Industry Sector:</label>
-                <select class="form-control" formControlName="industrySector" required>
-                    <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
-                </select>
-            </div>
-
-            <button type="submit" class="btn btn-success w-100">Save</button>
-        </form>
+  
+    <div class="card p-4 shadow" style="max-width: 600px; margin: 0 auto;" #companyForm>
+      <form (ngSubmit)="submitForm()" [formGroup]="addCompany">
+        <div class="mb-3">
+          <label class="form-label">Name:</label>
+          <input type="text" class="form-control" formControlName="name" required />
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label">Location:</label>
+          <input type="text" class="form-control" formControlName="location" required />
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label">Email:</label>
+          <input type="email" class="form-control" formControlName="email" required />
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label">Country:</label>
+          <select class="form-control" formControlName="country" (change)="onCountryChange($event)">
+            <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+          </select>
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label">City:</label>
+          <input type="text" class="form-control" formControlName="city" required />
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label">Phone:</label>
+          <input type="text" class="form-control" formControlName="phone" required />
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label">Industry Sector:</label>
+          <select class="form-control" formControlName="industrySector" required>
+            <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
+          </select>
+        </div>
+  
+        <button type="submit" class="btn btn-success w-100">ADD</button>
+      </form>
     </div>
-</div>
+  </div>
+  
 
 <app-company-list></app-company-list>
 <app-footer></app-footer>

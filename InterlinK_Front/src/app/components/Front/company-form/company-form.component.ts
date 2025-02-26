@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { CompanyService, Company } from 'src/app/services/company.service';
@@ -14,6 +14,8 @@ export class CompanyFormComponent implements OnInit, OnChanges {
   countries: string[] = [];
   cities: string[] = [];
   selectedCountry: string = '';
+
+  @ViewChild('companyForm') companyForm: ElementRef | undefined; // ViewChild to scroll to the form
 
   industrySectors: string[] = [
     'Technology', 'Finance', 'Healthcare', 'Education', 'Retail',
@@ -35,24 +37,29 @@ export class CompanyFormComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.loadCountries();
+    
   }
 
   // Detects when a company is selected for editing
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.selectedCompany) {
-      this.addCompany.patchValue(this.selectedCompany);
-      console.log("Editing Company:", this.selectedCompany);
+    if (changes['selectedCompany'] && this.selectedCompany) {
+      console.log("Updating form with company data:", this.selectedCompany);
+      this.addCompany.patchValue(this.selectedCompany); // ✅ Populate form fields
+      setTimeout(() => {
+        if (this.companyForm) {
+          this.companyForm.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
     }
   }
+  
 
-  // Load country list from API
   loadCountries(): void {
     this.http.get<any[]>('https://restcountries.com/v3.1/all').subscribe(data => {
       this.countries = data.map(country => country.name.common).sort();
     });
   }
 
-  // Fetch cities based on the selected country
   onCountryChange(event: any): void {
     this.selectedCountry = event.target.value;
 
@@ -64,32 +71,27 @@ export class CompanyFormComponent implements OnInit, OnChanges {
         this.http.get<any>(`http://api.geonames.org/searchJSON?country=${countryCode}&featureClass=P&maxRows=50&username=demo`)
           .subscribe(response => {
             this.cities = response.geonames.map((city: { name: string }) => city.name);
-            console.log("Cities loaded:", this.cities);
-          }, error => {
-            console.error("Error loading cities:", error);
           });
       }
     });
   }
 
   submitForm(): void {
-    console.log("Submit Button Clicked");
-    console.log("Form Data Before Submit:", this.addCompany.value);
-  
     if (this.addCompany.valid) {
-      if (this.addCompany.value.companyId) {
-        console.log("Updating company..."); // 🔥 Check if update logic runs
-        this.companyService.updateCompany(this.addCompany.value).subscribe(response => {
+      const companyData = this.addCompany.value;
+  
+      if (companyData.companyId) {
+        // Ensure the ID is included
+        this.companyService.updateCompany(companyData).subscribe(response => {
           alert('Company updated successfully');
-          window.location.reload(); // Refresh page
+          window.location.reload();
         }, error => {
           console.error("Error updating company:", error);
         });
       } else {
-        console.log("Adding new company..."); // 🔥 Check if add logic runs
-        this.companyService.addCompany(this.addCompany.value).subscribe(response => {
+        this.companyService.addCompany(companyData).subscribe(response => {
           alert('Company added successfully');
-          window.location.reload(); // Refresh page
+          window.location.reload();
         }, error => {
           console.error("Error adding company:", error);
         });
@@ -98,5 +100,4 @@ export class CompanyFormComponent implements OnInit, OnChanges {
       alert('Please fill all required fields');
     }
   }
-  
 }

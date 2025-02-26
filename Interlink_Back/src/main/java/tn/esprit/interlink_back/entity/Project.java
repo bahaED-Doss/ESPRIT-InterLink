@@ -1,10 +1,12 @@
 package tn.esprit.interlink_back.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,7 +33,7 @@ public class Project {
     private String status; // Status of the project (e.g., "Active", "Completed", "On-Hold")
 
     @JsonProperty("technologiesUsed")
-    private String technologiesUsed; // Technologies used in the project (e.g., "Java, Spring Boot, Angular")
+    private String technologiesUsed;
 
     @JsonProperty("startDate")
     private LocalDate startDate;
@@ -39,9 +41,11 @@ public class Project {
     @JsonProperty("endDate")
     private LocalDate endDate;
 
-    @ManyToOne
-    @JoinColumn(name = "company_id")
-    private Company company; // Each project belongs to one company
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")  // Explicitly defining the join column
+    private Company company;
+
+
 
     @ManyToOne
     @JoinColumn(name = "manager_id")
@@ -102,5 +106,6 @@ public class Project {
     public void setTechnologiesUsed(String technologiesUsed) {
         this.technologiesUsed = technologiesUsed;
     }
+
 
 }

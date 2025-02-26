@@ -1,0 +1,89 @@
+<app-navbar></app-navbar>
+
+<!-- Project Details & Edit Section -->
+<div class="container mt-5 pt-5">
+  <h2 class="text-center fw-bold mb-4 text-primary">Project Details</h2>
+
+  <div class="row">
+    <!-- Project Info Card -->
+    <div class="col-md-6">
+      <div class="card p-4 shadow rounded">
+        <h4 class="text-primary">{{ project.title }}</h4>
+        <p><strong>Company:</strong> {{ project.company?.name || 'No company available' }}</p>
+        <p><strong>Description:</strong> {{ project.description }}</p>
+        <p><strong>Start Date:</strong> {{ project.startDate | date }}</p>
+        <p><strong>End Date:</strong> {{ project.endDate | date }}</p>
+      </div>
+    </div>
+
+    <!-- Edit Project Form -->
+    <div class="col-md-6">
+      <div class="card p-4 shadow rounded">
+        <h4 class="text-primary">Edit Project</h4>
+        <form (ngSubmit)="updateProject()">
+          <div class="mb-3">
+            <label class="form-label">Title:</label>
+            <input type="text" class="form-control" [(ngModel)]="project.title" name="title" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Description:</label>
+            <textarea class="form-control" [(ngModel)]="project.description" name="description" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Start Date:</label>
+            <input type="date" class="form-control" [(ngModel)]="project.startDate" name="startDate" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">End Date:</label>
+            <input type="date" class="form-control" [(ngModel)]="project.endDate" name="endDate" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Status:</label>
+            <select class="form-select" [(ngModel)]="project.status" name="status">
+              <option value="Open">Open</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+
+          <!-- Technologies Used -->
+          <div class="mb-3">
+            <label class="form-label">Technologies Used:</label>
+            <div class="technologies-list">
+              <div *ngFor="let tech of technologies" class="tech-item">
+                <input 
+                  type="checkbox" 
+                  [checked]="isTechnologySelected(tech)" 
+                  (change)="toggleTechnologySelection(tech)" 
+                  [value]="tech" 
+                  name="technologiesUsed" 
+                />
+                <span>{{ tech }}</span>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success w-100">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kanban Board for Tasks -->
+  <h3 class="text-center mt-5 text-primary fw-bold">Task Board</h3>
+  <div class="row mt-3">
+    <div class="col-md-4">
+      <h4 class="text-center">To Do</h4>
+      <div class="task-card text-white bg-danger p-2 rounded mb-2" *ngFor="let task of tasks.todo">{{ task.title }}</div>
+    </div>
+    <div class="col-md-4">
+      <h4 class="text-center">Doing</h4>
+      <div class="task-card text-white bg-warning p-2 rounded mb-2" *ngFor="let task of tasks.doing">{{ task.title }}</div>
+    </div>
+    <div class="col-md-4">
+      <h4 class="text-center">Done</h4>
+      <div class="task-card text-white bg-success p-2 rounded mb-2" *ngFor="let task of tasks.done">{{ task.title }}</div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

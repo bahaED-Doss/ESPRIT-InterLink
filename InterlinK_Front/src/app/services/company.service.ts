@@ -17,6 +17,9 @@ export interface Company {
   providedIn: 'root'
 })
 export class CompanyService {
+  createCompany(value: any) {
+    throw new Error('Method not implemented.');
+  }
   private apiUrl = 'http://localhost:8081/Interlink/company'; // Adjust the URL if needed
 
   constructor(private http: HttpClient) {}
@@ -34,8 +37,8 @@ export class CompanyService {
   }
 
   updateCompany(company: Company): Observable<Company> {
-    return this.http.put<Company>(`${this.apiUrl}/modify-company/${company.companyId}`, company);
-  }
+    return this.http.put<Company>(`${this.apiUrl}/modify-company`, company);
+  }  
   
 
   deleteCompany(companyId: number): Observable<void> {

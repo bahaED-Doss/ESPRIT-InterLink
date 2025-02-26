@@ -1,0 +1,87 @@
+<app-navbar></app-navbar>
+
+<!-- Start Hero Area -->
+<section class="hero-area">
+    <div class="hero-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                    <div class="inner-content">
+                        <div class="hero-text">
+                            <h1 class="wow fadeInUp" data-wow-delay=".3s">Help your company attract talented employees <br>by completing your company profile below</h1>
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <div class="hero-video-head wow fadeInRight" data-wow-delay=".5s">
+                        <div class="video-inner">
+                            <img src="assets/frontA/images/hero/hero-image.png" alt="#">
+                            <div class="promo-video">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ End Hero Area -->
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Company Profile</h2>
+
+    <div class="card p-4 shadow" style="max-width: 600px; margin: 0 auto;">
+        <form (ngSubmit)="updateCompany()" [formGroup]="companyForm">
+            <input type="hidden" formControlName="companyId">
+
+            <!-- Name -->
+            <div class="mb-3">
+                <label class="form-label">Company Name:</label>
+                <input type="text" class="form-control" formControlName="name" required />
+            </div>
+
+            <!-- Location -->
+            <div class="mb-3">
+                <label class="form-label">Location:</label>
+                <input type="text" class="form-control" formControlName="location" required />
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label class="form-label">Email:</label>
+                <input type="email" class="form-control" formControlName="email" required />
+            </div>
+
+            <!-- Country Dropdown -->
+            <div class="mb-3">
+                <label class="form-label">Country:</label>
+                <select class="form-control" formControlName="country" (change)="onCountryChange($event)">
+                    <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+                </select>
+            </div>
+
+            <!-- City Dropdown -->
+            <div class="mb-3">
+                <label class="form-label">City:</label>
+                <input type="text" class="form-control" formControlName="city" required />
+              </div>
+            <!-- Phone -->
+            <div class="mb-3">
+                <label class="form-label">Phone:</label>
+                <input type="text" class="form-control" formControlName="phone" required />
+            </div>
+
+            <!-- Industry Sector Dropdown -->
+            <div class="mb-3">
+                <label class="form-label">Industry Sector:</label>
+                <select class="form-control" formControlName="industrySector">
+                    <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+<app-footer></app-footer>

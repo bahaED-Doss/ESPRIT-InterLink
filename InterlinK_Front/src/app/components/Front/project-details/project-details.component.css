@@ -1,0 +1,17 @@
+/* Add space below the navbar */
+/* Push content below navbar */
+.container {
+    margin-top: 120px; /* Adjust as needed */
+}
+body {
+    padding-top: 80px; /* Adjust based on navbar height */
+}
+
+
+/* Improve task cards */
+.task-card {
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+}

@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 export class ProjectFormComponent implements OnInit {
   addProject!: FormGroup;
   companies: any[] = [];
-  technologies: string[] = ['Angular', 'Spring Boot', 'PostgreSQL', 'Docker', 'Node.js'];
+  technologies: string[] = ['Angular', 'Spring Boot', 'SQL', 'Docker', 'Node.js', 'TensorFlow', 'Java'];
+  selectedTechnologies: string = ''; // Use a string instead of an array
 
   constructor(
     private fb: FormBuilder,
@@ -28,8 +29,8 @@ export class ProjectFormComponent implements OnInit {
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
       company: ['', Validators.required],
-      location: ['', Validators.required],
-      technologies: [[]]
+      technologiesUsed: [''], // Bind to a string
+      status: ['Open'] // Default value
     });
 
     this.loadCompanies();
@@ -41,12 +42,32 @@ export class ProjectFormComponent implements OnInit {
     });
   }
 
+  onTechnologyChange(event: any): void {
+    const tech = event.target.value;
+    if (event.target.checked) {
+      this.selectedTechnologies += this.selectedTechnologies ? `, ${tech}` : tech;
+    } else {
+      this.selectedTechnologies = this.selectedTechnologies
+        .split(', ')
+        .filter(t => t !== tech)
+        .join(', ');
+    }
+    this.addProject.get('technologiesUsed')?.setValue(this.selectedTechnologies);
+  }
+
+  isTechnologySelected(tech: string): boolean {
+    return this.selectedTechnologies.includes(tech);
+  }
+
   submitForm(): void {
     if (this.addProject.valid) {
+      console.log('Submitting Project:', this.addProject.value);
       this.projectService.addProject(this.addProject.value).subscribe(() => {
         alert('Project added successfully!');
-        this.router.navigate(['/projects']);
+        this.router.navigate(['/projectList']);
       });
+    } else {
+      console.log('Form is invalid');
     }
   }
 }

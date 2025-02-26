@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  } from '@angular/core';
 import { CompanyService, Company } from 'src/app/services/company.service';
 
 @Component({
@@ -8,7 +8,6 @@ import { CompanyService, Company } from 'src/app/services/company.service';
 })
 export class CompanyListComponent implements OnInit {
   companies: Company[] = [];
-  selectedCompany: Company | null = null; // Stores the company being edited
 
   constructor(private companyService: CompanyService) {}
 
@@ -45,12 +44,8 @@ export class CompanyListComponent implements OnInit {
       });
     }
   }
-  
-  
 
-  editCompany(company: any): void {
-    console.log("Editing Company:", company); // 🔥 Debugging Step
-    this.selectedCompany = { ...company }; // Copy company data for editing
-  }
+  
+  
   
 }

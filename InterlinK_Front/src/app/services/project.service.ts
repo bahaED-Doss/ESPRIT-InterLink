@@ -1,25 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Company } from './company.service';
 
 export interface Project {
-  projectId: number;
+  projectId?: number;
   title: string;
   description: string;
-  startDate: string;  // or Date if you prefer
-  endDate: string;    // or Date if you prefer
-  company: {
-    name: string;
-  };
+  startDate: string; // ISO format (YYYY-MM-DD)
+  endDate: string;
+  company: Company;
   status: string;
-  technologiesUsed: string;
+  technologiesUsed: string; // Changed to string (comma-separated)
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
-  private apiUrl = 'http://localhost:8081/Interlink/projects'; // Adjust the URL if needed
+  private apiUrl = 'http://localhost:8081/Interlink/projects';
 
   constructor(private http: HttpClient) {}
 
@@ -29,6 +28,10 @@ export class ProjectService {
 
   addProject(project: Project): Observable<Project> {
     return this.http.post<Project>(`${this.apiUrl}/add-project`, project);
+  }
+
+  getProjectById(projectId: number): Observable<Project> {
+    return this.http.get<Project>(`${this.apiUrl}/project-by-id/${projectId}`);
   }
 
   updateProject(project: Project): Observable<Project> {

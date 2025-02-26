@@ -23,9 +23,10 @@
         <td>{{ company.phone }}</td>
         <td>{{ company.industrySector }}</td>
         <td>
-          <button class="btn btn-primary btn-sm me-2" (click)="editCompany(company)">Edit</button>
-          <button class="btn btn-danger btn-sm" (click)="deleteCompany(company)">Delete</button>
-        </td>
+          <button class="btn btn-outline-primary btn-sm" [routerLink]="['/company-details', company.companyId]">
+            <i class="bi bi-pencil-square"></i> Edit
+          </button>          <button class="btn btn-danger btn-sm" (click)="deleteCompany(company)">Delete</button>
+        </td>        
       </tr>
     </tbody>
   </table>

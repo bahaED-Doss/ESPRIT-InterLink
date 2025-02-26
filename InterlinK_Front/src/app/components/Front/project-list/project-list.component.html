@@ -24,7 +24,8 @@
                         <!-- Dynamic Project List -->
                         <div class="list-group">
                             <div *ngFor="let project of projects" 
-                                 class="list-group-item list-group-item-action p-4 rounded-4 shadow-sm mb-3 position-relative">
+                                 class="list-group-item list-group-item-action p-4 rounded-4 shadow-sm mb-3 position-relative"
+                                 (click)="goToProjectDetails(project.projectId)"> <!-- ✅ Click Event to Navigate -->
                                 
                                 <div class="d-flex w-100 justify-content-between align-items-center">
                                     <h5 class="mb-1 text-primary">{{ project.title }}</h5>
@@ -35,12 +36,12 @@
                                 </div>
                                 
                                 <p class="mb-1 text-dark">{{ project.description }}</p>
-
+                        
                                 <div class="d-flex justify-content-between align-items-center mt-3">
                                     <small class="text-muted">
                                         <i class="bi bi-building"></i> {{ project.company?.name }}
                                     </small>
-
+                        
                                     <!-- Project Status -->
                                     <span class="badge px-3 py-2"
                                           [ngClass]="{
@@ -51,22 +52,24 @@
                                         {{ project.status }}
                                     </span>
                                 </div>
-
+                        
                                 <!-- Action Buttons -->
                                 <div class="d-flex gap-2 mt-3">
                                     <!-- Edit Button -->
                                     <button class="btn btn-outline-primary btn-sm" 
-                                            [routerLink]="['/editProject', project.id]">
+                                            [routerLink]="['/editProject', project.projectId]" (click)="$event.stopPropagation()">
                                         <i class="bi bi-pencil-square"></i> Edit
                                     </button>
-
+                        
                                     <!-- Delete Button -->
-                                    <button class="btn btn-outline-danger btn-sm" (click)="deleteProject(project)">
-                                        <i class="bi bi-trash"></i> Delete
-                                    </button>                                    
+                                        <button class="btn btn-outline-danger btn-sm" (click)="deleteProject(project); $event.stopPropagation();">
+                                                 <i class="bi bi-trash"></i> Delete
+                                        </button>
+
                                 </div>
                             </div>
                         </div>
+                        
                     </section>
                 </div>
             </div>

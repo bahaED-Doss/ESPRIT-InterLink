@@ -16,6 +16,8 @@ import { CompanyListComponent } from './components/Front/company-list/company-li
 import { CompanyFormComponent } from './components/Front/company-form/company-form.component';
 import { ProjectFormComponent } from './components/Front/project-form/project-form.component';
 import { ProjectListComponent } from './components/Front/project-list/project-list.component';
+import { ProjectDetailsComponent } from './components/Front/project-details/project-details.component';
+import { CompanyDetailsComponent } from './components/Front/company-details/company-details.component';
 
 
 const routes: Routes = [
@@ -34,7 +36,12 @@ const routes: Routes = [
   { path: 'companyForm', component: CompanyFormComponent },
   { path: 'companyList', component: CompanyListComponent },
   { path: 'projectForm', component: ProjectFormComponent },
-  { path: 'projectList', component: ProjectListComponent }
+  { path: 'projectList', component: ProjectListComponent },
+  { path: 'projectDetails/:id', component: ProjectDetailsComponent },
+  { path: 'editProject/:id', component: ProjectFormComponent }, // ✅ For Editing
+  { path: 'company-details/:id', component: CompanyDetailsComponent } // ✅ New Route
+
+
 
 
   

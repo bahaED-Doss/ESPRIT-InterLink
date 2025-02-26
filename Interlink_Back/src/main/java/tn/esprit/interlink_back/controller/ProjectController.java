@@ -22,31 +22,36 @@ public class ProjectController {
         return projectService.retrieveAllProjects();
     }
 
-    @GetMapping("/project-by-id/{id}")
-    public ResponseEntity<Project> getProjectById(@PathVariable Long id) {
-        Project project = projectService.retrieveProject(id);
+    @GetMapping("/project-by-id/{projectId}")
+    public ResponseEntity<Project> getProjectById(@PathVariable Long projectId) {
+        Project project = projectService.retrieveProject(projectId);
         return project != null ? ResponseEntity.ok(project) : ResponseEntity.notFound().build();
     }
 
     @PostMapping("/add-project")
     public Project createProject(@RequestBody Project project) {
+        // Process technologiesUsed if needed (convert list to string, for example)
         return projectService.addProject(project);
     }
 
-    @PutMapping("/modify-project/{id}")
-    public ResponseEntity<Project> updateProject(@PathVariable Long id, @RequestBody Project projectDetails) {
-        Project existingProject = projectService.retrieveProject(id);
+    @PutMapping("/modify-project/{projectId}")
+    public ResponseEntity<Project> updateProject(@PathVariable Long projectId, @RequestBody Project projectDetails) {
+        Project existingProject = projectService.retrieveProject(projectId);
         if (existingProject == null) {
             return ResponseEntity.notFound().build();
         }
 
-        // Update project details and save
+        // Update project fields
         existingProject.setTitle(projectDetails.getTitle());
         existingProject.setDescription(projectDetails.getDescription());
         existingProject.setStartDate(projectDetails.getStartDate());
         existingProject.setEndDate(projectDetails.getEndDate());
         existingProject.setStatus(projectDetails.getStatus());
-        existingProject.setTechnologiesUsed(projectDetails.getTechnologiesUsed());
+
+        // Handle technologiesUsed as comma-separated string
+        if (projectDetails.getTechnologiesUsed() != null && !projectDetails.getTechnologiesUsed().isEmpty()) {
+            existingProject.setTechnologiesUsed(String.join(",", projectDetails.getTechnologiesUsed()));
+        }
 
         return ResponseEntity.ok(projectService.modifyProject(existingProject));
     }

@@ -7,23 +7,6 @@
     background: #f6f9fc;
     overflow: hidden;
   }
-  .technologies-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.tech-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.tech-item input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-}
-
   
   .hero-area.style2 {
     position: relative;
