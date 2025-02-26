@@ -1,59 +1,62 @@
 <div class="g-sidenav-show bg-gray-100 d-flex">
-  
-    <app-aside class="sidebar"></app-aside>
-  
-    <div class="main-content flex-grow-1">
-      
-      <main class="position-relative max-height-vh-100 h-100 border-radius-lg">
-        <div class="container-fluid py-4">
-          
-            <div class="container">
-              <h2>Ajouter une Candidature</h2>
-  
-              <form (ngSubmit)="onSubmit()">
-                <div class="form-group">
-                  <label for="firstName">Prénom</label>
-                  <input type="text" [(ngModel)]="application.firstName" name="firstName" id="firstName" required class="form-control">
-                </div>
-  
-                <div class="form-group">
-                  <label for="lastName">Nom</label>
-                  <input type="text" [(ngModel)]="application.lastName" name="lastName" id="lastName" required class="form-control">
-                </div>
-  
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input type="email" [(ngModel)]="application.email" name="email" id="email" required class="form-control">
-                </div>
-  
-                <div class="form-group">
-                  <label for="phoneNumber">Numéro de téléphone</label>
-                  <input type="tel" [(ngModel)]="application.phoneNumber" name="phoneNumber" id="phoneNumber" required class="form-control">
-                </div>
-  
-                <div class="form-group">
-                  <label for="cv">CV (URL ou chemin)</label>
-                  <input type="text" [(ngModel)]="application.cv" name="cv" id="cv" required class="form-control">
-                </div>
-  
-                <div class="form-group">
-                  <label for="internshipId">ID du Stage</label>
-                  <input type="number" [(ngModel)]="application.internshipId" name="internshipId" id="internshipId" required class="form-control">
-                </div>
-  
-                <button type="submit" class="btn btn-primary">Ajouter</button>
-                <button type="button" (click)="goBack()" class="btn btn-secondary">Retour</button>
-              </form>
-  
-              <div *ngIf="message" class="alert" [ngClass]="{'alert-success': message.type === 'success', 'alert-danger': message.type === 'error'}">
-                {{ message.text }}
-              </div>
+  <app-aside class="sidebar"></app-aside>
+
+  <div class="main-content flex-grow-1">
+    <main class="position-relative max-height-vh-100 h-100 border-radius-lg">
+      <div class="container-fluid py-4">
+        <div class="container">
+          <h2>Ajouter une Candidature</h2>
+
+          <form (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="firstName">Prénom</label>
+              <input type="text" [(ngModel)]="application.firstName" name="firstName" id="firstName" required class="form-control">
+              <div *ngIf="errors['firstName']" class="error-message">{{ errors['firstName'] }}</div>
             </div>
+
+            <div class="form-group">
+              <label for="lastName">Nom</label>
+              <input type="text" [(ngModel)]="application.lastName" name="lastName" id="lastName" required class="form-control">
+              <div *ngIf="errors['lastName']" class="error-message">{{ errors['lastName'] }}</div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" [(ngModel)]="application.email" name="email" id="email" required class="form-control">
+              <div *ngIf="errors['email']" class="error-message">{{ errors['email'] }}</div>
+            </div>
+
+            <div class="form-group">
+              <label for="phoneNumber">Numéro de téléphone</label>
+              <input type="tel" [(ngModel)]="application.phoneNumber" name="phoneNumber" id="phoneNumber" required class="form-control">
+              <div *ngIf="errors['phoneNumber']" class="error-message">{{ errors['phoneNumber'] }}</div>
+            </div>
+
+            <div class="form-group">
+              <label for="cv">CV (URL ou chemin)</label>
+              <input type="text" [(ngModel)]="application.cv" name="cv" id="cv" required class="form-control">
+              <div *ngIf="errors['cv']" class="error-message">{{ errors['cv'] }}</div>
+            </div>
+
+            <div class="form-group">
+              <label for="internshipId">ID du Stage</label>
+              <input type="number" [(ngModel)]="application.internshipId" name="internshipId" id="internshipId" required class="form-control">
+              <div *ngIf="errors['internshipId']" class="error-message">{{ errors['internshipId'] }}</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+            <button type="button" (click)="goBack()" class="btn btn-secondary">Retour</button>
+          </form>
+
+          <div *ngIf="message" class="alert" [ngClass]="{'alert-success': message.type === 'success', 'alert-danger': message.type === 'error'}">
+            {{ message.text }}
           </div>
-        </main>
-    
-        <app-footer-back></app-footer-back>
-        <app-settings></app-settings>
-    
+        </div>
       </div>
-    </div>
+    </main>
+
+    <app-footer-back></app-footer-back>
+    <app-settings></app-settings>
+
+  </div>
+</div>

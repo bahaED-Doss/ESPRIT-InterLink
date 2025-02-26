@@ -14,40 +14,50 @@
           <div class="container">
             <h2>Ajouter un Stage</h2>
 
-            <form (ngSubmit)="onSubmit()">
-              <div class="form-group">
-                <label for="title">Nom</label>
-                <input type="text" [(ngModel)]="internship.title" name="title" id="title" required class="form-control">
-              </div>
+            <form (ngSubmit)="onSubmit()" class="internship-form">
+  <div class="form-group">
+    <label for="title">Titre du stage :</label>
+    <input type="text" id="title" [(ngModel)]="internship.title" name="title" required />
+    <div *ngIf="errors['requiredFields'] && !internship.title" class="error-message">{{ errors['requiredFields'] }}</div>
+  </div>
 
-              <div class="form-group">
-                <label for="companyName">Entreprise</label>
-                <input type="text" [(ngModel)]="internship.companyName" name="companyName" id="companyName" required class="form-control">
-              </div>
+  <div class="form-group">
+    <label for="companyName">Nom de l'entreprise :</label>
+    <input type="text" id="companyName" [(ngModel)]="internship.companyName" name="companyName" required />
+    <div *ngIf="errors['companyName']" class="error-message">{{ errors['companyName'] }}</div>
+  </div>
 
-              <div class="form-group">
-                <label for="localisation">Localisation</label>
-                <input type="text" [(ngModel)]="internship.localisation" name="localisation" id="localisation" required class="form-control">
-              </div>
+  <div class="form-group">
+    <label for="localisation">Localisation :</label>
+    <input type="text" id="localisation" [(ngModel)]="internship.localisation" name="localisation" required />
+    <div *ngIf="errors['localisation']" class="error-message">{{ errors['localisation'] }}</div>
+  </div>
 
-              <div class="form-group">
-                <label for="startDate">Début</label>
-                <input type="date" [(ngModel)]="internship.startDate" name="startDate" id="startDate" required class="form-control">
-              </div>
+  <div class="form-group">
+    <label for="startDate">Date de début :</label>
+    <input type="date" id="startDate" [(ngModel)]="internship.startDate" name="startDate" required />
+    <div *ngIf="errors['startDate']" class="error-message">{{ errors['startDate'] }}</div>
+  </div>
 
-              <div class="form-group">
-                <label for="endDate">Fin</label>
-                <input type="date" [(ngModel)]="internship.endDate" name="endDate" id="endDate" required class="form-control">
-              </div>
+  <div class="form-group">
+    <label for="endDate">Date de fin :</label>
+    <input type="date" id="endDate" [(ngModel)]="internship.endDate" name="endDate" required />
+    <div *ngIf="errors['endDate']" class="error-message">{{ errors['endDate'] }}</div>
+  </div>
 
-              <div class="form-group">
-                <label for="availableSpots">Places disponibles</label>
-                <input type="number" [(ngModel)]="internship.availableSpots" name="availableSpots" id="availableSpots" required class="form-control">
-              </div>
+  <div class="form-group">
+    <label for="availableSpots">Nombre de places disponibles :</label>
+    <input type="number" id="availableSpots" [(ngModel)]="internship.availableSpots" name="availableSpots" required />
+    <div *ngIf="errors['requiredFields'] && internship.availableSpots <= 0" class="error-message">{{ errors['requiredFields'] }}</div>
+  </div>
 
-              <button type="submit" class="btn btn-primary">Ajouter</button>
-              <button type="button" (click)="goBack()" class="btn btn-secondary">Retour</button>
-            </form>
+  <!-- Ajoutez ici les autres champs pour la description, la durée, le type et la compétence, avec des messages d'erreur similaires -->
+
+  <button type="submit" class="submit-btn">Ajouter le stage</button>
+
+  <div *ngIf="message" [ngClass]="message.type" class="response-message">{{ message.text }}</div>
+</form>
+
 
             <!-- Alert for success/error -->
             <div *ngIf="message" class="alert" [ngClass]="{'alert-success': message.type === 'success', 'alert-danger': message.type === 'error'}">
