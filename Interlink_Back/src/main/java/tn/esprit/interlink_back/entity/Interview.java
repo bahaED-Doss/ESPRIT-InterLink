@@ -18,8 +18,6 @@ import java.util.Date;
 @AllArgsConstructor
 public class Interview
 {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int interviewId;

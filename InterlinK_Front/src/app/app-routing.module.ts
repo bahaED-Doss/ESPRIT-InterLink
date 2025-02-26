@@ -22,6 +22,7 @@ import { StartProcessComponent } from './components/Front/start-process/start-pr
 import { HomeHrComponent } from './components/Front/hrDashboard/home-hr/home-hr.component';
 import { ProfileHrComponent } from './components/Front/profile-hr/profile-hr.component';
 import { ProfileStudentComponent } from './components/Front/profile-student/profile-student.component';
+import { InterviewComponent } from './components/Back/interview/interview.component';
 
 
 
@@ -46,7 +47,10 @@ const routes: Routes = [
   { path: 'student-profile/:id', component: StudentProfileComponent },
   { path: 'hr-profile/:id', component: HrProfileComponent },
   
-  { path: 'reset-password/:token', component: ResetPasswordComponent }
+  { path: 'reset-password/:token', component: ResetPasswordComponent },
+  { path: 'interviews', component: InterviewComponent }
+  
+  
   
 ];
 
