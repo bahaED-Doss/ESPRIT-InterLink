@@ -1,1 +1,80 @@
-<p>applications-back works! test </p>
+<div class="container-fluid">
+
+<div class="g-sidenav-show bg-gray-100 d-flex">
+  
+    <!-- ASIDE (Menu latéral) -->
+    <app-aside class="sidebar"></app-aside>
+  
+    <!-- CONTENU PRINCIPAL -->
+    <div class="main-content flex-grow-1">
+      
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+              <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+              <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Applications</li>
+            </ol>
+            <h6 class="font-weight-bolder mb-0">Applications</h6>
+          </nav>  
+     
+      <main class="position-relative max-height-vh-100 h-100 border-radius-lg">
+        <div class="container-fluid py-4">
+          
+          <!-- Gestion des Candidatures -->
+          <div class="card shadow-lg p-4">
+            <h2 class="text-center text-primary mb-4">Gestion des Candidatures</h2>
+            <div class="d-flex justify-content-end mb-3">
+                <button class="btn btn-primary" (click)="openAddApplicationModal()">+Ajouter une Application</button>
+              </div>
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                  <tr class="text-center">
+                    <th>Id</th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Téléphone</th>
+                    <th>Statut</th>
+                    <th>Stage</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let application of applications" class="text-center align-middle">
+                    <td>{{ application.applicationId }}</td>
+                    <td>{{ application.firstName }}</td>
+                    <td>{{ application.lastName }}</td>
+                    <td>{{ application.email }}</td>
+                    <td>{{ application.phoneNumber }}</td>
+                    <td>
+                      <span [ngClass]="{
+                        'badge bg-warning': application.status === 'PENDING',
+                        'badge bg-success': application.status === 'APPROVED',
+                        'badge bg-danger': application.status === 'REJECTED',
+                        'badge bg-info': application.status === 'INTERVIEW_SCHEDULED'
+                      }">
+                        {{ application.status }}
+                      </span>
+                    </td>
+                   <td>{{ application.internship?.title }}</td>
+                    <td>
+                      <button class="btn btn-info btn-sm me-1" [routerLink]="['/application-details', application.applicationId || 0]">Détails</button>
+                      <button class="btn btn-warning btn-sm me-1" (click)="editApplication(application)">Modifier</button>
+                      <button class="btn btn-danger btn-sm" (click)="deleteApplication(application.applicationId)">Supprimer</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Fin Gestion des Candidatures -->
+  
+        </div>
+      </main>
+  
+      <app-footer-back></app-footer-back>
+      <app-settings></app-settings>
+  
+    </div>
+</div>
+</div>

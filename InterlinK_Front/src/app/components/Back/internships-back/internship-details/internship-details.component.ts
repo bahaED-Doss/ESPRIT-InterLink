@@ -1,13 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { InternshipService } from '../../../../services/internship.service';
 import { Internship } from '../../../../models/Internship.model';
+import { AsideComponent } from "../../aside/aside.component";
+import { FooterBackComponent } from "../../footer-back/footer-back.component";
+import { SettingsComponent } from "../../settings/settings.component";
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-internship-details',
   templateUrl: './internship-details.component.html',
-  styleUrls: ['./internship-details.component.css']
+  styleUrls: ['./internship-details.component.css'],
+  standalone: true,
+  imports: [AsideComponent, FooterBackComponent, SettingsComponent,CommonModule,RouterModule]
+
 })
 export class InternshipDetailsComponent implements OnInit {
   internship: Internship | undefined;

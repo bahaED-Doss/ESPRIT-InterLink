@@ -1,10 +1,17 @@
 export enum ApplicationStatus {
     PENDING = 'PENDING',
     APPROVED = 'APPROVED',
-    REJECTED = 'REJECTED'
+    REJECTED = 'REJECTED',
+    INTERVIEW_SCHEDULED = 'INTERVIEW_SCHEDULED'
+  }
+  export interface Internship {
+    id: number;
+    title: string;
+    // Ajoutez d'autres propriétés si nécessaire
   }
   
   export interface Application {
+internship: any;
     applicationId: number;
     status: ApplicationStatus;
     firstName: string;

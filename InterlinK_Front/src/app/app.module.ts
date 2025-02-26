@@ -18,7 +18,6 @@ import { HrProfileComponent } from './components/Front/hr-profile/hr-profile.com
 import { HttpClientModule } from '@angular/common/http';
 import { ForgetPasswordComponent } from './components/Front/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './components/Front/reset-password/reset-password.component';
-import { InternshipsBackComponent } from './components/Back/internships-back/internships-back.component';
 import { ApplicationsBackComponent } from './components/Back/applications-back/applications-back.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeFrontComponent } from './components/Front/home-front/home-front.component';
@@ -38,7 +37,7 @@ import { ProfileHrComponent } from './components/Front/profile-hr/profile-hr.com
 import { ProfileStudentComponent } from './components/Front/profile-student/profile-student.component';
 import { AddInternshipComponent } from './components/Back/internships-back/add-internship/add-internship.component';
 import { CommonModule } from '@angular/common';
-import { InternshipDetailsComponent } from './components/Back/internships-back/internship-details/internship-details.component';
+import { AddApplicationComponent } from './components/Back/applications-back/add-application/add-application.component';
 
 
 
@@ -68,10 +67,7 @@ import { InternshipDetailsComponent } from './components/Back/internships-back/i
     HomeHrComponent,
     ProfileHrComponent,
     ProfileStudentComponent,
-    InternshipsBackComponent,
     AddInternshipComponent,
-    InternshipDetailsComponent,
-    
 
     
     
@@ -91,7 +87,10 @@ import { InternshipDetailsComponent } from './components/Back/internships-back/i
     SettingsComponent,
     TablesComponent,
     CommonModule,
-    NgbModule
+    NgbModule,
+    AddApplicationComponent,
+
+
     ],
   providers: [],
   bootstrap: [AppComponent]

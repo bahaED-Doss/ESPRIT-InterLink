@@ -1,10 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { InternshipService } from '../../../services/internship.service';
 import { Internship } from '../../../models/Internship.model';
+import { SettingsComponent } from "../settings/settings.component";
+import { FooterBackComponent } from "../footer-back/footer-back.component";
+import { AsideComponent } from "../aside/aside.component";
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-internships-back',
   templateUrl: './internships-back.component.html',
-  styleUrls: ['./internships-back.component.css']
+  styleUrls: ['./internships-back.component.css'],
+  standalone: true,
+  imports: [SettingsComponent, FooterBackComponent, AsideComponent,CommonModule,RouterModule]
+
 })
 export class InternshipsBackComponent implements OnInit {
   internships: Internship[] = [];
