@@ -5,25 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1208ae2e-4b1d-47e1-ae88-781d426b595b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Interlink_Back/src/main/java/tn/esprit/interlink_back/controller/TestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterlinK_Front/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterlinK_Front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterlinK_Front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/aside/aside.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/aside/aside.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/interview/interview.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/interview/interview.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/interview/interview.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/interview/interview.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/interview/interview.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/interview/interview.component.spec.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/interview/interview.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/interview/interview.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/models/interview.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/services/interview.service.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/services/interview.service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interlink_Back/src/main/java/tn/esprit/interlink_back/entity/Interview.java" beforeDir="false" afterPath="$PROJECT_DIR$/Interlink_Back/src/main/java/tn/esprit/interlink_back/entity/Interview.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interlink_Back/src/main/java/tn/esprit/interlink_back/entity/ProjectManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Interlink_Back/src/main/java/tn/esprit/interlink_back/entity/ProjectManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interlink_Back/src/main/java/tn/esprit/interlink_back/entity/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/Interlink_Back/src/main/java/tn/esprit/interlink_back/entity/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tokens/StoredCredential" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tokens/StoredCredential" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/models/interview.ts" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/models/interview.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +95,7 @@
       <updated>1740607197307</updated>
       <workItem from="1740607198845" duration="877000" />
       <workItem from="1740614256767" duration="745000" />
-      <workItem from="1740617424148" duration="10759000" />
+      <workItem from="1740617424148" duration="12991000" />
     </task>
     <servers />
   </component>

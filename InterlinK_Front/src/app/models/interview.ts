@@ -1,5 +1,5 @@
 export interface Interview {
-  interviewId: number | null; // Evite les erreurs sur undefined
+  interviewId?: number; // Rend l'id optionnel
   studentId: number;
   projectManagerId: number;
   applicationId: number;

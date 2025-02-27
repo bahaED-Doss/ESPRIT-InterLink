@@ -1,0 +1,35 @@
+<p>interview works!</p>
+<h2>Gestion des Interviews</h2>
+<p>Bienvenue sur la page de gestion des interviews.</p>
+<div class="container">
+    <h2>Liste des Interviews</h2>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Étudiant</th>
+        <th>Project Manager</th>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Statut</th>
+        <th>Lien Réunion</th>
+        <th>Actions</th>
+      </tr>
+      <tr *ngFor="let interview of interviews">
+        <td>{{ interview.interviewId }}</td>
+        <td>{{ interview.studentId }}</td>
+        <td>{{ interview.projectManagerId }}</td>
+        <td>{{ interview.interviewDate }}</td>
+        <td>{{ interview.interviewType }}</td>
+        <td>{{ interview.statusType }}</td>
+        <td>{{ interview.lienReunion }}</td>
+        <td>
+            <button *ngIf="interview.interviewId !== undefined" (click)="deleteInterview(interview.interviewId)">Supprimer</button>
+            <button routerLink="/interviews">Gestion des Interviews</button>
+
+        </td>
+      </tr>
+    </table>
+  
+   
+  </div>
+  

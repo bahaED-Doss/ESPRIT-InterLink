@@ -9,7 +9,7 @@ import { Interview } from 'src/app/models/interview';
 })
 export class InterviewComponent implements OnInit {
   interviews: any[] = [];
- /*newInterview: Interview = {
+ newInterview: Interview = {
     studentId: 0,
     projectManagerId: 0,
     applicationId: 0,
@@ -17,7 +17,7 @@ export class InterviewComponent implements OnInit {
     interviewType: '',
     statusType: '',
     lienReunion: ''
-  };*/  
+  };
 
   constructor(private interviewService: InterviewService) {}
 
@@ -31,7 +31,7 @@ export class InterviewComponent implements OnInit {
     });
   }
 
- /* addInterview(): void {
+  addInterview(): void {
     this.interviewService.addInterview(this.newInterview).subscribe(() => {
       this.loadInterviews();
       this.newInterview = {
@@ -44,7 +44,7 @@ export class InterviewComponent implements OnInit {
         lienReunion: ''
       };
     });
-  }*/
+  }
 
   deleteInterview(id: number): void {
     this.interviewService.deleteInterview(id).subscribe(() => {
