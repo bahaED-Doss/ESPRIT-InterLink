@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1208ae2e-4b1d-47e1-ae88-781d426b595b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterlinK_Front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/nav-back/nav-back.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/nav-back/nav-back.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tokens/StoredCredential" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tokens/StoredCredential" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +86,7 @@
       <updated>1740607197307</updated>
       <workItem from="1740607198845" duration="877000" />
       <workItem from="1740614256767" duration="745000" />
-      <workItem from="1740617424148" duration="2297000" />
+      <workItem from="1740617424148" duration="3438000" />
     </task>
     <servers />
   </component>
