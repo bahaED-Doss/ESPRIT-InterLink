@@ -34,4 +34,9 @@ export class InternshipService {
   getInternshipById(id: number): Observable<Internship> {
     return this.http.get<Internship>(`${this.apiUrl}/internship-by-id/${id}`);
   }
+  // Postuler à un stage
+applyForInternship(applicationData: FormData): Observable<any> {
+  return this.http.post(`${this.apiUrl}/apply`, applicationData);
+}
+
 }

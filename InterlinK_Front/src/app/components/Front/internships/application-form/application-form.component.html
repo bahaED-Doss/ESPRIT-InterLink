@@ -1,0 +1,26 @@
+<p>application-form works!</p>
+<div class="application-form">
+    <h3 class="form-title">📄 Postuler pour : {{ internshipTitle }}</h3>
+  
+    <form (ngSubmit)="submitApplication()">
+      <div class="form-group">
+        <label for="studentName">👤 Nom :</label>
+        <input type="text" id="studentName" [(ngModel)]="application.studentName" name="studentName" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="email">📧 Email :</label>
+        <input type="email" id="email" [(ngModel)]="application.email" name="email" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="cv">📎 CV :</label>
+        <input type="file" id="cv" (change)="onFileSelected($event)" required />
+      </div>
+  
+      <div class="btn-group">
+        <button type="submit" class="submit-btn">✅ Envoyer</button>
+        <button type="button" class="cancel-btn" (click)="formSubmitted.emit(null)">❌ Annuler</button>
+      </div>
+    </form>
+  </div>

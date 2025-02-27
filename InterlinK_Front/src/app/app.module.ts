@@ -38,6 +38,7 @@ import { ProfileStudentComponent } from './components/Front/profile-student/prof
 import { AddInternshipComponent } from './components/Back/internships-back/add-internship/add-internship.component';
 import { CommonModule } from '@angular/common';
 import { AddApplicationComponent } from './components/Back/applications-back/add-application/add-application.component';
+import { ApplicationFormComponent } from './components/Front/internships/application-form/application-form.component';
 
 
 
@@ -68,6 +69,7 @@ import { AddApplicationComponent } from './components/Back/applications-back/add
     ProfileHrComponent,
     ProfileStudentComponent,
     AddInternshipComponent,
+    ApplicationFormComponent,
 
     
     

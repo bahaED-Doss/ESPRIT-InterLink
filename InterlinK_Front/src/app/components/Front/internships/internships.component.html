@@ -1,1 +1,64 @@
-<p>internships works!</p>
+<app-navbar></app-navbar>
+
+<div class="internships-container">
+  <div class="internships-layout">
+    <div class="internships-list">
+      <div *ngFor="let internship of internships" class="internship-card">
+        <h3 class="internship-title">{{ internship.title }}</h3>
+        <p><strong>📝 Description :</strong> {{ internship.description }}</p>
+        <p><strong>🏢 Entreprise :</strong> {{ internship.companyName }}</p>
+        <p><strong>📍 Localisation :</strong> {{ internship.localisation }}</p>
+        <p><strong>📅 Début :</strong> {{ internship.startDate | date:'dd/MM/yyyy' }}</p>
+        <p><strong>📅 Fin :</strong> {{ internship.endDate | date:'dd/MM/yyyy' }}</p>
+        <p><strong>⏳ Durée :</strong> {{ internship.duration }}</p>
+        <p><strong>📌 Type :</strong> {{ internship.type }}</p>
+        <p><strong>🛠️ Compétence requise :</strong> {{ internship.skill }}</p>
+        <p><strong>👥 Places disponibles :</strong> {{ internship.availableSpots }}</p>
+
+        <button (click)="applyForInternship(internship)" class="apply-btn">🚀 Postuler</button>
+      </div>
+    </div>
+
+    <!-- Formulaire de candidature -->
+    <div *ngIf="selectedInternship" class="application-form">
+      <h3 class="form-title">📄 Postuler pour : {{ selectedInternship.title }}</h3>
+
+      <form (ngSubmit)="submitApplication()">
+        <div class="form-group">
+          <label for="firstName">👤 Prénom :</label>
+          <input type="text" id="firstName" [(ngModel)]="application.firstName" name="firstName" required />
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">👤 Nom :</label>
+          <input type="text" id="lastName" [(ngModel)]="application.lastName" name="lastName" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">📧 Email :</label>
+          <input type="email" id="email" [(ngModel)]="application.email" name="email" required />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">📞 Téléphone :</label>
+          <input type="tel" id="phone" [(ngModel)]="application.phoneNumber" name="phoneNumber" required />
+        </div>
+
+        <div class="form-group">
+          <label for="cv">📎 CV :</label>
+          <input type="file" id="cv" (change)="onFileSelected($event)" required />
+        </div>
+
+        <p *ngIf="application.status">
+          <strong>📌 Statut :</strong> {{ application.status }}
+        </p>
+
+        <div class="btn-group">
+          <button *ngIf="application.status !== 'PENDING'" type="submit" class="submit-btn">✅ Envoyer</button>
+          <p *ngIf="application.status === 'PENDING'">⏳ Candidature en attente de validation...</p>
+          <button type="button" (click)="cancelApplication()" class="cancel-btn">❌ Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
