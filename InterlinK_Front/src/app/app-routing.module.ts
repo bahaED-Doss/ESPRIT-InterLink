@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { InterviewComponent } from './components/Back/interview/interview.component';
 
 
 import { LoginComponent } from './components/Front/login/login.component';
@@ -45,7 +46,9 @@ const routes: Routes = [
   { path: 'tables', component: TablesComponent },
   { path: 'student-profile/:id', component: StudentProfileComponent },
   { path: 'hr-profile/:id', component: HrProfileComponent },
+  { path: 'interviews', component: InterviewComponent },
   
+ 
   { path: 'reset-password/:token', component: ResetPasswordComponent }
   
 ];

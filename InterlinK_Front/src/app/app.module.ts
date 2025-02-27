@@ -2,25 +2,15 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/Front/login/login.component';
-
-
-import { AsideComponent } from './components/Back/aside/aside.component';
-import { FooterBackComponent } from './components/Back/footer-back/footer-back.component';
-import { HomeBackComponent } from './components/Back/home-back/home-back.component';
-import { NavBackComponent } from './components/Back/nav-back/nav-back.component';
-import { ProfileComponent } from './components/Back/profile/profile.component';
-import { SettingsComponent } from './components/Back/settings/settings.component';
-import { TablesComponent } from './components/Back/tables/tables.component';
 import { StudentProfileComponent } from './components/Front/student-profile/student-profile.component';
 import { HrProfileComponent } from './components/Front/hr-profile/hr-profile.component';
-import { HttpClientModule } from '@angular/common/http';
 import { ForgetPasswordComponent } from './components/Front/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './components/Front/reset-password/reset-password.component';
-import { InternshipsBackComponent } from './components/Back/internships-back/internships-back.component';
-import { ApplicationsBackComponent } from './components/Back/applications-back/applications-back.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeFrontComponent } from './components/Front/home-front/home-front.component';
 import { FooterComponent } from './components/Front/footer/footer.component';
 import { InternshipsComponent } from './components/Front/internships/internships.component';
@@ -36,9 +26,18 @@ import { NavbarHrComponent } from './components/Front/navbar-hr/navbar-hr.compon
 import { HomeHrComponent } from './components/Front/hrDashboard/home-hr/home-hr.component';
 import { ProfileHrComponent } from './components/Front/profile-hr/profile-hr.component';
 import { ProfileStudentComponent } from './components/Front/profile-student/profile-student.component';
+import { InterviewComponent } from './components/Back/interview/interview.component';
 
-
-
+// ✅ Importation des composants standalone
+import { AsideComponent } from './components/Back/aside/aside.component';
+import { FooterBackComponent } from './components/Back/footer-back/footer-back.component';
+import { HomeBackComponent } from './components/Back/home-back/home-back.component';
+import { NavBackComponent } from './components/Back/nav-back/nav-back.component';
+import { ProfileComponent } from './components/Back/profile/profile.component';
+import { SettingsComponent } from './components/Back/settings/settings.component';
+import { TablesComponent } from './components/Back/tables/tables.component';
+import { InternshipsBackComponent } from './components/Back/internships-back/internships-back.component';
+import { ApplicationsBackComponent } from './components/Back/applications-back/applications-back.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +48,6 @@ import { ProfileStudentComponent } from './components/Front/profile-student/prof
     HrProfileComponent,
     ForgetPasswordComponent,
     ResetPasswordComponent,
-    HomeFrontComponent,
     FooterComponent,
     InternshipsComponent,
     NavbarComponent,
@@ -57,7 +55,6 @@ import { ProfileStudentComponent } from './components/Front/profile-student/prof
     SuggestionsHComponent,
     TasksComponent,
     WelcomeViewComponent,
-    TasksComponent,
     ContactComponent,
     AboutComponent,
     NavbarStudentComponent,
@@ -65,26 +62,26 @@ import { ProfileStudentComponent } from './components/Front/profile-student/prof
     HomeHrComponent,
     ProfileHrComponent,
     ProfileStudentComponent,
-    
-    
-    
+    InterviewComponent
   ],
   imports: [
-    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
-    FormsModule ,
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
+    NgbModule,
+
+    // ✅ Ajout des composants standalone ici :
     AsideComponent,
-    InternshipsBackComponent,
     FooterBackComponent,
     HomeBackComponent,
     NavBackComponent,
     ProfileComponent,
-   ApplicationsBackComponent,
     SettingsComponent,
     TablesComponent,
-    NgbModule
+    InternshipsBackComponent,
+    ApplicationsBackComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
