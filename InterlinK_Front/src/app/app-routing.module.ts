@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { InterviewComponent } from './components/Back/interview/interview.component';
 
 
@@ -23,6 +24,7 @@ import { StartProcessComponent } from './components/Front/start-process/start-pr
 import { HomeHrComponent } from './components/Front/hrDashboard/home-hr/home-hr.component';
 import { ProfileHrComponent } from './components/Front/profile-hr/profile-hr.component';
 import { ProfileStudentComponent } from './components/Front/profile-student/profile-student.component';
+import { ListTestComponent } from './components/Back/TestQuestion/Test/list-test/list-test.component';
 
 
 
@@ -46,10 +48,12 @@ const routes: Routes = [
   { path: 'tables', component: TablesComponent },
   { path: 'student-profile/:id', component: StudentProfileComponent },
   { path: 'hr-profile/:id', component: HrProfileComponent },
-  { path: 'interviews', component: InterviewComponent },
   
- 
-  { path: 'reset-password/:token', component: ResetPasswordComponent }
+  { path: 'interviews', component: InterviewComponent },
+  { path: 'reset-password/:token', component: ResetPasswordComponent },
+  { path: 'test', component: ListTestComponent },
+  { path: 'interview', component: InterviewComponent }
+
   
 ];
 

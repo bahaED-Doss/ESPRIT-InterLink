@@ -49,6 +49,7 @@ public class Interview
 
     private String lienReunion;
 
+    private String titre;
     // Constructeurs
     public Interview() {}
 
@@ -92,6 +93,12 @@ public class Interview
         this.lienReunion = lienReunion;
     }
 
+    public String getTitre() {
+        return titre;
+    }
 
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
 
 }

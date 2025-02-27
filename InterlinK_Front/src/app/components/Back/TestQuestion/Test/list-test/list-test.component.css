@@ -1,0 +1,20 @@
+.flexx{
+    display:flex !important;
+   align-items: center;
+   gap : 230px !important;
+    
+    justify-content: center !important;
+
+}
+.font-weight-bold{
+    font-family:cursive;
+}
+.tt:hover{
+color: rgb(190, 21, 209) !important;
+}
+.table th{
+    font-size:13px !important;
+}
+.modal-title{
+    color: #fff !important;
+}
