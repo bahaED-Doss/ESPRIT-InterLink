@@ -22,9 +22,7 @@ import { StartProcessComponent } from './components/Front/start-process/start-pr
 import { HomeHrComponent } from './components/Front/hrDashboard/home-hr/home-hr.component';
 import { ProfileHrComponent } from './components/Front/profile-hr/profile-hr.component';
 import { ProfileStudentComponent } from './components/Front/profile-student/profile-student.component';
-import { AddInternshipComponent } from './components/Back/internships-back/add-internship/add-internship.component';
 import { InternshipDetailsComponent } from './components/Back/internships-back/internship-details/internship-details.component';
-import { AddApplicationComponent } from './components/Back/applications-back/add-application/add-application.component';
 
 
 
@@ -50,10 +48,8 @@ const routes: Routes = [
   { path: 'hr-profile/:id', component: HrProfileComponent },
   
   { path: 'reset-password/:token', component: ResetPasswordComponent },
-  { path: 'add-internship', component: AddInternshipComponent },
   { path: 'internships-back', component: InternshipsBackComponent },
   { path: 'internship-details/:id', component: InternshipDetailsComponent },
-  { path: 'add-application', component: AddApplicationComponent },
 
   { path: '', redirectTo: '/internships-back', pathMatch: 'full' }
   

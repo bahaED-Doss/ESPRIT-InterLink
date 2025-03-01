@@ -35,9 +35,7 @@ import { NavbarHrComponent } from './components/Front/navbar-hr/navbar-hr.compon
 import { HomeHrComponent } from './components/Front/hrDashboard/home-hr/home-hr.component';
 import { ProfileHrComponent } from './components/Front/profile-hr/profile-hr.component';
 import { ProfileStudentComponent } from './components/Front/profile-student/profile-student.component';
-import { AddInternshipComponent } from './components/Back/internships-back/add-internship/add-internship.component';
 import { CommonModule } from '@angular/common';
-import { AddApplicationComponent } from './components/Back/applications-back/add-application/add-application.component';
 import { ApplicationFormComponent } from './components/Front/internships/application-form/application-form.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 
@@ -67,7 +65,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     HomeHrComponent,
     ProfileHrComponent,
     ProfileStudentComponent,
-    AddInternshipComponent,
     ApplicationFormComponent,
 
     
@@ -89,7 +86,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     TablesComponent,
     CommonModule,
     NgbModule,
-    AddApplicationComponent,
     NgxPaginationModule,
 
     ],

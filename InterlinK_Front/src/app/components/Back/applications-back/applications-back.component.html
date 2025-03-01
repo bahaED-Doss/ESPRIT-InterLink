@@ -18,6 +18,133 @@
               />
               <button class="btn btn-add" (click)="openAddApplicationModal()">Add Application</button>
             </div>
+            <!-- Modale pour ajouter une application -->
+<ng-template #addApplicationModal>
+  <div class="modal-header">
+    <h5 class="modal-title">Ajouter une Candidature</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addApplicationForm" (ngSubmit)="onSubmitAddApplication()">
+      <!-- Champ pour le prénom -->
+      <div class="mb-3">
+        <label for="firstName" class="form-label">Prénom</label>
+        <input type="text" id="firstName" class="form-control" formControlName="firstName">
+      </div>
+
+      <!-- Champ pour le nom -->
+      <div class="mb-3">
+        <label for="lastName" class="form-label">Nom</label>
+        <input type="text" id="lastName" class="form-control" formControlName="lastName">
+      </div>
+
+      <!-- Champ pour l'email -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" class="form-control" formControlName="email">
+      </div>
+
+      <!-- Champ pour le téléphone -->
+      <div class="mb-3">
+        <label for="phoneNumber" class="form-label">Téléphone</label>
+        <input type="text" id="phoneNumber" class="form-control" formControlName="phoneNumber">
+      </div>
+
+      <!-- Champ pour le statut -->
+      <div class="mb-3">
+        <label for="status" class="form-label">Statut</label>
+        <select id="status" class="form-control" formControlName="status">
+          <option *ngFor="let status of getEnumValues(ApplicationStatus)" [value]="status">
+            {{ formatEnumValue(status) }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Champ pour le CV -->
+      <div class="mb-3">
+        <label for="cv" class="form-label">CV</label>
+        <input type="text" id="cv" class="form-control" formControlName="cv">
+      </div>
+
+      <!-- Champ pour le stage associé -->
+      <div class="mb-3">
+        <label for="internshipId" class="form-label">Stage</label>
+        <select id="internshipId" class="form-control" formControlName="internshipId">
+          <option *ngFor="let internship of internships" [value]="internship.internshipId">
+            {{ internship.title }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Bouton de soumission -->
+      <button type="submit" class="btn btn-primary">Ajouter</button>
+    </form>
+  </div>
+</ng-template>
+
+<!-- Modale pour modifier une application -->
+<ng-template #editApplicationModal>
+  <div class="modal-header">
+    <h5 class="modal-title">Modifier une Candidature</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editApplicationForm" (ngSubmit)="onSubmitEditApplication()">
+      <!-- Champ pour le prénom -->
+      <div class="mb-3">
+        <label for="editFirstName" class="form-label">Prénom</label>
+        <input type="text" id="editFirstName" class="form-control" formControlName="firstName">
+      </div>
+
+      <!-- Champ pour le nom -->
+      <div class="mb-3">
+        <label for="editLastName" class="form-label">Nom</label>
+        <input type="text" id="editLastName" class="form-control" formControlName="lastName">
+      </div>
+
+      <!-- Champ pour l'email -->
+      <div class="mb-3">
+        <label for="editEmail" class="form-label">Email</label>
+        <input type="email" id="editEmail" class="form-control" formControlName="email">
+      </div>
+
+      <!-- Champ pour le téléphone -->
+      <div class="mb-3">
+        <label for="editPhoneNumber" class="form-label">Téléphone</label>
+        <input type="text" id="editPhoneNumber" class="form-control" formControlName="phoneNumber">
+      </div>
+
+      <!-- Champ pour le statut -->
+      <div class="mb-3">
+        <label for="editStatus" class="form-label">Statut</label>
+        <select id="editStatus" class="form-control" formControlName="status">
+          <option *ngFor="let status of getEnumValues(ApplicationStatus)" [value]="status">
+            {{ formatEnumValue(status) }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Champ pour le CV -->
+      <div class="mb-3">
+        <label for="editCv" class="form-label">CV</label>
+        <input type="text" id="editCv" class="form-control" formControlName="cv">
+      </div>
+
+      <!-- Champ pour le stage associé -->
+      <div class="mb-3">
+        <label for="editInternshipId" class="form-label">Stage</label>
+        <select id="editInternshipId" class="form-control" formControlName="internshipId">
+          <option *ngFor="let internship of internships" [value]="internship.internshipId">
+            {{ internship.title }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Bouton de soumission -->
+      <button type="submit" class="btn btn-primary">Modifier</button>
+    </form>
+  </div>
+</ng-template>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 <!-- Tableau avec tri -->
@@ -64,10 +191,7 @@
                       </td>
                       <td class="text-xs font-weight-bold mb-0">{{ application.internship?.title }}</td>
                       <td class="align-middle text-center">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs tt" [routerLink]="['/application-details', application.applicationId || 0]">
-                          Détails
-                        </a>
-                        <span class="text-secondary text-xs font-weight-bold">/</span>
+                       
                         <a href="javascript:;" class="text-secondary font-weight-bold text-xs tt" (click)="editApplication(application)">
                           Modifier
                         </a>
@@ -79,6 +203,34 @@
                     </tr>
                   </tbody>
                 </table>
+                <!-- Graphique en Barres -->
+<div class="chart-container">
+  <h3>Répartition des Statuts (Barres)</h3>
+  <div *ngFor="let stat of statusStats" class="bar-chart">
+    <div class="bar-label">{{ stat.status }}</div>
+    <div class="bar">
+      <div class="bar-fill" [style.width.%]="(stat.count / getMaxCount()) * 100"></div>
+    </div>
+    <div class="bar-value">{{ stat.count }}</div>
+  </div>
+</div>
+<!-- Graphique en Camembert -->
+<div class="chart-container">
+  <h3>Répartition des Statuts (Camembert)</h3>
+  <div class="pie-chart">
+    <div *ngFor="let stat of statusStats; let i = index"
+         class="pie-slice"
+         [style.transform]="'rotate(' + getRotationAngle(i) + 'deg)'"
+         [style.backgroundColor]="getColor(i)">
+    </div>
+  </div>
+  <div class="pie-legend">
+    <div *ngFor="let stat of statusStats; let i = index" class="legend-item">
+      <span class="legend-color" [style.backgroundColor]="getColor(i)"></span>
+      <span class="legend-label">{{ stat.status }} ({{ stat.count }})</span>
+    </div>
+  </div>
+</div>
                 <!-- Pagination -->
                 <div class="pagination-container">
                   <pagination-controls

@@ -16,8 +16,180 @@
                 placeholder="Rechercher..."
                 class="form-control search-input"
               />
-              <button class="btn btn-add" routerLink="/add-internship">ADD INTERNSHIP</button>
+              <button class="btn btn-add" (click)="openAddInternshipModal()">ADD INTERNSHIP</button>
             </div>
+
+            <!-- Modal for adding an internship -->
+<ng-template #addInternshipModal>
+  <div class="modal-header">
+    <h5 class="modal-title">Add Internship</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addInternshipForm" (ngSubmit)="onSubmitAddInternship()">
+      <!-- Champ pour le titre -->
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" id="title" class="form-control" formControlName="title">
+      </div>
+
+      <!-- Champ pour le nom de l'entreprise -->
+      <div class="mb-3">
+        <label for="companyName" class="form-label">Company Name</label>
+        <input type="text" id="companyName" class="form-control" formControlName="companyName">
+      </div>
+
+      <!-- Champ pour la localisation -->
+      <div class="mb-3">
+        <label for="localisation" class="form-label">Location</label>
+        <input type="text" id="localisation" class="form-control" formControlName="localisation">
+      </div>
+
+      <!-- Champ pour la date de début -->
+      <div class="mb-3">
+        <label for="startDate" class="form-label">Start Date</label>
+        <input type="date" id="startDate" class="form-control" formControlName="startDate">
+      </div>
+
+      <!-- Champ pour la date de fin -->
+      <div class="mb-3">
+        <label for="endDate" class="form-label">End Date</label>
+        <input type="date" id="endDate" class="form-control" formControlName="endDate">
+      </div>
+
+      <!-- Champ pour la durée (liste déroulante) -->
+      <div class="mb-3">
+        <label for="duration" class="form-label">Duration</label>
+        <select id="duration" class="form-control" formControlName="duration">
+          <option *ngFor="let duration of getEnumValues(InternshipDuration)" [value]="duration">
+            {{ formatEnumValue(duration) }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Champ pour le type (liste déroulante) -->
+      <div class="mb-3">
+        <label for="type" class="form-label">Type</label>
+        <select id="type" class="form-control" formControlName="type">
+          <option *ngFor="let type of getEnumValues(InternshipType)" [value]="type">
+            {{ formatEnumValue(type) }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Champ pour la compétence (liste déroulante) -->
+      <div class="mb-3">
+        <label for="skill" class="form-label">Skill</label>
+        <select id="skill" class="form-control" formControlName="skill">
+          <option *ngFor="let skill of getEnumValues(RequiredSkill)" [value]="skill">
+            {{ formatEnumValue(skill) }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Champ pour la description -->
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea id="description" class="form-control" formControlName="description"></textarea>
+      </div>
+
+      <!-- Champ pour le nombre de places disponibles -->
+      <div class="mb-3">
+        <label for="availableSpots" class="form-label">Available Spots</label>
+        <input type="number" id="availableSpots" class="form-control" formControlName="availableSpots">
+      </div>
+
+      <!-- Bouton de soumission -->
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+  </div>
+</ng-template>
+           <!-- Edit Internship Modal -->
+<ng-template #editInternshipModal>
+  <div class="modal-header">
+    <h5 class="modal-title">Edit Internship</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editInternshipForm" (ngSubmit)="onSubmitEditInternship()">
+      <!-- Champ pour le titre -->
+      <div class="mb-3">
+        <label for="editTitle" class="form-label">Title</label>
+        <input type="text" id="editTitle" class="form-control" formControlName="title">
+      </div>
+
+      <!-- Champ pour le nom de l'entreprise -->
+      <div class="mb-3">
+        <label for="editCompanyName" class="form-label">Company Name</label>
+        <input type="text" id="editCompanyName" class="form-control" formControlName="companyName">
+      </div>
+
+      <!-- Champ pour la localisation -->
+      <div class="mb-3">
+        <label for="editLocalisation" class="form-label">Location</label>
+        <input type="text" id="editLocalisation" class="form-control" formControlName="localisation">
+      </div>
+
+      <!-- Champ pour la date de début -->
+      <div class="mb-3">
+        <label for="editStartDate" class="form-label">Start Date</label>
+        <input type="date" id="editStartDate" class="form-control" formControlName="startDate">
+      </div>
+
+      <!-- Champ pour la date de fin -->
+      <div class="mb-3">
+        <label for="editEndDate" class="form-label">End Date</label>
+        <input type="date" id="editEndDate" class="form-control" formControlName="endDate">
+      </div>
+
+      <!-- Champ pour la durée (liste déroulante) -->
+      <div class="mb-3">
+        <label for="editDuration" class="form-label">Duration</label>
+        <select id="editDuration" class="form-control" formControlName="duration">
+          <option *ngFor="let duration of getEnumValues(InternshipDuration)" [value]="duration">
+            {{ formatEnumValue(duration) }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Champ pour le type (liste déroulante) -->
+      <div class="mb-3">
+        <label for="editType" class="form-label">Type</label>
+        <select id="editType" class="form-control" formControlName="type">
+          <option *ngFor="let type of getEnumValues(InternshipType)" [value]="type">
+            {{ formatEnumValue(type) }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Champ pour la compétence (liste déroulante) -->
+      <div class="mb-3">
+        <label for="editSkill" class="form-label">Skill</label>
+        <select id="editSkill" class="form-control" formControlName="skill">
+          <option *ngFor="let skill of getEnumValues(RequiredSkill)" [value]="skill">
+            {{ formatEnumValue(skill) }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Champ pour la description -->
+      <div class="mb-3">
+        <label for="editDescription" class="form-label">Description</label>
+        <textarea id="editDescription" class="form-control" formControlName="description"></textarea>
+      </div>
+
+      <!-- Champ pour le nombre de places disponibles -->
+      <div class="mb-3">
+        <label for="editAvailableSpots" class="form-label">Available Spots</label>
+        <input type="number" id="editAvailableSpots" class="form-control" formControlName="availableSpots">
+      </div>
+
+      <!-- Bouton de soumission -->
+      <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+  </div>
+</ng-template>
+
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 <!-- Tableau avec tri -->
@@ -70,11 +242,8 @@
                       <td class="text-xs font-weight-bold mb-0">{{ internship.description }}</td>
                       <td class="text-xs font-weight-bold mb-0">{{ internship.availableSpots }}</td>
                       <td class="align-middle text-center">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs tt" [routerLink]="['/internship-details', internship.internshipId || 0]">
-                          Details
-                        </a>
-                        <span class="text-secondary text-xs font-weight-bold">/</span>
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs tt" (click)="editInternship(internship)">
+                     
+                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs tt" (click)="openEditInternshipModal(internship)">
                           Update
                         </a>
                         <span class="text-secondary text-xs font-weight-bold">/</span>
@@ -85,6 +254,37 @@
                     </tr>
                   </tbody>
                 </table>
+
+                <!-- Graphique en Barres -->
+                <div class="chart-container">
+                  <h3>Répartition des Compétences (Barres)</h3>
+                  <div *ngFor="let stat of skillStats" class="bar-chart">
+                    <div class="bar-label">{{ stat.skill }}</div>
+                    <div class="bar">
+                      <div class="bar-fill" [style.width.%]="(stat.count / getMaxCount()) * 100"></div>
+                    </div>
+                    <div class="bar-value">{{ stat.count }}</div>
+                  </div>
+                </div>
+
+                <!-- Graphique en Camembert -->
+                <div class="chart-container">
+                  <h3>Répartition des Compétences (Camembert)</h3>
+                  <div class="pie-chart">
+                    <div *ngFor="let stat of skillStats; let i = index"
+                         class="pie-slice"
+                         [style.transform]="'rotate(' + getRotationAngle(i) + 'deg)'"
+                         [style.backgroundColor]="getColor(i)">
+                    </div>
+                  </div>
+                  <div class="pie-legend">
+                    <div *ngFor="let stat of skillStats; let i = index" class="legend-item">
+                      <span class="legend-color" [style.backgroundColor]="getColor(i)"></span>
+                      <span class="legend-label">{{ stat.skill }} ({{ stat.count }})</span>
+                    </div>
+                  </div>
+                </div>
+
                 <!-- Pagination -->
                 <div class="pagination-container">
                   <pagination-controls

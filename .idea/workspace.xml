@@ -9,7 +9,6 @@
       <change beforePath="$PROJECT_DIR$/InterlinK_Front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InterlinK_Front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/internships-back/internships-back.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/internships-back/internships-back.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/internships-back/internships-back.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/internships-back/internships-back.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/internships-back/internships-back.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/internships-back/internships-back.component.ts" afterDir="false" />
     </list>

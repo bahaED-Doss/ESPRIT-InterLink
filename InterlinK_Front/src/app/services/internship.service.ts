@@ -27,7 +27,8 @@ export class InternshipService {
 
   // Supprimer un stage
   deleteInternship(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/remove-internship/${id}`);
+    const url = `${this.apiUrl}/remove-internship/${id}`; // Remplacez par l'URL de votre API
+    return this.http.delete<void>(url);
   }
 
   // Récupérer un stage par ID
