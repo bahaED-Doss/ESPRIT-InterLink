@@ -6,12 +6,13 @@ import { FooterBackComponent } from "../footer-back/footer-back.component";
 import { AsideComponent } from "../aside/aside.component";
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { NavBackComponent } from "../nav-back/nav-back.component";
 @Component({
   selector: 'app-internships-back',
   templateUrl: './internships-back.component.html',
   styleUrls: ['./internships-back.component.css'],
   standalone: true,
-  imports: [SettingsComponent, FooterBackComponent, AsideComponent,CommonModule,RouterModule]
+  imports: [SettingsComponent, FooterBackComponent, AsideComponent, CommonModule, RouterModule, NavBackComponent]
 
 })
 export class InternshipsBackComponent implements OnInit {

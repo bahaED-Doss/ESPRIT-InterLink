@@ -1,77 +1,66 @@
-<div class="g-sidenav-show bg-gray-100 d-flex">
-  
-    <!-- ASIDE (Menu latéral) -->
-    <app-aside class="sidebar"></app-aside>
-  
-    <!-- CONTENU PRINCIPAL -->
-    <div class="main-content flex-grow-1">
-      
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-              <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-              <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Internships</li>
-            </ol>
-            <h6 class="font-weight-bolder mb-0">Internships</h6>
-          </nav>  
-      <main class="position-relative max-height-vh-100 h-100 border-radius-lg">
-        <div class="container-fluid py-4">
-          
-          <!-- Gestion des Stages -->
-          <div class="card shadow-lg p-4">
-            <h2 class="text-center text-primary mb-4">Gestion des Stages</h2>
-  
-            <div class="d-flex justify-content-end mb-3">
-              <button class="btn btn-success" routerLink="/add-internship">+ Ajouter Stage</button>
+<div class="flexx">
+  <app-aside></app-aside>
+  <div class="container">
+    <app-nav-back></app-nav-back>
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+              <h6>Internships Table</h6>
+              <button class="btn btn-add" routerLink="/add-internship">ADD INTERNSHIP</button>
             </div>
-  
-            <div class="table-responsive">
-              <table class="table table-striped table-bordered">
-                <thead class="table-dark">
-                    <tr class="text-center">
-                      <th>Nom</th>
-                      <th>Entreprise</th>
-                      <th>Localisation</th>
-                      <th>Début</th>
-                      <th>Fin</th>
-                      <th>Durée</th>
-                      <th>Type</th>
-                      <th>Compétence</th>
-                      <th>Description</th>
-                      <th>Places</th>
-                      <th>Actions</th>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Company</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Localisation</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Start</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">End</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Duration</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Type</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Compétence</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Description</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Places</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let internship of internships" class="text-center align-middle">
-                      <td>{{ internship.title }}</td>
-                      <td>{{ internship.companyName }}</td>
-                      <td>{{ internship.localisation }}</td>
-                      <td>{{ internship.startDate | date }}</td>
-                      <td>{{ internship.endDate | date }}</td>
-                      <td>{{ internship.duration }}</td>
-                      <td>{{ internship.type }}</td>
-                      <td>{{ internship.skill }}</td>
-                      <td>{{ internship.description }}</td>
-                      <td>{{ internship.availableSpots }}</td>
-                      <td>
-                        <button class="btn btn-info btn-sm me-1" [routerLink]="['/internship-details', internship.internshipId || 0]">Détails</button>
-                        <button class="btn btn-warning btn-sm me-1" (click)="editInternship(internship)">Modifier</button>
-                        <button class="btn btn-danger btn-sm" (click)="deleteInternship(internship.internshipId)">Supprimer</button>
+                    <tr *ngFor="let internship of internships">
+                      <td class="text-xs font-weight-bold mb-0">{{ internship.title }}</td>
+                      <td class="text-xs font-weight-bold mb-0">{{ internship.companyName }}</td>
+                      <td class="text-xs font-weight-bold mb-0">{{ internship.localisation }}</td>
+                      <td class="text-xs font-weight-bold mb-0">{{ internship.startDate | date }}</td>
+                      <td class="text-xs font-weight-bold mb-0">{{ internship.endDate | date }}</td>
+                      <td class="text-xs font-weight-bold mb-0">{{ internship.duration }}</td>
+                      <td class="text-xs font-weight-bold mb-0">{{ internship.type }}</td>
+                      <td class="text-xs font-weight-bold mb-0">{{ internship.skill }}</td>
+                      <td class="text-xs font-weight-bold mb-0">{{ internship.description }}</td>
+                      <td class="text-xs font-weight-bold mb-0">{{ internship.availableSpots }}</td>
+                      <td class="align-middle text-center">
+                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs tt" [routerLink]="['/internship-details', internship.internshipId || 0]">
+                          Details
+                        </a>
+                        <span class="text-secondary text-xs font-weight-bold">/</span>
+                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs tt" (click)="editInternship(internship)">
+                          Update
+                        </a>
+                        <span class="text-secondary text-xs font-weight-bold">/</span>
+                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs tt" (click)="deleteInternship(internship.internshipId)">
+                          Delete
+                        </a>
                       </td>
                     </tr>
                   </tbody>
-                  
-              </table>
+                </table>
+              </div>
             </div>
           </div>
-          <!-- Fin Gestion des Stages -->
-  
         </div>
-      </main>
-  
-      <app-footer-back></app-footer-back>
-      <app-settings></app-settings>
-  
+      </div>
     </div>
   </div>
-  
+</div>
