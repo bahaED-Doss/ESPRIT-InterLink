@@ -3,26 +3,26 @@
     align-items: center;
     gap: 230px !important;
     justify-content: center !important;
-}
-
-.font-weight-bold {
+  }
+  
+  .font-weight-bold {
     font-family: cursive;
-}
-
-.tt:hover {
+  }
+  
+  .tt:hover {
     color: rgb(190, 21, 209) !important;
-}
-
-.table th {
+  }
+  
+  .table th {
     font-size: 13px !important;
-}
-
-.modal-title {
+  }
+  
+  .modal-title {
     color: #fff !important;
-}
-
-/* Styles pour le tableau */
-table {
+  }
+  
+  /* Styles pour le tableau */
+  table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
@@ -30,59 +30,60 @@ table {
     overflow: hidden;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Effet ombré */
     background-color: white;
-}
-
-/* Suppression des bordures */
-th, td {
+  }
+  
+  /* Suppression des bordures */
+  th, td {
     padding: 12px;
     text-align: center;
     font-size: 16px;
     border: none;
-}
-
-/* En-tête du tableau */
-th {
+  }
+  
+  /* En-tête du tableau */
+  th {
     background-color: #f4f4f4;
     font-weight: bold;
-}
-
-/* Alternance des couleurs pour les lignes */
-tr:nth-child(even) {
+  }
+  
+  /* Alternance des couleurs pour les lignes */
+  tr:nth-child(even) {
     background-color: #f9f9f9;
-}
-
-tr:nth-child(odd) {
+  }
+  
+  tr:nth-child(odd) {
     background-color: #ffffff;
-}
-
-/* Styles des boutons */
-button {
+  }
+  
+  /* Styles des boutons */
+  button {
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s;
     font-size: 14px;
-}
-
-/* Bouton "Add" en rose */
-button.add {
+  }
+  
+  /* Bouton "Add" en rose */
+  button.add {
     background-color: rgb(190, 21, 209); /* Rose */
     color: white;
-}
-
-/* Autres boutons en gris par défaut */
-button:not(.add) {
+  }
+  
+  /* Autres boutons en gris par défaut */
+  button:not(.add) {
     background-color: rgb(190, 21, 209);
     color: white;
-}
-
-/* Changer en rose au clic */
-button:not(.add):active {
+  }
+  
+  /* Changer en rose au clic */
+  button:not(.add):active {
     background-color: rgb(190, 21, 209);
     color: white;
-}
-.btn-add {
+  }
+  
+  .btn-add {
     background-color: rgb(190, 21, 209); /* Rose */
     color: white;
     border: none;
@@ -90,12 +91,13 @@ button:not(.add):active {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-.btn-add:hover {
+  }
+  
+  .btn-add:hover {
     background-color: rgb(190, 21, 209); /* Rose plus foncé au survol */
-}
-.table {
+  }
+  
+  .table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
@@ -103,36 +105,77 @@ button:not(.add):active {
     overflow: hidden;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Effet ombré */
     background-color: white;
-}
-
-.table th,
-.table td {
+  }
+  
+  .table th,
+  .table td {
     padding: 12px;
     text-align: center;
     font-size: 14px;
     border: none;
-}
-
-.table th {
+  }
+  
+  .table th {
     background-color: #f4f4f4;
     font-weight: bold;
-    color: #f1f1f1;
-}
-
-.table tbody tr:nth-child(even) {
+    color: #333;
+  }
+  
+  .table tbody tr:nth-child(even) {
     background-color: #f9f9f9;
-}
-
-.table tbody tr:hover {
+  }
+  
+  .table tbody tr:hover {
     background-color: #f1f1f1; /* Effet de survol */
-}
-
-.table .tt {
-    color: #f1f1f1;
+  }
+  
+  .table .tt {
+    color: #666;
     text-decoration: none;
     transition: color 0.3s ease;
-}
-
-.table .tt:hover {
+  }
+  
+  .table .tt:hover {
     color: rgb(190, 21, 209); /* Rose au survol */
-}
+  }
+  
+  .search-input {
+    width: 300px;
+    margin-right: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 8px;
+  }
+  
+  .sort-icon {
+    margin-left: 5px;
+    font-size: 12px;
+  }
+  
+  .pagination-container {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .pagination-controls {
+    display: inline-block;
+  }
+  
+  .pagination-controls a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .pagination-controls a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .pagination-controls .current {
+    background-color: rgb(190, 21, 209);
+    color: white;
+    border-color: rgb(190, 21, 209);
+  }

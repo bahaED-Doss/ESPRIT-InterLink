@@ -39,8 +39,7 @@ import { AddInternshipComponent } from './components/Back/internships-back/add-i
 import { CommonModule } from '@angular/common';
 import { AddApplicationComponent } from './components/Back/applications-back/add-application/add-application.component';
 import { ApplicationFormComponent } from './components/Front/internships/application-form/application-form.component';
-
-
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -91,7 +90,7 @@ import { ApplicationFormComponent } from './components/Front/internships/applica
     CommonModule,
     NgbModule,
     AddApplicationComponent,
-
+    NgxPaginationModule,
 
     ],
   providers: [],

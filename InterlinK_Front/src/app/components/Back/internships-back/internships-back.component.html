@@ -8,28 +8,57 @@
           <div class="card mb-4">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center">
               <h6>Internships Table</h6>
+              <!-- Barre de recherche -->
+              <input
+                type="text"
+                [(ngModel)]="searchText"
+                (input)="applyFilter()"
+                placeholder="Rechercher..."
+                class="form-control search-input"
+              />
               <button class="btn btn-add" routerLink="/add-internship">ADD INTERNSHIP</button>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
+                <!-- Tableau avec tri -->
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Company</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Localisation</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Start</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">End</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Duration</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Type</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Compétence</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Description</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Places</th>
+                      <th (click)="sortData('title')" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        Name <span class="sort-icon">{{ getSortIcon('title') }}</span>
+                      </th>
+                      <th (click)="sortData('companyName')" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        Company <span class="sort-icon">{{ getSortIcon('companyName') }}</span>
+                      </th>
+                      <th (click)="sortData('localisation')" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        Localisation <span class="sort-icon">{{ getSortIcon('localisation') }}</span>
+                      </th>
+                      <th (click)="sortData('startDate')" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        Start <span class="sort-icon">{{ getSortIcon('startDate') }}</span>
+                      </th>
+                      <th (click)="sortData('endDate')" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        End <span class="sort-icon">{{ getSortIcon('endDate') }}</span>
+                      </th>
+                      <th (click)="sortData('duration')" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        Duration <span class="sort-icon">{{ getSortIcon('duration') }}</span>
+                      </th>
+                      <th (click)="sortData('type')" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        Type <span class="sort-icon">{{ getSortIcon('type') }}</span>
+                      </th>
+                      <th (click)="sortData('skill')" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        Compétence <span class="sort-icon">{{ getSortIcon('skill') }}</span>
+                      </th>
+                      <th (click)="sortData('description')" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        Description <span class="sort-icon">{{ getSortIcon('description') }}</span>
+                      </th>
+                      <th (click)="sortData('availableSpots')" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        Places <span class="sort-icon">{{ getSortIcon('availableSpots') }}</span>
+                      </th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let internship of internships">
+                    <tr *ngFor="let internship of filteredInternships | paginate: { itemsPerPage: pageSize, currentPage: currentPage }">
                       <td class="text-xs font-weight-bold mb-0">{{ internship.title }}</td>
                       <td class="text-xs font-weight-bold mb-0">{{ internship.companyName }}</td>
                       <td class="text-xs font-weight-bold mb-0">{{ internship.localisation }}</td>
@@ -56,6 +85,16 @@
                     </tr>
                   </tbody>
                 </table>
+                <!-- Pagination -->
+                <div class="pagination-container">
+                  <pagination-controls
+                    (pageChange)="currentPage = $event"
+                    previousLabel="Précédent"
+                    nextLabel="Suivant"
+                    [maxSize]="5"
+                    [responsive]="true"
+                  ></pagination-controls>
+                </div>
               </div>
             </div>
           </div>
