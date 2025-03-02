@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="939ebcb9-41c4-4031-b579-c8bbb6506283" name="Changes" comment="" />
+    <list default="true" id="939ebcb9-41c4-4031-b579-c8bbb6506283" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/applications-back/applications-back.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/applications-back/applications-back.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/applications-back/applications-back.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/applications-back/applications-back.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/applications-back/applications-back.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/applications-back/applications-back.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/internships-back/internships-back.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/internships-back/internships-back.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/internships-back/internships-back.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/internships-back/internships-back.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/internships-back/internships-back.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/InterlinK_Front/src/app/components/Back/internships-back/internships-back.component.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -111,7 +119,7 @@
       <workItem from="1740042486447" duration="11912000" />
       <workItem from="1740219063861" duration="16571000" />
       <workItem from="1740318453842" duration="12232000" />
-      <workItem from="1740804903192" duration="839000" />
+      <workItem from="1740804903192" duration="1512000" />
     </task>
     <servers />
   </component>

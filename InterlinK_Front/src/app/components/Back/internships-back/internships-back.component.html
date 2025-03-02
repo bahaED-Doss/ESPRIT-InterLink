@@ -255,42 +255,55 @@
                   </tbody>
                 </table>
 
-                <!-- Graphique en Barres -->
                 <div class="chart-container">
-                  <h3>Répartition des Compétences (Barres)</h3>
-                  <div *ngFor="let stat of skillStats" class="bar-chart">
-                    <div class="bar-label">{{ stat.skill }}</div>
-                    <div class="bar">
-                      <div class="bar-fill" [style.width.%]="(stat.count / getMaxCount()) * 100"></div>
+                  <h3>Statistics</h3>
+                  <div class="stat-buttons">
+                    <button (click)="showBarChart()" class="stat-btn bar-btn">
+                      <span class="btn-icon">📊</span>
+                      <span class="btn-text">Bar Chart</span>
+                    </button>
+                    <button (click)="showPieChart()" class="stat-btn pie-btn">
+                      <span class="btn-icon">🟣</span>
+                      <span class="btn-text">Pie Chart</span>
+                    </button>
+                  </div>
+                
+                  <!-- Bar Chart -->
+                  <div *ngIf="activeChart === 'bar'" class="stat-display">
+                    <h4>Skills Distribution (Bar Chart)</h4>
+                    <div *ngFor="let stat of skillStats" class="bar-chart">
+                      <div class="bar-label">{{ stat.skill }}</div>
+                      <div class="bar">
+                        <div class="bar-fill" [style.width.%]="(stat.count / getMaxCount()) * 100"></div>
+                      </div>
+                      <div class="bar-value">{{ stat.count }}</div>
                     </div>
-                    <div class="bar-value">{{ stat.count }}</div>
+                  </div>
+                
+                  <!-- Pie Chart -->
+                  <div *ngIf="activeChart === 'pie'" class="stat-display">
+                    <h4>Skills Distribution (Pie Chart)</h4>
+                    <div class="pie-chart">
+                      <div *ngFor="let stat of skillStats; let i = index"
+                           class="pie-slice"
+                           [style.transform]="'rotate(' + getRotationAngle(i) + 'deg) skewY(' + getSkewAngle(i) + 'deg)'"
+                           [style.backgroundColor]="getColor(i)">
+                      </div>
+                    </div>
+                    <div class="pie-legend">
+                      <div *ngFor="let stat of skillStats; let i = index" class="legend-item">
+                        <span class="legend-color" [style.backgroundColor]="getColor(i)"></span>
+                        <span class="legend-label">{{ stat.skill }} ({{ stat.count }})</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-                <!-- Graphique en Camembert -->
-                <div class="chart-container">
-                  <h3>Répartition des Compétences (Camembert)</h3>
-                  <div class="pie-chart">
-                    <div *ngFor="let stat of skillStats; let i = index"
-                         class="pie-slice"
-                         [style.transform]="'rotate(' + getRotationAngle(i) + 'deg)'"
-                         [style.backgroundColor]="getColor(i)">
-                    </div>
-                  </div>
-                  <div class="pie-legend">
-                    <div *ngFor="let stat of skillStats; let i = index" class="legend-item">
-                      <span class="legend-color" [style.backgroundColor]="getColor(i)"></span>
-                      <span class="legend-label">{{ stat.skill }} ({{ stat.count }})</span>
-                    </div>
-                  </div>
-                </div>
-
                 <!-- Pagination -->
                 <div class="pagination-container">
                   <pagination-controls
                     (pageChange)="currentPage = $event"
-                    previousLabel="Précédent"
-                    nextLabel="Suivant"
+                    previousLabel="Previous"
+                    nextLabel="Next"
                     [maxSize]="5"
                     [responsive]="true"
                   ></pagination-controls>

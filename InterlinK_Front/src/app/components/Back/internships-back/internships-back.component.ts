@@ -22,9 +22,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     RouterModule,
     NgxPaginationModule,
-    ReactiveFormsModule, // Added ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  providers: [InternshipService], // Provided InternshipService
+  providers: [InternshipService],
 })
 export class InternshipsBackComponent implements OnInit {
   internships: Internship[] = [];
@@ -38,34 +38,41 @@ export class InternshipsBackComponent implements OnInit {
   InternshipType = InternshipType;
   RequiredSkill = RequiredSkill;
 
-  // Vos autres propriétés
+  // Form groups for adding and editing internships
   addInternshipForm: FormGroup;
   editInternshipForm: FormGroup;
 
+  // Template references for modals
   @ViewChild('addInternshipModal', { read: TemplateRef }) addInternshipModal!: TemplateRef<any>;
   @ViewChild('editInternshipModal', { read: TemplateRef }) editInternshipModal!: TemplateRef<any>;
 
+  // Statistics data
   skillStats: { skill: string, count: number }[] = [];
   colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
+
+  // Active chart type
+  activeChart: 'bar' | 'pie' | null = null;
 
   constructor(
     private internshipService: InternshipService,
     private fb: FormBuilder,
     public modalService: NgbModal
   ) {
+    // Initialize the add internship form
     this.addInternshipForm = this.fb.group({
       title: ['', Validators.required],
       companyName: ['', Validators.required],
       localisation: ['', Validators.required],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
-      duration: ['', Validators.required], // Utilisez l'enum pour la durée
-      type: ['', Validators.required],    // Utilisez l'enum pour le type
-      skill: ['', Validators.required],   // Utilisez l'enum pour les compétences
+      duration: ['', Validators.required],
+      type: ['', Validators.required],
+      skill: ['', Validators.required],
       description: ['', Validators.required],
       availableSpots: ['', Validators.required],
     });
 
+    // Initialize the edit internship form
     this.editInternshipForm = this.fb.group({
       id: [''],
       title: ['', Validators.required],
@@ -84,18 +91,21 @@ export class InternshipsBackComponent implements OnInit {
   ngOnInit(): void {
     this.getAllInternships();
   }
-  // Méthode pour obtenir les valeurs d'une enum
+
+  // Method to get enum values
   getEnumValues(enumObject: any): string[] {
     return Object.values(enumObject);
   }
-// Méthode pour formater les valeurs des enums
-formatEnumValue(value: string): string {
-  return value
-    .toLowerCase() // Convertir en minuscules
-    .replace(/_/g, ' ') // Remplacer les underscores par des espaces
-    .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitaliser chaque mot
-}
 
+  // Method to format enum values
+  formatEnumValue(value: string): string {
+    return value
+      .toLowerCase()
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  }
+
+  // Fetch all internships
   getAllInternships(): void {
     this.internshipService.getInternships().subscribe((data: Internship[]) => {
       this.internships = data;
@@ -104,10 +114,12 @@ formatEnumValue(value: string): string {
     });
   }
 
+  // Open the add internship modal
   openAddInternshipModal(): void {
     this.modalService.open(this.addInternshipModal);
   }
 
+  // Submit the add internship form
   onSubmitAddInternship(): void {
     if (this.addInternshipForm.invalid) return;
     const internshipData = this.addInternshipForm.value;
@@ -118,11 +130,13 @@ formatEnumValue(value: string): string {
     });
   }
 
+  // Open the edit internship modal
   openEditInternshipModal(internship: Internship): void {
     this.editInternshipForm.patchValue(internship);
     this.modalService.open(this.editInternshipModal);
   }
 
+  // Submit the edit internship form
   onSubmitEditInternship(): void {
     if (this.editInternshipForm.invalid) return;
     const internshipData = this.editInternshipForm.value;
@@ -132,19 +146,20 @@ formatEnumValue(value: string): string {
     });
   }
   deleteInternship(id: number): void {
-    if (confirm('Voulez-vous vraiment supprimer ce stage ?')) {
+    console.log('Deleting internship with ID:', id); // Ajoutez ce log
+    if (confirm('Are you sure you want to delete this internship?')) {
       this.internshipService.deleteInternship(id).subscribe({
         next: () => {
-          // Rafraîchir la liste des stages après la suppression
           this.getAllInternships();
         },
         error: (err) => {
-          console.error('Erreur lors de la suppression du stage :', err);
+          console.error('Error deleting internship:', err);
         },
       });
     }
   }
 
+  // Calculate skill statistics
   calculateSkillStats(): void {
     const skillMap = new Map<string, number>();
 
@@ -158,27 +173,50 @@ formatEnumValue(value: string): string {
 
     this.skillStats = Array.from(skillMap.entries()).map(([skill, count]) => ({ skill, count }));
   }
+// Show bar chart
+showBarChart(): void {
+  this.activeChart = 'bar';
+}
 
-  getRotationAngle(index: number): number {
-    let total = 0;
-    for (let i = 0; i < index; i++) {
-      total += (this.skillStats[i].count / this.getTotalCount()) * 360;
-    }
-    return total;
+// Show pie chart
+showPieChart(): void {
+  this.activeChart = 'pie';
+}
+
+ // Méthode pour obtenir l'angle de rotation
+getRotationAngle(index: number): number {
+  let total = 0;
+  for (let i = 0; i < index; i++) {
+    total += (this.skillStats[i].count / this.getTotalCount()) * 360;
   }
+  return total;
+}
 
-  getColor(index: number): string {
-    return this.colors[index % this.colors.length];
-  }
+// Méthode pour obtenir l'angle d'inclinaison (skewY)
+getSkewAngle(index: number): number {
+  const totalCount = this.getTotalCount();
+  const percentage = (this.skillStats[index].count / totalCount) * 100;
+  return percentage > 50 ? 45 : 0; // Ajuster l'angle pour les tranches > 50%
+}
 
-  getTotalCount(): number {
-    return this.skillStats.reduce((total, stat) => total + stat.count, 0);
-  }
+// Méthode pour obtenir la couleur d'une tranche
+getColor(index: number): string {
+  const colors = ['#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0', '#9966FF']; // Palette de couleurs
+  return colors[index % colors.length];
+}
 
+// Méthode pour obtenir le nombre total de stages
+getTotalCount(): number {
+  return this.skillStats.reduce((total, stat) => total + stat.count, 0);
+}
+
+
+  // Get maximum count for bar chart
   getMaxCount(): number {
     return Math.max(...this.skillStats.map(stat => stat.count));
   }
 
+  // Apply search filter
   applyFilter(): void {
     this.filteredInternships = this.internships.filter(internship =>
       internship.title.toLowerCase().includes(this.searchText.toLowerCase()) ||
@@ -188,6 +226,7 @@ formatEnumValue(value: string): string {
     this.currentPage = 1;
   }
 
+  // Sort data by column
   sortData(column: string): void {
     if (this.sortColumn === column) {
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
@@ -206,6 +245,7 @@ formatEnumValue(value: string): string {
     });
   }
 
+  // Get sort icon for column
   getSortIcon(column: string): string {
     if (this.sortColumn === column) {
       return this.sortDirection === 'asc' ? '▲' : '▼';

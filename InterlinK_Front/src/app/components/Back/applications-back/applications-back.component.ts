@@ -34,6 +34,7 @@ export class ApplicationsBackComponent implements OnInit {
   addApplicationForm: FormGroup;
   editApplicationForm: FormGroup;
   ApplicationStatus = ApplicationStatus; 
+  activeChart: 'bar' | 'pie' | null = null;
 
   // Statistiques pour les statuts
   statusStats: { status: string, count: number }[] = [];
@@ -134,45 +135,59 @@ formatEnumValue(value: string): string {
       }
     );
   }
+ // Calculate status statistics
+ calculateStatusStats(): void {
+  const statusMap = new Map<string, number>();
 
-  // Calculer les statistiques des statuts
-  calculateStatusStats(): void {
-    const statusMap = new Map<string, number>();
-
-    this.applications.forEach(application => {
-      if (statusMap.has(application.status)) {
-        statusMap.set(application.status, statusMap.get(application.status)! + 1);
-      } else {
-        statusMap.set(application.status, 1);
-      }
-    });
-
-    this.statusStats = Array.from(statusMap.entries()).map(([status, count]) => ({ status, count }));
-  }
-
-  // Obtenir l'angle de rotation pour chaque tranche du camembert
-  getRotationAngle(index: number): number {
-    let total = 0;
-    for (let i = 0; i < index; i++) {
-      total += (this.statusStats[i].count / this.getTotalCount()) * 360;
+  this.applications.forEach(application => {
+    if (statusMap.has(application.status)) {
+      statusMap.set(application.status, statusMap.get(application.status)! + 1);
+    } else {
+      statusMap.set(application.status, 1);
     }
-    return total;
+  });
+
+  this.statusStats = Array.from(statusMap.entries()).map(([status, count]) => ({ status, count }));
+}
+  // Show bar chart
+  showBarChart(): void {
+    this.activeChart = 'bar';
   }
 
-  // Obtenir la couleur pour chaque tranche du camembert
-  getColor(index: number): string {
-    return this.colors[index % this.colors.length];
+  // Show pie chart
+  showPieChart(): void {
+    this.activeChart = 'pie';
   }
+ // Méthode pour obtenir l'angle de rotation
+getRotationAngle(index: number): number {
+  let total = 0;
+  for (let i = 0; i < index; i++) {
+    total += (this.statusStats[i].count / this.getTotalCount()) * 360;
+  }
+  return total;
+}
 
-  // Obtenir le nombre total de statuts
-  getTotalCount(): number {
-    return this.statusStats.reduce((total, stat) => total + stat.count, 0);
-  }
+// Méthode pour obtenir l'angle d'inclinaison (skewY)
+getSkewAngle(index: number): number {
+  const totalCount = this.getTotalCount();
+  const percentage = (this.statusStats[index].count / totalCount) * 100;
+  return percentage > 50 ? 45 : 0; // Ajuster l'angle pour les tranches > 50%
+}
 
-  // Obtenir le nombre maximum de statuts (pour le graphique en barres)
-  getMaxCount(): number {
-    return Math.max(...this.statusStats.map(stat => stat.count));
-  }
+// Méthode pour obtenir la couleur d'une tranche
+getColor(index: number): string {
+  const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']; // Palette de couleurs
+  return colors[index % colors.length];
+}
+
+// Méthode pour obtenir le nombre total de statuts
+getTotalCount(): number {
+  return this.statusStats.reduce((total, stat) => total + stat.count, 0);
+}
+// Get maximum count for bar chart
+getMaxCount(): number {
+  return Math.max(...this.statusStats.map(stat => stat.count));
+}
 
   // Méthodes existantes
   applyFilter(): void {

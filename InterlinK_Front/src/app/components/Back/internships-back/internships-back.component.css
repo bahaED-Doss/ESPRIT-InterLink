@@ -290,4 +290,120 @@
   
   .form-control {
     margin-bottom: 10px;
+  }/* Styles for the statistics buttons */
+.stat-buttons {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
   }
+  
+  .stat-btn {
+    background-color: #ffffff;
+    color: #333;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .stat-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%) rotate(45deg);
+    transition: all 0.5s ease;
+    z-index: 0;
+  }
+  
+  .stat-btn:hover::before {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  
+  .stat-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .stat-btn .btn-icon {
+    font-size: 20px;
+    transition: transform 0.3s ease;
+  }
+  
+  .stat-btn:hover .btn-icon {
+    transform: scale(1.2);
+  }
+  
+  .stat-btn .btn-text {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Specific styles for Bar Chart button */
+  .bar-btn {
+    background: linear-gradient(135deg, #36A2EB, #4BC0C0);
+    color: white;
+  }
+  
+  /* Specific styles for Pie Chart button */
+  .pie-btn {
+    background: linear-gradient(135deg, #FF6384, #FFCE56);
+    color: white;
+  }
+  .bar-chart {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .bar-label {
+    width: 120px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .bar {
+    flex-grow: 1;
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    margin: 0 10px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #36A2EB, #4BC0C0);
+    border-radius: 10px;
+    animation: fillBar 1s ease-out;
+  }
+  
+  @keyframes fillBar {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+  
+  .bar-value {
+    width: 40px;
+    text-align: right;
+    font-size: 14px;
+    color: #333;
+  }
+  

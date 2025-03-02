@@ -8,167 +8,168 @@
           <div class="card mb-4">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center">
               <h6>Applications Table</h6>
-              <!-- Barre de recherche -->
+              <!-- Search bar -->
               <input
                 type="text"
                 [(ngModel)]="searchText"
                 (input)="applyFilter()"
-                placeholder="Rechercher..."
+                placeholder="Search..."
                 class="form-control search-input"
               />
               <button class="btn btn-add" (click)="openAddApplicationModal()">Add Application</button>
             </div>
-            <!-- Modale pour ajouter une application -->
-<ng-template #addApplicationModal>
-  <div class="modal-header">
-    <h5 class="modal-title">Ajouter une Candidature</h5>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="addApplicationForm" (ngSubmit)="onSubmitAddApplication()">
-      <!-- Champ pour le prénom -->
-      <div class="mb-3">
-        <label for="firstName" class="form-label">Prénom</label>
-        <input type="text" id="firstName" class="form-control" formControlName="firstName">
-      </div>
 
-      <!-- Champ pour le nom -->
-      <div class="mb-3">
-        <label for="lastName" class="form-label">Nom</label>
-        <input type="text" id="lastName" class="form-control" formControlName="lastName">
-      </div>
+            <!-- Modal for adding an application -->
+            <ng-template #addApplicationModal>
+              <div class="modal-header">
+                <h5 class="modal-title">Add Application</h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="addApplicationForm" (ngSubmit)="onSubmitAddApplication()">
+                  <!-- First Name field -->
+                  <div class="mb-3">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" id="firstName" class="form-control" formControlName="firstName">
+                  </div>
 
-      <!-- Champ pour l'email -->
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" id="email" class="form-control" formControlName="email">
-      </div>
+                  <!-- Last Name field -->
+                  <div class="mb-3">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" id="lastName" class="form-control" formControlName="lastName">
+                  </div>
 
-      <!-- Champ pour le téléphone -->
-      <div class="mb-3">
-        <label for="phoneNumber" class="form-label">Téléphone</label>
-        <input type="text" id="phoneNumber" class="form-control" formControlName="phoneNumber">
-      </div>
+                  <!-- Email field -->
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-control" formControlName="email">
+                  </div>
 
-      <!-- Champ pour le statut -->
-      <div class="mb-3">
-        <label for="status" class="form-label">Statut</label>
-        <select id="status" class="form-control" formControlName="status">
-          <option *ngFor="let status of getEnumValues(ApplicationStatus)" [value]="status">
-            {{ formatEnumValue(status) }}
-          </option>
-        </select>
-      </div>
+                  <!-- Phone Number field -->
+                  <div class="mb-3">
+                    <label for="phoneNumber" class="form-label">Phone Number</label>
+                    <input type="text" id="phoneNumber" class="form-control" formControlName="phoneNumber">
+                  </div>
 
-      <!-- Champ pour le CV -->
-      <div class="mb-3">
-        <label for="cv" class="form-label">CV</label>
-        <input type="text" id="cv" class="form-control" formControlName="cv">
-      </div>
+                  <!-- Status field -->
+                  <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select id="status" class="form-control" formControlName="status">
+                      <option *ngFor="let status of getEnumValues(ApplicationStatus)" [value]="status">
+                        {{ formatEnumValue(status) }}
+                      </option>
+                    </select>
+                  </div>
 
-      <!-- Champ pour le stage associé -->
-      <div class="mb-3">
-        <label for="internshipId" class="form-label">Stage</label>
-        <select id="internshipId" class="form-control" formControlName="internshipId">
-          <option *ngFor="let internship of internships" [value]="internship.internshipId">
-            {{ internship.title }}
-          </option>
-        </select>
-      </div>
+                  <!-- CV field -->
+                  <div class="mb-3">
+                    <label for="cv" class="form-label">CV</label>
+                    <input type="text" id="cv" class="form-control" formControlName="cv">
+                  </div>
 
-      <!-- Bouton de soumission -->
-      <button type="submit" class="btn btn-primary">Ajouter</button>
-    </form>
-  </div>
-</ng-template>
+                  <!-- Internship field -->
+                  <div class="mb-3">
+                    <label for="internshipId" class="form-label">Internship</label>
+                    <select id="internshipId" class="form-control" formControlName="internshipId">
+                      <option *ngFor="let internship of internships" [value]="internship.internshipId">
+                        {{ internship.title }}
+                      </option>
+                    </select>
+                  </div>
 
-<!-- Modale pour modifier une application -->
-<ng-template #editApplicationModal>
-  <div class="modal-header">
-    <h5 class="modal-title">Modifier une Candidature</h5>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="editApplicationForm" (ngSubmit)="onSubmitEditApplication()">
-      <!-- Champ pour le prénom -->
-      <div class="mb-3">
-        <label for="editFirstName" class="form-label">Prénom</label>
-        <input type="text" id="editFirstName" class="form-control" formControlName="firstName">
-      </div>
+                  <!-- Submit button -->
+                  <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+              </div>
+            </ng-template>
 
-      <!-- Champ pour le nom -->
-      <div class="mb-3">
-        <label for="editLastName" class="form-label">Nom</label>
-        <input type="text" id="editLastName" class="form-control" formControlName="lastName">
-      </div>
+            <!-- Modal for editing an application -->
+            <ng-template #editApplicationModal>
+              <div class="modal-header">
+                <h5 class="modal-title">Edit Application</h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="editApplicationForm" (ngSubmit)="onSubmitEditApplication()">
+                  <!-- First Name field -->
+                  <div class="mb-3">
+                    <label for="editFirstName" class="form-label">First Name</label>
+                    <input type="text" id="editFirstName" class="form-control" formControlName="firstName">
+                  </div>
 
-      <!-- Champ pour l'email -->
-      <div class="mb-3">
-        <label for="editEmail" class="form-label">Email</label>
-        <input type="email" id="editEmail" class="form-control" formControlName="email">
-      </div>
+                  <!-- Last Name field -->
+                  <div class="mb-3">
+                    <label for="editLastName" class="form-label">Last Name</label>
+                    <input type="text" id="editLastName" class="form-control" formControlName="lastName">
+                  </div>
 
-      <!-- Champ pour le téléphone -->
-      <div class="mb-3">
-        <label for="editPhoneNumber" class="form-label">Téléphone</label>
-        <input type="text" id="editPhoneNumber" class="form-control" formControlName="phoneNumber">
-      </div>
+                  <!-- Email field -->
+                  <div class="mb-3">
+                    <label for="editEmail" class="form-label">Email</label>
+                    <input type="email" id="editEmail" class="form-control" formControlName="email">
+                  </div>
 
-      <!-- Champ pour le statut -->
-      <div class="mb-3">
-        <label for="editStatus" class="form-label">Statut</label>
-        <select id="editStatus" class="form-control" formControlName="status">
-          <option *ngFor="let status of getEnumValues(ApplicationStatus)" [value]="status">
-            {{ formatEnumValue(status) }}
-          </option>
-        </select>
-      </div>
+                  <!-- Phone Number field -->
+                  <div class="mb-3">
+                    <label for="editPhoneNumber" class="form-label">Phone Number</label>
+                    <input type="text" id="editPhoneNumber" class="form-control" formControlName="phoneNumber">
+                  </div>
 
-      <!-- Champ pour le CV -->
-      <div class="mb-3">
-        <label for="editCv" class="form-label">CV</label>
-        <input type="text" id="editCv" class="form-control" formControlName="cv">
-      </div>
+                  <!-- Status field -->
+                  <div class="mb-3">
+                    <label for="editStatus" class="form-label">Status</label>
+                    <select id="editStatus" class="form-control" formControlName="status">
+                      <option *ngFor="let status of getEnumValues(ApplicationStatus)" [value]="status">
+                        {{ formatEnumValue(status) }}
+                      </option>
+                    </select>
+                  </div>
 
-      <!-- Champ pour le stage associé -->
-      <div class="mb-3">
-        <label for="editInternshipId" class="form-label">Stage</label>
-        <select id="editInternshipId" class="form-control" formControlName="internshipId">
-          <option *ngFor="let internship of internships" [value]="internship.internshipId">
-            {{ internship.title }}
-          </option>
-        </select>
-      </div>
+                  <!-- CV field -->
+                  <div class="mb-3">
+                    <label for="editCv" class="form-label">CV</label>
+                    <input type="text" id="editCv" class="form-control" formControlName="cv">
+                  </div>
 
-      <!-- Bouton de soumission -->
-      <button type="submit" class="btn btn-primary">Modifier</button>
-    </form>
-  </div>
-</ng-template>
+                  <!-- Internship field -->
+                  <div class="mb-3">
+                    <label for="editInternshipId" class="form-label">Internship</label>
+                    <select id="editInternshipId" class="form-control" formControlName="internshipId">
+                      <option *ngFor="let internship of internships" [value]="internship.internshipId">
+                        {{ internship.title }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <!-- Submit button -->
+                  <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+              </div>
+            </ng-template>
+
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
-                <!-- Tableau avec tri -->
+                <!-- Table with sorting -->
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                     
                       <th (click)="sortData('firstName')" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                        Prénom <span class="sort-icon">{{ getSortIcon('firstName') }}</span>
+                        First Name <span class="sort-icon">{{ getSortIcon('firstName') }}</span>
                       </th>
                       <th (click)="sortData('lastName')" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                        Nom <span class="sort-icon">{{ getSortIcon('lastName') }}</span>
+                        Last Name <span class="sort-icon">{{ getSortIcon('lastName') }}</span>
                       </th>
                       <th (click)="sortData('email')" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                         Email <span class="sort-icon">{{ getSortIcon('email') }}</span>
                       </th>
                       <th (click)="sortData('phoneNumber')" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                        Téléphone <span class="sort-icon">{{ getSortIcon('phoneNumber') }}</span>
+                        Phone Number <span class="sort-icon">{{ getSortIcon('phoneNumber') }}</span>
                       </th>
                       <th (click)="sortData('status')" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                        Statut <span class="sort-icon">{{ getSortIcon('status') }}</span>
+                        Status <span class="sort-icon">{{ getSortIcon('status') }}</span>
                       </th>
                       <th (click)="sortData('internship.title')" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                        Stage <span class="sort-icon">{{ getSortIcon('internship.title') }}</span>
+                        Internship <span class="sort-icon">{{ getSortIcon('internship.title') }}</span>
                       </th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
                     </tr>
@@ -191,52 +192,69 @@
                       </td>
                       <td class="text-xs font-weight-bold mb-0">{{ application.internship?.title }}</td>
                       <td class="align-middle text-center">
-                       
                         <a href="javascript:;" class="text-secondary font-weight-bold text-xs tt" (click)="editApplication(application)">
-                          Modifier
+                          Edit
                         </a>
                         <span class="text-secondary text-xs font-weight-bold">/</span>
                         <a href="javascript:;" class="text-secondary font-weight-bold text-xs tt" (click)="deleteApplication(application.applicationId)">
-                          Supprimer
+                          Delete
                         </a>
                       </td>
                     </tr>
                   </tbody>
                 </table>
-                <!-- Graphique en Barres -->
-<div class="chart-container">
-  <h3>Répartition des Statuts (Barres)</h3>
-  <div *ngFor="let stat of statusStats" class="bar-chart">
-    <div class="bar-label">{{ stat.status }}</div>
-    <div class="bar">
-      <div class="bar-fill" [style.width.%]="(stat.count / getMaxCount()) * 100"></div>
-    </div>
-    <div class="bar-value">{{ stat.count }}</div>
-  </div>
-</div>
-<!-- Graphique en Camembert -->
-<div class="chart-container">
-  <h3>Répartition des Statuts (Camembert)</h3>
-  <div class="pie-chart">
-    <div *ngFor="let stat of statusStats; let i = index"
-         class="pie-slice"
-         [style.transform]="'rotate(' + getRotationAngle(i) + 'deg)'"
-         [style.backgroundColor]="getColor(i)">
-    </div>
-  </div>
-  <div class="pie-legend">
-    <div *ngFor="let stat of statusStats; let i = index" class="legend-item">
-      <span class="legend-color" [style.backgroundColor]="getColor(i)"></span>
-      <span class="legend-label">{{ stat.status }} ({{ stat.count }})</span>
-    </div>
-  </div>
-</div>
+
+                <!-- Statistics Section -->
+                <div class="chart-container">
+                  <h3>Statistics</h3>
+                  <div class="stat-buttons">
+                    <button (click)="showBarChart()" class="stat-btn bar-btn">
+                      <span class="btn-icon">📊</span>
+                      <span class="btn-text">Bar Chart</span>
+                    </button>
+                    <button (click)="showPieChart()" class="stat-btn pie-btn">
+                      <span class="btn-icon">🟣</span>
+                      <span class="btn-text">Pie Chart</span>
+                    </button>
+                  </div>
+
+                  <!-- Bar Chart -->
+                  <div *ngIf="activeChart === 'bar'" class="stat-display">
+                    <h4>Status Distribution (Bar Chart)</h4>
+                    <div *ngFor="let stat of statusStats" class="bar-chart">
+                      <div class="bar-label">{{ stat.status }}</div>
+                      <div class="bar">
+                        <div class="bar-fill" [style.width.%]="(stat.count / getMaxCount()) * 100"></div>
+                      </div>
+                      <div class="bar-value">{{ stat.count }}</div>
+                    </div>
+                  </div>
+
+                  <!-- Pie Chart -->
+                  <div *ngIf="activeChart === 'pie'" class="stat-display">
+                    <h4>Status Distribution (Pie Chart)</h4>
+                    <div class="pie-chart">
+                      <div *ngFor="let stat of statusStats; let i = index"
+                           class="pie-slice"
+                           [style.transform]="'rotate(' + getRotationAngle(i) + 'deg) skewY(' + getSkewAngle(i) + 'deg)'"
+                           [style.backgroundColor]="getColor(i)">
+                      </div>
+                    </div>
+                    <div class="pie-legend">
+                      <div *ngFor="let stat of statusStats; let i = index" class="legend-item">
+                        <span class="legend-color" [style.backgroundColor]="getColor(i)"></span>
+                        <span class="legend-label">{{ stat.status }} ({{ stat.count }})</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <!-- Pagination -->
                 <div class="pagination-container">
                   <pagination-controls
                     (pageChange)="currentPage = $event"
-                    previousLabel="Précédent"
-                    nextLabel="Suivant"
+                    previousLabel="Previous"
+                    nextLabel="Next"
                     [maxSize]="5"
                     [responsive]="true"
                   ></pagination-controls>
