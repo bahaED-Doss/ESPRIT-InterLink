@@ -22,7 +22,7 @@ public class Test
 
     @ManyToOne
     @JoinColumn(name = "project_manager_id", nullable = false)
-    private ProjectManager projectManager; // Un Project Manager peut superviser plusieurs tests
+    private User projectManager; // Un Project Manager peut superviser plusieurs tests
 
     @OneToOne
     @JoinColumn(name = "interview_id", nullable = false)
@@ -41,7 +41,7 @@ public class Test
     // Constructeurs
     public Test() {}
 
-    public Test(User student, ProjectManager projectManager, Interview interview, TestType typeTest) {
+    public Test(User student, User projectManager, Interview interview, TestType typeTest) {
         this.student = student;
         this.projectManager = projectManager;
         this.interview = interview;
@@ -66,11 +66,11 @@ public class Test
         this.student = student;
     }
 
-    public ProjectManager getProjectManager() {
+    public User getProjectManager() {
         return projectManager;
     }
 
-    public void setProjectManager(ProjectManager projectManager) {
+    public void setProjectManager(User projectManager) {
         this.projectManager = projectManager;
     }
 

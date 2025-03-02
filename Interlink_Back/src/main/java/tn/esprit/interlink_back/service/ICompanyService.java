@@ -9,4 +9,5 @@ public interface ICompanyService {
     public Company addCompany(Company company);
     public void removeCompany(Long id);
     public Company modifyCompany(Company company);
+    List<Company> searchCompanies(String industrySector, String country, String city, String sortField, boolean ascending);
 }

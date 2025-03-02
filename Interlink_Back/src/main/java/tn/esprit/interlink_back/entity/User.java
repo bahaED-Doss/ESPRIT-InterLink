@@ -1,5 +1,6 @@
 package tn.esprit.interlink_back.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -32,7 +33,9 @@ public class User {
     // Company (For HR Users)
     @ManyToOne
     @JoinColumn(name = "company_id")
+    @JsonBackReference
     private Company company;
+
 
     // Project Manager-specific fields
     private String department;

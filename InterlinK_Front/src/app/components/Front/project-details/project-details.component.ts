@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Company } from 'src/app/services/company.service';
-import { ProjectService, Project } from 'src/app/services/project.service';
+import { ProjectService, Project, Milestone } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-project-details',
@@ -15,18 +15,10 @@ export class ProjectDetailsComponent implements OnInit {
     description: '',
     startDate: '',
     endDate: '',
-    company: {
-      companyId: 0,
-      name: '',
-      location: '',
-      email: '',
-      city: '',
-      country: '',
-      phone: '',
-      industrySector: ''
-    } as Company,
+    company: { companyId: 0, name: '' } as Company,
     status: '',
-    technologiesUsed: '' // Now it's a string
+    technologiesUsed: '',
+    milestones: [] // Initialize milestones as an empty array
   };
 
   technologies: string[] = ['Angular', 'Spring Boot', 'SQL', 'Docker', 'Node.js', 'TensorFlow', 'Java'];
@@ -44,22 +36,44 @@ export class ProjectDetailsComponent implements OnInit {
     ]
   };
 
+  progress: number = 0;
+
   constructor(private route: ActivatedRoute, private projectService: ProjectService) {}
 
   ngOnInit(): void {
     const projectId = this.route.snapshot.paramMap.get('id');
     if (projectId) {
-      this.loadProject(Number(projectId));
+      const projectIdNum = Number(projectId);
+      if (!isNaN(projectIdNum)) {
+        this.loadProject(projectIdNum);
+        this.getProjectProgress(projectIdNum);
+      } else {
+        console.error('Invalid project ID');
+      }
+    } else {
+      console.error('Project ID is missing in the route parameters');
     }
   }
+  
 
   loadProject(id: number): void {
     this.projectService.getProjectById(id).subscribe(data => {
+      console.log('API response data:', data);  // Log the full response data
       this.project = data;
-      // Ensure technologiesUsed is always a string and avoid null values
+      console.log('Project data:', this.project);  // Check if company is included
       this.project.technologiesUsed = this.project.technologiesUsed || '';
+      this.project.milestones = this.project.milestones || [];
     }, error => {
       console.error('Error fetching project', error);
+    });
+  }
+  
+
+  getProjectProgress(projectId: number): void {
+    this.projectService.getProjectProgress(projectId).subscribe(progress => {
+      this.progress = progress;
+    }, error => {
+      console.error('Error fetching project progress', error);
     });
   }
 
@@ -69,14 +83,12 @@ export class ProjectDetailsComponent implements OnInit {
 
   toggleTechnologySelection(tech: string): void {
     let techArray = this.project.technologiesUsed ? this.project.technologiesUsed.split(',').map(t => t.trim()) : [];
-
     if (techArray.includes(tech)) {
       techArray = techArray.filter(t => t !== tech);
     } else {
       techArray.push(tech);
     }
-
-    this.project.technologiesUsed = techArray.join(', '); // Convert back to string
+    this.project.technologiesUsed = techArray.join(', ');
   }
 
   updateProject(): void {
@@ -85,5 +97,35 @@ export class ProjectDetailsComponent implements OnInit {
     }, error => {
       console.error('Error updating project', error);
     });
+  }
+
+  // Fixed updateMilestoneStatus
+  updateMilestoneStatus(milestone: Milestone): void {
+    console.log('Milestone object:', milestone);
+    console.log('Milestone ID:', milestone.id);
+    console.log('Project ID:', this.project.projectId);
+
+    if (!milestone.id || !this.project.projectId) {
+      console.error('Invalid milestone or project ID');
+      return;
+    }
+
+    // Send the status directly as a string
+    const statusUpdate = milestone.status;  // Just the status string, not an object
+
+    this.projectService.updateMilestoneStatus(this.project.projectId, milestone.id, statusUpdate)
+      .subscribe(
+        (updatedMilestone: Milestone) => {
+          console.log('Updated milestone:', updatedMilestone);
+          const milestoneIndex = this.project.milestones.findIndex(m => m.id === updatedMilestone.id);
+          if (milestoneIndex !== -1) {
+            this.project.milestones[milestoneIndex].status = updatedMilestone.status;
+          }
+          this.getProjectProgress(this.project.projectId);
+        },
+        error => {
+          console.error('Error updating milestone status', error);
+        }
+      );
   }
 }

@@ -1,10 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Company } from './company.service';
 
+export interface Milestone {
+  id: any;
+  milestoneId: number;
+  name: string;
+  status: string;  // Could be an enum or string
+  projectId: number;
+  // Add other fields if necessary based on your backend response
+}
+
 export interface Project {
-  projectId?: number;
+  projectId: number;
   title: string;
   description: string;
   startDate: string; // ISO format (YYYY-MM-DD)
@@ -12,7 +21,9 @@ export interface Project {
   company: Company;
   status: string;
   technologiesUsed: string; // Changed to string (comma-separated)
+  milestones: Milestone[]; // Added milestones field with an array of Milestone
 }
+
 
 @Injectable({
   providedIn: 'root'
@@ -41,4 +52,21 @@ export class ProjectService {
   deleteProject(projectId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/remove-project/${projectId}`);
   }
+
+  getProjectProgress(projectId: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/${projectId}/progress`);
+  }
+
+  // Method to update the milestone status
+  updateMilestoneStatus(projectId: number, milestoneId: number, newStatus: string): Observable<Milestone> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    // Call the backend API to update milestone status with just the status string
+    return this.http.put<Milestone>(
+      `${this.apiUrl}/${projectId}/milestone/${milestoneId}/update-status`,
+      newStatus // Send the status directly as a string
+    );
+  }
+  
 }

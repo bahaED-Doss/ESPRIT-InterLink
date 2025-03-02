@@ -1,8 +1,7 @@
 package tn.esprit.interlink_back.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -41,24 +40,33 @@ public class Project {
     @JsonProperty("endDate")
     private LocalDate endDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id")  // Explicitly defining the join column
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_id")
+    @JsonManagedReference
     private Company company;
 
 
 
-    @ManyToOne
-    @JoinColumn(name = "manager_id")
-    private ProjectManager projectManager; // Each project is managed by one manager
+    @OneToMany(mappedBy = "project")
+    @JsonManagedReference
+    private List<Milestone> milestones;
 
-    @ManyToMany
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "manager_id")
+    private User projectManager; // Each project is managed by one manager
+
+    @ManyToOne
     @JoinTable(
             name = "project_student",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private List<User> students; // A project can have multiple students
+    private User students; // A project can have multiple students
 
+    public Long getProjectId() {
+        return projectId;
+    }
     public String getTitle() {
         return title;
     }
@@ -105,6 +113,13 @@ public class Project {
 
     public void setTechnologiesUsed(String technologiesUsed) {
         this.technologiesUsed = technologiesUsed;
+    }
+    public List<Milestone> getMilestones() {
+        return milestones;
+    }
+
+    public void setMilestones(List<Milestone> milestones) {
+        this.milestones = milestones;
     }
 
 

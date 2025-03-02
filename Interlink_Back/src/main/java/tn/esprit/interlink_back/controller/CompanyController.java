@@ -13,9 +13,11 @@ import java.util.Optional;
 public class CompanyController {
 
     public final ICompanyService companyService;
+
     public CompanyController(ICompanyService companyService) {
         this.companyService = companyService;
     }
+
     @GetMapping("/retrieve-all-companies")
     public List<Company> getAllCompanies() {
         return companyService.retrieveAllCompanies();
@@ -60,4 +62,15 @@ public class CompanyController {
         return ResponseEntity.ok(updatedCompany);
     }
 
+    // New method to handle advanced search functionality
+    @GetMapping("/search-companies")
+    public List<Company> searchCompanies(
+            @RequestParam(required = false) String industrySector,
+            @RequestParam(required = false) String country,
+            @RequestParam(required = false) String city,
+            @RequestParam(defaultValue = "name") String sortField,
+            @RequestParam(defaultValue = "true") boolean ascending
+    ) {
+        return companyService.searchCompanies(industrySector, country, city, sortField, ascending);
+    }
 }

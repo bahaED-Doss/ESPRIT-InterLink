@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Added Validators import
 import { HttpClient } from '@angular/common/http';
 import { CompanyService, Company } from 'src/app/services/company.service';
 
@@ -25,15 +25,16 @@ export class CompanyDetailsComponent implements OnInit {
     private http: HttpClient,
     private companyService: CompanyService
   ) {
+    // Add validators to the form controls
     this.companyForm = this.fb.group({
       companyId: [''],
-      name: [''],
-      location: [''],
-      email: [''],
-      city: [''],
-      country: [''],
-      phone: [''],
-      industrySector: ['']
+      name: ['', [Validators.required, Validators.minLength(3)]], // Name is required with min length 3
+      location: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]], // Email validation
+      city: ['', [Validators.required, Validators.pattern('^[a-zA-Z\s]+$')]], // Only allows letters and spaces
+      country: ['', [Validators.required]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{8,15}$')]], // Phone number validation
+      industrySector: ['', [Validators.required]]
     });
   }
 
@@ -45,7 +46,6 @@ export class CompanyDetailsComponent implements OnInit {
     }
   }
 
-  // Load company details for editing
   loadCompany(id: number): void {
     this.companyService.getCompanyById(id).subscribe(data => {
       this.companyForm.patchValue(data);
@@ -53,14 +53,12 @@ export class CompanyDetailsComponent implements OnInit {
     });
   }
 
-  // Load list of countries
   loadCountries(): void {
     this.http.get<any[]>('https://restcountries.com/v3.1/all').subscribe(data => {
       this.countries = data.map(country => country.name.common).sort();
     });
   }
 
-  // Load cities based on selected country
   onCountryChange(event: any): void {
     const selectedCountry = event.target.value;
     this.loadCities(selectedCountry);
@@ -84,5 +82,10 @@ export class CompanyDetailsComponent implements OnInit {
     } else {
       alert('Please fill all required fields');
     }
+  }
+
+  // Convenience getter for form fields
+  get f() {
+    return this.companyForm.controls;
   }
 }

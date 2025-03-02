@@ -510,6 +510,30 @@
 .keywords ul li {
   display: inline-block;
 }
+.company-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.company-item {
+  background-color: #f8f9fa;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.company-item h4 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.company-item p {
+  font-size: 1rem;
+  color: #6c757d;
+}
+
 
 .keywords ul li a {
   font-size: 13px;

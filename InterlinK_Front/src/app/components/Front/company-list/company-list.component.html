@@ -1,3 +1,78 @@
+<section class="hero-area py-5 bg-light">
+  <div class="hero-inner text-center">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="inner-content">
+            <h1 class="wow fadeInUp" data-wow-delay=".3s">
+              
+              <br>
+              <span class="text-primary">Complete your company profile below</span>
+            </h1>
+          </div>
+
+          <!-- ✅ Search Form -->
+          <div class="job-search-wrap-two mt-4 p-4 shadow rounded bg-white wow fadeInUp" data-wow-delay=".7s">
+            <form (ngSubmit)="onSearch()">
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label for="industrySector" class="form-label">Industry Sector</label>
+                  <select class="form-select" id="industrySector" [(ngModel)]="searchIndustrySector" name="industrySector">
+                    <option value="" disabled selected>Select Industry Sector</option>
+                    <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
+                  </select>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="country" class="form-label">Country</label>
+                  <select class="form-select" id="country" [(ngModel)]="selectedCountry" name="country" (change)="onCountryChange($event)">
+                    <option value="" disabled selected>Select Country</option>
+                    <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+                  </select>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="city" class="form-label">City</label>
+                  <select class="form-select" id="city" [(ngModel)]="selectedCity" name="city">
+                    <option value="" disabled selected>Select City</option>
+                    <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="text-center mt-4">
+                <button class="btn btn-primary btn-lg px-5">Search</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+
+      <!-- ✅ Search Results Section -->
+      <div *ngIf="searchResults.length > 0" class="row mt-5">
+        <div class="col-12">
+          <h3 class="text-center text-success">Search Results</h3>
+          <div class="row g-4 mt-3">
+            <div *ngFor="let company of searchResults" class="col-md-4">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title">{{ company.name }}</h5>
+                  <p class="card-text">
+                    <strong>{{ company.industrySector }}</strong> <br>
+                    {{ company.city }}, {{ company.country }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>      
+    </div>
+  </div>
+</section>
+
+<!-- ✅ Full Company List (Unaffected by search) -->
 <div class="container mt-4">
   <h2 class="text-center">Company List</h2>
   <table class="table table-striped table-hover">
@@ -25,8 +100,9 @@
         <td>
           <button class="btn btn-outline-primary btn-sm" [routerLink]="['/company-details', company.companyId]">
             <i class="bi bi-pencil-square"></i> Edit
-          </button>          <button class="btn btn-danger btn-sm" (click)="deleteCompany(company)">Delete</button>
-        </td>        
+          </button>
+          <button class="btn btn-danger btn-sm" (click)="deleteCompany(company)">Delete</button>
+        </td>
       </tr>
     </tbody>
   </table>

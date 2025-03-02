@@ -12,6 +12,33 @@
     flex-wrap: wrap;
     gap: 10px;
 }
+/* Add some styles for input validation */
+input.ng-invalid, textarea.ng-invalid, select.ng-invalid {
+  border-color: red;
+}
+
+input.ng-valid, textarea.ng-valid, select.ng-valid {
+  border-color: green;
+}
+
+input.ng-touched.ng-invalid, textarea.ng-touched.ng-invalid {
+  background-color: #f8d7da;
+}
+
+input.ng-touched.ng-valid, textarea.ng-touched.ng-valid {
+  background-color: #d4edda;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 5px;
+}
+
+/* Styles for the submit button when the form is invalid */
+button:disabled {
+  background-color: #ccc;
+}
 
 .tech-item {
     display: flex;

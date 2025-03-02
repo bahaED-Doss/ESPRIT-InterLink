@@ -28,7 +28,6 @@ export class ProjectFormComponent implements OnInit {
       description: ['', Validators.required],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
-      company: ['', Validators.required],
       technologiesUsed: [''], // Bind to a string
       status: ['Open'] // Default value
     });
@@ -70,4 +69,5 @@ export class ProjectFormComponent implements OnInit {
       console.log('Form is invalid');
     }
   }
+  
 }

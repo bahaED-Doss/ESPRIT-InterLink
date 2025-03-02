@@ -6,4 +6,5 @@ import tn.esprit.interlink_back.entity.Project;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
+
 }

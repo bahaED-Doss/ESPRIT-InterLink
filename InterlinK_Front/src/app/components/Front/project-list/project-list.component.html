@@ -30,9 +30,10 @@
                                 <div class="d-flex w-100 justify-content-between align-items-center">
                                     <h5 class="mb-1 text-primary">{{ project.title }}</h5>
                                     <small class="text-muted">
-                                        {{ project.startDate ? (project.startDate | date:'yyyy') : 'N/A' }} - 
-                                        {{ project.endDate ? (project.endDate | date:'yyyy') : 'N/A' }}
+                                        {{ project.startDate ? (project.startDate | date:'yyyy-MM-dd') : 'N/A' }} -> 
+                                        {{ project.endDate ? (project.endDate | date:'yyyy-MM-dd') : 'N/A' }}
                                     </small>
+                                    
                                 </div>
                                 
                                 <p class="mb-1 text-dark">{{ project.description }}</p>

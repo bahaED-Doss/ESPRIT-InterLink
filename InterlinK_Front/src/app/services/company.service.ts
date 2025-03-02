@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Company {
@@ -17,12 +17,13 @@ export interface Company {
   providedIn: 'root'
 })
 export class CompanyService {
-  createCompany(value: any) {
-    throw new Error('Method not implemented.');
-  }
   private apiUrl = 'http://localhost:8081/Interlink/company'; // Adjust the URL if needed
 
   constructor(private http: HttpClient) {}
+
+  createCompany(value: any) {
+    throw new Error('Method not implemented.');
+  }
 
   getAllCompanies(): Observable<Company[]> {
     return this.http.get<Company[]>(`${this.apiUrl}/retrieve-all-companies`);
@@ -38,14 +39,25 @@ export class CompanyService {
 
   updateCompany(company: Company): Observable<Company> {
     return this.http.put<Company>(`${this.apiUrl}/modify-company`, company);
-  }  
-  
+  }
 
   deleteCompany(companyId: number): Observable<void> {
     console.log("Sending DELETE request for Company ID:", companyId); // 🔥 Log request
     return this.http.delete<void>(`${this.apiUrl}/remove-company/${companyId}`);
   }
-  
-  
-  
+
+  // New searchCompanies method
+  searchCompanies(params: { industrySector?: string, country?: string, city?: string, sortField?: string, ascending?: boolean }): Observable<Company[]> {
+    let httpParams = new HttpParams();
+
+    if (params.industrySector) httpParams = httpParams.set('industrySector', params.industrySector);
+    if (params.country) httpParams = httpParams.set('country', params.country);
+    if (params.city) httpParams = httpParams.set('city', params.city);
+    if (params.sortField) httpParams = httpParams.set('sortField', params.sortField);
+    if (params.ascending !== undefined) httpParams = httpParams.set('ascending', params.ascending.toString());
+
+    return this.http.get<Company[]>(`${this.apiUrl}/search-companies`, { params: httpParams });
+}
+
+
 }
