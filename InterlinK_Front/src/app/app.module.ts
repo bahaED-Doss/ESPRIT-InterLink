@@ -36,7 +36,6 @@ import { HomeHrComponent } from './components/Front/hrDashboard/home-hr/home-hr.
 import { ProfileHrComponent } from './components/Front/profile-hr/profile-hr.component';
 import { ProfileStudentComponent } from './components/Front/profile-student/profile-student.component';
 import { CommonModule } from '@angular/common';
-import { ApplicationFormComponent } from './components/Front/internships/application-form/application-form.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 
@@ -65,7 +64,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     HomeHrComponent,
     ProfileHrComponent,
     ProfileStudentComponent,
-    ApplicationFormComponent,
 
     
     

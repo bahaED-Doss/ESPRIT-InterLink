@@ -1,62 +1,95 @@
 <app-navbar></app-navbar>
 
 <div class="internships-container">
+  <h1 class="title">Trouvez votre stage idéal</h1>
   <div class="internships-layout">
-    <div class="internships-list">
-      <div *ngFor="let internship of internships" class="internship-card">
-        <h3 class="internship-title">{{ internship.title }}</h3>
-        <p><strong>📝 Description :</strong> {{ internship.description }}</p>
-        <p><strong>🏢 Entreprise :</strong> {{ internship.companyName }}</p>
-        <p><strong>📍 Localisation :</strong> {{ internship.localisation }}</p>
-        <p><strong>📅 Début :</strong> {{ internship.startDate | date:'dd/MM/yyyy' }}</p>
-        <p><strong>📅 Fin :</strong> {{ internship.endDate | date:'dd/MM/yyyy' }}</p>
-        <p><strong>⏳ Durée :</strong> {{ internship.duration }}</p>
-        <p><strong>📌 Type :</strong> {{ internship.type }}</p>
-        <p><strong>🛠️ Compétence requise :</strong> {{ internship.skill }}</p>
-        <p><strong>👥 Places disponibles :</strong> {{ internship.availableSpots }}</p>
-
-        <button (click)="applyForInternship(internship)" class="apply-btn">🚀 Postuler</button>
+    <!-- Filtres à droite -->
+    <div class="filters-section">
+      <h3>Filtres</h3>
+      <div class="filter-group">
+        <label for="location">📍 Localisation</label>
+        <input
+          type="text"
+          id="location"
+          [(ngModel)]="locationFilter"
+          (ngModelChange)="applyFilters()"
+          placeholder="Entrez une ville"
+        />
+      </div>
+      <div class="filter-group">
+        <label for="duration">⏳ Durée</label>
+        <select
+          id="duration"
+          [(ngModel)]="durationFilter"
+          (ngModelChange)="applyFilters()"
+        >
+          <option value="">Toutes les durées</option>
+          <option value="FOUR_WEEKS">4 semaines</option>
+          <option value="SIX_WEEKS">6 semaines</option>
+          <option value="EIGHT_WEEKS">8 semaines</option>
+          <option value="SIX_MONTHS">6 mois</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="type">📌 Type</label>
+        <select
+          id="type"
+          [(ngModel)]="typeFilter"
+          (ngModelChange)="applyFilters()"
+        >
+          <option value="">Tous les types</option>
+          <option value="FULL_TIME">Temps plein</option>
+          <option value="PART_TIME">Temps partiel</option>
+          <option value="REMOTE">À distance</option>
+          <option value="HYBRID">Hybride</option>
+        </select>
       </div>
     </div>
 
-    <!-- Formulaire de candidature -->
-    <div *ngIf="selectedInternship" class="application-form">
-      <h3 class="form-title">📄 Postuler pour : {{ selectedInternship.title }}</h3>
+    <!-- Liste des stages -->
+    <div class="internships-list">
+      <div *ngFor="let internship of filteredInternships" class="internship-card">
+        <h3 class="internship-title">{{ internship.title }}</h3>
+        <p class="company-name">{{ internship.companyName }}</p>
+        <p class="location">📍 {{ internship.localisation }}</p>
+        <p class="duration">⏳ {{ internship.duration }}</p>
+        <p class="type">📌 {{ internship.type }}</p>
+        <p class="start-date">📅 Début : {{ internship.startDate | date:'dd/MM/yyyy' }}</p>
+        <p class="available-spots">👥 Places disponibles : {{ internship.availableSpots }}</p>
+        <button (click)="applyForInternship(internship)" class="apply-btn">Postuler</button>
+      </div>
+    </div>
+  </div>
 
+  <!-- Formulaire de candidature en superposition (modale) -->
+  <div *ngIf="selectedInternship" class="modal-overlay">
+    <div class="application-form">
+      <h3 class="form-title">Postuler pour : {{ selectedInternship.title }}</h3>
+      <button (click)="cancelApplication()" class="close-btn">&times;</button>
       <form (ngSubmit)="submitApplication()">
         <div class="form-group">
-          <label for="firstName">👤 Prénom :</label>
+          <label for="firstName">Prénom</label>
           <input type="text" id="firstName" [(ngModel)]="application.firstName" name="firstName" required />
         </div>
-
         <div class="form-group">
-          <label for="lastName">👤 Nom :</label>
+          <label for="lastName">Nom</label>
           <input type="text" id="lastName" [(ngModel)]="application.lastName" name="lastName" required />
         </div>
-
         <div class="form-group">
-          <label for="email">📧 Email :</label>
+          <label for="email">Email</label>
           <input type="email" id="email" [(ngModel)]="application.email" name="email" required />
         </div>
-
         <div class="form-group">
-          <label for="phone">📞 Téléphone :</label>
+          <label for="phone">Téléphone</label>
           <input type="tel" id="phone" [(ngModel)]="application.phoneNumber" name="phoneNumber" required />
         </div>
-
         <div class="form-group">
-          <label for="cv">📎 CV :</label>
+          <label for="cv">CV</label>
           <input type="file" id="cv" (change)="onFileSelected($event)" required />
         </div>
-
-        <p *ngIf="application.status">
-          <strong>📌 Statut :</strong> {{ application.status }}
-        </p>
-
         <div class="btn-group">
-          <button *ngIf="application.status !== 'PENDING'" type="submit" class="submit-btn">✅ Envoyer</button>
-          <p *ngIf="application.status === 'PENDING'">⏳ Candidature en attente de validation...</p>
-          <button type="button" (click)="cancelApplication()" class="cancel-btn">❌ Annuler</button>
+          <button type="submit" class="submit-btn">Envoyer</button>
+          <button type="button" (click)="cancelApplication()" class="cancel-btn">Annuler</button>
         </div>
       </form>
     </div>

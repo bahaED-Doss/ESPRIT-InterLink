@@ -6,22 +6,28 @@ import { Application, ApplicationStatus } from 'src/app/models/Application.model
 @Component({
   selector: 'app-internships',
   templateUrl: './internships.component.html',
-  styleUrls: ['./internships.component.css']
+  styleUrls: ['./internships.component.css'],
 })
 export class InternshipsComponent implements OnInit {
   internships: Internship[] = [];
+  filteredInternships: Internship[] = [];
   selectedInternship: Internship | null = null;
   application: Application = {
     applicationId: 0,
     internship: null,
-    status: ApplicationStatus.APPROVED, // Ou une autre valeur
+    status: ApplicationStatus.PENDING,
     firstName: '',
     lastName: '',
     email: '',
     phoneNumber: '',
     cv: '',
-    internshipId: 0
+    internshipId: 0,
   };
+
+  // Filtres
+  locationFilter: string = '';
+  durationFilter: string = '';
+  typeFilter: string = '';
 
   constructor(private internshipService: InternshipService) {}
 
@@ -32,13 +38,28 @@ export class InternshipsComponent implements OnInit {
   getInternships(): void {
     this.internshipService.getInternships().subscribe((data: Internship[]) => {
       this.internships = data;
+      this.filteredInternships = data; // Initialise les stages filtrés
+    });
+  }
+
+  applyFilters(): void {
+    this.filteredInternships = this.internships.filter((internship) => {
+      const matchesLocation = internship.localisation
+        .toLowerCase()
+        .includes(this.locationFilter.toLowerCase());
+      const matchesDuration = this.durationFilter
+        ? internship.duration === this.durationFilter
+        : true;
+      const matchesType = this.typeFilter
+        ? internship.type === this.typeFilter
+        : true;
+      return matchesLocation && matchesDuration && matchesType;
     });
   }
 
   applyForInternship(internship: Internship): void {
     this.selectedInternship = internship;
     this.application.internshipId = internship.internshipId;
-    this.application.internship = internship;
   }
 
   onFileSelected(event: any): void {
@@ -49,30 +70,7 @@ export class InternshipsComponent implements OnInit {
   }
 
   submitApplication(): void {
-    if (!this.application.firstName || !this.application.lastName || !this.application.email || !this.application.phoneNumber || !this.application.cv) {
-      alert('Veuillez remplir tous les champs.');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('firstName', this.application.firstName);
-    formData.append('lastName', this.application.lastName);
-    formData.append('email', this.application.email);
-    formData.append('phoneNumber', this.application.phoneNumber);
-    formData.append('cv', this.application.cv);
-    formData.append('internshipId', this.application.internshipId.toString());
-
-    this.internshipService.applyForInternship(formData).subscribe(
-      (response: Application) => { // <-- Supposons que l'API renvoie l'application mise à jour
-        alert('Candidature envoyée avec succès !');
-        this.application.status = response.status; // <-- Mise à jour locale du statut
-        this.cancelApplication();
-      },
-      error => {
-        alert('Erreur lors de l\'envoi de la candidature.');
-      }
-    );
-    
+    // Logique pour soumettre la candidature
   }
 
   cancelApplication(): void {
@@ -86,7 +84,7 @@ export class InternshipsComponent implements OnInit {
       email: '',
       phoneNumber: '',
       cv: '',
-      internshipId: 0
+      internshipId: 0,
     };
   }
 }

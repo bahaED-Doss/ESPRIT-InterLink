@@ -1,96 +1,245 @@
+/* Styles généraux */
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: #f6f5f7;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
 
 .internships-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 100px;
-  }
-  
-  .internships-layout {
-    display: flex; /* Utilisez flexbox pour aligner le contenu */
-    justify-content: space-between; /* Espace entre la liste des stages et le formulaire */
-    width: 100%; /* Largeur à 100% pour s'étendre sur tout l'espace disponible */
-  }
-  
-  .internships-list {
-    flex: 10; /* Laissez cette section occuper l'espace disponible */
-    margin-right: 10px; /* Espace entre la liste et le formulaire */
-  }
-  
-  .application-form {
-    width: 300px; /* Largeur fixe ou ajustable pour le formulaire */
-    background: #f0f0f0; /* Couleur de fond pour le formulaire */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .title {
-    text-align: center;
-    font-size: 28px;
-    margin-bottom: 20px;
-    color: #b71c1c; /* Couleur du titre */
-  }
-  
-  .internship-card {
-    background: #f0f0f0; /* Couleur de fond pour chaque carte de stage */
-    margin: 50px 0;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  }
-  
-  .apply-btn {
-    background-color: #c62828; /* Couleur du bouton "Postuler" */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .apply-btn:hover {
-    background-color: #b71c1c; /* Couleur du bouton au survol */
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    color: #c62828; /* Couleur des labels */
-  }
-  
-  input[type="text"],
-  input[type="email"],
-  input[type="file"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #d6d4d4; /* Bordure des champs de saisie */
-    border-radius: 4px;
-  }
-  
-  .btn-group {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .submit-btn,
-  .cancel-btn {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .submit-btn {
-    background-color: #377c3e; /* Couleur du bouton "Envoyer" */
-    color: white;
-  }
-  
-  .cancel-btn {
-    background-color: #d32f2f; /* Couleur du bouton "Annuler" */
-    color: white;
-  }
+  padding:110px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #802020;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.internships-layout {
+  display: flex;
+  gap: 20px;
+}
+
+/* Filtres */
+.filters-section {
+  width: 250px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.filter-group {
+  margin-bottom: 20px;
+}
+
+.filter-group label {
+  font-weight: bold;
+  color: #802020;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.filter-group input,
+.filter-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Liste des stages */
+.internships-list {
+  flex: 1;
+}
+
+.internship-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.internship-title {
+  font-size: 22px;
+  color: #802020;
+  margin-bottom: 10px;
+}
+
+.company-name {
+  font-weight: bold;
+  color: #555;
+}
+
+.location,
+.duration,
+.type,
+.start-date,
+.available-spots {
+  color: #777;
+  margin: 5px 0;
+}
+
+.apply-btn {
+  background-color: #802020;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.apply-btn:hover {
+  background-color: #b71c1c;
+}
+
+/* Formulaire de candidature */
+.application-form {
+  width: 300px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  font-size: 20px;
+  color: #802020;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-weight: bold;
+  color: #802020;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.submit-btn {
+  background-color: #377c3e;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #d32f2f;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+/* Styles pour la superposition (modale) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Assure que la modale est au-dessus de tout */
+}
+
+.application-form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #802020;
+}
+
+.close-btn:hover {
+  color: #b71c1c;
+}
+
+.form-title {
+  font-size: 20px;
+  color: #802020;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-weight: bold;
+  color: #802020;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.submit-btn {
+  background-color: #377c3e;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #d32f2f;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
