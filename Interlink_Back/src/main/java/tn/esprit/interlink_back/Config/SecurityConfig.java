@@ -1,4 +1,4 @@
-package tn.esprit.interlink_back;
+package tn.esprit.interlink_back.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

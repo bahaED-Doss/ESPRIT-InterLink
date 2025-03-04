@@ -15,15 +15,22 @@ export class TaskFormComponent implements OnInit {
   @Input() isOpen: boolean = false;
   @Input() selectedProjectId!: number;
   @Input() selectedManagerId!: number;
-  
-  @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<Task>();
+  @Output() close = new EventEmitter<void>();
+  
+
   
   taskForm!: FormGroup;
   
-  constructor(private fb: FormBuilder,
-      private taskService: TaskService
-  ) {}
+  constructor(private fb: FormBuilder) {
+    this.taskForm = this.fb.group({
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      deadline: ['', Validators.required],
+      priority: ['LOW'],
+      status: ['TO_DO']
+    });
+  }
   
   ngOnInit() {
     this.initForm();

@@ -32,7 +32,8 @@ import { TaskManagementComponent } from './components/Front/TASKSM/tasksPM/task-
 import { DashboardComponent } from './components/Front/TASKSM/tasksPM/dashboard.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ProjectService } from './components/Front/TASKSM/Services/projectstatic.service';
-
+import { TaskCardComponent } from './components/Front/TASKSM/tasksPM/task-card/task-card.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 const routes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'tasks', component: TaskManagementComponent },
@@ -57,7 +58,8 @@ const routes: Routes = [
     TaskListComponent,
     TaskFormComponent,
     TaskManagementComponent,
-    DashboardComponent
+    DashboardComponent,
+    TaskCardComponent
     
     
     
@@ -80,7 +82,8 @@ const routes: Routes = [
     TablesComponent,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    DragDropModule 
     
     
   ],

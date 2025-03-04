@@ -1,0 +1,49 @@
+<div class="task-card" cdkDrag>
+  <div class="priority-indicator" [ngClass]="task.priority?.toLowerCase()">
+    <div class="corner-triangle"></div>
+  </div>
+
+  <div class="card-content">
+    <div class="card-header">
+      <h3 class="task-title">{{task.title}}</h3>
+      <div class="menu-container">
+        <button class="menu-trigger" (click)="toggleMenu($event)">
+          <i class="fas fa-ellipsis-v"></i>
+        </button>
+        <div class="menu-dropdown" [class.show]="isMenuOpen">
+          <div class="menu-item" (click)="onDetails()">
+            <i class="fas fa-info-circle"></i> Details
+          </div>
+          <div class="menu-item" *ngIf="isManager" (click)="onEdit()">
+            <i class="fas fa-edit"></i> Edit
+          </div>
+          <div class="menu-item" (click)="onFlag()">
+            <i class="fas fa-flag"></i> Flag
+          </div>
+          <div class="menu-item delete" *ngIf="isManager" (click)="onDelete()">
+            <i class="fas fa-trash"></i> Delete
+          </div>
+          <div class="menu-item disabled">
+            <i class="fas fa-comment"></i> Add feedback
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="task-description">{{task.description}}</p>
+
+    <div class="task-meta">
+      <div class="meta-item">
+        <i class="far fa-clock"></i>
+        <span>{{task.timer}}h</span>
+      </div>
+      <div class="meta-item">
+        <i class="far fa-calendar"></i>
+        <span>Due: {{task.deadline | date:'MMM d'}}</span>
+      </div>
+      <div class="status-badge" [ngClass]="task.status?.toLowerCase()">
+        {{task.status}}
+      </div>
+    </div>
+  </div>
+</div>

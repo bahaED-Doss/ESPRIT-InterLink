@@ -20,7 +20,7 @@ export class TaskService {
   }
 
   // Create a new task
-  createTask(projectId: number, managerId: number, task: Task): Observable<Task> {
+  createTask(projectId: number, managerId: number,task: Task): Observable<Task> {
     const url = `${this.baseUrl}/projects/${projectId}/tasks/${managerId}`;
     
     const payload = {
@@ -30,6 +30,7 @@ export class TaskService {
       priority: 'Second_Level',
       projectManager: { id: managerId },
       project: { projectId: projectId }
+      
     };
 
     console.log('Request payload:', payload);
@@ -46,11 +47,11 @@ export class TaskService {
   // Update task status
   updateTaskStatus(projectId: number, taskId: number, userId: number, status: string): Observable<Task> {
     return this.http.put<Task>(
-      `${this.baseUrl}/projects/${projectId}/tasks/${taskId}/status/${userId}`, 
-      { status } // Send status in the request body
+      `${this.baseUrl}/projects/${projectId}/tasks/${taskId}/status/${userId}?status=${status}`, 
+      {} // Send an empty body
     );
   }
-
+  
   // Delete a task
   deleteTask(projectId: number, taskId: number, userId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/projects/${projectId}/tasks/${taskId}/${userId}`);

@@ -21,25 +21,15 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskId;
-
     private String title;
     private String description;
     private Date deadline ;
     private LocalDateTime CreatedAt;
     private int timer ;
-
-
-
-
-
     @Enumerated(EnumType.STRING)
     private TaskPriority priority ;
-
-
-
     @Enumerated(EnumType.STRING)
     private TaskStatus status; // TO_DO , IN_PROGRESS , DONE
-
     @Enumerated(EnumType.STRING)
     private SatisfactionRating rating;  // 🔥, 👍, 🤔, ⚠️
 

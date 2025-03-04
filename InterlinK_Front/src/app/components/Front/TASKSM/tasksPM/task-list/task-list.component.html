@@ -1,95 +1,99 @@
-<div class="row">
-  <div class="col-md-4">
-    <div class="kanban-column">
+<div class="task-board">
+  <div class="board-header">
+    <div class="status-column">TO DO ({{getTasks('TO_DO').length}})</div>
+    <div class="status-column">IN PROGRESS ({{getTasks('IN_PROGRESS').length}})</div>
+    <div class="status-column">DONE ({{getTasks('DONE').length}})</div>
+  </div>
+
+  <div class="board-columns">
+    <!-- TO DO Column -->
+    <div class="kanban-column"
+         cdkDropList
+         id="todoList"
+         [cdkDropListData]="getTasks('TO_DO')"
+         [cdkDropListConnectedTo]="['inProgressList', 'doneList']"
+         (cdkDropListDropped)="drop($event)">
       <h3>To Do</h3>
-      <div class="task-cards">
-        <div class="single-job" *ngFor="let task of getTasks('TO_DO'); trackBy: trackByTaskId">
-          <div class="job-content">
-            <div class="task-header">
-              <h4>{{ task.title }}</h4>
-              <div class="dropdown">
-                <button class="btn-options" (click)="toggleDropdown($event, task)">
-                  <i class="fas fa-ellipsis-v"></i>
-                </button>
-                <div class="dropdown-menu" [class.show]="task.showDropdown">
-                  <a (click)="onEditTask(task)"><i class="fas fa-edit"></i> Edit</a>
-                  <a (click)="onDeleteTask(task.taskId!)"><i class="fas fa-trash"></i> Delete</a>
-                </div>
-              </div>
-            </div>
-            <p>{{ task.description }}</p>
-            <div class="job-info">
-              <span><i class="lni lni-calendar"></i> {{ task.deadline | date }}</span>
-              <span><i class="lni lni-timer"></i> {{ task.timer }} hours</span>
-              <span class="status-badge todo">TO DO</span>
-            </div>
+      <div class="column-stats">
+        <div class="priority-stats">
+          <div class="stat-circle">
+            <div class="circle high">{{getPriorityCount('TO_DO', 'HIGH')}}</div>
+            <span class="stat-label">High</span>
+          </div>
+          <div class="stat-circle">
+            <div class="circle medium">{{getPriorityCount('TO_DO', 'MEDIUM')}}</div>
+            <span class="stat-label">Medium</span>
+          </div>
+          <div class="stat-circle">
+            <div class="circle low">{{getPriorityCount('TO_DO', 'LOW')}}</div>
+            <span class="stat-label">Low</span>
           </div>
         </div>
       </div>
+      <div class="task-cards">
+        <app-task-card
+          *ngFor="let task of getTasks('TO_DO'); trackBy: trackByTaskId"
+          [task]="task"
+          [isManager]="isManager"
+          (edit)="onEditTask($event)"
+          (delete)="onDeleteTask($event)"
+          cdkDrag>
+        </app-task-card>
+      </div>
     </div>
-  </div>
 
-  <div class="col-md-4">
-    <div class="kanban-column">
+    <!-- IN PROGRESS Column -->
+    <div class="kanban-column"
+         cdkDropList
+         id="inProgressList"
+         [cdkDropListData]="getTasks('IN_PROGRESS')"
+         [cdkDropListConnectedTo]="['todoList', 'doneList']"
+         (cdkDropListDropped)="drop($event)">
       <h3>In Progress</h3>
-      <div class="task-cards">
-        <div class="single-job" *ngFor="let task of getTasks('IN_PROGRESS'); trackBy: trackByTaskId">
-          <div class="job-content">
-            <div class="task-header">
-              <h4>{{ task.title }}</h4>
-              <div class="dropdown">
-                <button class="btn-options" (click)="toggleDropdown($event, task)">
-                  <i class="fas fa-ellipsis-v"></i>
-                </button>
-                <div class="dropdown-menu" [class.show]="task.showDropdown">
-                  <a (click)="onEditTask(task)"><i class="fas fa-edit"></i> Edit</a>
-                  <a (click)="onDeleteTask(task.taskId!)"><i class="fas fa-trash"></i> Delete</a>
-                </div>
-              </div>
-            </div>
-            <p>{{ task.description }}</p>
-            <div class="job-info">
-              <span><i class="lni lni-calendar"></i> {{ task.deadline | date }}</span>
-              <span><i class="lni lni-timer"></i> {{ task.timer }} hours</span>
-              <span class="status-badge in-progress">IN PROGRESS</span>
-            </div>
-          </div>
+      <div class="column-stats">
+        <div class="priority-stats">
+          <!-- Same stats structure as TODO -->
         </div>
       </div>
+      <div class="task-cards">
+        <app-task-card
+          *ngFor="let task of getTasks('IN_PROGRESS'); trackBy: trackByTaskId"
+          [task]="task"
+          [isManager]="isManager"
+          (edit)="onEditTask($event)"
+          (delete)="onDeleteTask($event)"
+          cdkDrag>
+        </app-task-card>
+      </div>
     </div>
-  </div>
 
-  <div class="col-md-4">
-    <div class="kanban-column">
+    <!-- DONE Column -->
+    <div class="kanban-column"
+         cdkDropList
+         id="doneList"
+         [cdkDropListData]="getTasks('DONE')"
+         [cdkDropListConnectedTo]="['todoList', 'inProgressList']"
+         (cdkDropListDropped)="drop($event)">
       <h3>Done</h3>
-      <div class="task-cards">
-        <div class="single-job" *ngFor="let task of getTasks('DONE'); trackBy: trackByTaskId">
-          <div class="job-content">
-            <div class="task-header">
-              <h4>{{ task.title }}</h4>
-              <div class="dropdown">
-                <button class="btn-options" (click)="toggleDropdown($event, task)">
-                  <i class="fas fa-ellipsis-v"></i>
-                </button>
-                <div class="dropdown-menu" [class.show]="task.showDropdown">
-                  <a (click)="onEditTask(task)"><i class="fas fa-edit"></i> Edit</a>
-                  <a (click)="onDeleteTask(task.taskId!)"><i class="fas fa-trash"></i> Delete</a>
-                </div>
-              </div>
-            </div>
-            <p>{{ task.description }}</p>
-            <div class="job-info">
-              <span><i class="lni lni-calendar"></i> {{ task.deadline | date }}</span>
-              <span><i class="lni lni-timer"></i> {{ task.timer }} hours</span>
-              <span class="status-badge done">DONE</span>
-            </div>
-          </div>
+      <div class="column-stats">
+        <div class="priority-stats">
+          <!-- Same stats structure as TODO -->
         </div>
+      </div>
+      <div class="task-cards">
+        <app-task-card
+          *ngFor="let task of getTasks('DONE'); trackBy: trackByTaskId"
+          [task]="task"
+          [isManager]="isManager"
+          (edit)="onEditTask($event)"
+          (delete)="onDeleteTask($event)"
+          cdkDrag>
+        </app-task-card>
       </div>
     </div>
   </div>
-</div>
 
-<div *ngIf="tasks.length === 0" class="no-tasks">
-  No tasks found for this project.
+  <div *ngIf="tasks.length === 0" class="no-tasks">
+    No tasks found for this project.
+  </div>
 </div>

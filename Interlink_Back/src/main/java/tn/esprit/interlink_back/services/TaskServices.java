@@ -1,6 +1,8 @@
 package tn.esprit.interlink_back.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.interlink_back.entity.Enums.TaskPriority;
 import tn.esprit.interlink_back.entity.Enums.TaskStatus;
 import tn.esprit.interlink_back.entity.Project;
 import tn.esprit.interlink_back.entity.Enums.Role;
@@ -18,6 +20,11 @@ public class TaskServices implements ITaskSerevice {
     private final TaskRepository taskRepository;
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    @Autowired
+    private GoogleCalendarService googleCalendarService;
+
+    @Autowired
+    private EmailService emailService; // To send emails
 
     public TaskServices(TaskRepository taskRepository, ProjectRepository projectRepository, UserRepository userRepository) {
         this.taskRepository = taskRepository;
@@ -42,27 +49,54 @@ public class TaskServices implements ITaskSerevice {
         System.out.println("Creating task with projectId=" + projectId + ", userId=" + userId);
         System.out.println("Task payload: " + task);
 
+        // Fetch and validate user
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
-
         System.out.println("Found user: " + user);
 
         if (user.getRole() != Role.PROJECT_MANAGER) {
             throw new RuntimeException("Only PROJECT_MANAGER can create tasks. Current role: " + user.getRole());
         }
 
+        // Fetch and validate project
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new RuntimeException("Project not found with ID: " + projectId));
-
         System.out.println("Found project: " + project);
 
+        // Get the student from the project
+        User student = project.getStudent();
+        if (student == null) {
+            throw new RuntimeException("No student assigned to this project!");
+        }
+        System.out.println("Found student: " + student);
+        // Set task properties
         task.setProject(project);
+        task.setStudent(student);
         task.setStatus(TaskStatus.TO_DO);
         task.setCreatedAt(LocalDateTime.now());
         task.setTimer(0);
+        task.setStudent(student);
 
+        // Save the task
         Task savedTask = taskRepository.save(task);
         System.out.println("Saved task: " + savedTask);
+
+        // If priority is HIGH or SECOND_LEVEL, add event to Google Calendar
+        if (savedTask.getPriority() == TaskPriority.High || savedTask.getPriority() == TaskPriority.Second_Level) {
+            try {
+                googleCalendarService.addEventToStudentCalendar(
+                        savedTask.getStudent().getEspritEmail(),
+                        savedTask.getTitle(),
+                        savedTask.getDescription(),
+                        savedTask.getDeadline()
+                );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Send email notification
+        emailService.sendTaskNotification(savedTask);
 
         return savedTask;
     }

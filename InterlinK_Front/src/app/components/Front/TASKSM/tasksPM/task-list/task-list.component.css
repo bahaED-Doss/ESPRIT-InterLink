@@ -1,143 +1,96 @@
-/* Kanban Board Styles */
-.kanban-column {
-  background-color: #f9f9f9;
-  border-radius: 5px;
-  padding: 15px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.task-board {
+  padding: 20px;
+  background: #f4f5f7;
+  min-height: calc(100vh - 100px);
 }
 
-.kanban-column h3 {
-  margin-bottom: 15px;
-  font-size: 20px;
-  color: #333;
+.board-header {
+  display: flex;
+  margin-bottom: 20px;
+  gap: 12px;
 }
+
+.status-column {
+  flex: 1;
+  text-align: center;
+  font-weight: 600;
+  color: #172b4d;
+  padding: 12px;
+}
+
+.board-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.kanban-column {
+  background: #ebecf0;
+  border-radius: 3px;
+  padding: 12px;
+  min-height: 100px;
+  position: relative;
+}
+
+.column-stats {
+  display: none;
+  position: absolute;
+  top: -80px;
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 1000;
+}
+
+.kanban-column:hover .column-stats {
+  display: block;
+}
+
+.priority-stats {
+  display: flex;
+  justify-content: space-around;
+}
+
+.stat-circle {
+  text-align: center;
+}
+
+.circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.circle.high { background: #ff5630; }
+.circle.medium { background: #ffab00; }
+.circle.low { background: #36b37e; }
 
 .task-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  margin-top: 12px;
 }
 
-.single-job {
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.cdk-drag-preview {
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15);
 }
 
-.job-content h4 {
-  margin-bottom: 10px;
-  font-size: 18px;
-  color: #333;
+.cdk-drag-placeholder {
+  opacity: 0.3;
 }
 
-.job-content p {
-  margin-bottom: 10px;
-  color: #666;
-}
-
-.job-info {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-bottom: 10px;
-}
-
-.job-info span {
-  font-size: 14px;
-  color: #999;
-}
-
-.status-badge {
-  padding: 5px 10px;
-  border-radius: 3px;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.status-badge.pending {
-  background-color: #ffc107;
-  color: #fff;
-}
-
-.status-badge.in-progress {
-  background-color: #17a2b8;
-  color: #fff;
-}
-
-.status-badge.completed {
-  background-color: #28a745;
-  color: #fff;
-}
-
-.job-button {
-  display: flex;
-  gap: 10px;
-}
-
-.job-button .btn {
-  padding: 5px 10px;
-  font-size: 14px;
-}
-.task-list {
-  margin-top: 20px;
-}
-
-.task-item {
-  border: 1px solid #ddd;
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 4px;
-  background-color: #fff;
+.cdk-drag-animating {
+  transition: transform 250ms ease;
 }
 
 .no-tasks {
   text-align: center;
-  padding: 20px;
-  color: #666;
+  color: #6b778c;
+  padding: 24px;
 }
-.task-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
-}
-
-.btn-options {
-  background: none;
-  border: none;
-  padding: 5px;
-  cursor: pointer;
-}
-
-.dropdown {
-  position: relative;
-}
-
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  right: 0;
-  background: white;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  border-radius: 4px;
-  z-index: 1000;
-}
-
-.dropdown-menu.show {
-  display: block;
-}
-
-.dropdown-menu a {
-  display: block;
-  padding: 8px 15px;
-  color: #333;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.dropdown-menu a:hover {
-  background: #f5f5f5;
-}
-

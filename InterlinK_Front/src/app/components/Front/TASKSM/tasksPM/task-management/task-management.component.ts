@@ -69,36 +69,23 @@ export class TaskManagementComponent implements OnInit {
   }
 
   createTask(task: Task) {
-    const taskPayload: Task = {
-      title: task.title,
-      description: task.description,
-      deadline: task.deadline,
-      priority: task.priority,
-      projectManager: {
-        id: this.selectedManagerId
-      },
-      project: {
-        projectId: this.selectedProjectId
-      },
-      status: 'TO_DO',
-      timer: 0
-    };
-  
-    this.taskService.createTask(
-      this.selectedProjectId,
-      this.selectedManagerId,
-      taskPayload
-    ).subscribe({
-      next: (createdTask) => {
-        console.log('Task created successfully:', createdTask);
-        this.loadTasks();
-        this.closeTaskDrawer();
-      },
-      error: (error) => {
-        console.error('Error creating task:', error);
-      }
-    });
-  }
+    alert("✅ Task created successfully! The student will receive an email & a calendar notification.");
+  this.taskService.createTask(
+    this.selectedProjectId,
+    this.selectedManagerId,
+    
+    task
+  ).subscribe({
+    next: (response) => {
+      this.loadTasks();
+      this.closeTaskDrawer();
+    },
+    error: (error) => {
+      console.error('Error creating task:', error);
+      
+    }
+  });
+}
 
   getEmptyTask(): Task {
     return {

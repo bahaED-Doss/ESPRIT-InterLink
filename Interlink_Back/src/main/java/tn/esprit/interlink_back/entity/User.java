@@ -26,7 +26,7 @@ public class User {
 
     // Student-specific fields
     private String levelOfStudy;
-    private String espritEmail;
+    private String espritEmail; //---> student email
     private String phoneNumber;
 
     // HR-specific fields

@@ -27,6 +27,19 @@ public class Project {
     @JoinColumn(name = "user_id")
     private User manager;
 
+
+    @OneToOne
+    @JoinColumn(name = "student_id")
+    private User student;
+
+    public User getStudent() {
+        return student;
+    }
+
+    public void setStudent(User student) {
+        this.student = student;
+    }
+
     public User getUserId() {
         return this.manager;
     }
