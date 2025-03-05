@@ -16,7 +16,7 @@
                 <div class="col-md-4">
                   <label for="industrySector" class="form-label">Industry Sector</label>
                   <select class="form-select" id="industrySector" [(ngModel)]="searchIndustrySector" name="industrySector" (change)="onSearch()">
-                    <option value="" disabled selected>Select Industry Sector</option>
+                    <option value="Industry Sector" disabled selected>Select Industry Sector</option>
                     <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
                   </select>
                 </div>
@@ -115,4 +115,4 @@
       <div echarts [options]="industryChartOption" class="chart-container"></div>
     </div>
   </div>
-</div>
+</div>  

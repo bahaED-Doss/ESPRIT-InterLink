@@ -5,7 +5,6 @@ public class ProjectStatisticsDTO  {
     private String status;
     private Long count;
 
-    // Default constructor (needed for Jackson serialization/deserialization)
     public ProjectStatisticsDTO () {
     }
 
