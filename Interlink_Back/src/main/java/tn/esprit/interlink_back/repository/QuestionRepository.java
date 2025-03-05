@@ -10,7 +10,7 @@ import java.util.List;
 public interface QuestionRepository extends JpaRepository <Question, Integer>
 {
     //  Trouver toutes les questions d'un test spécifique
-    List<Question> findByTest(Test test);
+    List<Question> findByTestId(Long testId);
 
     // Trouver les questions ayant une évaluation correcte (true)
     List<Question> findByEvaluationTrue();

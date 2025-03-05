@@ -19,11 +19,8 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int questionId;
-
-    @ManyToOne
-    @JoinColumn(name = "test_id", nullable = false)
-    private Test test;
-
+    @Column(name="test_id")
+    private Long testId;
 
     @Column(nullable = false)
     private String contenu; // Le texte de la question
@@ -37,22 +34,14 @@ public class Question {
     @Column
     private int noteAttribuee=0; // Gérée automatiquement
 
+    @ManyToOne
+    @JoinColumn(name = "test_id", referencedColumnName = "testId",insertable = false,updatable = false)
+    private Test testById;
 
     // Constructeur
     public Question() {
     }
 
-    public Question(Test test, String contenu, String reponse) {
-        this.test = test;
-
-        this.contenu = contenu;
-        this.reponse = reponse;
-        this.evaluation = null;
-        // Par défaut, aucune évaluation
-        //this.noteAttribuee = 0; // Par défaut, 0 points
-    }
-
-    // Getters et Setters
     public int getQuestionId() {
         return questionId;
     }
@@ -61,14 +50,14 @@ public class Question {
         this.questionId = questionId;
     }
 
-    public Test getTest() {
-        return test;
+
+    public Long getTestId() {
+        return testId;
     }
 
-    public void setTest(Test test) {
-        this.test = test;
+    public void setTestId(Long testId) {
+        this.testId = testId;
     }
-
 
     public String getContenu() {
         return contenu;
@@ -78,33 +67,37 @@ public class Question {
         this.contenu = contenu;
     }
 
+    public String getReponse() {
+        return reponse;
+    }
+
+    public void setReponse(String reponse) {
+        this.reponse = reponse;
+    }
 
     public Boolean getEvaluation() {
         return evaluation;
     }
 
     public void setEvaluation(Boolean evaluation) {
-
-        if (this.evaluation != null) {
-            throw new IllegalStateException("L'évaluation ne peut pas être modifiée après validation !");
-        }
         this.evaluation = evaluation;
-
-        // 🚀 Mise à jour automatique de la note :
-        if (evaluation != null) {
-            this.noteAttribuee = evaluation ? 1 : 0; // 1 points si correcte, 0 sinon
-        }
     }
 
-
-    public String getReponse() {
-        return reponse;
-    }
-    public void setReponse(String reponse) {
-        this.reponse = reponse;
+    public int getNoteAttribuee() {
+        return noteAttribuee;
     }
 
+    public void setNoteAttribuee(int noteAttribuee) {
+        this.noteAttribuee = noteAttribuee;
+    }
 
+    public Test getTestById() {
+        return testById;
+    }
+
+    public void setTestById(Test testById) {
+        this.testById = testById;
+    }
 }
 
 

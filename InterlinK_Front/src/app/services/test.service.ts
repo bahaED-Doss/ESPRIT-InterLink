@@ -12,16 +12,6 @@ export class TestService {
 
   private baseUrl = 'http://localhost:8081/api/test/';
 
-  sendNotification(value: any) {
-    this.subject.next({ ID: value });
-  }
-
-  //this will be subscribed by the listing component which needs to display the //added/deleted ie updated list.
-
-  getNotification() {
-    return this.subject.asObservable();
-  }
-
   public getAll(): Observable<Test> {
     return this.httpClient.get<Test>(this.baseUrl + 'all');
   }
@@ -39,5 +29,9 @@ export class TestService {
 
   public getById(id: number): Observable<Test> {
     return this.httpClient.get<Test>(this.baseUrl + id);
+  }
+
+  searchTests(param: string): Observable<any> {
+    return this.httpClient.get(this.baseUrl + 'search', { params: { param } });
   }
 }

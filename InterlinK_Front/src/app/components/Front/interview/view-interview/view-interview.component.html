@@ -1,0 +1,45 @@
+<app-navbar-hr></app-navbar-hr>
+
+<!-- Start Hero Area -->
+<section class="hero-area">
+  <div class="hero-inner">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="hero-text text-center">
+            <h1 class="wow fadeInUp" data-wow-delay=".3s">
+              Your Interview List
+            </h1>
+          </div>
+
+          <!-- Container des cartes -->
+          <div class="row mt-4">
+            <div class="col-lg-6 col-md-6" *ngFor="let interview of data">
+              <div class="card shadow-sm p-3 mb-4">
+                <div class="card-body">
+                  <h5 class="card-title text-primary">{{ interview.titre }}</h5>
+                  <p class="card-text">
+                    <strong>Date:</strong>
+                    {{ interview.interviewDate | date : "dd/MM/yyyy" }}
+                  </p>
+                  <p class="card-text">
+                    <strong>Type:</strong> {{ interview.statusType }}
+                  </p>
+                  <p class="card-text">
+                    <strong>Student:</strong>
+
+                    {{ interview.studentByUserId.firstName }}
+                  </p>
+                  <button class="btn btn-primary btn-sm">View Test</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Hero Area -->
+
+<app-start-process></app-start-process>

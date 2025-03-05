@@ -16,22 +16,36 @@ import java.util.Date;
 @Entity
 @Getter
 @AllArgsConstructor
+
 public class Interview
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int interviewId;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "student_id")
-    private User student; // Chaque entretien est lié à un seul étudiant
+    @Column(name = "student_id")
+    private Long student; // Chaque entretien est lié à un seul étudiant
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "project_manager_id")
+    @JoinColumn(name = "student_id", referencedColumnName = "id",insertable = false,updatable = false)
+    private User studentByUserId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "manager_id", referencedColumnName = "managerId",insertable = false,updatable = false)
     private ProjectManager projectManager; // Un Project Manager peut faire plusieurs entretiens
 
+    @Column(name = "manager_id")
+    private Long managerId ;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "test_id", referencedColumnName = "testId",insertable = false,updatable = false)
+    private Test testByTestId;
+
+    @Column(name = "test_id")
+    private Long testId ;
+
     @ManyToOne
-    @JoinColumn(name = "application_id")
+    @JoinColumn(name = "application_id", nullable = false)
     private Application application; // L'entretien est lié à une candidature
 
     @Column(nullable = false)
@@ -46,23 +60,76 @@ public class Interview
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @Column(nullable = false)
     private StatusType statusType; // Statut de l’entretien (planifié, réalisé, annulé)
-
     private String lienReunion;
-
     private String titre;
-    // Constructeurs
-    public Interview() {}
 
-    public Interview(User student, ProjectManager projectManager, Application application, Date interviewDate, InterviewType interviewType, StatusType statusType, String lienReunion) {
-        this.student = student;
-        this.projectManager = projectManager;
-        this.application = application;
-        this.interviewDate = interviewDate;
-        this.interviewType = interviewType;
-        this.statusType = statusType;
-        this.lienReunion = lienReunion;
+    public Interview() {
     }
-    //getter,setter
+
+    public int getInterviewId() {
+        return interviewId;
+    }
+
+    public void setInterviewId(int interviewId) {
+        this.interviewId = interviewId;
+    }
+
+    public Long getStudent() {
+        return student;
+    }
+
+    public void setStudent(Long student) {
+        this.student = student;
+    }
+
+    public User getStudentByUserId() {
+        return studentByUserId;
+    }
+
+    public void setStudentByUserId(User studentByUserId) {
+        this.studentByUserId = studentByUserId;
+    }
+
+    public ProjectManager getProjectManager() {
+        return projectManager;
+    }
+
+    public void setProjectManager(ProjectManager projectManager) {
+        this.projectManager = projectManager;
+    }
+
+    public Long getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(Long managerId) {
+        this.managerId = managerId;
+    }
+
+    public Test getTestByTestId() {
+        return testByTestId;
+    }
+
+    public void setTestByTestId(Test testByTestId) {
+        this.testByTestId = testByTestId;
+    }
+
+    public Long getTestId() {
+        return testId;
+    }
+
+    public void setTestId(Long testId) {
+        this.testId = testId;
+    }
+
+    public Application getApplication() {
+        return application;
+    }
+
+    public void setApplication(Application application) {
+        this.application = application;
+    }
+
     public Date getInterviewDate() {
         return interviewDate;
     }
@@ -70,6 +137,7 @@ public class Interview
     public void setInterviewDate(Date interviewDate) {
         this.interviewDate = interviewDate;
     }
+
     public InterviewType getInterviewType() {
         return interviewType;
     }
@@ -85,6 +153,7 @@ public class Interview
     public void setStatusType(StatusType statusType) {
         this.statusType = statusType;
     }
+
     public String getLienReunion() {
         return lienReunion;
     }
@@ -100,5 +169,4 @@ public class Interview
     public void setTitre(String titre) {
         this.titre = titre;
     }
-
 }

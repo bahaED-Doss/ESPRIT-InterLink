@@ -39,4 +39,8 @@ public class TestService
         testRepository.deleteById(id);
     }
 
+    public List<Test> getAllSearch(String param) {
+        return testRepository.search(param);
+    }
+
 }

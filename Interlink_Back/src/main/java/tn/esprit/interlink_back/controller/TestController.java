@@ -2,6 +2,7 @@ package tn.esprit.interlink_back.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.interlink_back.entity.Interview;
 import tn.esprit.interlink_back.entity.Test;
 import tn.esprit.interlink_back.service.TestService;
 
@@ -56,5 +57,11 @@ public class TestController {
     public ResponseEntity<Void> deleteTest(@PathVariable int id) {
         testService.deleteTest(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Test>> getAllByParam(@RequestParam String param) {
+        List<Test> interviews = testService.getAllSearch(param);
+        return ResponseEntity.ok(interviews);
     }
 }

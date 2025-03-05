@@ -36,8 +36,10 @@ import { NavbarHrComponent } from './components/Front/navbar-hr/navbar-hr.compon
 import { HomeHrComponent } from './components/Front/hrDashboard/home-hr/home-hr.component';
 import { ProfileHrComponent } from './components/Front/profile-hr/profile-hr.component';
 import { ProfileStudentComponent } from './components/Front/profile-student/profile-student.component';
-import { InterviewComponent } from './Back/interview/interview.component';
+import { ViewInterviewComponent } from './components/Front/interview/view-interview/view-interview.component';
+import { AddTestComponent } from './components/Back/TestQuestion/Test/add-test/add-test.component';
 import { ListTestComponent } from './components/Back/TestQuestion/Test/list-test/list-test.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -67,19 +69,20 @@ import { ListTestComponent } from './components/Back/TestQuestion/Test/list-test
     HomeHrComponent,
     ProfileHrComponent,
     ProfileStudentComponent,
-    InterviewComponent,
+    ViewInterviewComponent,
     ListTestComponent,
-    
-   
+    AddTestComponent,
+    ViewInterviewComponent
     
     
     
   ],
   imports: [
+    NgxPaginationModule,
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
+    FormsModule ,
     HttpClientModule,
     AsideComponent,
     InternshipsBackComponent,

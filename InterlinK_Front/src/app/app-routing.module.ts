@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { InterviewComponent } from './components/Back/interview/interview.component';
-
 
 import { LoginComponent } from './components/Front/login/login.component';
 import { TablesComponent } from './components/Back/tables/tables.component';
@@ -24,7 +22,9 @@ import { StartProcessComponent } from './components/Front/start-process/start-pr
 import { HomeHrComponent } from './components/Front/hrDashboard/home-hr/home-hr.component';
 import { ProfileHrComponent } from './components/Front/profile-hr/profile-hr.component';
 import { ProfileStudentComponent } from './components/Front/profile-student/profile-student.component';
+import { ViewInterviewComponent } from './components/Front/interview/view-interview/view-interview.component';
 import { ListTestComponent } from './components/Back/TestQuestion/Test/list-test/list-test.component';
+import { AddTestComponent } from './components/Back/TestQuestion/Test/add-test/add-test.component';
 
 
 
@@ -49,11 +49,13 @@ const routes: Routes = [
   { path: 'student-profile/:id', component: StudentProfileComponent },
   { path: 'hr-profile/:id', component: HrProfileComponent },
   
-  { path: 'interviews', component: InterviewComponent },
   { path: 'reset-password/:token', component: ResetPasswordComponent },
+  { path: 'interviews', component: ViewInterviewComponent },
   { path: 'test', component: ListTestComponent },
-  { path: 'interview', component: InterviewComponent }
-
+  { path: 'test/add', component: AddTestComponent },
+  { path: 'test/edit/:id', component: AddTestComponent },
+  { path: 'viewinterview', component: ViewInterviewComponent },
+  
   
 ];
 

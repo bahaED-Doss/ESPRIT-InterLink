@@ -1,6 +1,8 @@
 package tn.esprit.interlink_back.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import tn.esprit.interlink_back.entity.ProjectManager;
 import tn.esprit.interlink_back.entity.Test;
@@ -9,12 +11,9 @@ import tn.esprit.interlink_back.entity.User;
 import java.util.List;
 @Repository
 public interface TestRepository extends JpaRepository<Test, Integer>
-{    //Trouver tous les tests d'un étudiant
-    List<Test> findByStudent(User student);
-    //Trouver tous les tests d'un project manager
-    List<Test> findByProjectManager(ProjectManager projectManager);
-    //Trouver un test par interview
-    Test findByInterview_InterviewId(int interviewId);
+{
 
+    @Query(value = "SELECT t.* FROM test t WHERE t.type_test LIKE CONCAT('%', :param, '%') OR t.titre LIKE CONCAT('%', :param, '%') ORDER BY t.titre ASC", nativeQuery = true)
+    List<Test> search(@Param("param") String param);
 
 }

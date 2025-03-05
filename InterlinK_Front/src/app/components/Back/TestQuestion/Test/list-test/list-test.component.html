@@ -10,9 +10,20 @@
               class="card-header pb-0 d-flex justify-content-between align-items-center"
             >
               <h6>Test Table</h6>
-              <button class="btn btn-primary">Add Test</button>
-            </div>
+              <div class="search-container mb-3">
+                <input
+                  #searchInput
+                  type="text"
+                  (input)="onSearch(searchInput.value)"
+                  class="form-control"
+                  placeholder="Rechercher..."
+                />
+              </div>
 
+              <button class="btn btn-primary" (click)="addTest()">
+                Add Test
+              </button>
+            </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
@@ -36,22 +47,22 @@
                       <th
                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
                       >
-                        Interview
-                      </th>
-                      <th
-                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-                      >
-                        Manager
-                      </th>
-                      <th
-                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-                      >
-                        Studient
+                        Actions
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let test of data">
+                    <!-- Application du pipe 'paginate' sur la donnée -->
+                    <tr
+                      *ngFor="
+                        let test of data
+                          | paginate
+                            : {
+                                itemsPerPage: itemsPerPage,
+                                currentPage: currentPage
+                              }
+                      "
+                    >
                       <td>
                         <div class="d-flex flex-column justify-content-center">
                           <p class="text-xs text-secondary mb-0">
@@ -67,40 +78,100 @@
                       <td class="align-middle text-center text-sm">
                         {{ test.note }}
                       </td>
-
-                      <td class="align-middle text-center text-sm">
-                        {{ test.interview.titre }}
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        {{ test.projectManagerByProjectManagerId.name }}
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        {{ test.userById.firstName }}
-                      </td>
                       <td class="align-middle text-center">
                         <a
                           href="javascript:;"
                           class="text-secondary font-weight-bold text-xs tt"
+                          (click)="ouvrirFormulaireEditTest(test.testId)"
+                          >Edit</a
                         >
-                          Edit
-                        </a>
                         <span class="text-secondary text-xs font-weight-bold"
                           >/</span
                         >
                         <a
                           href="javascript:;"
                           class="text-secondary font-weight-bold text-xs tt"
+                          (click)="supprimerTest(test.testId)"
+                          >Delete</a
                         >
-                          Delete
-                        </a>
+                        <span class="text-secondary text-xs font-weight-bold"
+                          >/</span
+                        >
+                        <a
+                          href="javascript:;"
+                          class="text-secondary font-weight-bold text-xs tt"
+                          (click)="openQuestionModal(test.testId)"
+                          >Ajouter Question</a
+                        >
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
+            <!-- Contrôles de pagination avec un design Bootstrap -->
+            <div class="d-flex justify-content-center mt-3">
+              <pagination-controls
+              (pageChange)="currentPage = $event"
+                
+                [directionLinks]="true"
+                [autoHide]="true"
+              >
+              </pagination-controls>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="questionModal"
+  tabindex="-1"
+  aria-labelledby="questionModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="questionModalLabel">
+          Ajouter une Question
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="ajouterQuestion()">
+          <div class="mb-3">
+            <label for="contenu" class="form-label">Contenu</label>
+            <input
+              type="text"
+              class="form-control"
+              id="contenu"
+              [(ngModel)]="nouvelleQuestion.contenu"
+              name="contenu"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="contenu" class="form-label">Note</label>
+            <input
+              type="text"
+              class="form-control"
+              id="noteAttribuee"
+              [(ngModel)]="nouvelleQuestion.noteAttribuee"
+              name="noteAttribuee"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Ajouter</button>
+        </form>
       </div>
     </div>
   </div>

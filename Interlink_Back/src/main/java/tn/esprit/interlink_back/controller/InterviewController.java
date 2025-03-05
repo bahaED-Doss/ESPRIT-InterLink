@@ -11,10 +11,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/interviews")
-
+@CrossOrigin(origins = "http://localhost:4200")
 public class InterviewController {
 
-     final InterviewService interviewService;
+    final InterviewService interviewService;
     public InterviewController(InterviewService interviewService) {
         this.interviewService = interviewService;
     }
@@ -58,4 +58,6 @@ public class InterviewController {
         interviewService.deleteInterview(id);
         return ResponseEntity.noContent().build();
     }
+
+
 }

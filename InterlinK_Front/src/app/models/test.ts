@@ -1,9 +1,8 @@
 export class Test {
   constructor(
     public testId: number,
-    public student: number,
-    public projectManager: number,
-    public interview: number,
+    public note: number,
+    public titre: string,
     public typeTest: string,
     public questions: any[]
   ) {}
@@ -11,9 +10,8 @@ export class Test {
   public static fromJson(json: any): Test {
     return new Test(
       json['testId'],
-      json['student'],
-      json['projectManager'],
-      json['interview'],
+      json['note'],
+      json['titre'],
       json['typeTest'],
       json['questions']
     );

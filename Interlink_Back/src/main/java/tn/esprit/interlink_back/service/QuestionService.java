@@ -1,9 +1,11 @@
 package tn.esprit.interlink_back.service;
 
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import tn.esprit.interlink_back.entity.Question;
+import tn.esprit.interlink_back.entity.Test;
 import tn.esprit.interlink_back.repository.QuestionRepository;
+import tn.esprit.interlink_back.repository.TestRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,12 +15,17 @@ import java.util.Optional;
 public class QuestionService
 {
     private final QuestionRepository questionRepository;
-    public QuestionService(QuestionRepository questionRepository)
+    private final TestRepository testRepository;
+    public QuestionService(QuestionRepository questionRepository,TestRepository testRepository)
     {
         this.questionRepository = questionRepository;
+        this.testRepository = testRepository;
     }
     // Ajouter une question
     public Question addQuestion(Question question) {
+        Test test = testRepository.findById(question.getTestId().intValue()).get();
+        test.setNote(test.getNote()+question.getNoteAttribuee() );
+        testRepository.save(test);
         return questionRepository.save(question);
     }
 
@@ -47,5 +54,7 @@ public class QuestionService
         questionRepository.deleteById(id);
     }
 
-
+    public List<Question> getAllByTest(Long testId) {
+        return questionRepository.findByTestId(testId);
+    }
 }
