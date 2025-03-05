@@ -2,7 +2,7 @@
 
 ## Overview
 
-Le système de gestion des utilisateurs permet d’administrer les utilisateurs avec différents rôles, gérer leur authentification et autorisation, ainsi que de fournir des fonctionnalités avancées telles que l'authentification à deux facteurs (2FA), la gestion des profils, et des liens sociaux. Ce projet utilise **Symfony 6.4** pour la gestion du backend, avec un focus particulier sur la sécurité, l'authentification sécurisée, et la gestion des rôles.
+Le système de gestion des utilisateurs permet d’administrer les utilisateurs avec différents rôles, gérer leur authentification et autorisation, ainsi que de fournir des fonctionnalités avancées telles que l'authentification à deux facteurs (2FA), la gestion des profils, et des liens sociaux. Ce projet utilise **SpringBoot** pour la gestion du backend, avec un focus particulier sur la sécurité, l'authentification sécurisée, et la gestion des rôles.
 
 Les utilisateurs peuvent être des **etudiants**, des **RH** ou des **projects managers**, et chaque rôle a des privilèges différents. 
 
