@@ -39,13 +39,14 @@
         <div class="mb-3">
           <label class="form-label fw-bold">Country:</label>
           <select class="form-control" formControlName="country" (change)="onCountryChange($event)">
+            <option value="" disabled selected>Select Country</option>
             <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
           </select>
           <small class="text-danger" *ngIf="f['country'].touched && f['country'].invalid">
             Country selection is required.
           </small>
         </div>
-  
+        
         <div class="mb-3">
           <label class="form-label fw-bold">City:</label>
           <input type="text" class="form-control" formControlName="city" placeholder="Enter city" />
@@ -53,8 +54,10 @@
             <span *ngIf="f['city'].errors?.['required']">City is required.</span>
             <span *ngIf="f['city'].errors?.['pattern']">City must only contain letters and spaces.</span>
           </small>
-          
         </div>
+        
+       
+        
   
         <div class="mb-3">
           <label class="form-label fw-bold">Phone:</label>
@@ -68,6 +71,7 @@
         <div class="mb-3">
           <label class="form-label fw-bold">Industry Sector:</label>
           <select class="form-control" formControlName="industrySector">
+            <option value="" disabled selected>Select Industry Sector</option>
             <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
           </select>
           <small class="text-danger" *ngIf="f['industrySector'].touched && f['industrySector'].invalid">

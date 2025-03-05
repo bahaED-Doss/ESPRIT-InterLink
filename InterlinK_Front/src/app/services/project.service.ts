@@ -68,5 +68,9 @@ export class ProjectService {
       newStatus // Send the status directly as a string
     );
   }
+  searchProjects(keyword: string): Observable<Project[]> {
+    return this.http.get<Project[]>(`${this.apiUrl}/search?keyword=${keyword}`);
+  }
+  
   
 }

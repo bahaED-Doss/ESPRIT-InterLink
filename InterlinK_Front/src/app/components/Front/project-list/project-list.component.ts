@@ -36,6 +36,23 @@ export class ProjectListComponent implements OnInit {
     }
     this.router.navigate(['/projectDetails', projectId]); 
   }
+  searchKeyword: string = "";
+
+searchProjects(): void {
+  if (!this.searchKeyword.trim()) {
+    this.loadProjects(); // Reload all projects if search is empty
+    return;
+  }
+
+  this.projectService.searchProjects(this.searchKeyword).subscribe(data => {
+    this.projects = data.map(p => ({
+      ...p,
+      startDate: new Date(p.startDate),
+      endDate: new Date(p.endDate)
+    }));
+  });
+}
+
 
   deleteProject(project: any): void {
     if (!project || !project.projectId) {

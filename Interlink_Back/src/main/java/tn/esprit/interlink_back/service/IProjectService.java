@@ -16,4 +16,8 @@ public interface IProjectService {
     int calculateProjectProgress(Long projectId);
 
     Milestone updateMilestoneStatus(Long projectId, Long milestoneId, MilestoneStatus status);
+
+    List<Project> searchProjects(String keyword);
+
+    StatisticsDTO getProjectStatistics();
 }

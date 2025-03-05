@@ -17,32 +17,31 @@
               <div class="row g-3">
                 <div class="col-md-4">
                   <label for="industrySector" class="form-label">Industry Sector</label>
-                  <select class="form-select" id="industrySector" [(ngModel)]="searchIndustrySector" name="industrySector">
+                  <select class="form-select" id="industrySector" [(ngModel)]="searchIndustrySector" name="industrySector" (change)="onSearch()">
                     <option value="" disabled selected>Select Industry Sector</option>
                     <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
                   </select>
                 </div>
-
+                
                 <div class="col-md-4">
                   <label for="country" class="form-label">Country</label>
-                  <select class="form-select" id="country" [(ngModel)]="selectedCountry" name="country" (change)="onCountryChange($event)">
+                  <select class="form-select" id="country" [(ngModel)]="selectedCountry" name="country" (change)="onCountryChange($event); onSearch()">
                     <option value="" disabled selected>Select Country</option>
                     <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
                   </select>
                 </div>
-
+                
                 <div class="col-md-4">
                   <label for="city" class="form-label">City</label>
-                  <select class="form-select" id="city" [(ngModel)]="selectedCity" name="city">
+                  <select class="form-select" id="city" [(ngModel)]="selectedCity" name="city" (change)="onSearch()">
                     <option value="" disabled selected>Select City</option>
                     <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
                   </select>
                 </div>
               </div>
 
-              <div class="text-center mt-4">
-                <button class="btn btn-primary btn-lg px-5">Search</button>
-              </div>
+
+        
             </form>
           </div>
         </div>

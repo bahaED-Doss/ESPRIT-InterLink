@@ -39,15 +39,18 @@ export class CompanyListComponent implements OnInit {
   onCountryChange(event: Event): void {
     const selectedCountry = (event.target as HTMLSelectElement).value;
     this.selectedCountry = selectedCountry;
-
+  
     this.cities = [...new Set(this.companies
       .filter(company => company.country === selectedCountry)
       .map(company => company.city))];
-
+  
     if (!this.cities.includes(this.selectedCity)) {
       this.selectedCity = '';
     }
+  
+    this.onSearch(); // 🔥 Automatically trigger search
   }
+  
 
   onSearch(): void {
     this.companyService.searchCompanies({

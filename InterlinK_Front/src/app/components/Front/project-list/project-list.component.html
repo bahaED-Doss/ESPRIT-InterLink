@@ -20,56 +20,49 @@
                                 <i class="bi bi-plus-circle me-2"></i> Add Project
                             </button>
                         </div>
+                    <!-- Search Bar -->
+                    <div class="input-group mb-4">
+                        <input type="text" class="form-control" placeholder="Search projects..." [(ngModel)]="searchKeyword" (keyup)="searchProjects()">
+                    </div>
+                        <!-- Projects List -->
+<div class="list-group">
+    <div *ngFor="let project of projects" 
+         class="list-group-item list-group-item-action p-4 rounded-4 shadow-sm mb-3 position-relative"
+         (click)="goToProjectDetails(project.projectId)">
 
-                        <!-- Dynamic Project List -->
-                        <div class="list-group">
-                            <div *ngFor="let project of projects" 
-                                 class="list-group-item list-group-item-action p-4 rounded-4 shadow-sm mb-3 position-relative"
-                                 (click)="goToProjectDetails(project.projectId)"> <!-- ✅ Click Event to Navigate -->
-                                
-                                <div class="d-flex w-100 justify-content-between align-items-center">
-                                    <h5 class="mb-1 text-primary">{{ project.title }}</h5>
-                                    <small class="text-muted">
-                                        {{ project.startDate ? (project.startDate | date:'yyyy-MM-dd') : 'N/A' }} -> 
-                                        {{ project.endDate ? (project.endDate | date:'yyyy-MM-dd') : 'N/A' }}
-                                    </small>
-                                    
-                                </div>
-                                
-                                <p class="mb-1 text-dark">{{ project.description }}</p>
-                        
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <small class="text-muted">
-                                        <i class="bi bi-building"></i> {{ project.company?.name }}
-                                    </small>
-                        
-                                    <!-- Project Status -->
-                                    <span class="badge px-3 py-2"
-                                          [ngClass]="{
-                                              'bg-success': project.status === 'Completed',
-                                              'bg-warning text-dark': project.status === 'In Progress',
-                                              'bg-secondary': project.status === 'Open'
-                                          }">
-                                        {{ project.status }}
-                                    </span>
-                                </div>
-                        
-                                <!-- Action Buttons -->
-                                <div class="d-flex gap-2 mt-3">
-                                    <!-- Edit Button -->
-                                    <button class="btn btn-outline-primary btn-sm" 
-                                            [routerLink]="['/editProject', project.projectId]" (click)="$event.stopPropagation()">
-                                        <i class="bi bi-pencil-square"></i> Edit
-                                    </button>
-                        
-                                    <!-- Delete Button -->
-                                        <button class="btn btn-outline-danger btn-sm" (click)="deleteProject(project); $event.stopPropagation();">
-                                                 <i class="bi bi-trash"></i> Delete
-                                        </button>
+        <div class="d-flex w-100 justify-content-between align-items-center">
+            <h5 class="mb-1 text-primary">{{ project.title }}</h5>
+            <small class="text-muted">
+                {{ project.startDate ? (project.startDate | date:'yyyy-MM-dd') : 'N/A' }} -> 
+                {{ project.endDate ? (project.endDate | date:'yyyy-MM-dd') : 'N/A' }}
+            </small>
+        </div>
 
-                                </div>
-                            </div>
-                        </div>
+        <p class="mb-1 text-dark">{{ project.description }}</p>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <small class="text-muted">
+                <i class="bi bi-building"></i> {{ project.company?.name }}
+            </small>
+
+            <span class="badge px-3 py-2"
+                  [ngClass]="{
+                      'bg-success': project.status === 'Completed',
+                      'bg-warning text-dark': project.status === 'In Progress',
+                      'bg-secondary': project.status === 'Open'
+                  }">
+                {{ project.status }}
+            </span>
+        </div>
+
+        <!-- Delete Button Only (Removed Edit Button) -->
+        <div class="d-flex gap-2 mt-3">
+            <button class="btn btn-outline-danger btn-sm" (click)="deleteProject(project); $event.stopPropagation();">
+                <i class="bi bi-trash"></i> Delete
+            </button>
+        </div>
+    </div>
+</div>
                         
                     </section>
                 </div>
