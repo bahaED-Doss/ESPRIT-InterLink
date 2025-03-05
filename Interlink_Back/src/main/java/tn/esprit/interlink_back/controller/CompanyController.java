@@ -6,6 +6,7 @@ import tn.esprit.interlink_back.entity.Company;
 import tn.esprit.interlink_back.service.ICompanyService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -72,5 +73,14 @@ public class CompanyController {
             @RequestParam(defaultValue = "true") boolean ascending
     ) {
         return companyService.searchCompanies(industrySector, country, city, sortField, ascending);
+    }
+    @GetMapping("/projects-per-company")
+    public Map<String, Integer> getProjectsPerCompany() {
+        return companyStatisticsService.getProjectsPerCompany();
+    }
+
+    @GetMapping("/companies-by-industry")
+    public Map<String, Long> getCompaniesByIndustrySector() {
+        return companyStatisticsService.getCompaniesByIndustrySector();
     }
 }

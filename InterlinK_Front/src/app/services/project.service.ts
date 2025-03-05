@@ -71,6 +71,9 @@ export class ProjectService {
   searchProjects(keyword: string): Observable<Project[]> {
     return this.http.get<Project[]>(`${this.apiUrl}/search?keyword=${keyword}`);
   }
+  getProjectStatusStatistics(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/statistics/status`);
+  }
   
   
 }

@@ -2,7 +2,7 @@ package tn.esprit.interlink_back.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.esprit.interlink_back.dtos.StatisticsDTO;
+import tn.esprit.interlink_back.dtos.ProjectStatisticsDTO;
 import tn.esprit.interlink_back.entity.Enums.MilestoneStatus;
 import tn.esprit.interlink_back.entity.Project;
 import tn.esprit.interlink_back.entity.Milestone;
@@ -10,6 +10,7 @@ import tn.esprit.interlink_back.repository.MilestoneRepository;
 import tn.esprit.interlink_back.repository.ProjectRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectServiceImpl implements IProjectService {
@@ -126,22 +127,12 @@ public class ProjectServiceImpl implements IProjectService {
         return projectRepository.searchProjects(keyword);
     }
     @Override
-    public StatisticsDTO getProjectStatistics() {
-        List<Project> allProjects = projectRepository.findAll();
+    public List<ProjectStatisticsDTO> getProjectStatusStatistics() {
+        List<Object[]> rawStats = projectRepository.getProjectStatusStatistics();
 
-        // Create counters for each project status
-        long activeCount = allProjects.stream().filter(p -> "In Progress".equalsIgnoreCase(p.getStatus())).count();
-        long completedCount = allProjects.stream().filter(p -> "Completed".equalsIgnoreCase(p.getStatus())).count();
-        long onHoldCount = allProjects.stream().filter(p -> "Open".equalsIgnoreCase(p.getStatus())).count();
-
-        // Create and return the statistics DTO
-        StatisticsDTO stats = new StatisticsDTO();
-        stats.setActive(activeCount);
-        stats.setCompleted(completedCount);
-        stats.setOnHold(onHoldCount);
-        stats.setTotal(allProjects.size());
-
-        return stats;
+        return rawStats.stream()
+                .map(row -> new ProjectStatisticsDTO((String) row[0], (Long) row[1]))
+                .collect(Collectors.toList());
     }
 
 

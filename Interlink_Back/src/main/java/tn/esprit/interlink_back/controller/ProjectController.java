@@ -3,7 +3,7 @@ package tn.esprit.interlink_back.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.interlink_back.dtos.StatisticsDTO;
+import tn.esprit.interlink_back.dtos.ProjectStatisticsDTO;
 import tn.esprit.interlink_back.entity.Enums.MilestoneStatus;
 import tn.esprit.interlink_back.entity.Milestone;
 import tn.esprit.interlink_back.entity.Project;
@@ -89,10 +89,11 @@ public class ProjectController {
     public List<Project> searchProjects(@RequestParam String keyword) {
         return projectService.searchProjects(keyword);
     }
-    @GetMapping("/statistics")
-    public ResponseEntity<StatisticsDTO> getStatistics() {
-        StatisticsDTO stats = projectService.getProjectStatistics();
-        return ResponseEntity.ok(stats);
+
+    @GetMapping("/statistics/status")
+    public ResponseEntity<List<ProjectStatisticsDTO>> getProjectStatistics() {
+        return ResponseEntity.ok(projectService.getProjectStatusStatistics());
     }
+
 
 }

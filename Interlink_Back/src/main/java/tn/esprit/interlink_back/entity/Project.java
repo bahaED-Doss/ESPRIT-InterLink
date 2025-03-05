@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+
 public class Project {
 
     @Id
@@ -29,7 +30,7 @@ public class Project {
     private String description;
 
     @JsonProperty("status")
-    private String status; // Status of the project (e.g., "Active", "Completed", "On-Hold")
+    private String status; // e.g., "Active", "Completed", "On-Hold"
 
     @JsonProperty("technologiesUsed")
     private String technologiesUsed;
@@ -40,29 +41,23 @@ public class Project {
     @JsonProperty("endDate")
     private LocalDate endDate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "company_id")
-    @JsonManagedReference
     private Company company;
 
-
-
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Milestone> milestones;
+    private List<Milestone> milestones = new ArrayList<>();
 
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "manager_id")
-    private User projectManager; // Each project is managed by one manager
+    private User projectManager;
 
     @ManyToOne
-    @JoinTable(
-            name = "project_student",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private User students; // A project can have multiple students
+    @JoinColumn(name = "student_id")
+    private User student;
+
 
     public Long getProjectId() {
         return projectId;

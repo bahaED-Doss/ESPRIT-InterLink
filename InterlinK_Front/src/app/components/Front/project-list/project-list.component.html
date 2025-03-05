@@ -10,9 +10,11 @@
                 </h1>
             </div>
 
+           
+
+            <!-- Existing Projects Section -->
             <div class="row justify-content-center">
                 <div class="col-lg-11 col-xl-9 col-xxl-8">
-                    <!-- Internship Projects Section -->
                     <section>
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <h2 class="text-primary fw-bolder mb-0">Projects</h2>
@@ -20,54 +22,73 @@
                                 <i class="bi bi-plus-circle me-2"></i> Add Project
                             </button>
                         </div>
-                    <!-- Search Bar -->
-                    <div class="input-group mb-4">
-                        <input type="text" class="form-control" placeholder="Search projects..." [(ngModel)]="searchKeyword" (keyup)="searchProjects()">
-                    </div>
+
+                        <!-- Search Bar -->
+                        <div class="input-group mb-4">
+                            <input type="text" class="form-control" placeholder="Search projects..." [(ngModel)]="searchKeyword" (keyup)="searchProjects()">
+                        </div>
+
                         <!-- Projects List -->
-<div class="list-group">
-    <div *ngFor="let project of projects" 
-         class="list-group-item list-group-item-action p-4 rounded-4 shadow-sm mb-3 position-relative"
-         (click)="goToProjectDetails(project.projectId)">
+                        <div class="list-group">
+                            <div *ngFor="let project of projects" 
+                                 class="list-group-item list-group-item-action p-4 rounded-4 shadow-sm mb-3 position-relative"
+                                 (click)="goToProjectDetails(project.projectId)">
 
-        <div class="d-flex w-100 justify-content-between align-items-center">
-            <h5 class="mb-1 text-primary">{{ project.title }}</h5>
-            <small class="text-muted">
-                {{ project.startDate ? (project.startDate | date:'yyyy-MM-dd') : 'N/A' }} -> 
-                {{ project.endDate ? (project.endDate | date:'yyyy-MM-dd') : 'N/A' }}
-            </small>
-        </div>
+                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                    <h5 class="mb-1 text-primary">{{ project.title }}</h5>
+                                    <small class="text-muted">
+                                        {{ project.startDate ? (project.startDate | date:'yyyy-MM-dd') : 'N/A' }} -> 
+                                        {{ project.endDate ? (project.endDate | date:'yyyy-MM-dd') : 'N/A' }}
+                                    </small>
+                                </div>
 
-        <p class="mb-1 text-dark">{{ project.description }}</p>
+                                <p class="mb-1 text-dark">{{ project.description }}</p>
 
-        <div class="d-flex justify-content-between align-items-center mt-3">
-            <small class="text-muted">
-                <i class="bi bi-building"></i> {{ project.company?.name }}
-            </small>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <small class="text-muted">
+                                        <i class="bi bi-building"></i> {{ project.company?.name }}
+                                    </small>
 
-            <span class="badge px-3 py-2"
-                  [ngClass]="{
-                      'bg-success': project.status === 'Completed',
-                      'bg-warning text-dark': project.status === 'In Progress',
-                      'bg-secondary': project.status === 'Open'
-                  }">
-                {{ project.status }}
-            </span>
-        </div>
+                                    <span class="badge px-3 py-2"
+                                          [ngClass]="{
+                                              'bg-success': project.status === 'Completed',
+                                              'bg-warning text-dark': project.status === 'In Progress',
+                                              'bg-secondary': project.status === 'Open'
+                                          }">
+                                        {{ project.status }}
+                                    </span>
+                                </div>
 
-        <!-- Delete Button Only (Removed Edit Button) -->
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-outline-danger btn-sm" (click)="deleteProject(project); $event.stopPropagation();">
-                <i class="bi bi-trash"></i> Delete
-            </button>
-        </div>
-    </div>
-</div>
-                        
+                                <!-- Delete Button Only -->
+                                <div class="d-flex gap-2 mt-3">
+                                    <button class="btn btn-outline-danger btn-sm" (click)="deleteProject(project); $event.stopPropagation();">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </section>
+                </div>
+            </div>
+           <!-- Project Statistics Section -->
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">Project Status Statistics</h5>
+                    <div *ngIf="projectStatistics.length > 0; else noStats">
+                        <ul class="list-group">
+                            <li *ngFor="let stat of projectStatistics" class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ stat.status }}
+                                <span class="badge bg-primary rounded-pill">{{ stat.count }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <ng-template #noStats>
+                        <p class="text-muted">No statistics available.</p>
+                    </ng-template>
                 </div>
             </div>
         </div>
     </main>
 
-<app-footer></app-footer>
+    <app-footer></app-footer>
+</body>

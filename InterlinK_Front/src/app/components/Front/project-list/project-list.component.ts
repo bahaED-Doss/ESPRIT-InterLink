@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/services/project.service';
-import { Router } from '@angular/router'; 
-
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project-list',
@@ -11,13 +9,14 @@ import { Router } from '@angular/router';
 })
 export class ProjectListComponent implements OnInit {
   projects: any[] = [];
-  skills: string[] = ['Project Management', 'Teamwork', 'Problem Solving', 'Agile Development'];
-  technologies: string[] = ['Angular', 'Spring Boot', 'PostgreSQL', 'Docker'];
+  projectStatistics: any[] = []; // Store statistics
+  searchKeyword: string = "";
 
-  constructor(private projectService: ProjectService ,private router: Router) {}
+  constructor(private projectService: ProjectService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadProjects();
+    this.loadProjectStatistics(); // Fetch statistics
   }
 
   loadProjects(): void {
@@ -29,6 +28,14 @@ export class ProjectListComponent implements OnInit {
       }));
     });
   }
+
+  loadProjectStatistics(): void {
+    this.projectService.getProjectStatusStatistics().subscribe(data => {
+      this.projectStatistics = data;
+    });
+  }
+  
+
   goToProjectDetails(projectId: number): void {
     if (!this.router) {
       console.error("Router is undefined!"); 
@@ -36,23 +43,21 @@ export class ProjectListComponent implements OnInit {
     }
     this.router.navigate(['/projectDetails', projectId]); 
   }
-  searchKeyword: string = "";
 
-searchProjects(): void {
-  if (!this.searchKeyword.trim()) {
-    this.loadProjects(); // Reload all projects if search is empty
-    return;
+  searchProjects(): void {
+    if (!this.searchKeyword.trim()) {
+      this.loadProjects(); // Reload all projects if search is empty
+      return;
+    }
+
+    this.projectService.searchProjects(this.searchKeyword).subscribe(data => {
+      this.projects = data.map(p => ({
+        ...p,
+        startDate: new Date(p.startDate),
+        endDate: new Date(p.endDate)
+      }));
+    });
   }
-
-  this.projectService.searchProjects(this.searchKeyword).subscribe(data => {
-    this.projects = data.map(p => ({
-      ...p,
-      startDate: new Date(p.startDate),
-      endDate: new Date(p.endDate)
-    }));
-  });
-}
-
 
   deleteProject(project: any): void {
     if (!project || !project.projectId) {
@@ -62,9 +67,6 @@ searchProjects(): void {
 
     const confirmation = confirm(`Are you sure you want to delete "${project.title}"?`);
     if (!confirmation) return;
-
-    console.log("Deleting Project:", project); 
-    console.log("Project ID:", project.projectId); 
 
     this.projectService.deleteProject(project.projectId).subscribe({
       next: () => {

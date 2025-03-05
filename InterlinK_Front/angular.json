@@ -123,7 +123,9 @@
               "src/assets/frontA/css/glightbox.min.css",
               "src/assets/frontA/css/tiny-slider.css",
               "src/assets/frontA/css/lineicons.2.0.css",
-              "src/assets/frontA/css/style.css"
+              "src/assets/frontA/css/style.css",
+              "node_modules/@swimlane/ngx-charts/release/index.css"
+
               
             ],
            "scripts": [

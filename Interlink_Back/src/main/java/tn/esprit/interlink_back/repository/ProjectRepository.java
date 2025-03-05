@@ -14,4 +14,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
             "OR LOWER(p.description) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Project> searchProjects(@Param("keyword") String keyword);
 
+    @Query("SELECT p.status, COUNT(p) FROM Project p GROUP BY p.status")
+    List<Object[]> getProjectStatusStatistics();
+
 }

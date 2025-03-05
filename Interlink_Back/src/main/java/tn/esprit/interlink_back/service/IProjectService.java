@@ -1,5 +1,6 @@
 package tn.esprit.interlink_back.service;
 
+import tn.esprit.interlink_back.dtos.ProjectStatisticsDTO;
 import tn.esprit.interlink_back.entity.Enums.MilestoneStatus;
 import tn.esprit.interlink_back.entity.Milestone;
 import tn.esprit.interlink_back.entity.Project;
@@ -19,5 +20,5 @@ public interface IProjectService {
 
     List<Project> searchProjects(String keyword);
 
-    StatisticsDTO getProjectStatistics();
+    List<ProjectStatisticsDTO> getProjectStatusStatistics();
 }
