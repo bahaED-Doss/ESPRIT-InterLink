@@ -63,6 +63,7 @@ public class GmailOAuth2Service {
 
     private Gmail gmailService;
 
+
     @PostConstruct
     public void init() throws GeneralSecurityException, IOException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();

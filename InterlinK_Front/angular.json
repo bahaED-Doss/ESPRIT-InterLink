@@ -36,9 +36,10 @@
               
             ],
             "scripts": [
-              "src/assets/frontA/js/bootstrap.min.js",
-              "src/assets/frontA/js/glightbox.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
               "src/assets/frontA/js/jquery-counterup.min.js",
+              "src/assets/frontA/js/glightbox.min.js",
+             
               "src/assets/frontA/js/main.js",
               "src/assets/frontA/js/tiny-slider.js",
               "src/assets/frontA/js/wow.min.js",
@@ -114,9 +115,11 @@
               
             ],
             "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "src/assets/frontA/js/jquery-counterup.min.js",
               "src/assets/frontA/js/bootstrap.min.js",
               "src/assets/frontA/js/glightbox.min.js",
-              "src/assets/frontA/js/jquery-counterup.min.js",
+              
               "src/assets/frontA/js/main.js",
               "src/assets/frontA/js/tiny-slider.js",
               "src/assets/frontA/js/wow.min.js",

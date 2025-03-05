@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class StudentProfileComponent {
   user: any;
-
+  studentId!: string;
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService
@@ -17,6 +17,8 @@ export class StudentProfileComponent {
 
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
+    this.studentId = this.route.snapshot.paramMap.get('id')!;
+    console.log("Logged-in student ID:", this.studentId);
     this.authService.getUserById(id).subscribe((user) => {
       this.user = user;
     });

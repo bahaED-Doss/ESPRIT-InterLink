@@ -20,8 +20,22 @@ import { WelcomeViewComponent } from './components/Front/welcome-view/welcome-vi
 import { InternshipsComponent } from './components/Front/internships/internships.component';
 import { StartProcessComponent } from './components/Front/start-process/start-process.component';
 import { HomeHrComponent } from './components/Front/hrDashboard/home-hr/home-hr.component';
-import { ProfileHrComponent } from './components/Front/profile-hr/profile-hr.component';
-import { ProfileStudentComponent } from './components/Front/profile-student/profile-student.component';
+
+import { ProfileStudentComponent } from './components/Front/studentSettings/profile-student/profile-student.component';
+
+import { ChangepasswordsComponent } from './components/Front/studentSettings/changepasswords/changepasswords.component';
+import { SkillssComponent } from './components/Front/studentSettings/skillss/skillss.component';
+import { SociallinkssComponent } from './components/Front/studentSettings/sociallinkss/sociallinkss.component';
+import { ProfileHrComponent } from './components/Front/hrSettings/profile-hr/profile-hr.component';
+import { SociallinkshrComponent } from './components/Front/hrSettings/sociallinkshr/sociallinkshr.component';
+import { ChangepasswordhrComponent } from './components/Front/hrSettings/changepasswordhr/changepasswordhr.component';
+import { UserStatisticsComponent } from './components/Back/user-statistics/user-statistics.component';
+import { authGuard } from './guards/auth.guard';
+
+
+
+
+
 
 
 
@@ -29,7 +43,11 @@ const routes: Routes = [
   {path: '', component: HomeFrontComponent,},
   { path: 'login', component: LoginComponent },
   { path: 'homeFront', component: HomeFrontComponent },
-  
+  { path: 'socialLinksHR/:id', component: SociallinkshrComponent },
+  { path: 'changePassHR/:id', component: ChangepasswordhrComponent },
+  { path: 'changePassS/:id', component: ChangepasswordsComponent },
+  { path: 'skillsS/:id', component: SkillssComponent },
+  { path: 'socialLinksS/:id', component: SociallinkssComponent },
   { path: 'welcomeV', component: WelcomeViewComponent },
   { path: 'internships', component: InternshipsComponent },
   { path: 'startProcess', component: StartProcessComponent },
@@ -37,16 +55,17 @@ const routes: Routes = [
   { path: 'HrDashboard', component: HomeHrComponent },
   { path: 'forgetPassword', component: ForgetPasswordComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'profileHr', component: ProfileHrComponent },
-  { path: 'profileStudent', component: ProfileStudentComponent },
+  { path: 'profileHr/:id', component: ProfileHrComponent },
+  { path: 'profileStudent/:id', component: ProfileStudentComponent },
   { path: 'internshipsBack', component: InternshipsBackComponent },
   { path: 'applicationsBack', component: ApplicationsBackComponent },
-  
+  { path: 'userStats', component: UserStatisticsComponent },
   { path: 'tables', component: TablesComponent },
   { path: 'student-profile/:id', component: StudentProfileComponent },
-  { path: 'hr-profile/:id', component: HrProfileComponent },
+  { path: 'hr-profile/:id', component: HrProfileComponent, canActivate: [authGuard] },
   
-  { path: 'reset-password/:token', component: ResetPasswordComponent }
+  { path: 'reset-password/:token', component: ResetPasswordComponent },
+  { path: '**', redirectTo: 'login' }  // Default redirect
   
 ];
 

@@ -1,3 +1,4 @@
+
 package tn.esprit.interlink_back.configs;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,6 +30,8 @@ import tn.esprit.interlink_back.entity.CustomOAuth2User;
 import tn.esprit.interlink_back.services.CustomOAuth2UserService;
 import tn.esprit.interlink_back.services.UserService;
 
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -41,9 +44,14 @@ public class SecurityConfig {
     }
     @Bean
     public CorsFilter corsFilter() {
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of("http://localhost:4200")); // Allow Angular frontend
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
+
         config.addAllowedOriginPattern("*");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
@@ -66,7 +74,17 @@ public class SecurityConfig {
 
                 // Configure URL authorization
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll()
+                        .requestMatchers(
+                                "/",
+                                "/error",
+                                "/login",
+                                "/oauth2/**",
+                                "/api/**",
+                                "/oauth2/callback/**",
+                                "/uploads/**"
+                        ).permitAll()
+                        .anyRequest().authenticated()
+
                 )
 
                 // Configure form login and OAuth2 login
@@ -75,7 +93,15 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/login")
+                        //.loginPage("/login")
+                        .defaultSuccessUrl("http://localhost:4200/student-profile/{id}", true)
+                        .successHandler(oauth2AuthenticationSuccessHandler())
+
+                        .failureUrl("/login?error=true")
+                        .authorizationEndpoint(authorization -> authorization
+                                .baseUri("/oauth2/authorize"))
+                        .redirectionEndpoint(redirection -> redirection
+                                .baseUri("/oauth2/callback/*"))
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(oauth2UserService)
                         )

@@ -1,0 +1,57 @@
+<app-navbar-student></app-navbar-student>
+
+<div class="container">
+  <h4 class="title">Social Links</h4>
+  <div class="settings-card">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 sidebar">
+        <div class="list-group">
+          <a class="list-group-item" [routerLink]="['/profileHr', userId]" routerLinkActive="active">General</a>
+          <a class="list-group-item" [routerLink]="['/changePassHR', userId]" routerLinkActive="active">Change Password</a>
+          <a class="list-group-item" [routerLink]="['/socialLinksHR', userId]" routerLinkActive="active">Social Links</a>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-md-9 content">
+        <form [formGroup]="socialForm">
+          <div class="form-group">
+            <label class="form-label">Facebook</label>
+            <input type="text" class="form-control" formControlName="facebook" placeholder="https://www.facebook.com/yourprofile">
+            <div *ngIf="socialForm.get('facebook')?.hasError('invalidUrl')" class="error-message">
+              Please enter a valid Facebook URL.
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Github</label>
+            <input type="text" class="form-control" formControlName="githubLink" placeholder="https://github.com/yourusername">
+            <div *ngIf="socialForm.get('githubLink')?.hasError('invalidUrl')" class="error-message">
+              Please enter a valid Github URL.
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">LinkedIn</label>
+            <input type="text" class="form-control" formControlName="linkedin" placeholder="https://www.linkedin.com/in/yourprofile">
+            <div *ngIf="socialForm.get('linkedin')?.hasError('invalidUrl')" class="error-message">
+              Please enter a valid LinkedIn URL.
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Instagram</label>
+            <input type="text" class="form-control" formControlName="instagram" placeholder="https://www.instagram.com/yourprofile">
+            <div *ngIf="socialForm.get('instagram')?.hasError('invalidUrl')" class="error-message">
+              Please enter a valid Instagram URL.
+            </div>
+          </div>
+          <div class="action-buttons">
+            <button type="button" class="btn btn-save" (click)="saveSocialLinks()">Save Changes</button>
+            <button type="button" class="btn btn-cancel">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

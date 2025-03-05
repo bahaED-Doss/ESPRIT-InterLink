@@ -244,7 +244,7 @@
   }
   
   .navbar-nav .nav-item a {
-    font-size: 13px;
+    font-size: 12px ;
     font-weight: 500;
     color: #333; /* <--- This sets the default color */
     -webkit-transition: all 0.3s ease-out 0s;
@@ -307,7 +307,7 @@
   
  
   .navbar-nav .nav-item a {
-    font-size: 18px !important;
+    font-size: 17px !important;
     font-weight: 500;
     color: #333;
     /* ... other styles ... */
@@ -494,6 +494,9 @@
   .navbar-nav a{
     font-size: 17px !important;
     text-decoration: none !important;
+  }
+  .nav-item a{
+    font-size: 32px !important;
   }
   .button a{ 
     display: flex !important;

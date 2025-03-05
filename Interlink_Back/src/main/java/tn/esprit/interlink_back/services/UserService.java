@@ -3,28 +3,56 @@ package tn.esprit.interlink_back.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import tn.esprit.interlink_back.dtos.GoogleUser;
 import tn.esprit.interlink_back.entity.PasswordResetToken;
+import tn.esprit.interlink_back.entity.Provider;
+import tn.esprit.interlink_back.entity.Role;
 import tn.esprit.interlink_back.entity.User;
 import tn.esprit.interlink_back.repository.TokenRepository;
 import tn.esprit.interlink_back.repository.UserRepository;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
+import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 
 @Service
 public class UserService {
+    private final String JWT_SECRET = "befda9f0bd9cd5b3cf1014cb9df5262ce22e18e7709"; // Use a secure secret in production
+    private final String GOOGLE_CLIENT_ID = "340845014781-evjvvne83oqk7ia1fdg1oclcqto82snv.apps.googleusercontent.com";
+    private final String GOOGLE_CLIENT_SECRET = "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";
+
+    private static final String GITHUB_TOKEN_URL = "https://github.com/login/oauth/access_token";
+    private static final String GITHUB_USER_URL = "https://api.github.com/user";
+
+
+    @Value("${github.client-id}")
+    private String clientId;
+
+    @Value("${github.client-secret}")
+    private String clientSecret;
+
+    @Value("${github.redirect-uri}")
+    private String redirectUri;
+    private final RestTemplate restTemplate = new RestTemplate();
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private FileStorageService fileStorageService;
     // Use BCryptPasswordEncoder for hashing passwords
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -36,8 +64,16 @@ public class UserService {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(UserService.class);
     @Autowired
     private GmailOAuth2Service gmailOAuth2Service;
+    private final String jwtSecret = "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"; // Replace with a secure secret key
+    private final long jwtExpirationMs = 86400000; // 24 hours
 
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
 
+    }
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
     // Register a new user
     public User registerUser(User user) {
         // Validate email uniqueness
@@ -82,6 +118,12 @@ public class UserService {
                 throw new RuntimeException("Invalid role");
         }
     }
+    public User blockUser(Long id, boolean enabled) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        user.setEnabled(enabled);
+        return userRepository.save(user);
+    }
 
     // Find a user by email
     public User findByEmail(String email) {
@@ -115,18 +157,75 @@ public class UserService {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
+        // Update common fields
         existingUser.setFirstName(updatedUser.getFirstName());
         existingUser.setLastName(updatedUser.getLastName());
         existingUser.setEmail(updatedUser.getEmail());
-        existingUser.setRole(updatedUser.getRole());
+        existingUser.setPhoneNumber(updatedUser.getPhoneNumber());
 
-        // Only update the password if a new one is provided
+        // Update levelOfStudy only if the user is a STUDENT.
+        if (existingUser.getRole() == Role.STUDENT) {
+            existingUser.setLevelOfStudy(updatedUser.getLevelOfStudy());
+        }
+
+        // Update social links (applies to all roles)
+        existingUser.setFacebook(updatedUser.getFacebook());
+        existingUser.setGithubLink(updatedUser.getGithubLink());
+        existingUser.setLinkedin(updatedUser.getLinkedin());
+        existingUser.setInstagram(updatedUser.getInstagram());
+
+        // Update password if a new one is provided
         if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
             String encryptedPassword = passwordEncoder.encode(updatedUser.getPassword());
             existingUser.setPassword(encryptedPassword);
         }
 
+        // Update role only if a new role is provided (otherwise, keep the existing role)
+        if (updatedUser.getRole() != null) {
+            existingUser.setRole(updatedUser.getRole());
+        }
+
         return userRepository.save(existingUser);
+    }
+
+
+    public User loginWithGoogle(GoogleUser googleUser) {
+        // Check if the user already exists by email
+        User existingUser = userRepository.findByEmail(googleUser.getEmail());
+
+        if (existingUser != null) {
+            // If the user exists, update their Google ID and provider
+            existingUser.setGoogleId(googleUser.getId());
+            existingUser.setProvider(Provider.valueOf("GOOGLE"));
+            return userRepository.save(existingUser);
+        } else {
+            // Create a new user with the role set to STUDENT
+            User newUser = new User();
+            newUser.setGoogleId(googleUser.getId());
+            newUser.setEmail(googleUser.getEmail());
+            newUser.setFirstName(googleUser.getFirstName());
+            newUser.setLastName(googleUser.getLastName());
+            newUser.setPhotoUrl(googleUser.getPhotoUrl());
+            newUser.setRole(Role.STUDENT); // Explicitly set role to STUDENT
+            newUser.setProvider(Provider.valueOf("GOOGLE"));
+
+            return userRepository.save(newUser);
+        }
+    }
+    // Upload photo and update the user photo URL
+    public String uploadUserPhoto(Long userId, MultipartFile file) throws IOException {
+        String photoUrl = fileStorageService.storeFile(file); // Save the file to storage and get the URL
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        user.setPhotoUrl(photoUrl);
+        userRepository.save(user);
+        return photoUrl;
+    }
+
+    // Reset photo to default
+    public void resetUserPhoto(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        user.setPhotoUrl("https://bootdey.com/img/Content/avatar/avatar1.png"); // Default image URL
+        userRepository.save(user);
     }
 
     public void deleteUser(int id) {
@@ -137,6 +236,134 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findById((long) id);
         return optionalUser.orElse(null);
     }
+    public String exchangeCodeForToken(String code) throws IOException {
+        String url = "https://github.com/login/oauth/access_token";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("client_id", clientId);
+        body.add("client_secret", clientSecret);
+        body.add("code", code);
+        body.add("redirect_uri", redirectUri);  // Vérifier si ce paramètre est correct
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
+        ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
+
+        if (response.getBody() != null && response.getBody().containsKey("access_token")) {
+            return response.getBody().get("access_token").toString();
+        }
+
+        throw new RuntimeException("Erreur lors de l'échange du code GitHub pour un token");
+    }
+    // Récupère les informations de l'utilisateur depuis GitHub
+    public Map<String, Object> fetchGitHubUser(String accessToken) {
+        String url = "https://api.github.com/user";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(accessToken);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        ResponseEntity<Map> response = restTemplate.exchange(url, HttpMethod.GET, request, Map.class);
+        return response.getBody();
+    }
+    // Traite l'utilisateur GitHub (crée ou met à jour)
+    public User processGitHubUser(Map<String, Object> githubUser) {
+        String githubId = String.valueOf(githubUser.get("id"));
+        String firstName = (String) githubUser.get("name");
+        String email = (String) githubUser.get("email");
+        String photoUrl = (String) githubUser.get("avatar_url");
+
+        // Si l'email est privé ou non disponible, utilisez une adresse générique
+        if (email == null) {
+            email = "github-user-" + githubId + "@github.com"; // Email généré automatiquement
+            logger.warn("Email GitHub non public, utilisation d'un email générique: {}", email);
+        }
+
+        Optional<User> existingUser = Optional.ofNullable(userRepository.findByEmail(email));
+
+        String finalEmail = email;
+        return existingUser.orElseGet(() -> {
+            User newUser = new User(githubId, firstName, "", finalEmail, photoUrl, Role.STUDENT);
+            return userRepository.save(newUser);
+        });
+    }
+
+    // Génère un JWT pour l'utilisateur
+    public String generateJwtToken(User user) {
+        return Jwts.builder()
+                .setSubject(user.getEmail())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs)) // Set expiration time
+                .claim("role", user.getRole().toString()) // Add role claim
+                .claim("id", user.getId()) // Add user ID claim
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact();
+    }
+    public GoogleUser fetchGoogleUserDetails(String accessToken) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(accessToken);
+
+        String url = "https://www.googleapis.com/oauth2/v3/userinfo";
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<Map> response = restTemplate.exchange(url, HttpMethod.GET, entity, Map.class);
+        Map<String, Object> userInfo = response.getBody();
+
+        GoogleUser googleUser = new GoogleUser();
+        googleUser.setEmail((String) userInfo.get("email"));
+        googleUser.setFirstName((String) userInfo.get("name"));
+        googleUser.setPhotoUrl((String) userInfo.get("picture"));
+        return googleUser;
+    }
+
+    public User processGoogleUser(GoogleUser googleUser) {
+        User user = userRepository.findByEmail(googleUser.getEmail());
+        if (user == null) {
+            user = new User();
+        }
+
+        // Update user info
+        user.setEmail(googleUser.getEmail());
+        user.setFirstName(googleUser.getFirstName());
+        user.setPhotoUrl(googleUser.getPhotoUrl());
+        user.setProvider(Provider.GOOGLE);
+        user.setRole(Role.STUDENT);
+        user.setEnabled(true);
+
+        return userRepository.save(user);
+    }
+
+
+    //github
+    public User processOAuthUser(OAuth2User principal) {
+        String email = principal.getAttribute("email");
+        if (email == null) {
+            throw new RuntimeException("GitHub account does not have a public email.");
+        }
+
+        Optional<User> existingUser = Optional.ofNullable(userRepository.findByEmail(email));
+        if (existingUser.isPresent()) {
+            return existingUser.get();
+        }
+
+        // Create a new Student user
+        User newUser = new User();
+        newUser.setEmail(email);
+        newUser.setFirstName(principal.getAttribute("name"));
+        newUser.setPhotoUrl(principal.getAttribute("avatar_url"));
+        newUser.setRole(Role.STUDENT);
+        return userRepository.save(newUser);
+    }
+
+
+
+
+
+
+
 
     /* Updated authenticate method to use password encoding
     public boolean authenticateUser(String email, String password) {
@@ -188,6 +415,7 @@ public class UserService {
                 "box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); overflow: hidden; }\n" +
                 "        .header { background: linear-gradient(135deg, #d32f2f, #a70000); color: #ffffff; text-align: center; padding: 20px; " +
                 "font-size: 24px; font-weight: bold; }\n" +
+                "        .header img { display: block; margin: 0 auto; width: 180px; height: auto; margin-bottom: 10px; }\n" +
                 "        .content { padding: 30px; font-size: 16px; line-height: 1.6; color: #555; }\n" +
                 "        .content p { margin-bottom: 20px; }\n" +
                 "        .button { display: block; width: fit-content; background: #d32f2f; color: #ffffff; text-decoration: none; font-size: 18px; " +
@@ -198,7 +426,10 @@ public class UserService {
                 "</head>\n" +
                 "<body>\n" +
                 "<div class=\"email-container\">\n" +
-                "    <div class=\"header\">Password Reset</div>\n" +
+                "    <div class=\"header\">\n" +
+                "        <img src=\"https://i.imgur.com/qI4IRFM.png\" alt=\"Company Logo\" >\n" + // Remplace l'URL par le lien réel de ton image
+                "        Password Reset\n" +
+                "    </div>\n" +
                 "    <div class=\"content\">\n" +
                 "        <p>Hello,</p>\n" +
                 "        <p>You have requested to reset your password. Please click the button below to reset it:</p>\n" +
@@ -286,21 +517,31 @@ public class UserService {
 
         return "Password has been reset successfully";
     }
-    /*
-    public void processOAuthPostLogin(String username) {
-        User existUser = userRepository.getUserByUsername(username);
+    public void processOAuthPostLogin(String email) {
+        User existUser = userRepository.findByEmail(email);
 
         if (existUser == null) {
             User newUser = new User();
-            newUser.setFirstName(username);
-            newUser.setProvider(Provider.FACEBOOK);
+            newUser.setEmail(email);
+            newUser.setProvider(Provider.GOOGLE);
             newUser.setEnabled(true);
+            // Set other necessary user properties
 
             userRepository.save(newUser);
         }
-
     }
-    */
+        public String generateToken(User oauthUser) {
+            return Jwts.builder()
+                    .setSubject(oauthUser.getEmail())
+                    .setIssuedAt(new Date())
+                    .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                    .claim("name", oauthUser.getFirstName() )
+                    .claim("email", oauthUser.getEmail())
+                    // Add any additional claims you need
+                    .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                    .compact();
+        }
+    }
 
 
-}
+

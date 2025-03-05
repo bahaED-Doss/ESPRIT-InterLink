@@ -5,21 +5,25 @@ import { SettingsComponent } from "../settings/settings.component";
 import { FooterBackComponent } from "../footer-back/footer-back.component";
 import { NavBackComponent } from '../nav-back/nav-back.component';
 import { Role, User } from 'src/app/models/user';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common'; //
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-tables',
   standalone: true,
-  imports: [CommonModule,AsideComponent, NavBackComponent, SettingsComponent, FooterBackComponent,ReactiveFormsModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule,AsideComponent, NavBackComponent, SettingsComponent, FooterBackComponent,ReactiveFormsModule , FormsModule],
   templateUrl: './tables.component.html',
   styleUrls: ['./tables.component.css']
 })
 export class TablesComponent implements OnInit {
   users: User[] = [];
   addUserForm: FormGroup;
+  filteredUsers: User[] = [];
   editUserForm: FormGroup; 
+  searchTerm: string = '';
+  selectedRoleFilter: string = '';
   Role = Role;
   selectedUserType: Role | null = null;
   selectedUser: User | null = null;
@@ -34,35 +38,71 @@ export class TablesComponent implements OnInit {
     public modalService: NgbModal
   ) {
     this.addUserForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstName: ['', [Validators.required, Validators.pattern('^[A-Za-z]+$')]],
+      lastName: ['', [Validators.required, Validators.pattern('^[A-Za-z]+$')]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern('^(?=.*[!@#$%^&*]).+$') // at least one special character
+      ]],
       levelOfStudy: [''],
-      phoneNumber: [''],
+      phoneNumber: ['', [Validators.pattern('^\\d{8}$')]],  // exactly 8 digits
       companyName: [''],
-      companyIdentifier: [''],
+      companyIdentifier: ['', [Validators.pattern('^\\d{8}$')]], // exactly 8 digits
       department: [''],
-      yearsOfExperience: ['']
+      yearsOfExperience: ['', [Validators.pattern('^\\d{1,2}$')]]  // 1 to 2 digits max
     });
     this.editUserForm = this.fb.group({
-      id: [''], // Add this
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      id: [''],
+      firstName: ['', [Validators.required, Validators.pattern('^[A-Za-z]+$')]],
+      lastName: ['', [Validators.required, Validators.pattern('^[A-Za-z]+$')]],
       email: ['', [Validators.required, Validators.email]],
-      password: [''],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern('^(?=.*[!@#$%^&*]).+$') // at least one special character
+      ]], // Optional field for updating password
       levelOfStudy: [''],
-      phoneNumber: [''],
+      phoneNumber: ['', [Validators.pattern('^\\d{8}$')]],
       companyName: [''],
-      companyIdentifier: [''],
+      companyIdentifier: ['', [Validators.pattern('^\\d{8}$')]],
       department: [''],
-      yearsOfExperience: [''],
-      role: [Role.STUDENT, Validators.required] // Add this
+      yearsOfExperience: ['', [Validators.pattern('^\\d{1,2}$')]],
+      role: [Role.STUDENT, Validators.required]
     });
   }
 
   ngOnInit(): void {
     this.loadUsers();
+  }
+  filterUsers(): void {
+    this.filteredUsers = this.users.filter(user => {
+      const fullName = `${user.firstName ?? ''} ${user.lastName ?? ''}`.toLowerCase();
+      const email = (user.email ?? '').toLowerCase();
+      const searchTerm = this.searchTerm.toLowerCase();
+      const searchMatch = fullName.includes(searchTerm) || email.includes(searchTerm);
+      const roleMatch = this.selectedRoleFilter ? user.role === this.selectedRoleFilter : true;
+      return searchMatch && roleMatch;
+    });
+  }
+  toggleBlockUser(user: User): void {
+    // If user.enabled is undefined, we treat it as true (unblocked state).
+    const block = user.enabled !== undefined ? user.enabled : false;  // Default to false if undefined
+  
+    // Send request to block or unblock
+    this.AuthService.blockUser(user.id!, block).subscribe({
+      next: (response: any) => {
+        // e.g. { message: "User blocked successfully" }
+        alert(response.message);
+        // Flip the local user.enabled
+        user.enabled = !user.enabled;
+      },
+      error: (err) => {
+        console.error('Error updating block status:', err);
+        alert('Error updating block status');
+      }
+    });
   }
 
   openAddUserModal(): void {

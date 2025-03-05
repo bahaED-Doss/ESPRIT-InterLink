@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -20,21 +20,51 @@ export class ResetPasswordComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    // Initialize Reset Password Form
-    this.resetPasswordForm = this.fb.group({
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required],
-    });
+    // Initialize Reset Password Form with custom validators
+    this.resetPasswordForm = this.fb.group(
+      {
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.maxLength(16),
+            this.passwordValidator(), // Custom validator for special character
+          ],
+        ],
+        confirmPassword: ['', Validators.required],
+      },
+      { validators: this.confirmPasswordValidator } // Cross-field validator
+    );
   }
 
   ngOnInit(): void {
     // Extract the token from the route parameters
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.token = params['token'];
       if (!this.token) {
         this.errorMessage = 'Invalid reset link. Please try again.';
       }
     });
+  }
+
+  // Custom validator for password (must contain at least one special character)
+  passwordValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if (!value) {
+        return null;
+      }
+      const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+      return hasSpecialCharacter ? null : { password: true };
+    };
+  }
+
+  // Cross-field validator to check if confirmPassword matches password
+  confirmPasswordValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { confirmPassword: true };
   }
 
   onResetPassword(): void {

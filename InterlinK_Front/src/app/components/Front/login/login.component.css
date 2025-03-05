@@ -69,6 +69,7 @@ a {
   }
   .role-formbut{
     margin-right: 40px !important;
+    margin-top: 20px !important;
   }
   .hr{
     margin-top: 240px !important;
@@ -109,6 +110,8 @@ button:focus {
 button.ghost {
 	background-color: transparent;
 	border-color: #FFFFFF;
+  font-family: "Lexend", serif;
+  font-optical-sizing: auto;
 }
 
 form {
@@ -149,6 +152,8 @@ input {
 .create{
     font-size: 2.2rem !important;
     color: #1c1c1c !important;
+    font-family: "Lexend", serif !important;
+    font-optical-sizing: auto !important;
 }
 .small{
     font-size: 14px !important;
@@ -169,7 +174,30 @@ input {
 	left: 0;
 	width: 50%;
 	z-index: 2;
+  display: flex !important;
+  flex-direction:column !important;
 }
+.signINN{
+  text-align: center !important;
+  margin-top: 40px !important;
+}
+.face{
+  width:40% !important;
+  height:40% !important;
+  margin-left: 120px !important;
+  margin-top: 5px !important;
+}
+.error-message {
+  color: rgb(158, 18, 18);
+  font-size: 10px;
+  font-family: "Lexend", serif !important;
+  font-optical-sizing: auto;
+  font-weight: 200 !important;
+  
+  
+}
+
+
 
 .container.right-panel-active .sign-in-container {
 	transform: translateX(100%);
@@ -287,12 +315,19 @@ input {
   letter-spacing:1px !important;
   line-height: 27px !important;
   margin-top: -26px !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 .overlay-panel img{
   width: 216px !important;
   height:  216px !important;
   
 }
+.overlay-panel h1{
+  font-family: "Lexend", serif !important;
+    font-optical-sizing: auto !important;
+  
+}
+
 .overlay-left p{
   margin-top: 36px !important;
 }
@@ -342,7 +377,7 @@ input {
     display: flex;
     justify-content:flex-end;
     margin-right: 20px;
-    margin-top: 5px;
+    margin-top: -30px;
     align-items: center;
     position: relative;
     cursor: pointer;
@@ -359,6 +394,12 @@ input {
     font-size: 13px !important;
     background-color: #991616;
     border: #991616;
+    font-family: "Lexend", serif;
+    font-optical-sizing: auto;
+    
+  }
+  .loginn{
+    margin-top: -5px !important;
   }
   
   .contr .eye {
@@ -647,7 +688,11 @@ input {
 
 .login100-form-social{
     display: flex;
-    gap: 10px;
+    gap: 5px;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-top: 30px !important;
+
    }
    .login100-form-social-item-google {
     background: transparent;
@@ -703,7 +748,7 @@ input {
     fill: currentColor;
   }
   .login100-form-social-item-google:hover::before {
-    box-shadow: inset 0 0 0 10em #0163E0;
+    box-shadow: inset 0 0 0 10em #ff1a056d;
   }
 
   
@@ -787,13 +832,18 @@ option, select{
     border-color: inherit !important;
     border: none;
 }
+.confirm{
+  margin-top : 20px !important;
+}
 .wrap-input100 {
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
     display: -ms-flexbox;
-    display: flex;
+    display: flex !important;
     
+  flex-direction: column !important;
+
     
     width: 100%;
     height: 50px;
@@ -807,6 +857,7 @@ option, select{
     appearance: none; /* Removes default system styles */
     -webkit-appearance: none;
     -moz-appearance: none;
+    padding-top: 11px !important;
   
   }
   
@@ -831,13 +882,26 @@ option, select{
   }
   
   .input100 {
-    display: block;
+    display: flex !important;
+    align-items: center !important;
     background: transparent;
-    font-size: 15px;
+    font-size: 14px;
     color: #555555;
-    line-height: 1.2;
-    padding: 0 26px;
+    height: 40px; /* Adjust the height as needed */
+    padding: 8px; /* Ensure enough padding */
+    padding-top: 5px !important;
+    
+    
+   
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    
   }
+  .input100::placeholder {
+    text-align: left; /* Keeps placeholder aligned to the left */
+    color: #999; /* Optional: Adjust placeholder color */
+    font-size: 14px;
+  }
+  
   
   input.input100 {
    

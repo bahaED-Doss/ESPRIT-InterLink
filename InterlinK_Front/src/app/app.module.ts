@@ -15,7 +15,7 @@ import { SettingsComponent } from './components/Back/settings/settings.component
 import { TablesComponent } from './components/Back/tables/tables.component';
 import { StudentProfileComponent } from './components/Front/student-profile/student-profile.component';
 import { HrProfileComponent } from './components/Front/hr-profile/hr-profile.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ForgetPasswordComponent } from './components/Front/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './components/Front/reset-password/reset-password.component';
 import { InternshipsBackComponent } from './components/Back/internships-back/internships-back.component';
@@ -34,8 +34,21 @@ import { AboutComponent } from './components/Front/about/about.component';
 import { NavbarStudentComponent } from './components/Front/navbar-student/navbar-student.component';
 import { NavbarHrComponent } from './components/Front/navbar-hr/navbar-hr.component';
 import { HomeHrComponent } from './components/Front/hrDashboard/home-hr/home-hr.component';
-import { ProfileHrComponent } from './components/Front/profile-hr/profile-hr.component';
-import { ProfileStudentComponent } from './components/Front/profile-student/profile-student.component';
+
+
+
+import { OAuthModule, OAuthService } from 'angular-oauth2-oidc';
+import { ProfileStudentComponent } from './components/Front/studentSettings/profile-student/profile-student.component';
+import { ChangepasswordsComponent } from './components/Front/studentSettings/changepasswords/changepasswords.component';
+
+import { SociallinkssComponent } from './components/Front/studentSettings/sociallinkss/sociallinkss.component';
+import { SkillssComponent } from './components/Front/studentSettings/skillss/skillss.component';
+import { ProfileHrComponent } from './components/Front/hrSettings/profile-hr/profile-hr.component';
+import { ChangepasswordhrComponent } from './components/Front/hrSettings/changepasswordhr/changepasswordhr.component';
+import { SociallinkshrComponent } from './components/Front/hrSettings/sociallinkshr/sociallinkshr.component';
+import { UserStatisticsComponent } from './components/Back/user-statistics/user-statistics.component';
+
+
 
 
 
@@ -63,8 +76,18 @@ import { ProfileStudentComponent } from './components/Front/profile-student/prof
     NavbarStudentComponent,
     NavbarHrComponent,
     HomeHrComponent,
-    ProfileHrComponent,
+    
     ProfileStudentComponent,
+    ChangepasswordsComponent,
+ 
+    SociallinkssComponent,
+    SkillssComponent,
+    ProfileHrComponent,
+    ChangepasswordhrComponent,
+    SociallinkshrComponent,
+    UserStatisticsComponent
+    
+    
     
     
     
@@ -84,9 +107,12 @@ import { ProfileStudentComponent } from './components/Front/profile-student/prof
    ApplicationsBackComponent,
     SettingsComponent,
     TablesComponent,
-    NgbModule
+    NgbModule,
+    OAuthModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

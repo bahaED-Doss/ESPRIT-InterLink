@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.client.registration.InMemoryClientReg
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 
 @Configuration
 public class OAuth2Config {
@@ -23,17 +24,19 @@ public class OAuth2Config {
 
     private ClientRegistration googleClientRegistration() {
         return ClientRegistration.withRegistrationId("google")
-                .clientId("940921093930-3gtsvl4399kngsmmfulemcl88qb7pmal.apps.googleusercontent.com")
-                .clientSecret("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")
+                .clientId("340845014781-evjvvne83oqk7ia1fdg1oclcqto82snv.apps.googleusercontent.com")
+                .clientSecret("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")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
-                .scope("profile", "email")
+                .redirectUri("http://localhost:8081/oauth2/callback/google") // Updated redirect URI
+                .scope("openid", "profile", "email")
                 .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
                 .tokenUri("https://www.googleapis.com/oauth2/v4/token")
                 .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
-                .userNameAttributeName("sub")
+                .userNameAttributeName(IdTokenClaimNames.SUB)
+                .jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
                 .clientName("Google")
                 .build();
     }
+
 }
