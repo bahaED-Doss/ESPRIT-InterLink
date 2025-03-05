@@ -58,6 +58,14 @@ export class CompanyService {
 
     return this.http.get<Company[]>(`${this.apiUrl}/search-companies`, { params: httpParams });
 }
+    // Fetch Projects Per Company
+    getProjectsPerCompany(): Observable<Map<string, number>> {
+      return this.http.get<Map<string, number>>(`${this.apiUrl}/projects-per-company`);
+    }
 
+    // Fetch Companies By Industry Sector
+    getCompaniesByIndustrySector(): Observable<Map<string, number>> {
+      return this.http.get<Map<string, number>>(`${this.apiUrl}/companies-by-industry-sector`);
+    }
 
 }

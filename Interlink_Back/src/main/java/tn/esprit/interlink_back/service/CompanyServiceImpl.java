@@ -6,6 +6,8 @@ import tn.esprit.interlink_back.entity.Company;
 import tn.esprit.interlink_back.repository.CompanyRepository;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyServiceImpl implements ICompanyService {
@@ -52,6 +54,18 @@ public class CompanyServiceImpl implements ICompanyService {
         if (city == null) city = "";
 
         return companyRepository.searchCompanies(industrySector, country, city, sort);
+    }
+    @Override
+    public Map<String, Integer> getProjectsPerCompany() {
+        List<Company> companies = companyRepository.findAll();
+        return companies.stream()
+                .collect(Collectors.toMap(Company::getName, company -> company.getProjects() != null ? company.getProjects().size() : 0));
+    }
+
+    @Override
+    public Map<String, Long> getCompaniesByIndustrySector() {
+        return companyRepository.findAll().stream()
+                .collect(Collectors.groupingBy(Company::getIndustrySector, Collectors.counting()));
     }
 
 }

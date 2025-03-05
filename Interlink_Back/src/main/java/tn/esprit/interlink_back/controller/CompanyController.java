@@ -76,11 +76,11 @@ public class CompanyController {
     }
     @GetMapping("/projects-per-company")
     public Map<String, Integer> getProjectsPerCompany() {
-        return companyStatisticsService.getProjectsPerCompany();
+        return companyService.getProjectsPerCompany();
     }
 
     @GetMapping("/companies-by-industry")
     public Map<String, Long> getCompaniesByIndustrySector() {
-        return companyStatisticsService.getCompaniesByIndustrySector();
+        return companyService.getCompaniesByIndustrySector();
     }
 }
