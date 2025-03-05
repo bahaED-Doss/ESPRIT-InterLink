@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import tn.esprit.interlink_back.entity.Company;
 import tn.esprit.interlink_back.service.ICompanyService;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -79,8 +80,9 @@ public class CompanyController {
         return companyService.getProjectsPerCompany();
     }
 
-    @GetMapping("/companies-by-industry")
-    public Map<String, Long> getCompaniesByIndustrySector() {
-        return companyService.getCompaniesByIndustrySector();
+    @GetMapping("/companies-by-industry-sector")
+    public ResponseEntity<Map<String, Long>> getCompaniesByIndustrySector() {
+        Map<String, Long> data = companyService.getCompaniesByIndustrySector();
+        return ResponseEntity.ok(new LinkedHashMap<>(data));
     }
 }

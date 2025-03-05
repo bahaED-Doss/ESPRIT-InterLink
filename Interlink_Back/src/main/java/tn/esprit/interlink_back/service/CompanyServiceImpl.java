@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import tn.esprit.interlink_back.entity.Company;
 import tn.esprit.interlink_back.repository.CompanyRepository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -58,15 +59,23 @@ public class CompanyServiceImpl implements ICompanyService {
     @Override
     public Map<String, Integer> getProjectsPerCompany() {
         List<Company> companies = companyRepository.findAll();
-        return companies.stream()
-                .collect(Collectors.toMap(Company::getName, company -> company.getProjects() != null ? company.getProjects().size() : 0));
+        Map<String, Integer> result = new HashMap<>();
+        for (Company company : companies) {
+            result.put(company.getName(), company.getProjects() != null ? company.getProjects().size() : 0);
+        }
+        return result; // ✅ Returns a simple object
     }
 
     @Override
     public Map<String, Long> getCompaniesByIndustrySector() {
-        return companyRepository.findAll().stream()
-                .collect(Collectors.groupingBy(Company::getIndustrySector, Collectors.counting()));
+        List<Company> companies = companyRepository.findAll();
+        Map<String, Long> result = new HashMap<>();
+        for (Company company : companies) {
+            result.put(company.getIndustrySector(), result.getOrDefault(company.getIndustrySector(), 0L) + 1);
+        }
+        return result; // ✅ Returns a simple object
     }
+
 
 }
 

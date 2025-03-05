@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router'; // ✅ Import RouterModule
+import { RouterModule } from '@angular/router'; //  RouterModule
+import { NgxEchartsModule } from 'ngx-echarts';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -74,7 +75,8 @@ import { CompanyDetailsComponent } from './components/Front/company-details/comp
     TablesComponent,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot([]) // ✅ Ensure RouterModule is properly set up
+    NgxEchartsModule.forRoot({ echarts: () => import('echarts') }),
+    RouterModule.forRoot([]) 
   ],
   providers: [],
   bootstrap: [AppComponent]
