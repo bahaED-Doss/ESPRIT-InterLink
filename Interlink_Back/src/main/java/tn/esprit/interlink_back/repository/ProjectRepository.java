@@ -17,4 +17,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("SELECT p.status, COUNT(p) FROM Project p GROUP BY p.status")
     List<Object[]> getProjectStatusStatistics();
 
+    @Query("SELECT p FROM Project p LEFT JOIN FETCH p.company WHERE p.projectId = :projectId")
+    Project findByProjectIdWithCompany(@Param("projectId") Long projectId);
+
 }

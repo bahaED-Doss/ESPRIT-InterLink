@@ -30,8 +30,9 @@ public class ProjectServiceImpl implements IProjectService {
     }
 
     @Override
-    public Project retrieveProject(Long id) {
-        return projectRepository.findById(id).orElse(null);
+    public Project retrieveProject(Long projectId) {
+        // Use the custom query to get the project with the company
+        return projectRepository.findByProjectIdWithCompany(projectId);
     }
 
     @Override

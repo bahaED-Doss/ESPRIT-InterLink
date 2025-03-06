@@ -141,6 +141,8 @@ export class CompanyListComponent implements OnInit {
         next: () => {
           alert(`${company.name} deleted successfully`);
           this.loadCompanies();
+          this.loadStatistics();
+
         },
         error: (err) => {
           console.error("Error deleting company:", err);

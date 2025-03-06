@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 import tn.esprit.interlink_back.entity.Enums.Role;
 
+import javax.lang.model.element.Name;
 import java.util.Objects;
 
 @Entity
@@ -198,4 +199,7 @@ public class User {
     public int hashCode() {
         return Objects.hash(id, email);
     }
+
+
+
 }

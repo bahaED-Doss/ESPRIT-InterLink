@@ -41,7 +41,8 @@ public class Project {
     @JsonProperty("endDate")
     private LocalDate endDate;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonManagedReference
     @JoinColumn(name = "company_id")
     private Company company;
 
@@ -58,6 +59,9 @@ public class Project {
     @JoinColumn(name = "student_id")
     private User student;
 
+    public User getProjectManager() {
+        return projectManager;
+    }
 
     public Long getProjectId() {
         return projectId;
@@ -116,6 +120,10 @@ public class Project {
     public void setMilestones(List<Milestone> milestones) {
         this.milestones = milestones;
     }
+    public Company getCompany() {
+        return company;
+    }
+
 
 
 }

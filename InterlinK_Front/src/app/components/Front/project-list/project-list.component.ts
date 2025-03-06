@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/services/project.service';
 import { Router } from '@angular/router';
+import { saveAs } from 'file-saver'; // Don't forget to install file-saver!
 
 @Component({
   selector: 'app-project-list',
@@ -34,7 +35,6 @@ export class ProjectListComponent implements OnInit {
       this.projectStatistics = data;
     });
   }
-  
 
   goToProjectDetails(projectId: number): void {
     if (!this.router) {
@@ -77,5 +77,15 @@ export class ProjectListComponent implements OnInit {
         console.error("Error deleting project:", err);
       }
     });
+  }
+
+  // Method to generate and download PDF for all projects
+  downloadProjectsPdf(): void {
+    this.projectService.generateProjectsPdf();
+  }
+
+  // Method to generate and download Excel for all projects
+  downloadProjectsExcel(): void {
+    this.projectService.generateProjectsExcel();
   }
 }
