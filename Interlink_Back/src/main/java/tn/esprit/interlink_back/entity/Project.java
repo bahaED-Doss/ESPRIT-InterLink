@@ -42,9 +42,10 @@ public class Project {
     private LocalDate endDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonIgnore  // Use @JsonIgnore instead of @JsonManagedReference
     @JoinColumn(name = "company_id")
     private Company company;
+
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -123,6 +124,9 @@ public class Project {
     public Company getCompany() {
         return company;
     }
+    public void setCompany(Company company) {this.company = company;}
+
+
 
 
 

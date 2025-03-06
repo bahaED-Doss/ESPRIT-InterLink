@@ -15,9 +15,12 @@ import java.util.stream.Collectors;
 @Service
 public class ProjectServiceImpl implements IProjectService {
 
+    @Autowired
     private final ProjectRepository projectRepository;
     @Autowired
     private MilestoneRepository milestoneRepository;
+    @Autowired
+    private EmailService emailService;
 
 
     public ProjectServiceImpl(ProjectRepository projectRepository) {
@@ -116,12 +119,31 @@ public class ProjectServiceImpl implements IProjectService {
             throw new IllegalArgumentException("Milestone not found or does not belong to this project");
         }
 
+        // Save the old status to compare later
+        MilestoneStatus oldStatus = milestone.getStatus();
+
+        // Update the milestone status
         milestone.setStatus(status);
         milestoneRepository.save(milestone);  // Save the updated milestone
+
+        // Check if the milestone status has changed
+        if (!oldStatus.equals(status)) {
+            // Send an email to the static recipient when the status changes
+            sendStatusUpdateEmail(project, oldStatus, status);
+        }
 
         // Recalculate the progress after updating milestone status
         int progress = calculateProjectProgress(projectId);
         return milestone;
+    }
+    @Override
+    public void sendStatusUpdateEmail(Project project, MilestoneStatus oldStatus, MilestoneStatus newStatus) {
+        String subject = "Project Status Update";
+        String body = String.format("Hello, \n\nThe status of the project '%s' has been updated from '%s' to '%s'.\n\nBest regards, \nYour Project Management Team",
+                project.getTitle(), oldStatus, newStatus);
+
+        // Send the email to the static recipient
+        emailService.sendEmail(subject, body);
     }
     @Override
     public List<Project> searchProjects(String keyword) {

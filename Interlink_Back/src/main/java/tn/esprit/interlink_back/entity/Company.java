@@ -41,6 +41,12 @@ public class Company {
     @JsonProperty("industrySector")
     private String industrySector;
 
+    @JsonProperty("latitude")
+    private Double latitude;
+
+    @JsonProperty("longitude")
+    private Double longitude;
+
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Project> projects;
@@ -52,6 +58,21 @@ public class Company {
 
 
     // Getters and Setters
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
     public Long getCompanyId() {
         return companyId;
     }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CompanyService, Company } from 'src/app/services/company.service';
 import { EChartsOption } from 'echarts';
 
-
 @Component({
   selector: 'app-company-list',
   templateUrl: './company-list.component.html',
@@ -23,45 +22,47 @@ export class CompanyListComponent implements OnInit {
   projectsChartOption: EChartsOption = {};
   industryChartOption: EChartsOption = {};
 
+  // Google Map Configuration
+  mapCenter: google.maps.LatLngLiteral = { lat: 51.505, lng: -0.09 }; // Default center (Change it as needed)
+  zoomLevel: number = 2; // Default zoom level
+
   constructor(private companyService: CompanyService) {}
 
   ngOnInit(): void {
     this.loadCompanies();
     this.loadStatistics();
-
   }
+
   loadStatistics(): void {
     this.companyService.getProjectsPerCompany().subscribe(data => {
-      console.log("Projects per Company Data:", data);
-      
+      console.log('Projects per Company Data:', data);
+
       if (data instanceof Map) {
         this.projectsPerCompany = Object.fromEntries(data as any); // Convert Map to Object
       } else {
         this.projectsPerCompany = data; // Assign directly if already an object
       }
-      
+
       this.updateProjectsChart();
     });
-  
+
     this.companyService.getCompaniesByIndustrySector().subscribe({
       next: (data) => {
-        console.log("Companies by Industry Data:", data);
-  
+        console.log('Companies by Industry Data:', data);
+
         if (data instanceof Map) {
           this.companiesByIndustry = Object.fromEntries(data as any);
         } else {
           this.companiesByIndustry = data;
         }
-  
+
         this.updateIndustryChart();
       },
       error: (err) => {
-        console.error("Error loading companies by industry:", err);
+        console.error('Error loading companies by industry:', err);
       }
     });
   }
-  
-  
 
   updateProjectsChart(): void {
     this.projectsChartOption = {
@@ -87,7 +88,7 @@ export class CompanyListComponent implements OnInit {
 
   loadCompanies(): void {
     this.companyService.getAllCompanies().subscribe(data => {
-      console.log("API Response:", data);
+      console.log('API Response:', data);
       this.companies = data;
       this.extractFilterOptions();
     });
@@ -102,37 +103,42 @@ export class CompanyListComponent implements OnInit {
   onCountryChange(event: Event): void {
     const selectedCountry = (event.target as HTMLSelectElement).value;
     this.selectedCountry = selectedCountry;
-  
-    this.cities = [...new Set(this.companies
-      .filter(company => company.country === selectedCountry)
-      .map(company => company.city))];
-  
+
+    this.cities = [
+      ...new Set(
+        this.companies
+          .filter((company) => company.country === selectedCountry)
+          .map((company) => company.city)
+      ),
+    ];
+
     if (!this.cities.includes(this.selectedCity)) {
       this.selectedCity = '';
     }
-  
+
     this.onSearch(); // 🔥 Automatically trigger search
   }
-  
 
   onSearch(): void {
-    this.companyService.searchCompanies({
-      industrySector: this.searchIndustrySector,
-      country: this.selectedCountry,
-      city: this.selectedCity,
-      sortField: 'name',
-      ascending: true
-    }).subscribe(data => {
-      this.searchResults = data; // Store search results
-    });
+    this.companyService
+      .searchCompanies({
+        industrySector: this.searchIndustrySector,
+        country: this.selectedCountry,
+        city: this.selectedCity,
+        sortField: 'name',
+        ascending: true,
+      })
+      .subscribe((data) => {
+        this.searchResults = data; // Store search results
+      });
   }
 
   deleteCompany(company: any): void {
-    console.log("Deleting Company:", company); 
-    console.log("Company ID:", company?.companyId);
+    console.log('Deleting Company:', company);
+    console.log('Company ID:', company?.companyId);
 
     if (!company || !company.companyId) {
-      console.error("Error: companyId is undefined.");
+      console.error('Error: companyId is undefined.');
       return;
     }
 
@@ -142,11 +148,10 @@ export class CompanyListComponent implements OnInit {
           alert(`${company.name} deleted successfully`);
           this.loadCompanies();
           this.loadStatistics();
-
         },
         error: (err) => {
-          console.error("Error deleting company:", err);
-        }
+          console.error('Error deleting company:', err);
+        },
       });
     }
   }

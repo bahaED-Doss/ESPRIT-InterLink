@@ -101,6 +101,20 @@
   </table>
 </div>
 
+<!-- Google Map Container -->
+<h3 class="text-center">Companies locations</h3>
+<google-map width="80%" height="400px" [center]="mapCenter" [zoom]="zoomLevel">
+  <map-marker *ngFor="let company of companies" [position]="{ lat: company.latitude, lng: company.longitude }"
+    [label]="company.name">
+  </map-marker>
+</google-map>
+
+
+
+
+
+
+
 <!-- Companies Statistics Section -->
 <div class="container mt-4">
   <h3 class="text-center">Companies Statistics</h3>

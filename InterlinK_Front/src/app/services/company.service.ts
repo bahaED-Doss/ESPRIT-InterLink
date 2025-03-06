@@ -11,6 +11,8 @@ export interface Company {
   country: string;
   phone: string;
   industrySector: string;
+  latitude: number;
+  longitude: number;
 }
 
 @Injectable({

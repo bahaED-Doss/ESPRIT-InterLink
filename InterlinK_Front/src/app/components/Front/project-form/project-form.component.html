@@ -28,66 +28,78 @@
 
 <!-- Project Details Form -->
 <section class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <div class="card shadow-lg p-5 rounded-4">
-          <h2 class="text-center mb-4 text-primary">Project Details</h2>
-  
-          <form (ngSubmit)="submitForm()" [formGroup]="addProject">
-            <div class="row">
-              <!-- Title -->
-              <div class="col-md-6 mb-3">
-                <label class="form-label fw-bold">Title:</label>
-                <input type="text" class="form-control" formControlName="title" required />
-              </div>
-  
-              <!-- Description -->
-              <div class="col-md-6 mb-3">
-                <label class="form-label fw-bold">Description:</label>
-                <textarea class="form-control" formControlName="description" rows="3" required></textarea>
-              </div>
-  
-              <!-- Start Date -->
-              <div class="col-md-6 mb-3">
-                <label class="form-label fw-bold">Start Date:</label>
-                <input type="date" class="form-control" formControlName="startDate" required />
-              </div>
-  
-              <!-- End Date -->
-              <div class="col-md-6 mb-3">
-                <label class="form-label fw-bold">End Date:</label>
-                <input type="date" class="form-control" formControlName="endDate" required />
-              </div>
-  
-              <!-- Status Info -->
-              <div class="col-md-12 mb-3">
-                <p class="text-muted">
-                  The project status will be set to <strong>"Open"</strong> by default upon creation.
-                </p>
-              </div>
-  
-              <!-- Technology Stack -->
-              <div class="col-md-12 mb-3">
-                <label class="form-label fw-bold">Technology Stack:</label>
-                <div class="technologies-list">
-                  <div *ngFor="let tech of technologies" class="tech-item">
-                    <input 
-                      type="checkbox" 
-                      [value]="tech" 
-                      (change)="onTechnologyChange($event)" 
-                      [checked]="isTechnologySelected(tech)" 
-                    />
-                    <span>{{ tech }}</span>
-                  </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-lg p-5 rounded-4">
+        <h2 class="text-center mb-4 text-primary">Project Details</h2>
+
+        <form (ngSubmit)="submitForm()" [formGroup]="addProject">
+          <div class="row">
+            <!-- Title -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold">Title:</label>
+              <input type="text" class="form-control" formControlName="title" required />
+            </div>
+
+            <!-- Description -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold">Description:</label>
+              <textarea class="form-control" formControlName="description" rows="3" required></textarea>
+            </div>
+
+            <!-- Start Date -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold">Start Date:</label>
+              <input type="date" class="form-control" formControlName="startDate" required />
+            </div>
+
+            <!-- End Date -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold">End Date:</label>
+              <input type="date" class="form-control" formControlName="endDate" required />
+            </div>
+
+           <!-- Add Company Dropdown -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold">Company:</label>
+              <select class="form-control" formControlName="companyId" required>
+                  <option *ngFor="let company of companies" [value]="company.companyId">
+                      {{ company.name }}
+                  </option>
+              </select>
+            </div>
+
+
+            <!-- Status Info -->
+            <div class="col-md-12 mb-3">
+              <p class="text-muted">
+                The project status will be set to <strong>"Open"</strong> by default upon creation.
+              </p>
+            </div>
+
+            <!-- Technology Stack -->
+            <div class="col-md-12 mb-3">
+              <label class="form-label fw-bold">Technology Stack:</label>
+              <div class="technologies-list">
+                <div *ngFor="let tech of technologies" class="tech-item">
+                  <input 
+                    type="checkbox" 
+                    [value]="tech" 
+                    (change)="onTechnologyChange($event)" 
+                    [checked]="isTechnologySelected(tech)" 
+                  />
+                  <span>{{ tech }}</span>
                 </div>
               </div>
             </div>
-  
-            <button type="submit" class="btn btn-primary w-100">Add Project</button>
-          </form>
-        </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Add Project</button>
+        </form>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
 
 <app-footer></app-footer>

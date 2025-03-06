@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router'; //  RouterModule
+import { RouterModule } from '@angular/router'; 
 import { NgxEchartsModule } from 'ngx-echarts';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -19,7 +19,6 @@ import { ProfileComponent } from './components/Back/profile/profile.component';
 import { RtlComponent } from './components/Back/rtl/rtl.component';
 import { SettingsComponent } from './components/Back/settings/settings.component';
 import { TablesComponent } from './components/Back/tables/tables.component';
-
 import { NavbarComponent } from './components/Front/navbar/navbar.component';
 import { FooterComponent } from './components/Front/footer/footer.component';
 import { TasksComponent } from './components/Front/tasks/tasks.component';
@@ -35,6 +34,8 @@ import { ProjectListComponent } from './components/Front/project-list/project-li
 import { ProjectDetailsComponent } from './components/Front/project-details/project-details.component';
 import { CompanyDetailsComponent } from './components/Front/company-details/company-details.component';
 
+// Import GoogleMapsModule
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -56,9 +57,6 @@ import { CompanyDetailsComponent } from './components/Front/company-details/comp
     ProjectListComponent,
     ProjectDetailsComponent,
     CompanyDetailsComponent
-   
-    
-    
   ],
   imports: [
     ReactiveFormsModule,
@@ -76,7 +74,11 @@ import { CompanyDetailsComponent } from './components/Front/company-details/comp
     FormsModule,
     HttpClientModule,
     NgxEchartsModule.forRoot({ echarts: () => import('echarts') }),
-    RouterModule.forRoot([]) 
+
+    // Import the official Google Maps module
+    GoogleMapsModule,
+
+    RouterModule.forRoot([])
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,6 +3,7 @@ package tn.esprit.interlink_back.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.interlink_back.entity.Company;
+import tn.esprit.interlink_back.service.GeocodingService;
 import tn.esprit.interlink_back.service.ICompanyService;
 
 import java.util.LinkedHashMap;
@@ -15,10 +16,13 @@ import java.util.Optional;
 public class CompanyController {
 
     public final ICompanyService companyService;
+    private final GeocodingService geocodingService;
 
-    public CompanyController(ICompanyService companyService) {
+    public CompanyController(ICompanyService companyService, GeocodingService geocodingService) {
         this.companyService = companyService;
+        this.geocodingService = geocodingService;
     }
+
 
     @GetMapping("/retrieve-all-companies")
     public List<Company> getAllCompanies() {
@@ -61,6 +65,7 @@ public class CompanyController {
         if (company.getIndustrySector() != null) existingCompany.setIndustrySector(company.getIndustrySector());
 
         Company updatedCompany = companyService.modifyCompany(existingCompany);
+        geocodingService.geocodeCompanyLocation(company);
         return ResponseEntity.ok(updatedCompany);
     }
 
@@ -84,5 +89,11 @@ public class CompanyController {
     public ResponseEntity<Map<String, Long>> getCompaniesByIndustrySector() {
         Map<String, Long> data = companyService.getCompaniesByIndustrySector();
         return ResponseEntity.ok(new LinkedHashMap<>(data));
+    }
+
+    @PostMapping("/geocode-company-location")
+    public ResponseEntity<Company> geocodeCompanyLocation(@RequestBody Company company) {
+        geocodingService.geocodeCompanyLocation(company);
+        return ResponseEntity.ok(company);
     }
 }

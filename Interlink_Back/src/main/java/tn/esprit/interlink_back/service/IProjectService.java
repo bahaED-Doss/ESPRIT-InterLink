@@ -18,6 +18,8 @@ public interface IProjectService {
 
     Milestone updateMilestoneStatus(Long projectId, Long milestoneId, MilestoneStatus status);
 
+    void sendStatusUpdateEmail(Project project, MilestoneStatus oldStatus, MilestoneStatus newStatus);
+
     List<Project> searchProjects(String keyword);
 
     List<ProjectStatisticsDTO> getProjectStatusStatistics();

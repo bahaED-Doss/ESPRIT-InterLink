@@ -8,15 +8,16 @@ import tn.esprit.interlink_back.repository.CompanyRepository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class CompanyServiceImpl implements ICompanyService {
 
     private final CompanyRepository companyRepository;
+    private final GeocodingService geocodingService; // Add this
 
-    public CompanyServiceImpl(CompanyRepository companyRepository) {
+    public CompanyServiceImpl(CompanyRepository companyRepository, GeocodingService geocodingService) {
         this.companyRepository = companyRepository;
+        this.geocodingService = geocodingService;
     }
 
     @Override
@@ -31,6 +32,8 @@ public class CompanyServiceImpl implements ICompanyService {
 
     @Override
     public Company addCompany(Company company) {
+        // Geocode the location before saving
+        geocodingService.geocodeCompanyLocation(company);
         return companyRepository.save(company);
     }
 
@@ -41,6 +44,8 @@ public class CompanyServiceImpl implements ICompanyService {
 
     @Override
     public Company modifyCompany(Company company) {
+        // Geocode the location before saving
+        geocodingService.geocodeCompanyLocation(company);
         return companyRepository.save(company);
     }
 
@@ -56,6 +61,7 @@ public class CompanyServiceImpl implements ICompanyService {
 
         return companyRepository.searchCompanies(industrySector, country, city, sort);
     }
+
     @Override
     public Map<String, Integer> getProjectsPerCompany() {
         List<Company> companies = companyRepository.findAll();
@@ -75,7 +81,4 @@ public class CompanyServiceImpl implements ICompanyService {
         }
         return result; // ✅ Returns a simple object
     }
-
-
 }
-

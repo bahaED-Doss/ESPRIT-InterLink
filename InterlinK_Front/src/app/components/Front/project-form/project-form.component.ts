@@ -29,7 +29,8 @@ export class ProjectFormComponent implements OnInit {
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
       technologiesUsed: [''], // Bind to a string
-      status: ['Open'] // Default value
+      status: ['Open'], // Default value
+      companyId: ['', Validators.required] // Add this for the company selection
     });
 
     this.loadCompanies();
@@ -69,5 +70,4 @@ export class ProjectFormComponent implements OnInit {
       console.log('Form is invalid');
     }
   }
-  
 }

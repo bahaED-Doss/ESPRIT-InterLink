@@ -10,9 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.interlink_back.dtos.ProjectStatisticsDTO;
+import tn.esprit.interlink_back.entity.Company;
 import tn.esprit.interlink_back.entity.Enums.MilestoneStatus;
 import tn.esprit.interlink_back.entity.Milestone;
 import tn.esprit.interlink_back.entity.Project;
+import tn.esprit.interlink_back.repository.CompanyRepository;
 import tn.esprit.interlink_back.service.ExcelService;
 import tn.esprit.interlink_back.service.IProjectService;
 import tn.esprit.interlink_back.service.PdfService;
@@ -26,6 +28,9 @@ public class ProjectController {
 
     @Autowired
     private final IProjectService projectService;
+    @Autowired
+    private CompanyRepository companyRepository; // Inject CompanyRepository
+
 
     @Autowired
     private PdfService pdfService;  // Inject PdfService
@@ -49,10 +54,13 @@ public class ProjectController {
         return project != null ? ResponseEntity.ok(project) : ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/add-project")
-    public Project createProject(@RequestBody Project project) {
-        return projectService.addProject(project);
+    @PostMapping(value = "/add-project", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Project> addProject(@RequestBody Project project) {
+        Project savedProject = projectService.addProject(project);
+        return ResponseEntity.ok(savedProject);
     }
+
+
 
     @PutMapping("/modify-project/{projectId}")
     public ResponseEntity<Project> updateProject(@PathVariable Long projectId, @RequestBody Project projectDetails) {
