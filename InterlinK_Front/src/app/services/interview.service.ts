@@ -15,6 +15,10 @@ export class InterviewService {
     return this.http.get<Interview[]>(this.apiUrl + '/all');
   }
 
+  getInterviewsById(id: any): Observable<Interview[]> {
+    return this.http.get<Interview[]>(this.apiUrl + '/' + id);
+  }
+
   addInterview(interview: Interview): Observable<Interview> {
     return this.http.post<Interview>(this.apiUrl, interview);
   }
@@ -28,5 +32,11 @@ export class InterviewService {
       `${this.apiUrl}/${interview.interviewId}`,
       interview
     );
+  }
+
+  getRankAndPercent(id: number): Observable<string> {
+    return this.http.get(`${this.apiUrl}/getRang/${id}`, {
+      responseType: 'text',
+    });
   }
 }

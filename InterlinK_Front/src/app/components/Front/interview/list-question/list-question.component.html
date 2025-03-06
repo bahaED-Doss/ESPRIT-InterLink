@@ -1,0 +1,55 @@
+<app-navbar></app-navbar><br /><br /><br /><br /><br />
+
+<!-- Start Hero Area -->
+<section class="hero-area">
+  <div class="hero-inner">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="hero-text text-center">
+            <h1 class="wow fadeInUp" data-wow-delay=".3s">
+              Test : {{ test.titre }} & Answers
+            </h1>
+          </div>
+
+          <!-- Liste des questions avec réponses -->
+          <form (ngSubmit)="submitResponses()">
+            <div class="row mt-4">
+              <div class="col-12" *ngFor="let question of data; let i = index">
+                <p class="p-2 border-bottom">
+                  <strong>Question:</strong> {{ question.contenu }}
+                </p>
+
+                <input
+                  type="text"
+                  class="form-control mb-2"
+                  placeholder="Enter your response"
+                  [(ngModel)]="responses[i].reponse"
+                  reponse
+                  name="response{{ i }}"
+                  required
+                />
+
+                <label>
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="responses[i].evaluation"
+                    name="evaluation{{ i }}"
+                  />
+                  Correct?
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">
+              Submit Answers
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Hero Area -->
+
+<app-start-process></app-start-process>

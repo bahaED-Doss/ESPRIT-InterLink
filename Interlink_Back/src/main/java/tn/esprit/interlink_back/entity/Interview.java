@@ -62,6 +62,7 @@ public class Interview
     private StatusType statusType; // Statut de l’entretien (planifié, réalisé, annulé)
     private String lienReunion;
     private String titre;
+    private int note ;
 
     public Interview() {
     }
@@ -168,5 +169,13 @@ public class Interview
 
     public void setTitre(String titre) {
         this.titre = titre;
+    }
+
+    public int getNote() {
+        return note;
+    }
+
+    public void setNote(int note) {
+        this.note = note;
     }
 }

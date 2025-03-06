@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/Front/login/login.component';
 
-
 import { AsideComponent } from './components/Back/aside/aside.component';
 import { FooterBackComponent } from './components/Back/footer-back/footer-back.component';
 import { HomeBackComponent } from './components/Back/home-back/home-back.component';
@@ -36,13 +35,13 @@ import { NavbarHrComponent } from './components/Front/navbar-hr/navbar-hr.compon
 import { HomeHrComponent } from './components/Front/hrDashboard/home-hr/home-hr.component';
 import { ProfileHrComponent } from './components/Front/profile-hr/profile-hr.component';
 import { ProfileStudentComponent } from './components/Front/profile-student/profile-student.component';
-import { ViewInterviewComponent } from './components/Front/interview/view-interview/view-interview.component';
-import { AddTestComponent } from './components/Back/TestQuestion/Test/add-test/add-test.component';
+import { InterviewComponent } from './components/Back/interview/interview.component';
 import { ListTestComponent } from './components/Back/TestQuestion/Test/list-test/list-test.component';
+import { AddTestComponent } from './components/Back/TestQuestion/Test/add-test/add-test.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-
-
-
+import { ViewInterviewComponent } from './components/Front/interview/view-interview/view-interview.component';
+import { ListQuestionComponent } from './components/Front/interview/list-question/list-question.component';
+import { CheckTestComponent } from './components/Front/interview/check-test/check-test.component';
 
 @NgModule({
   declarations: [
@@ -69,20 +68,19 @@ import { NgxPaginationModule } from 'ngx-pagination';
     HomeHrComponent,
     ProfileHrComponent,
     ProfileStudentComponent,
-    ViewInterviewComponent,
+    InterviewComponent,
     ListTestComponent,
     AddTestComponent,
-    ViewInterviewComponent
-    
-    
-    
+    ViewInterviewComponent,
+    ListQuestionComponent,
+    CheckTestComponent,
   ],
   imports: [
     NgxPaginationModule,
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
-    FormsModule ,
+    FormsModule,
     HttpClientModule,
     AsideComponent,
     InternshipsBackComponent,
@@ -90,12 +88,12 @@ import { NgxPaginationModule } from 'ngx-pagination';
     HomeBackComponent,
     NavBackComponent,
     ProfileComponent,
-   ApplicationsBackComponent,
+    ApplicationsBackComponent,
     SettingsComponent,
     TablesComponent,
-    NgbModule
+    NgbModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

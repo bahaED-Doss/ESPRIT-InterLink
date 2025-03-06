@@ -27,7 +27,7 @@ export class TestService {
     return this.httpClient.delete<Test>(this.baseUrl + 'delete/' + id);
   }
 
-  public getById(id: number): Observable<Test> {
+  public getById(id: any): Observable<Test> {
     return this.httpClient.get<Test>(this.baseUrl + id);
   }
 

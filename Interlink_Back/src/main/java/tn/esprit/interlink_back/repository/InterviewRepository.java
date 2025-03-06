@@ -32,4 +32,6 @@ public interface InterviewRepository extends JpaRepository<Interview, Integer>
     //  Trouver tous les entretiens avec un statut spécifique (planifié, réalisé, annulé)
     List<Interview> findByStatusType(StatusType statusType);
 
+    Interview findByStudentAndTestId(Long student, Long testId);
+
 }

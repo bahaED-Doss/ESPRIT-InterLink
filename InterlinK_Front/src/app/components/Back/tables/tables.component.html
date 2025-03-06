@@ -1,226 +1,140 @@
 <div class="flexx">
   <app-aside></app-aside>
   <div class="container">
-      <app-nav-back></app-nav-back>
-      <div class="container-fluid py-4">
-          <div class="row">
-            <div class="col-12">
-              <div class="card mb-4">
-                <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                  <h6>Users Table</h6>
-                  <button class="btn btn-primary" (click)="openChooseUserTypeModal()">Add User</button>
-                </div>
+    <app-nav-back></app-nav-back>
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div
+              class="card-header pb-0 d-flex justify-content-between align-items-center"
+            >
+              <h6>Users Table</h6>
+              <button class="btn btn-primary">Add User</button>
+            </div>
 
-                <!-- Modal for choosing user type -->
-                <ng-template #chooseUserTypeModal>
-                  <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">Choose User Type</h5>
-                    <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="d-grid gap-2">
-                      <button class="btn btn-outline-primary" (click)="selectUserType(Role.STUDENT)">Add Student</button>
-                      <button class="btn btn-outline-primary" (click)="selectUserType(Role.HR)">Add HR</button>
-                      <button class="btn btn-outline-primary" (click)="selectUserType(Role.PROJECT_MANAGER)">Add Project Manager</button>
-                    </div>
-                  </div>
-                </ng-template>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th
+                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                      >
+                        Users
+                      </th>
+                      <th
+                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3"
+                      >
+                        Role
+                      </th>
+                      <th
+                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                      >
+                        Status
+                      </th>
+                      <th
+                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                      >
+                        Action
+                      </th>
 
-                <!-- Modal for adding a user -->
-                <ng-template #addUserModal>
-                  <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">Add New {{ selectedUserType }}</h5>
-                    <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
-                  </div>
-                  <div class="modal-body">
-                    <form [formGroup]="addUserForm" (ngSubmit)="onSubmitAddUser()">
-                      <!-- Common fields for all users -->
-                      <div class="mb-3">
-                        <label for="firstName" class="form-label">First Name</label>
-                        <input type="text" id="firstName" class="form-control" formControlName="firstName">
-                      </div>
-                      <div class="mb-3">
-                        <label for="lastName" class="form-label">Last Name</label>
-                        <input type="text" id="lastName" class="form-control" formControlName="lastName">
-                      </div>
-                      <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" id="email" class="form-control" formControlName="email">
-                      </div>
-                      <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" id="password" class="form-control" formControlName="password">
-                      </div>
-
-                      <!-- Fields for Students -->
-                      <div *ngIf="selectedUserType === Role.STUDENT">
-                        <div class="mb-3">
-                          <label for="levelOfStudy" class="form-label">Level of Study</label>
-                          <input type="text" id="levelOfStudy" class="form-control" formControlName="levelOfStudy">
+                      <th
+                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3"
+                      >
+                        Role
+                      </th>
+                      <th
+                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                      >
+                        Status
+                      </th>
+                      <th
+                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                      >
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let user of users">
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img
+                              src="/assets/images/Back/profilePic.png"
+                              class="avatar avatar-sm me-3"
+                              alt="user1"
+                            />
+                          </div>
+                          <div
+                            class="d-flex flex-column justify-content-center"
+                          >
+                            <h6 class="mb-0 text-sm">
+                              {{ user.firstName }} {{ user.lastName }}
+                            </h6>
+                            <p class="text-xs text-secondary mb-0">
+                              {{ user.email }}
+                            </p>
+                          </div>
                         </div>
-                        <div class="mb-3">
-                          <label for="phoneNumber" class="form-label">Phone Number</label>
-                          <input type="text" id="phoneNumber" class="form-control" formControlName="phoneNumber">
-                        </div>
-                      </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">
+                          {{ user.role }}
+                        </p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <span class="badge badge-sm bg-gradient-success"
+                          >Online</span
+                        >
+                      </td>
 
-                      <!-- Fields for HR -->
-                      <div *ngIf="selectedUserType === Role.HR">
-                        <div class="mb-3">
-                          <label for="companyName" class="form-label">Company Name</label>
-                          <input type="text" id="companyName" class="form-control" formControlName="companyName">
-                        </div>
-                        <div class="mb-3">
-                          <label for="companyIdentifier" class="form-label">Company Identifier</label>
-                          <input type="text" id="companyIdentifier" class="form-control" formControlName="companyIdentifier">
-                        </div>
-                      </div>
+                      <td class="align-middle text-center text-sm">
+                        <span class="badge badge-sm bg-gradient-success"
+                          >Online</span
+                        >
+                      </td>
 
-                      <!-- Fields for Project Managers -->
-                      <div *ngIf="selectedUserType === Role.PROJECT_MANAGER">
-                        <div class="mb-3">
-                          <label for="department" class="form-label">Department</label>
-                          <input type="text" id="department" class="form-control" formControlName="department">
-                        </div>
-                        <div class="mb-3">
-                          <label for="yearsOfExperience" class="form-label">Years of Experience</label>
-                          <input type="number" id="yearsOfExperience" class="form-control" formControlName="yearsOfExperience">
-                        </div>
-                      </div>
+                      <td class="align-middle text-center text-sm">
+                        <span class="badge badge-sm bg-gradient-success"
+                          >Online</span
+                        >
+                      </td>
 
-                      <button type="submit" class="btn btn-primary">Save User</button>
-                    </form>
-                  </div>
-                </ng-template>
-                <!-- Modal for editing a user -->
-<!-- Modal for editing a user -->
-<ng-template #editUserModal>
-  <div class="modal-header bg-primary text-white">
-    <h5 class="modal-title">Edit User</h5>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="editUserForm" (ngSubmit)="onSubmitEditUser()">
-      <!-- Common fields for all users -->
-      <div class="mb-3">
-        <label for="editFirstName" class="form-label">First Name</label>
-        <input type="text" id="editFirstName" class="form-control" formControlName="firstName">
-      </div>
-      <div class="mb-3">
-        <label for="editLastName" class="form-label">Last Name</label>
-        <input type="text" id="editLastName" class="form-control" formControlName="lastName">
-      </div>
-      <div class="mb-3">
-        <label for="editEmail" class="form-label">Email</label>
-        <input type="email" id="editEmail" class="form-control" formControlName="email">
-      </div>
-      <div class="mb-3">
-        <label for="editPassword" class="form-label">Password</label>
-        <input type="password" id="editPassword" class="form-control" formControlName="password">
-      </div>
+                      <td class="align-middle text-center text-sm">
+                        <span class="badge badge-sm bg-gradient-success"
+                          >Online</span
+                        >
+                      </td>
 
-      <!-- Fields for Students -->
-      <div *ngIf="editUserForm.value.role === Role.STUDENT">
-        <div class="mb-3">
-          <label for="editLevelOfStudy" class="form-label">Level of Study</label>
-          <input type="text" id="editLevelOfStudy" class="form-control" formControlName="levelOfStudy">
-        </div>
-        <div class="mb-3">
-          <label for="editPhoneNumber" class="form-label">Phone Number</label>
-          <input type="text" id="editPhoneNumber" class="form-control" formControlName="phoneNumber">
-        </div>
-      </div>
-
-      <!-- Fields for HR -->
-      <div *ngIf="editUserForm.value.role === Role.HR">
-        <div class="mb-3">
-          <label for="editCompanyName" class="form-label">Company Name</label>
-          <input type="text" id="editCompanyName" class="form-control" formControlName="companyName">
-        </div>
-        <div class="mb-3">
-          <label for="editCompanyIdentifier" class="form-label">Company Identifier</label>
-          <input type="text" id="editCompanyIdentifier" class="form-control" formControlName="companyIdentifier">
-        </div>
-      </div>
-
-      <!-- Fields for Project Managers -->
-      <div *ngIf="editUserForm.value.role === Role.PROJECT_MANAGER">
-        <div class="mb-3">
-          <label for="editDepartment" class="form-label">Department</label>
-          <input type="text" id="editDepartment" class="form-control" formControlName="department">
-        </div>
-        <div class="mb-3">
-          <label for="editYearsOfExperience" class="form-label">Years of Experience</label>
-          <input type="number" id="editYearsOfExperience" class="form-control" formControlName="yearsOfExperience">
-        </div>
-      </div>
-
-      <!-- Role Selection -->
-      <div class="mb-3">
-        <label for="editRole" class="form-label">Role</label>
-        <select id="editRole" class="form-control" formControlName="role">
-          <option [value]="Role.STUDENT">Student</option>
-          <option [value]="Role.HR">HR</option>
-          <option [value]="Role.PROJECT_MANAGER">Project Manager</option>
-          <option [value]="Role.ADMIN">ADMIN</option>
-          
-        </select>
-      </div>
-
-      <button type="submit" class="btn btn-primary">Update User</button>
-    </form>
-  </div>
-</ng-template>
-
-                <div class="card-body px-0 pt-0 pb-2">
-                  <div class="table-responsive p-0">
-                    <table class="table align-items-center mb-0">
-                      <thead>
-                        <tr>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Users</th>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">Role</th>
-                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let user of users">
-                          
-                          <td>
-                            <div class="d-flex px-2 py-1">
-                              <div>
-                                <img src="/assets/images/Back/profilePic.png" class="avatar avatar-sm me-3" alt="user1">
-                              </div>
-                              <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">{{ user.firstName }} {{ user.lastName }}</h6>
-                                <p class="text-xs text-secondary mb-0">{{ user.email }}</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0">{{ user.role }}</p>
-                          </td>
-                          <td class="align-middle text-center text-sm">
-                            <span class="badge badge-sm bg-gradient-success">Online</span>
-                          </td>
-                          
-                          <td class="align-middle text-center">
-                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs tt" (click)="openEditUserModal(user)">
-                              Edit
-                            </a>
-                            <span class="text-secondary text-xs font-weight-bold">/</span>
-                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs tt" (click)="deleteUser(user.id!)">
-                              Delete
-                            </a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+                      <td class="align-middle text-center">
+                        <a
+                          href="javascript:;"
+                          class="text-secondary font-weight-bold text-xs tt"
+                          (click)="openEditUserModal(user)"
+                        >
+                          Edit
+                        </a>
+                        <span class="text-secondary text-xs font-weight-bold"
+                          >/</span
+                        >
+                        <a
+                          href="javascript:;"
+                          class="text-secondary font-weight-bold text-xs tt"
+                          (click)="deleteUser(user.id!)"
+                        >
+                          Delete
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
+        </div>
       </div>
+    </div>
   </div>
 </div>

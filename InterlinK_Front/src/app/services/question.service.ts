@@ -10,7 +10,7 @@ export class QuestionService {
   constructor(public httpClient: HttpClient) {}
   private baseUrl = 'http://localhost:8081/api/question/';
 
-  public getAll(id: number): Observable<Question> {
+  public getAllByTest(id: any): Observable<Question> {
     return this.httpClient.get<Question>(this.baseUrl + id);
   }
 

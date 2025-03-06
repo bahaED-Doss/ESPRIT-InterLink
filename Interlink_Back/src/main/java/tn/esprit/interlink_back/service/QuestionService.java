@@ -1,6 +1,6 @@
 package tn.esprit.interlink_back.service;
 
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.interlink_back.entity.Question;
 import tn.esprit.interlink_back.entity.Test;
@@ -41,12 +41,8 @@ public class QuestionService
 
     // Mettre à jour une question
     public Question updateQuestion(int id, Question newQuestion) {
-        return questionRepository.findById(id).map(question -> {
-            question.setContenu(newQuestion.getContenu());
-            question.setReponse(newQuestion.getReponse());
-            question.setEvaluation(newQuestion.getEvaluation());
-            return questionRepository.save(question);
-        }).orElseThrow(() -> new RuntimeException("Question avec ID " + id + " non trouvée"));
+
+            return questionRepository.save(newQuestion);
     }
 
     // Supprimer une question

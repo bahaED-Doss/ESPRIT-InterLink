@@ -4,12 +4,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { TestService } from 'src/app/services/test.service';
+import * as bootstrap from 'bootstrap';
 import { Question } from 'src/app/models/question';
 import { QuestionService } from 'src/app/services/question.service';
 import Swal from 'sweetalert2';
-import * as bootstrap from 'bootstrap';
-import { NgxPaginationModule } from 'ngx-pagination';
-
 
 @Component({
   selector: 'app-list-test',

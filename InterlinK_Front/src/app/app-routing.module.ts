@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-
 import { LoginComponent } from './components/Front/login/login.component';
 import { TablesComponent } from './components/Back/tables/tables.component';
 
@@ -22,17 +21,18 @@ import { StartProcessComponent } from './components/Front/start-process/start-pr
 import { HomeHrComponent } from './components/Front/hrDashboard/home-hr/home-hr.component';
 import { ProfileHrComponent } from './components/Front/profile-hr/profile-hr.component';
 import { ProfileStudentComponent } from './components/Front/profile-student/profile-student.component';
-import { ViewInterviewComponent } from './components/Front/interview/view-interview/view-interview.component';
+import { InterviewComponent } from './components/Back/interview/interview.component';
 import { ListTestComponent } from './components/Back/TestQuestion/Test/list-test/list-test.component';
 import { AddTestComponent } from './components/Back/TestQuestion/Test/add-test/add-test.component';
-
-
+import { ViewInterviewComponent } from './components/Front/interview/view-interview/view-interview.component';
+import { ListQuestionComponent } from './components/Front/interview/list-question/list-question.component';
+import { CheckTestComponent } from './components/Front/interview/check-test/check-test.component';
 
 const routes: Routes = [
-  {path: '', component: HomeFrontComponent,},
+  { path: '', component: HomeFrontComponent },
   { path: 'login', component: LoginComponent },
   { path: 'homeFront', component: HomeFrontComponent },
-  
+
   { path: 'welcomeV', component: WelcomeViewComponent },
   { path: 'internships', component: InternshipsComponent },
   { path: 'startProcess', component: StartProcessComponent },
@@ -44,23 +44,23 @@ const routes: Routes = [
   { path: 'profileStudent', component: ProfileStudentComponent },
   { path: 'internshipsBack', component: InternshipsBackComponent },
   { path: 'applicationsBack', component: ApplicationsBackComponent },
-  
+
   { path: 'tables', component: TablesComponent },
   { path: 'student-profile/:id', component: StudentProfileComponent },
   { path: 'hr-profile/:id', component: HrProfileComponent },
-  
+
   { path: 'reset-password/:token', component: ResetPasswordComponent },
-  { path: 'interviews', component: ViewInterviewComponent },
+  { path: 'interviews', component: InterviewComponent },
   { path: 'test', component: ListTestComponent },
   { path: 'test/add', component: AddTestComponent },
   { path: 'test/edit/:id', component: AddTestComponent },
   { path: 'viewinterview', component: ViewInterviewComponent },
-  
-  
+  { path: 'viewinterview/:id', component: ListQuestionComponent },
+  { path: 'checkresult/:id', component: CheckTestComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

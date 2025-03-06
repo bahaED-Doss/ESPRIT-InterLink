@@ -3,11 +3,8 @@ package tn.esprit.interlink_back.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import tn.esprit.interlink_back.entity.Enums.TestType;
 
-import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
@@ -22,15 +19,7 @@ public class Question {
     @Column(name="test_id")
     private Long testId;
 
-    @Column(nullable = false)
-    private String contenu; // Le texte de la question
-
-    @Column
-    private String reponse;
-
-    @Column
-    private Boolean evaluation; // ✔️ true si correct, ❌ false si incorrect
-
+    private String contenu;
     @Column
     private int noteAttribuee=0; // Gérée automatiquement
 
@@ -59,30 +48,6 @@ public class Question {
         this.testId = testId;
     }
 
-    public String getContenu() {
-        return contenu;
-    }
-
-    public void setContenu(String contenu) {
-        this.contenu = contenu;
-    }
-
-    public String getReponse() {
-        return reponse;
-    }
-
-    public void setReponse(String reponse) {
-        this.reponse = reponse;
-    }
-
-    public Boolean getEvaluation() {
-        return evaluation;
-    }
-
-    public void setEvaluation(Boolean evaluation) {
-        this.evaluation = evaluation;
-    }
-
     public int getNoteAttribuee() {
         return noteAttribuee;
     }
@@ -97,6 +62,25 @@ public class Question {
 
     public void setTestById(Test testById) {
         this.testById = testById;
+    }
+
+    public String getContenu() {
+        return contenu;
+    }
+
+    public void setContenu(String contenu) {
+        this.contenu = contenu;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "questionId=" + questionId +
+                ", testId=" + testId +
+                ", contenu='" + contenu + '\'' +
+                ", noteAttribuee=" + noteAttribuee +
+                ", testById=" + testById +
+                '}';
     }
 }
 
