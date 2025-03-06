@@ -16,4 +16,6 @@ public interface IInternshipService {
     public Internship updateInternship(Internship internship);
 
     void deleteInternship(Long id);
+
+    Internship findInternshipById(Long internshipId);
 }

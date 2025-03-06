@@ -39,6 +39,7 @@ public class ApplicationController {
     public Application addApplication(@RequestBody Application a) {
         Application application = applicationService.addApplication(a);
         return application;
+
     }
 
     // http://localhost:8081/foyer/application/remove-application/{application-id}

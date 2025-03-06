@@ -9,7 +9,7 @@ export class InternshipService {
   private apiUrl = 'http://localhost:8081/internships'; // Assure-toi que c'est bien cette URL
 
   constructor(private http: HttpClient) {}
-
+ 
   // Récupérer tous les stages
   getInternships(): Observable<Internship[]> {
     return this.http.get<Internship[]>(`${this.apiUrl}/retrieve-all-internships`);

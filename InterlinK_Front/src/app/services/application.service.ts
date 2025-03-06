@@ -33,15 +33,10 @@ export class ApplicationService {
   }
 
   // ✅ Ajouter une nouvelle candidature
-  addApplication(application: Application): Observable<Application> {
-    return this.http.post<Application>(`${this.apiUrl}/add-application`, application).pipe(
-      catchError((error) => {
-        console.error('Error adding application:', error);
-        return throwError(() => new Error('Failed to add application. Please try again.'));
-      })
-    );
+ 
+  addApplication(applicationData: Application): Observable<Application> {
+    return this.http.post<Application>(`${this.apiUrl}/add-application`, applicationData);
   }
-
   // ✅ Supprimer une candidature
   deleteApplication(applicationId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/remove-application/${applicationId}`).pipe(

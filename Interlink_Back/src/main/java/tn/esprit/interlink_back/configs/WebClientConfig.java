@@ -3,6 +3,7 @@ package tn.esprit.interlink_back.configs;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
@@ -15,4 +16,5 @@ public class WebClientConfig {
     public WebClient userInfoClient() {
         return WebClient.builder().baseUrl(introspectUri).build();
     }
+
 }

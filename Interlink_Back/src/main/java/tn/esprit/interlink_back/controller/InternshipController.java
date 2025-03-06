@@ -13,6 +13,7 @@ import java.util.List;
 public class InternshipController {
 
      InternshipServiceImpl internshipService;
+
     @Autowired
     public InternshipController(InternshipServiceImpl internshipService) {
         this.internshipService = internshipService;
