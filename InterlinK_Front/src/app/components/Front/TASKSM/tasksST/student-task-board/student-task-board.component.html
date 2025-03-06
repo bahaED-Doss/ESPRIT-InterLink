@@ -1,0 +1,90 @@
+<div class="task-board">
+  <div class="task-columns">
+    <!-- TO DO Column -->
+    <div class="task-column todo-column" (mousemove)="onColumnHeaderMouseMove($event, 0)">
+      <div class="column-header" 
+           [style.background]="'radial-gradient(circle at ' + columnHoverPositions[0].x + '% ' + columnHoverPositions[0].y + '%, #5c6bc0, #3f51b5)'">
+        <h3>TO DO</h3>
+        <div class="task-count">
+          <span class="badge bg-danger">{{getPriorityCount('TO_DO', 'HIGH')}}</span>
+          <span class="badge bg-warning">{{getPriorityCount('TO_DO', 'MEDIUM')}}</span>
+          <span class="badge bg-success">{{getPriorityCount('TO_DO', 'LOW')}}</span>
+        </div>
+      </div>
+      <div class="task-cards"
+           cdkDropList
+           id="todoList"
+           [cdkDropListData]="todoTasks"
+           [cdkDropListConnectedTo]="['inProgressList', 'doneList']"
+           (cdkDropListDropped)="drop($event)">
+        <div *ngIf="todoTasks.length === 0" class="empty-list-message">
+          No tasks in this column
+        </div>
+        <div *ngFor="let task of todoTasks; trackBy: trackByTaskId" cdkDrag>
+          <app-task-card
+            [task]="task"
+            (viewDetails)="onViewDetails(task)">
+          </app-task-card>
+        </div>
+      </div>
+    </div>
+
+    <!-- IN PROGRESS Column -->
+    <div class="task-column in-progress-column" (mousemove)="onColumnHeaderMouseMove($event, 1)">
+      <div class="column-header" 
+           [style.background]="'radial-gradient(circle at ' + columnHoverPositions[1].x + '% ' + columnHoverPositions[1].y + '%, #ffb74d, #ff9800)'">
+        <h3>IN PROGRESS</h3>
+        <div class="task-count">
+          <span class="badge bg-danger">{{getPriorityCount('IN_PROGRESS', 'HIGH')}}</span>
+          <span class="badge bg-warning">{{getPriorityCount('IN_PROGRESS', 'MEDIUM')}}</span>
+          <span class="badge bg-success">{{getPriorityCount('IN_PROGRESS', 'LOW')}}</span>
+        </div>
+      </div>
+      <div class="task-cards"
+           cdkDropList
+           id="inProgressList"
+           [cdkDropListData]="inProgressTasks"
+           [cdkDropListConnectedTo]="['todoList', 'doneList']"
+           (cdkDropListDropped)="drop($event)">
+        <div *ngIf="inProgressTasks.length === 0" class="empty-list-message">
+          No tasks in this column
+        </div>
+        <div *ngFor="let task of inProgressTasks; trackBy: trackByTaskId" cdkDrag>
+          <app-task-card
+            [task]="task"
+            (viewDetails)="onViewDetails(task)">
+          </app-task-card>
+        </div>
+      </div>
+    </div>
+
+    <!-- DONE Column -->
+    <div class="task-column done-column" (mousemove)="onColumnHeaderMouseMove($event, 2)">
+      <div class="column-header" 
+           [style.background]="'radial-gradient(circle at ' + columnHoverPositions[2].x + '% ' + columnHoverPositions[2].y + '%, #81c784, #4caf50)'">
+        <h3>DONE</h3>
+        <div class="task-count">
+          <span class="badge bg-danger">{{getPriorityCount('DONE', 'HIGH')}}</span>
+          <span class="badge bg-warning">{{getPriorityCount('DONE', 'MEDIUM')}}</span>
+          <span class="badge bg-success">{{getPriorityCount('DONE', 'LOW')}}</span>
+        </div>
+      </div>
+      <div class="task-cards"
+           cdkDropList
+           id="doneList"
+           [cdkDropListData]="doneTasks"
+           [cdkDropListConnectedTo]="['todoList', 'inProgressList']"
+           (cdkDropListDropped)="drop($event)">
+        <div *ngIf="doneTasks.length === 0" class="empty-list-message">
+          No tasks in this column
+        </div>
+        <div *ngFor="let task of doneTasks; trackBy: trackByTaskId" cdkDrag>
+          <app-task-card
+            [task]="task"
+            (viewDetails)="onViewDetails(task)">
+          </app-task-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

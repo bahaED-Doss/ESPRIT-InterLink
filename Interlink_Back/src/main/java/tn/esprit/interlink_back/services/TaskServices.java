@@ -37,6 +37,11 @@ public class TaskServices implements ITaskSerevice {
         return taskRepository.findByProjectId(projectId);
     }
 
+    // Get all tasks for a specific student
+    public List<Task> getTasksByStudentId(Long studentId) {
+        return taskRepository.findByStudentId(studentId);
+    }
+
     //  Get a specific task by projectId & taskId
     public Task getTaskByProjectIdAndTaskId(Long projectId, Long taskId) {
         return taskRepository.findByProjectIdAndTaskId(projectId, taskId)
@@ -80,7 +85,7 @@ public class TaskServices implements ITaskSerevice {
         // Save the task
         Task savedTask = taskRepository.save(task);
         System.out.println("Saved task: " + savedTask);
-
+    /*
         // If priority is HIGH or SECOND_LEVEL, add event to Google Calendar
         if (savedTask.getPriority() == TaskPriority.High || savedTask.getPriority() == TaskPriority.Second_Level) {
             try {
@@ -94,7 +99,7 @@ public class TaskServices implements ITaskSerevice {
                 e.printStackTrace();
             }
         }
-
+*/
         // Send email notification
         emailService.sendTaskNotification(savedTask);
 

@@ -1,8 +1,8 @@
 <div class="task-board">
   <div class="board-header">
-    <div class="status-column">TO DO ({{getTasks('TO_DO').length}})</div>
-    <div class="status-column">IN PROGRESS ({{getTasks('IN_PROGRESS').length}})</div>
-    <div class="status-column">DONE ({{getTasks('DONE').length}})</div>
+    <div class="status-column">TO DO ({{todoTasks.length}})</div>
+    <div class="status-column">IN PROGRESS ({{inProgressTasks.length}})</div>
+    <div class="status-column">DONE ({{doneTasks.length}})</div>
   </div>
 
   <div class="board-columns">
@@ -10,7 +10,7 @@
     <div class="kanban-column"
          cdkDropList
          id="todoList"
-         [cdkDropListData]="getTasks('TO_DO')"
+         [cdkDropListData]="todoTasks"
          [cdkDropListConnectedTo]="['inProgressList', 'doneList']"
          (cdkDropListDropped)="drop($event)">
       <h3>To Do</h3>
@@ -32,13 +32,16 @@
       </div>
       <div class="task-cards">
         <app-task-card
-          *ngFor="let task of getTasks('TO_DO'); trackBy: trackByTaskId"
+          *ngFor="let task of todoTasks; trackBy: trackByTaskId"
           [task]="task"
           [isManager]="isManager"
           (edit)="onEditTask($event)"
           (delete)="onDeleteTask($event)"
           cdkDrag>
         </app-task-card>
+        <div *ngIf="todoTasks.length === 0" class="no-tasks">
+          No tasks in this column
+        </div>
       </div>
     </div>
 
@@ -46,24 +49,38 @@
     <div class="kanban-column"
          cdkDropList
          id="inProgressList"
-         [cdkDropListData]="getTasks('IN_PROGRESS')"
+         [cdkDropListData]="inProgressTasks"
          [cdkDropListConnectedTo]="['todoList', 'doneList']"
          (cdkDropListDropped)="drop($event)">
       <h3>In Progress</h3>
       <div class="column-stats">
         <div class="priority-stats">
-          <!-- Same stats structure as TODO -->
+          <div class="stat-circle">
+            <div class="circle high">{{getPriorityCount('IN_PROGRESS', 'HIGH')}}</div>
+            <span class="stat-label">High</span>
+          </div>
+          <div class="stat-circle">
+            <div class="circle medium">{{getPriorityCount('IN_PROGRESS', 'MEDIUM')}}</div>
+            <span class="stat-label">Medium</span>
+          </div>
+          <div class="stat-circle">
+            <div class="circle low">{{getPriorityCount('IN_PROGRESS', 'LOW')}}</div>
+            <span class="stat-label">Low</span>
+          </div>
         </div>
       </div>
       <div class="task-cards">
         <app-task-card
-          *ngFor="let task of getTasks('IN_PROGRESS'); trackBy: trackByTaskId"
+          *ngFor="let task of inProgressTasks; trackBy: trackByTaskId"
           [task]="task"
           [isManager]="isManager"
           (edit)="onEditTask($event)"
           (delete)="onDeleteTask($event)"
           cdkDrag>
         </app-task-card>
+        <div *ngIf="inProgressTasks.length === 0" class="no-tasks">
+          No tasks in this column
+        </div>
       </div>
     </div>
 
@@ -71,29 +88,43 @@
     <div class="kanban-column"
          cdkDropList
          id="doneList"
-         [cdkDropListData]="getTasks('DONE')"
+         [cdkDropListData]="doneTasks"
          [cdkDropListConnectedTo]="['todoList', 'inProgressList']"
          (cdkDropListDropped)="drop($event)">
       <h3>Done</h3>
       <div class="column-stats">
         <div class="priority-stats">
-          <!-- Same stats structure as TODO -->
+          <div class="stat-circle">
+            <div class="circle high">{{getPriorityCount('DONE', 'HIGH')}}</div>
+            <span class="stat-label">High</span>
+          </div>
+          <div class="stat-circle">
+            <div class="circle medium">{{getPriorityCount('DONE', 'MEDIUM')}}</div>
+            <span class="stat-label">Medium</span>
+          </div>
+          <div class="stat-circle">
+            <div class="circle low">{{getPriorityCount('DONE', 'LOW')}}</div>
+            <span class="stat-label">Low</span>
+          </div>
         </div>
       </div>
       <div class="task-cards">
         <app-task-card
-          *ngFor="let task of getTasks('DONE'); trackBy: trackByTaskId"
+          *ngFor="let task of doneTasks; trackBy: trackByTaskId"
           [task]="task"
           [isManager]="isManager"
           (edit)="onEditTask($event)"
           (delete)="onDeleteTask($event)"
           cdkDrag>
         </app-task-card>
+        <div *ngIf="doneTasks.length === 0" class="no-tasks">
+          No tasks in this column
+        </div>
       </div>
     </div>
   </div>
 
-  <div *ngIf="tasks.length === 0" class="no-tasks">
-    No tasks found for this project.
+  <div *ngIf="tasks.length === 0" class="no-tasks-message">
+    No tasks found for this project. Select a project or create new tasks.
   </div>
 </div>

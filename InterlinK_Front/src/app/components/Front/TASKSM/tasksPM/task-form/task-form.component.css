@@ -2,23 +2,24 @@
 .task-drawer {
   position: fixed;
   top: 0;
-  right: -100%;
-  width: 300px;
-  height: 100%;
-  background-color: #fff;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-  transition: right 0.3s ease;
-  z-index: 1050;
+  right: -400px;
+  width: 400px;
+  height: 100vh;
+  background: white;
+  box-shadow: -2px 0 8px rgba(9, 30, 66, 0.15);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
 }
 
 .task-drawer.open {
-  right: 0;
+  transform: translateX(-400px);
 }
 
 .drawer-header {
-  padding: 15px;
-  background-color: #007bff;
-  color: #fff;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e1e4e8;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,60 +27,137 @@
 
 .drawer-header h3 {
   margin: 0;
-  font-size: 18px;
+  color: #172b4d;
+  font-size: 20px;
+  font-weight: 600;
 }
 
-.drawer-header .close-btn {
+.close-btn {
   background: none;
   border: none;
   font-size: 24px;
-  color: #fff;
+  color: #6b778c;
   cursor: pointer;
-}
-
-.drawer-body {
-  padding: 15px;
-}
-
-.drawer-body .form-group {
-  margin-bottom: 15px;
-}
-
-.drawer-body .form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.drawer-body .form-group input,
-.drawer-body .form-group select,
-.drawer-body .form-group textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
+  padding: 4px 8px;
   border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
-.drawer-footer {
-  padding: 15px;
-  text-align: right;
+.close-btn:hover {
+  background: #f4f5f7;
+  color: #172b4d;
 }
 
-.drawer-footer .btn {
-  padding: 10px 20px;
+form {
+  padding: 24px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #172b4d;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px 12px;
+  border: 2px solid #dfe1e6;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: #4c9aff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(76, 154, 255, 0.2);
+}
+
+.form-control.is-invalid {
+  border-color: #DE350B;
+}
+
+textarea.form-control {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.invalid-feedback {
+  color: #DE350B;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+select.form-control {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%236B778C'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 32px;
+}
+
+.form-actions {
+  padding: 16px 24px;
+  border-top: 1px solid #e1e4e8;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  background: white;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btn-secondary {
+  background: #f4f5f7;
+  color: #42526e;
+}
+
+.btn-secondary:hover {
+  background: #ebecf0;
+}
+
+.btn-primary {
+  background: #0052cc;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #0747a6;
+}
+
+.btn-primary:disabled {
+  background: #dfe1e6;
+  color: #a5adba;
+  cursor: not-allowed;
 }
 
 .drawer-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  right: 0;
+  bottom: 0;
+  background: rgba(9, 30, 66, 0.54);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease;
-  z-index: 1040;
+  transition: all 0.3s ease;
+  z-index: 999;
 }
 
 .drawer-overlay.open {

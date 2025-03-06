@@ -34,9 +34,21 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProjectService } from './components/Front/TASKSM/Services/projectstatic.service';
 import { TaskCardComponent } from './components/Front/TASKSM/tasksPM/task-card/task-card.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+// Student Task Management Components
+import { StudentTaskManagementComponent } from './components/Front/TASKSM/tasksST/student-task-management/student-task-management.component';
+import { StudentTaskBoardComponent } from './components/Front/TASKSM/tasksST/student-task-board/student-task-board.component';
+import { SelectStudentComponent } from './components/Front/TASKSM/tasksST/select-student/select-student.component';
+import { TaskCardComponent as StudentTaskCardComponent } from './components/Front/TASKSM/tasksST/student-task-card/student-task-card.component';
+import { StudentNavbarComponent } from './components/Front/TASKSM/shared/student-navbar/student-navbar.component';
+import { ManagerNavbarComponent } from './components/Front/TASKSM/shared/manager-navbar/manager-navbar.component';
+
 const routes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'tasks', component: TaskManagementComponent },
+  { path: 'tasks-s', component: StudentTaskManagementComponent },
   { path: '**', redirectTo: '' }
 ];
 
@@ -59,17 +71,20 @@ const routes: Routes = [
     TaskFormComponent,
     TaskManagementComponent,
     DashboardComponent,
-    TaskCardComponent
-    
-    
-    
-   
-    
-    
+    TaskCardComponent,
+    // Student Task Management Components
+    StudentTaskManagementComponent,
+    StudentTaskBoardComponent,
+    SelectStudentComponent,
+    StudentTaskCardComponent,
+    StudentNavbarComponent,
+    ManagerNavbarComponent
   ],
   imports: [
     ReactiveFormsModule,
     BrowserModule,
+    BrowserAnimationsModule,
+    CommonModule,
     AppRoutingModule,
     AsideComponent,
     BillingComponent,
@@ -83,11 +98,9 @@ const routes: Routes = [
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    DragDropModule 
-    
-    
+    DragDropModule
   ],
-  providers: [TaskService,ProjectService],
+  providers: [TaskService, ProjectService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

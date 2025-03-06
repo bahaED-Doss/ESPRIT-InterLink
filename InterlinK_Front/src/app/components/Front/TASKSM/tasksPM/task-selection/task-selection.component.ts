@@ -46,7 +46,7 @@ export class TaskSelectionComponent implements OnInit {
           this.projects = data;
           console.log('Projects loaded:', data);
           this.tasks = [];
-          this.loadTasks;
+          this.loadTasks();
         },
         error: (error: any) => {
           console.error('Error loading projects:', error);
@@ -77,9 +77,7 @@ export class TaskSelectionComponent implements OnInit {
     this.projectSelected.emit({ 
       projectId: 0, 
       managerId: Number(this.selectedManagerId) 
-      
     });
-    
   }
 
   onProjectChange() {

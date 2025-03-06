@@ -70,22 +70,20 @@ export class TaskManagementComponent implements OnInit {
 
   createTask(task: Task) {
     alert("✅ Task created successfully! The student will receive an email & a calendar notification.");
-  this.taskService.createTask(
-    this.selectedProjectId,
-    this.selectedManagerId,
-    
-    task
-  ).subscribe({
-    next: (response) => {
-      this.loadTasks();
-      this.closeTaskDrawer();
-    },
-    error: (error) => {
-      console.error('Error creating task:', error);
-      
-    }
-  });
-}
+    this.taskService.createTask(
+      this.selectedProjectId,
+      this.selectedManagerId,
+      task
+    ).subscribe({
+      next: (response) => {
+        this.loadTasks();
+        this.closeTaskDrawer();
+      },
+      error: (error) => {
+        console.error('Error creating task:', error);
+      }
+    });
+  }
 
   getEmptyTask(): Task {
     return {
@@ -104,7 +102,6 @@ export class TaskManagementComponent implements OnInit {
     };
   }
 
-
   deleteTask(taskId: number) {
     this.taskService.deleteTask(
       this.selectedProjectId, 
@@ -118,7 +115,6 @@ export class TaskManagementComponent implements OnInit {
     });
   }
 
-
   openEditTaskDrawer(task: Task) {
     console.log('Opening edit drawer for task:', task);
     this.newTask = { ...task };
@@ -130,8 +126,8 @@ export class TaskManagementComponent implements OnInit {
     console.log('Updating task:', task);
     this.taskService.updateTaskStatus(
       this.selectedProjectId,
-      task.taskId!,
       this.selectedManagerId,
+      task.taskId!,
       task.status || 'TO_DO'
     ).subscribe({
       next: (updatedTask) => {

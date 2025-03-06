@@ -1,9 +1,6 @@
-
 import { Task } from '../../models/task.model';
-import { Component, Input, Output, EventEmitter, OnChanges,HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, HostListener } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-
-
 
 @Component({
   selector: 'app-task-list',
@@ -17,25 +14,48 @@ export class TaskListComponent implements OnChanges {
   @Output() editTask = new EventEmitter<Task>();
   @Output() deleteTask = new EventEmitter<number>();
 
+  todoTasks: Task[] = [];
+  inProgressTasks: Task[] = [];
+  doneTasks: Task[] = [];
+
   constructor() {}
 
-  ngOnChanges() {
-    this.filterTasks();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['tasks']) {
+      this.filterTasks();
+    }
   }
 
   filterTasks() {
-    // Optional: Implement if needed for filtering
+    // Make sure tasks is defined before filtering
+    if (!this.tasks) {
+      this.todoTasks = [];
+      this.inProgressTasks = [];
+      this.doneTasks = [];
+      return;
+    }
+
+    this.todoTasks = this.getTasks('TO_DO');
+    this.inProgressTasks = this.getTasks('IN_PROGRESS');
+    this.doneTasks = this.getTasks('DONE');
   }
 
-
   getTasks(status: string): Task[] {
-    return this.tasks.filter(task => task.status === status);
+    if (!this.tasks) return [];
+    return this.tasks.filter(task => task && task.status === status);
   }
 
   getPriorityCount(status: string, priority: string): number {
-    return this.getTasks(status).filter(task => 
-      task.priority.toUpperCase() === priority.toUpperCase()
+    const tasks = this.getTasks(status);
+    if (!tasks || tasks.length === 0) return 0;
+    
+    return tasks.filter(task => 
+      task && task.priority && task.priority.toUpperCase() === priority.toUpperCase()
     ).length;
+  }
+
+  trackByTaskId(index: number, task: Task): number {
+    return task.taskId || index; // Use index as fallback if taskId is undefined
   }
 
   drop(event: CdkDragDrop<Task[]>) {
@@ -43,6 +63,8 @@ export class TaskListComponent implements OnChanges {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       const task = event.previousContainer.data[event.previousIndex];
+      if (!task) return;
+      
       const newStatus = this.getStatusFromId(event.container.id);
       
       transferArrayItem(
@@ -51,29 +73,29 @@ export class TaskListComponent implements OnChanges {
         event.previousIndex,
         event.currentIndex
       );
-
-      this.statusChanged.emit({ task, newStatus });
+      
+      // Emit the status change
+      this.statusChanged.emit({
+        task: task,
+        newStatus: newStatus
+      });
     }
   }
 
-   onEditTask(task: Task) {
-    this.editTask.emit(task);
-  }
-
-  onDeleteTask(taskId: number) {
-    this.deleteTask.emit(taskId);
-  }
-
-  trackByTaskId(index: number, task: Task): number {
-    return task.taskId || index;
-  }
-
-  private getStatusFromId(id: string): string {
-    switch(id) {
+  getStatusFromId(id: string): string {
+    switch (id) {
       case 'todoList': return 'TO_DO';
       case 'inProgressList': return 'IN_PROGRESS';
       case 'doneList': return 'DONE';
       default: return 'TO_DO';
     }
+  }
+
+  onEditTask(task: Task) {
+    this.editTask.emit(task);
+  }
+
+  onDeleteTask(taskId: number) {
+    this.deleteTask.emit(taskId);
   }
 }

@@ -17,12 +17,10 @@ public class statticUserServiceTasks {
 
     public List<User> getProjectManagers() {
         return userRepository.findByRole(Role.PROJECT_MANAGER);
-    }}
-  //  public List<User> getstudents() {
-    //    return userRepository.findByRole(Role.STUDENT);
-    //}
-    // public Project getStudentProject(Long studentId) {
-     //   User student = userRepository.findById(studentId)
-       //         .orElseThrow(() -> new RuntimeException("Student not found"));
-        //return student.getProject();}}
+    }
+    public List<User> getStudents() {
+       return userRepository.findByRole(Role.STUDENT);
+    }
+}
+     
 

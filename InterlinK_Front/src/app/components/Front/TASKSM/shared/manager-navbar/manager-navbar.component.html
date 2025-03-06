@@ -1,0 +1,55 @@
+<header class="header">
+  <div class="navbar-area">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" routerLink="/">
+          <img src="assets/images/logo.png" alt="ESPRIT InterLink" />
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link active" routerLink="/home" routerLinkActive="active">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/interviews" routerLinkActive="active">Interviews</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/internships" routerLinkActive="active">Internships</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/workspace" routerLinkActive="active">Workspace</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/my-company" routerLinkActive="active">My Company</a>
+            </li>
+          </ul>
+          
+          <div class="notification-area">
+            <div class="create-button">
+              <button class="btn btn-create" (click)="onCreateTask()">
+                <i class="fas fa-plus"></i> Create Task
+              </button>
+            </div>
+            
+            <div class="notification-icon" [class.has-notifications]="notificationCount > 0">
+              <i class="fas fa-bell"></i>
+              <span class="notification-badge" *ngIf="notificationCount > 0">
+                {{ notificationCount > 9 ? '9+' : notificationCount }}
+              </span>
+            </div>
+            
+            <div class="user-profile">
+              <img src="assets/images/avatar.jpg" alt="Profile" />
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>

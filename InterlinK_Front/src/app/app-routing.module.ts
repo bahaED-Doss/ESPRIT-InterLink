@@ -17,6 +17,7 @@ import { TaskFormComponent } from './components/Front/TASKSM/tasksPM/task-form/t
 import { TaskListComponent } from './components/Front/TASKSM/tasksPM/task-list/task-list.component';
 import { TaskManagementComponent } from './components/Front/TASKSM/tasksPM/task-management/task-management.component';
 import { TaskSelectionComponent } from './components/Front/TASKSM/tasksPM/task-selection/task-selection.component';
+import { StudentTaskManagementComponent } from './components/Front/TASKSM/tasksST/student-task-management/student-task-management.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent,},
@@ -36,8 +37,7 @@ const routes: Routes = [
   { path: 'taskM', component: TaskManagementComponent },
   { path: 'taskList', component: TaskListComponent },
   { path: 'taskSelect', component: TaskSelectionComponent },
-  
-  
+  { path: 'tasks-s', component: StudentTaskManagementComponent },
 ];
 
 @NgModule({

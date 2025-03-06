@@ -22,5 +22,9 @@ public class UserStatisticController {
     }
 
 
+    @GetMapping("/students")
+    public List<User> getAllStudents() {
+        return userStatisticService.getStudents();
+    }
 
 }

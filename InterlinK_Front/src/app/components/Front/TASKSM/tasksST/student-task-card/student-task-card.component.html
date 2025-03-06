@@ -4,7 +4,7 @@
   </div>
 
   <div class="task-header">
-    <h3 class="task-title">{{task.title}}</h3>
+    <h3 class="task-title">{{ task.title }}</h3>
     
     <div class="task-actions">
       <div class="dropdown">
@@ -12,48 +12,24 @@
           <i class="fas fa-ellipsis-v"></i>
         </button>
         <div class="dropdown-menu" [class.show]="isMenuOpen">
-          <a class="dropdown-item" (click)="onDetails()">
+          <a class="dropdown-item" (click)="onViewDetails()">
             <i class="fas fa-info-circle"></i> View Details
-          </a>
-          <a class="dropdown-item" *ngIf="isManager" (click)="onEdit()">
-            <i class="fas fa-edit"></i> Edit Task
-          </a>
-          <a class="dropdown-item delete" *ngIf="isManager" (click)="confirmDelete()">
-            <i class="fas fa-trash"></i> Delete Task
           </a>
         </div>
       </div>
     </div>
   </div>
 
-  <p class="task-description">{{task.description}}</p>
+  <p class="task-description">{{ task.description }}</p>
 
   <div class="task-meta">
     <div class="due-date">
       <i class="far fa-calendar"></i>
-      <span>Due: {{task.deadline | date:'MMM d'}}</span>
+      <span>Due: {{ task.deadline | date:'MMM d' }}</span>
     </div>
     <div class="assignee">
       <i class="far fa-clock"></i>
-      <span>{{task.timer}}h</span>
-    </div>
-  </div>
-</div>
-
-<!-- Delete Confirmation Modal -->
-<div class="modal" *ngIf="showDeleteConfirm">
-  <div class="modal-content task-details-modal">
-    <div class="modal-header">
-      <h2 class="modal-title">Delete Task</h2>
-      <button type="button" class="close" (click)="cancelDelete()">&times;</button>
-    </div>
-    <div class="modal-body">
-      <p>Are you sure you want to delete "{{task.title}}"?</p>
-      <p>This action cannot be undone.</p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" (click)="cancelDelete()">Cancel</button>
-      <button class="btn btn-danger" (click)="onDelete()">Delete</button>
+      <span>{{ task.timer }}h</span>
     </div>
   </div>
 </div>

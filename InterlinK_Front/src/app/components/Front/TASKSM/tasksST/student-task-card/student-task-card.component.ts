@@ -2,21 +2,15 @@ import { Component, Input, Output, EventEmitter, HostListener } from '@angular/c
 import { Task } from '../../models/task.model';
 
 @Component({
-  selector: 'app-task-card',
-  templateUrl: './task-card.component.html',
-  styleUrls: ['./task-card.component.css']
+  selector: 'app-student-task-card',
+  templateUrl: './student-task-card.component.html',
+  styleUrls: ['./student-task-card.component.css']
 })
 export class TaskCardComponent {
   @Input() task!: Task;
-  @Input() userRole!: string;
-  @Output() details = new EventEmitter<Task>();
-  @Output() statusChange = new EventEmitter<{task: Task, newStatus: string}>();
-  @Output() edit = new EventEmitter<Task>();
-  @Output() delete = new EventEmitter<number>();
-  @Input() isManager = false;
+  @Output() viewDetails = new EventEmitter<Task>();
 
   isMenuOpen = false;
-  showDeleteConfirm = false;
   showDetails = false;
 
   @HostListener('document:click', ['$event'])
@@ -25,7 +19,6 @@ export class TaskCardComponent {
     if (!target.closest('.action-button') && !target.closest('.dropdown-menu') && !target.closest('.modal-content')) {
       this.isMenuOpen = false;
       if (!target.closest('.modal')) {
-        this.showDeleteConfirm = false;
         this.showDetails = false;
       }
     }
@@ -36,32 +29,14 @@ export class TaskCardComponent {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  onDetails(): void {
+  onViewDetails(): void {
     this.showDetails = true;
     this.isMenuOpen = false;
+    this.viewDetails.emit(this.task);
   }
 
   closeDetails(): void {
     this.showDetails = false;
-  }
-
-  onEdit(): void {
-    this.edit.emit(this.task);
-    this.isMenuOpen = false;
-  }
-
-  confirmDelete(): void {
-    this.showDeleteConfirm = true;
-    this.isMenuOpen = false;
-  }
-
-  cancelDelete(): void {
-    this.showDeleteConfirm = false;
-  }
-
-  onDelete(): void {
-    this.delete.emit(this.task.taskId);
-    this.showDeleteConfirm = false;
   }
 
   getStatusClass(status: string | undefined): string {
@@ -80,7 +55,7 @@ export class TaskCardComponent {
     
     switch (priority.toUpperCase()) {
       case 'HIGH': return 'danger';
-      case 'MEDIUM': return 'warning';
+      case 'SECOND_LEVEL': return 'warning';
       case 'LOW': return 'success';
       default: return 'secondary';
     }
