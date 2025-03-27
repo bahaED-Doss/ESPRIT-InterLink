@@ -40,4 +40,9 @@ public class InternshipServiceImpl implements IInternshipService {
     public void deleteInternship(Long id) {
         internshipRepository.deleteById(id);
     }
+
+    @Override
+    public Internship findInternshipById(Long internshipId) {
+        return null;
+    }
 }

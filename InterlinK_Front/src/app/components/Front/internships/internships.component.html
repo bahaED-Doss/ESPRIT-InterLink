@@ -56,11 +56,46 @@
         <p class="type">📌 {{ internship.type }}</p>
         <p class="start-date">📅 Start date: {{ internship.startDate | date:'dd/MM/yyyy' }}</p>
         <p class="available-spots">👥 Available spots: {{ internship.availableSpots }}</p>
+        <!-- Rating display -->
+        <div class="rating" *ngIf="getRating(internship.internshipId) > 0">
+          ★ {{ getRating(internship.internshipId) | number:'1.1-1' }}
+          ({{ getRatingCount(internship.internshipId) }} avis)
+        </div>
+
+        <!-- Rate button -->
+        <button 
+          *ngIf="!hasRated(internship.internshipId)"
+          (click)="openRatingModal(internship)"
+          class="rate-btn"
+        >
+        Rate this internship
+        </button>
+
         <button (click)="applyForInternship(internship)" class="apply-btn">Apply</button>
       </div>
     </div>
   </div>
 
+  <!-- Application form modal -->
+  <div *ngIf="selectedInternship" class="modal-overlay">
+    <!-- Your existing application form -->
+  </div>
+
+  <!-- Rating modal -->
+  <div *ngIf="selectedInternshipForRating" class="modal-overlay">
+    <div class="rating-modal">
+      <h3>Noter {{ selectedInternshipForRating.title }}</h3>
+      <button (click)="selectedInternshipForRating = null" class="close-btn">&times;</button>
+      <div class="stars">
+        <span 
+          *ngFor="let star of [1,2,3,4,5]" 
+          (click)="selectedRating = star"
+          [class.active]="star <= selectedRating">★</span>
+      </div>
+      <textarea [(ngModel)]="ratingComment" placeholder="Votre avis..."></textarea>
+      <button (click)="submitRating()">Envoyer</button>
+    </div>
+  </div>
   <!-- Application form overlay (modal) -->
   <div *ngIf="selectedInternship" class="modal-overlay">
     <div class="application-form">
@@ -112,4 +147,5 @@
       </form>
     </div>
   </div>
+  
 </div>

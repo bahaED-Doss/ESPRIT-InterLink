@@ -5,7 +5,7 @@ import { Internship } from 'src/app/models/Internship.model';
 import { Application, ApplicationStatus } from 'src/app/models/Application.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { RatingService } from 'src/app/services/rating.service';
 
 @Component({
   selector: 'app-internships',
@@ -14,74 +14,81 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class InternshipsComponent implements OnInit {
   internships: Internship[] = [];
-  applications: Application[] = []; // Pour stocker la liste complète
-
-  addApplicationForm: FormGroup; 
+  applications: Application[] = [];
+  addApplicationForm: FormGroup;
   ApplicationStatus = ApplicationStatus;
+  filteredInternships: Internship[] = [];
+  selectedInternship: Internship | null = null;
+  selectedRating = 0;
+  ratingComment = '';
+  selectedInternshipForRating: Internship | null = null;
 
-  application: Application = {
-    applicationId: 0,
-    status: ApplicationStatus.PENDING, // Remplace par la valeur par défaut appropriée
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    cv: '',
-    internshipId: 0,
-    internship: null
-  };
-    filteredInternships: Internship[] = [];
-  selectedInternship: Internship | null = null; // Allow null
- 
-
-  @ViewChild('addApplicationModal', { read: TemplateRef }) addApplicationModal!: TemplateRef<any>; // Nouveau modal pour Application
-
-  // Filtres
+  // Filters
   locationFilter: string = '';
   durationFilter: string = '';
   typeFilter: string = '';
-  http: any;
 
-  constructor( private fb: FormBuilder, public  modalService: NgbModal,
+  @ViewChild('addApplicationModal', { read: TemplateRef }) addApplicationModal!: TemplateRef<any>;
+
+  constructor(
+    private fb: FormBuilder,
+    public modalService: NgbModal,
     private internshipService: InternshipService,
-    private applicationService: ApplicationService
+    private applicationService: ApplicationService,
+    private ratingService: RatingService
   ) {
-    this.addApplicationForm = this.fb.group({ firstName: ['', [Validators.required, Validators.minLength(2)]],
+    this.addApplicationForm = this.fb.group({
+      firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
-      phoneNumber: [
-        '',
-        [Validators.required, Validators.pattern('^[0-9]{8}$')],
-      ],
+      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{8}$')]],
       cv: [null, Validators.required],
-      status: [ApplicationStatus, Validators.required] 
+      status: [ApplicationStatus.PENDING, Validators.required]
     });
-    
   }
-
- // Method to get enum values
- getEnumValues(enumObject: any): string[] {
-  return Object.values(enumObject);
-}
-
-// Method to format enum values
-formatEnumValue(value: string): string {
-  return value
-    .toLowerCase()
-    .replace(/_/g, ' ')
-    .replace(/\b\w/g, (char) => char.toUpperCase());
-}
 
   ngOnInit(): void {
     this.getInternships();
   }
 
-  // Récupérer tous les stages
+  // Rating methods
+  openRatingModal(internship: Internship): void {
+    this.selectedInternshipForRating = internship;
+  }
+
+  submitRating(): void {
+    if (this.selectedRating === 0 || !this.selectedInternshipForRating) return;
+
+    this.ratingService.addRating(
+      this.selectedInternshipForRating.internshipId,
+      this.selectedRating,
+      this.ratingComment
+    ).subscribe(() => {
+      this.selectedInternshipForRating = null;
+      this.selectedRating = 0;
+      this.ratingComment = '';
+    });
+  }
+
+  getRating(internshipId: number): number {
+    return this.ratingService.getAverageRating(internshipId);
+  }
+
+  getRatingCount(internshipId: number): number {
+    return this.ratingService.getRatings(internshipId).length;
+  }
+
+  hasRated(internshipId: number): boolean {
+    // Implement logic to check if current user has rated
+    return false;
+  }
+
+  // Rest of your existing methods...
   getInternships(): void {
     this.internshipService.getInternships().subscribe({
       next: (data: Internship[]) => {
         this.internships = data;
-        this.filteredInternships = data; // Initialiser les stages filtrés
+        this.filteredInternships = data;
       },
       error: (error: any) => {
         alert('Error fetching internships. Please try again.');
@@ -89,7 +96,6 @@ formatEnumValue(value: string): string {
     });
   }
 
-  // Appliquer les filtres
   applyFilters(): void {
     this.filteredInternships = this.internships.filter((internship) => {
       const matchesLocation = internship.localisation
@@ -105,6 +111,31 @@ formatEnumValue(value: string): string {
     });
   }
 
+ 
+  
+  application: Application = {
+    applicationId: 0,
+    status: ApplicationStatus.PENDING, // Remplace par la valeur par défaut appropriée
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    cv: '',
+    internshipId: 0,
+    internship: null
+  };
+  // Method to format enum values
+formatEnumValue(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+ // Method to get enum values
+ getEnumValues(enumObject: any): string[] {
+  return Object.values(enumObject);
+}
   // Postuler pour un stage
   applyForInternship(internship: Internship): void {
     this.selectedInternship = internship;
@@ -214,4 +245,6 @@ onSubmitAddApplication():void{
       internship: null,
     };
   }
+  
+
 }
