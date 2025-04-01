@@ -43,6 +43,8 @@
           <option value="HYBRID">Hybrid</option>
         </select>
       </div>
+      <!-- Bouton pour ouvrir le formulaire de CV -->
+    <button class="generate-cv-btn" (click)="showCVForm = true">Générer mon CV Automatique</button>
     </div>
 
     <!-- Internship list -->
@@ -147,9 +149,7 @@
     </div>
   </div>
   <div class="cv-container">
-    <!-- Bouton pour ouvrir le formulaire de CV -->
-    <button class="generate-cv-btn" (click)="showCVForm = true">Générer mon CV Automatique</button>
-  
+    
     <!-- Formulaire de CV -->
     <div *ngIf="showCVForm" class="cv-form-container">
       <form [formGroup]="cvForm" class="cv-form">
