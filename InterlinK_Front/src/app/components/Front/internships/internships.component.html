@@ -1,5 +1,4 @@
 <app-navbar></app-navbar>
-
 <div class="internships-container">
   <h1 class="title">Find Your Ideal Internship</h1>
   <div class="internships-layout">
@@ -147,5 +146,149 @@
       </form>
     </div>
   </div>
+  <div class="cv-container">
+    <!-- Bouton pour ouvrir le formulaire de CV -->
+    <button class="generate-cv-btn" (click)="showCVForm = true">Générer mon CV Automatique</button>
   
+    <!-- Formulaire de CV -->
+    <div *ngIf="showCVForm" class="cv-form-container">
+      <form [formGroup]="cvForm" class="cv-form">
+        <h2>Création de CV</h2>
+        
+        <!-- Informations Personnelles -->
+        <fieldset formGroupName="personalInfo">
+          <legend>Informations Personnelles</legend>
+          <div class="form-group">
+            <input formControlName="fullName" placeholder="Nom complet" required>
+          </div>
+          <div class="form-group">
+            <input formControlName="email" type="email" placeholder="Email" required>
+          </div>
+          <div class="form-group">
+            <input formControlName="phone" placeholder="Téléphone">
+          </div>
+          <div class="form-group">
+            <textarea formControlName="profile" placeholder="Profil professionnel (50-100 mots)"></textarea>
+          </div>
+        </fieldset>
+  
+        <!-- Formation -->
+        <div formArrayName="education">
+          <h3>Formation <button type="button" (click)="addEducation()">+ Ajouter</button></h3>
+          
+          <div *ngFor="let edu of getEducationControls(); let i=index">
+                        <div class="form-group">
+              <input formControlName="degree" placeholder="Diplôme">
+            </div>
+            <div class="form-group">
+              <input formControlName="institution" placeholder="Établissement">
+            </div>
+            <div class="form-group">
+              <input formControlName="year" placeholder="Année">
+            </div>
+            <button type="button" (click)="removeEducation(i)">Supprimer</button>
+          </div>
+        </div>
+  
+        <!-- Expérience Professionnelle -->
+        <div formArrayName="experiences">
+          <h3>Expérience Professionnelle <button type="button" (click)="addExperience()">+ Ajouter</button></h3>
+          
+          <div *ngFor="let exp of getExperienceControls(); let i=index" [formGroupName]="i">
+            <div class="form-group">
+              <input formControlName="title" placeholder="Poste">
+            </div>
+            <div class="form-group">
+              <input formControlName="company" placeholder="Entreprise">
+            </div>
+            <div class="form-group">
+              <input formControlName="period" placeholder="Période (ex: 2020-2022)">
+            </div>
+            <div class="form-group">
+              <textarea formControlName="description" placeholder="Description"></textarea>
+            </div>
+            <button type="button" (click)="removeExperience(i)">Supprimer</button>
+          </div>
+        </div>
+  
+        <!-- Compétences -->
+        <div formArrayName="skills">
+          <h3>Compétences <button type="button" (click)="addSkill()">+ Ajouter</button></h3>
+          
+          <div *ngFor="let skill of getSkillControls(); let i=index">
+            <input [formControlName]="i" placeholder="Compétence">
+            <button type="button" (click)="removeSkill(i)">Supprimer</button>
+          </div>
+        </div>
+  
+        <!-- Langues -->
+        <div formArrayName="languages">
+          <h3>Langues <button type="button" (click)="addLanguage()">+ Ajouter</button></h3>
+          
+          <div *ngFor="let lang of getLanguageControls(); let i=index" [formGroupName]="i">
+            <div class="form-group">
+              <input formControlName="name" placeholder="Langue">
+            </div>
+            <div class="form-group">
+              <select formControlName="level">
+                <option value="Débutant">Débutant</option>
+                <option value="Intermédiaire">Intermédiaire</option>
+                <option value="Avancé">Avancé</option>
+                <option value="Bilingue">Bilingue</option>
+              </select>
+            </div>
+            <button type="button" (click)="removeLanguage(i)">Supprimer</button>
+          </div>
+        </div>
+  
+        <div class="form-actions">
+          <button type="button" (click)="previewCV()">Aperçu</button>
+          <button type="button" (click)="generatePDF()">Générer PDF</button>
+          <button type="button" (click)="saveDraft()">Enregistrer brouillon</button>
+          <button type="button" (click)="showCVForm = false">Annuler</button>
+        </div>
+      </form>
+    </div>
+  
+    <!-- Aperçu du CV -->
+    <div *ngIf="previewMode" class="cv-preview-container">
+      <div id="cv-preview" class="cv-preview">
+        <!-- Le contenu du CV sera généré ici -->
+      </div>
+      <div class="preview-actions">
+        <button (click)="previewMode = false">Retour à l'édition</button>
+        <button (click)="generatePDF()">Télécharger PDF</button>
+      </div>
+    </div>
+  </div>
+  <!-- Ajoutez ceci où vous voulez le chatbot --><!-- Remplacez la section chatbot existante par : 
+<div class="chatgpt-container">
+  <div class="chat-header">
+    <h3>Assistant Stages</h3>
+  </div>
+  
+  <div class="chat-messages">
+    <div *ngFor="let msg of ChatMessage" [class]="msg.role + '-message'">
+      <div class="message-content">
+        {{ msg.content }}
+      </div>
+    </div>
+    
+    <div *ngIf="isWaitingForAI" class="typing-indicator">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  
+  <div class="chat-input">
+    <textarea [(ngModel)]="userMessage" 
+              (keydown.enter)="$event.preventDefault(); sendMessage()"
+              placeholder="Posez votre question..."></textarea>
+    <button (click)="sendMessage()" [disabled]="isWaitingForAI">
+      <span *ngIf="!isWaitingForAI">Envoyer</span>
+      <span *ngIf="isWaitingForAI">...</span>
+    </button>
+  </div>
+</div>-->
 </div>
