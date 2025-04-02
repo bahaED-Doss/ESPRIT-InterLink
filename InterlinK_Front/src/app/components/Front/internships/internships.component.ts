@@ -23,8 +23,51 @@ import * as QRCode from 'qrcode';
   styleUrls: ['./internships.component.css'],
 })
 export class InternshipsComponent implements OnInit {
-sendToAI(arg0: any) {
+/*sendToAI(arg0: any) {
 throw new Error('Method not implemented.');
+}*/
+// Add these properties
+availableSkills: string[] = [
+  'JavaScript', 'TypeScript', 'Angular', 'React', 'Vue.js',
+  'Node.js', 'Python', 'Java', 'C#', 'PHP',
+  'HTML', 'CSS', 'SQL', 'Git', 'Docker'
+];
+selectedSkills: string[] = [];
+customSkillInput: string = '';
+
+// Add these methods
+isSkillSelected(skill: string): boolean {
+  return this.selectedSkills.includes(skill);
+}
+
+toggleSkill(skill: string): void {
+  if (this.isSkillSelected(skill)) {
+    this.selectedSkills = this.selectedSkills.filter(s => s !== skill);
+  } else {
+    this.selectedSkills.push(skill);
+  }
+}
+
+addCustomSkill(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  const skill = input.value.trim();
+  if (skill && !this.availableSkills.includes(skill)) {
+    this.availableSkills.push(skill);
+    this.selectedSkills.push(skill);
+    input.value = '';
+  }
+}
+
+addCustomSkillFromInput(): void {
+  const skillInput = document.querySelector('.skill-input') as HTMLInputElement;
+  if (skillInput) {
+    const skill = skillInput.value.trim();
+    if (skill && !this.availableSkills.includes(skill)) {
+      this.availableSkills.push(skill);
+      this.selectedSkills.push(skill);
+      skillInput.value = '';
+    }
+  }
 }
 showCVForm = false;
 previewMode = false;
@@ -75,12 +118,17 @@ internships: Internship[] = [];
       }),
       education: this.fb.array([this.createEducationEntry()]),
       experiences: this.fb.array([this.createExperienceEntry()]),
-      skills: this.fb.array([this.fb.control('')]),
+      skills: this.fb.array([]), // This should be initialized as empty array
       languages: this.fb.array([this.createLanguageEntry()])
     });
     /*this.chatGPTService.getConversation().subscribe(messages => {
       this.ChatMessage = messages.filter(m => m.role !== 'system');
     });*/
+  }
+  createSkillEntry(): FormGroup {
+    return this.fb.group({
+      name: ['']
+    });
   }
 /*
   sendMessage(): void {
@@ -98,6 +146,7 @@ internships: Internship[] = [];
     this.getInternships();
     this.loadDraft();
   }
+  
  // Méthodes pour Education
  createEducationEntry(): FormGroup {
   return this.fb.group({
@@ -187,9 +236,8 @@ removeLanguage(index: number): void {
 // Sauvegarde automatique
 saveDraft(): void {
   localStorage.setItem('cvDraft', JSON.stringify(this.cvForm.value));
-  alert('Brouillon enregistré!');
+  alert('Brouillon enregistré avec succès!');
 }
-
 loadDraft(): void {
   const draft = localStorage.getItem('cvDraft');
   if (draft) {
@@ -229,66 +277,77 @@ renderPreview(): void {
   const cvData = this.cvForm.value;
   
   previewElement.innerHTML = `
-    <div class="cv-header">
-      <h1>${cvData.personalInfo.fullName}</h1>
-      <p>${cvData.personalInfo.email} | ${cvData.personalInfo.phone}</p>
-      ${cvData.personalInfo.address ? `<p>${cvData.personalInfo.address}</p>` : ''}
+    <div class="cv-header" style="background: linear-gradient(135deg, #802020 0%, #802020 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
+      <h1 style="margin: 0; color: white;font-size: 32px; font-weight: 700;">${cvData.personalInfo.fullName}</h1>
+      <p style="margin: 5px 0; font-size: 16px; opacity: 0.9;">
+        ${cvData.personalInfo.email} | ${cvData.personalInfo.phone || ''}
+      </p>
+      ${cvData.personalInfo.address ? `<p style="margin: 0; font-size: 14px;">📍 ${cvData.personalInfo.address}</p>` : ''}
     </div>
-    
-    ${cvData.personalInfo.profile ? `
-    <div class="cv-section">
-      <h2>Profil Professionnel</h2>
-      <p>${cvData.personalInfo.profile}</p>
-    </div>` : ''}
-    
-    <div class="cv-section">
-      <h2>Formation</h2>
-      ${cvData.education.map((edu: any) => `
-        <div class="education-item">
-          <h3>${edu.degree}</h3>
-          <p>${edu.institution} ${edu.year ? `(${edu.year})` : ''}</p>
+
+    <div class="cv-body" style="padding: 20px; background: white; border-radius: 0 0 8px 8px;">
+      <!-- Profil -->
+      ${cvData.personalInfo.profile ? `
+      <div class="section" style="margin-bottom: 20px;">
+        <h2 style="color: #802020; border-bottom: 2px solid #f0f0f0; padding-bottom: 5px; font-size: 20px;">PROFIL</h2>
+        <p style="line-height: 1.6;">${cvData.personalInfo.profile}</p>
+      </div>` : ''}
+
+      <!-- Compétences -->
+      <div class="section" style="margin-bottom: 20px;">
+        <h2 style="color: #802020; border-bottom: 2px solid #f0f0f0; padding-bottom: 5px; font-size: 20px;">COMPÉTENCES</h2>
+        <div class="skills" style="display: flex; flex-wrap: wrap; gap: 10px;">
+          ${this.selectedSkills.map(skill => `
+            <span style="background: #e0d6f0; color: #802020; padding: 5px 10px; border-radius: 15px; font-size: 14px;">
+              ${skill}
+            </span>
+          `).join('')}
         </div>
-      `).join('')}
-    </div>
-    
-    ${cvData.experiences.length > 0 ? `
-    <div class="cv-section">
-      <h2>Expérience Professionnelle</h2>
-      ${cvData.experiences.map((exp: any) => `
-        <div class="experience-item">
-          <h3>${exp.title} - ${exp.company}</h3>
-          ${exp.period ? `<p class="period">${exp.period}</p>` : ''}
-          ${exp.description ? `<p>${exp.description}</p>` : ''}
+      </div>
+
+      <!-- Expérience -->
+      ${cvData.experiences.length > 0 ? `
+      <div class="section" style="margin-bottom: 20px;">
+        <h2 style="color: #802020; border-bottom: 2px solid #f0f0f0; padding-bottom: 5px; font-size: 20px;">EXPÉRIENCE</h2>
+        ${cvData.experiences.map((exp: { title: any; company: any; period: any; description: any; }) => `
+          <div style="margin-bottom: 15px;">
+            <h3 style="margin: 0; font-size: 18px; color: #333;">${exp.title} • ${exp.company}</h3>
+            <p style="margin: 5px 0; color: #666; font-style: italic;">${exp.period || ''}</p>
+            <p style="margin: 0; line-height: 1.5;">${exp.description || ''}</p>
+          </div>
+        `).join('')}
+      </div>` : ''}
+
+      <!-- Formation -->
+      <div class="section" style="margin-bottom: 20px;">
+        <h2 style="color: #802020; border-bottom: 2px solid #f0f0f0; padding-bottom: 5px; font-size: 20px;">FORMATION</h2>
+        ${cvData.education.map((edu: { degree: any; institution: any; year: any; }) => `
+          <div style="margin-bottom: 15px;">
+            <h3 style="margin: 0; font-size: 18px; color: #333;">${edu.degree}</h3>
+            <p style="margin: 5px 0; color: #666;">${edu.institution || ''} ${edu.year ? `(${edu.year})` : ''}</p>
+          </div>
+        `).join('')}
+      </div>
+
+      <!-- Langues -->
+      ${cvData.languages.length > 0 ? `
+      <div class="section" style="margin-bottom: 20px;">
+        <h2 style="color: #802020; border-bottom: 2px solid #f0f0f0; padding-bottom: 5px; font-size: 20px;">LANGUES</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+          ${cvData.languages.map((lang: { name: any; level: any; }) => `
+            <div style="background: #f5f5f5; padding: 8px 12px; border-radius: 5px;">
+              <span style="font-weight: bold;">${lang.name}</span>: ${lang.level}
+            </div>
+          `).join('')}
         </div>
-      `).join('')}
-    </div>` : ''}
-    
-    ${cvData.skills.filter((s: string) => s).length > 0 ? `
-    <div class="cv-section">
-      <h2>Compétences</h2>
-      <ul>
-        ${cvData.skills.filter((s: string) => s).map((skill: string) => `
-          <li>${skill}</li>
-        `).join('')}
-      </ul>
-    </div>` : ''}
-    
-    ${cvData.languages.length > 0 ? `
-    <div class="cv-section">
-      <h2>Langues</h2>
-      <ul>
-        ${cvData.languages.map((lang: any) => `
-          <li>${lang.name} - ${lang.level}</li>
-        `).join('')}
-      </ul>
-    </div>` : ''}
-    
-    <div class="qr-code-container">
+      </div>` : ''}
+
+      <!-- QR Code (optionnel) -->
+      <div class="qr-code-container">
       <!-- QR Code sera ajouté dynamiquement -->
     </div>
   `;
 
-  // Générer le QR Code
   this.generateQRCode(previewElement);
 }
 
@@ -318,6 +377,7 @@ async generateQRCode(previewElement: HTMLElement): Promise<void> {
 }
 
 // Générer le PDF
+
 async generatePDF(): Promise<void> {
   if (!this.previewMode) {
     this.previewCV();
@@ -327,36 +387,41 @@ async generatePDF(): Promise<void> {
   const previewElement = document.getElementById('cv-preview');
   if (!previewElement) return;
 
+  // Options pour une meilleure qualité
+  const options = {
+    scale: 3, // Résolution élevée
+    logging: false,
+    useCORS: true,
+    allowTaint: true,
+    scrollX: 0,
+    scrollY: -window.scrollY,
+    windowWidth: previewElement.scrollWidth,
+    windowHeight: previewElement.scrollHeight
+  };
+
   try {
-    const canvas = await html2canvas(previewElement, {
-      scale: 2,
-      logging: false,
-      useCORS: true
-    });
-
-    const imgData = canvas.toDataURL('image/png');
+    const canvas = await html2canvas(previewElement, options);
+    const imgData = canvas.toDataURL('image/png', 1.0); // Qualité maximale
     const pdf = new jsPDF('p', 'mm', 'a4');
-    const imgWidth = 210; // A4 width in mm
-    const pageHeight = 295; // A4 height in mm
-    const imgHeight = canvas.height * imgWidth / canvas.width;
-    let heightLeft = imgHeight;
-    let position = 0;
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    const imgRatio = canvas.width / canvas.height;
+    const pdfRatio = pageWidth / pageHeight;
 
-    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-    heightLeft -= pageHeight;
-
-    while (heightLeft >= 0) {
-      position = heightLeft - imgHeight;
-      pdf.addPage();
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+    let imgWidth, imgHeight;
+    if (imgRatio > pdfRatio) {
+      imgWidth = pageWidth;
+      imgHeight = pageWidth / imgRatio;
+    } else {
+      imgHeight = pageHeight;
+      imgWidth = pageHeight * imgRatio;
     }
 
-    const fileName = `CV_${this.cvForm.value.personalInfo.fullName.replace(/\s+/g, '_')}.pdf`;
-    pdf.save(fileName);
+    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+    pdf.save(`CV_${this.cvForm.value.personalInfo.fullName}.pdf`);
   } catch (error) {
-    console.error('Erreur lors de la génération du PDF:', error);
-    alert('Une erreur est survenue lors de la génération du PDF');
+    console.error('Erreur PDF:', error);
+    alert('Erreur lors de la génération du PDF');
   }
 }
   // Rating methods

@@ -697,3 +697,81 @@ body {
   display: block;
   margin: 0 auto;
 }
+/* Styles pour les boutons spécifiques */
+.form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s;
+  border: none;
+  min-width: 120px;
+}
+
+.btn-preview {
+  background-color: #5a6268;
+  color: white;
+}
+
+.btn-preview:hover {
+  background-color: #6c757d;
+}
+
+.btn-download {
+  background-color: #377c3e;
+  color: white;
+}
+
+.btn-download:hover {
+  background-color: #4cae4c;
+}
+
+.btn-save {
+  background-color: #802020;
+  color: white;
+}
+
+.btn-save:hover {
+  background-color: #a03030;
+}
+
+.btn-cancel {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.btn-cancel:hover {
+  background-color: #e53935;
+}
+
+/* Responsive pour les boutons */
+@media (max-width: 600px) {
+  .form-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+}
+/* Animation du bouton PDF */
+.btn-download {
+  transition: all 0.3s;
+  background: linear-gradient(135deg, #377c3e 0%, #4cae4c 100%);
+  color: white;
+  border: none;
+}
+
+.btn-download:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(110, 72, 170, 0.4);
+}
