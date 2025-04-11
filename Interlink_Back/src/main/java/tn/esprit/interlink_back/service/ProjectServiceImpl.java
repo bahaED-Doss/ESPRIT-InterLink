@@ -67,7 +67,6 @@ public class ProjectServiceImpl implements IProjectService {
             milestone.setStatus(MilestoneStatus.PENDING);  // Default status is PENDING
             milestone.setProject(project);  // Associate the milestone with the project
 
-            // Save the milestone to the repository (assuming you have a milestoneRepository)
             milestoneRepository.save(milestone);
         }
     }

@@ -29,11 +29,11 @@ public class ProjectController {
     @Autowired
     private final IProjectService projectService;
     @Autowired
-    private CompanyRepository companyRepository; // Inject CompanyRepository
+    private CompanyRepository companyRepository;
 
 
     @Autowired
-    private PdfService pdfService;  // Inject PdfService
+    private PdfService pdfService;
 
     @Autowired
     private ExcelService excelService;
