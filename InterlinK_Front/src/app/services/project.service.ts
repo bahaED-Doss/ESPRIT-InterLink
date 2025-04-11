@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { saveAs } from 'file-saver'; // Import file-saver for saving the PDF
+import { saveAs } from 'file-saver'; 
 import { Company } from './company.service';
 
 export interface Milestone {
