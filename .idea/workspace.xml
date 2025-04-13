@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="939ebcb9-41c4-4031-b579-c8bbb6506283" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interlink_Back/src/main/java/tn/esprit/interlink_back/service/InternshipServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Interlink_Back/src/main/java/tn/esprit/interlink_back/service/InternshipServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/tokens/StoredCredential" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tokens/StoredCredential" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -118,7 +116,10 @@
       <workItem from="1740318453842" duration="12232000" />
       <workItem from="1740804903192" duration="11867000" />
       <workItem from="1741244848964" duration="729000" />
-      <workItem from="1742979084075" duration="1004000" />
+      <workItem from="1742979084075" duration="1769000" />
+      <workItem from="1743715694162" duration="301000" />
+      <workItem from="1744212303186" duration="1471000" />
+      <workItem from="1744445699078" duration="3017000" />
     </task>
     <servers />
   </component>

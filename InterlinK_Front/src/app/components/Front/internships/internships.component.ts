@@ -6,26 +6,19 @@ import { Application, ApplicationStatus } from 'src/app/models/Application.model
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RatingService } from 'src/app/services/rating.service';
-//import { ChatGPTService } from 'src/app/services/chatbot.service';
+import { ChatbotService } from 'src/app/services/chatbot.service';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import * as QRCode from 'qrcode';
 
 
-/*interface ChatMessage {
-  role: 'system' | 'user' | 'assistant';
-  content: string;
-}
-*/
 @Component({
   selector: 'app-internships',
   templateUrl: './internships.component.html',
   styleUrls: ['./internships.component.css'],
 })
 export class InternshipsComponent implements OnInit {
-/*sendToAI(arg0: any) {
-throw new Error('Method not implemented.');
-}*/
+
 // Add these properties
 availableSkills: string[] = [
   'JavaScript', 'TypeScript', 'Angular', 'React', 'Vue.js',
@@ -81,9 +74,18 @@ internships: Internship[] = [];
   selectedRating = 0;
   ratingComment = '';
   selectedInternshipForRating: Internship | null = null;
-  //ChatMessage:ChatMessage[] = [];
-  //isWaitingForAI = false;
-//userMessage = '';
+  chatbot = {
+    isOpen: true,
+    userMessage: '',
+    messages: [] as {sender: string, text: string}[],
+    isLoading: false,
+    suggestions: [
+      "Comment rédiger un bon CV ?",
+      "Quels documents faut-il pour postuler ?",
+      "Comment se préparer pour un entretien ?"
+    ]
+  };
+  
 
   // Filters
   locationFilter: string = '';
@@ -98,7 +100,7 @@ internships: Internship[] = [];
     private internshipService: InternshipService,
     private applicationService: ApplicationService,
     private ratingService: RatingService,
-   // private chatGPTService: ChatGPTService
+    private ChatbotService: ChatbotService
   ) {
     this.addApplicationForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -121,26 +123,43 @@ internships: Internship[] = [];
       skills: this.fb.array([]), // This should be initialized as empty array
       languages: this.fb.array([this.createLanguageEntry()])
     });
-    /*this.chatGPTService.getConversation().subscribe(messages => {
-      this.ChatMessage = messages.filter(m => m.role !== 'system');
-    });*/
+   
   }
   createSkillEntry(): FormGroup {
     return this.fb.group({
       name: ['']
     });
   }
-/*
-  sendMessage(): void {
-    if (!this.userMessage.trim()) return;
-    
-    this.isWaitingForAI = true;
-    this.chatGPTService.sendMessage(this.userMessage).finally(() => {
-      this.isWaitingForAI = false;
-      this.userMessage = '';
-    });
-  }*/
-  
+
+// Ajoutez ces méthodes
+toggleChatbot() {
+  this.chatbot.isOpen = !this.chatbot.isOpen;
+}
+
+sendChatbotMessage() {
+  if (!this.chatbot.userMessage.trim()) return;
+
+  this.chatbot.messages.push({ sender: 'user', text: this.chatbot.userMessage });
+  this.chatbot.isLoading = true;
+
+  this.ChatbotService.askQuestion(this.chatbot.userMessage).subscribe({  // Changé ici
+    next: (response: string) => {  // Type ajouté
+      this.chatbot.messages.push({ sender: 'bot', text: response });
+      this.chatbot.isLoading = false;
+    },
+    error: (error: any) => {  // Type ajouté
+      this.chatbot.messages.push({ sender: 'bot', text: 'Désolé, je ne peux pas répondre maintenant.' });
+      this.chatbot.isLoading = false;
+    }
+  });
+
+  this.chatbot.userMessage = '';
+}
+
+selectSuggestion(suggestion: string) {
+  this.chatbot.userMessage = suggestion;
+  this.sendChatbotMessage();
+}
 
   ngOnInit(): void {
     this.getInternships();

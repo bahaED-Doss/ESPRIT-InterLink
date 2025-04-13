@@ -311,35 +311,40 @@
       </form>
     </div>
   </div>
- 
-  <!-- Ajoutez ceci où vous voulez le chatbot --><!-- Remplacez la section chatbot existante par : 
-<div class="chatgpt-container">
-  <div class="chat-header">
+ <!-- Chatbot intégré -->
+ <div class="chatbot-container" [class.open]="chatbot.isOpen">
+  <div class="chatbot-header" (click)="toggleChatbot()">
     <h3>Assistant Stages</h3>
+    <span>{{ chatbot.isOpen ? '−' : '+' }}</span>
   </div>
-  
-  <div class="chat-messages">
-    <div *ngFor="let msg of ChatMessage" [class]="msg.role + '-message'">
-      <div class="message-content">
-        {{ msg.content }}
+
+  <div class="chatbot-body" *ngIf="chatbot.isOpen">
+    <div class="messages">
+      <div *ngFor="let msg of chatbot.messages" 
+           [class.user-message]="msg.sender === 'user'" 
+           [class.bot-message]="msg.sender === 'bot'">
+        {{ msg.text }}
+      </div>
+      
+      <div *ngIf="chatbot.isLoading" class="typing-indicator">
+        <span>●</span><span>●</span><span>●</span>
       </div>
     </div>
-    
-    <div *ngIf="isWaitingForAI" class="typing-indicator">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
+
+    <div class="suggestions" *ngIf="chatbot.messages.length === 0">
+      <p>Essayez de demander :</p>
+      <button *ngFor="let suggestion of chatbot.suggestions" 
+              (click)="selectSuggestion(suggestion)">
+        {{ suggestion }}
+      </button>
+    </div>
+
+    <div class="input-area">
+      <input [(ngModel)]="chatbot.userMessage" 
+             placeholder="Posez votre question..." 
+             (keyup.enter)="sendChatbotMessage()">
+      <button (click)="sendChatbotMessage()">Envoyer</button>
     </div>
   </div>
-  
-  <div class="chat-input">
-    <textarea [(ngModel)]="userMessage" 
-              (keydown.enter)="$event.preventDefault(); sendMessage()"
-              placeholder="Posez votre question..."></textarea>
-    <button (click)="sendMessage()" [disabled]="isWaitingForAI">
-      <span *ngIf="!isWaitingForAI">Envoyer</span>
-      <span *ngIf="isWaitingForAI">...</span>
-    </button>
-  </div>
-</div>-->
+</div>
 </div>
