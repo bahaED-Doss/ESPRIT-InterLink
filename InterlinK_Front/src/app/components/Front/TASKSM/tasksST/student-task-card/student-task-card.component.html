@@ -1,78 +1,17 @@
 <div class="task-card" cdkDrag [ngClass]="'priority-' + task.priority.toLowerCase()">
-  <div class="priority-indicator">
-    <div class="corner-triangle"></div>
-  </div>
-
-  <div class="task-header">
-    <h3 class="task-title">{{ task.title }}</h3>
-    
-    <div class="task-actions">
-      <div class="dropdown">
-        <button class="action-button" type="button" (click)="toggleMenu($event)">
-          <i class="fas fa-ellipsis-v"></i>
-        </button>
-        <div class="dropdown-menu" [class.show]="isMenuOpen">
-          <a class="dropdown-item" (click)="onViewDetails()">
-            <i class="fas fa-info-circle"></i> View Details
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <p class="task-description">{{ task.description }}</p>
-
-  <div class="task-meta">
-    <div class="due-date">
-      <i class="far fa-calendar"></i>
-      <span>Due: {{ task.deadline | date:'MMM d' }}</span>
-    </div>
-    <div class="assignee">
-      <i class="far fa-clock"></i>
-      <span>{{ task.timer }}h</span>
-    </div>
+  <!-- Card content here -->
+  
+  <!-- Make sure there's NO conditional rendering of details like this: -->
+  <!-- <div *ngIf="showDetails" class="task-details">...</div> -->
+  
+  <!-- Only buttons to trigger events -->
+  <div class="task-actions">
+    <button class="action-button" (click)="onDetails($event)">View Details</button>
+    <!-- Other buttons -->
   </div>
 </div>
 
-<!-- Task Details Modal -->
-<div class="modal" *ngIf="showDetails">
-  <div class="modal-content task-details-modal">
-    <div class="modal-header">
-      <h2 class="modal-title">Task Details</h2>
-      <button type="button" class="close" (click)="closeDetails()">&times;</button>
-    </div>
-    <div class="modal-body">
-      <div class="task-detail-row">
-        <div class="task-detail-label">Title</div>
-        <div class="task-detail-value">{{task.title}}</div>
-      </div>
-      <div class="task-detail-row">
-        <div class="task-detail-label">Description</div>
-        <div class="task-detail-value">{{task.description}}</div>
-      </div>
-      <div class="task-detail-row">
-        <div class="task-detail-label">Status</div>
-        <div class="task-detail-value">
-          <span class="badge" [ngClass]="'badge-' + getStatusClass(task.status)">{{task.status}}</span>
-        </div>
-      </div>
-      <div class="task-detail-row">
-        <div class="task-detail-label">Priority</div>
-        <div class="task-detail-value">
-          <span class="badge" [ngClass]="'badge-' + getPriorityClass(task.priority)">{{task.priority}}</span>
-        </div>
-      </div>
-      <div class="task-detail-row">
-        <div class="task-detail-label">Deadline</div>
-        <div class="task-detail-value">{{task.deadline | date:'fullDate'}}</div>
-      </div>
-      <div class="task-detail-row">
-        <div class="task-detail-label">Estimated Hours</div>
-        <div class="task-detail-value">{{task.timer}} hours</div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-primary" (click)="closeDetails()">Close</button>
-    </div>
-  </div>
+<!-- Feedback panel can stay if it's meant to be part of the card -->
+<div class="feedback-panel" *ngIf="showFeedbacks">
+  <!-- Feedback content -->
 </div>

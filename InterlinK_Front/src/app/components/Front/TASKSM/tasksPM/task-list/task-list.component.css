@@ -1,6 +1,6 @@
 .task-board {
   padding: 20px;
-  background: #f4f5f7;
+  background: #f8f9fa;
   min-height: calc(100vh - 200px);
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -16,7 +16,7 @@
   flex: 1;
   text-align: center;
   font-weight: 600;
-  color: #172b4d;
+  color: #333;
   padding: 12px;
   background-color: #fff;
   border-radius: 6px;
@@ -30,36 +30,39 @@
 }
 
 .kanban-column {
-  background: #ebecf0;
+  background: #fff;
   border-radius: 8px;
   padding: 16px;
   min-height: 300px;
   position: relative;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-top: 3px solid #ddd;
+}
+
+.kanban-column:nth-child(1) {
+  border-top-color: #c41e3a; /* Red for To Do */
+}
+
+.kanban-column:nth-child(2) {
+  border-top-color: #f0ad4e; /* Orange for In Progress */
+}
+
+.kanban-column:nth-child(3) {
+  border-top-color: #5cb85c; /* Green for Done */
 }
 
 .kanban-column h3 {
   margin-bottom: 15px;
-  color: #172b4d;
+  color: #333;
   font-size: 18px;
   font-weight: 600;
 }
 
 .column-stats {
-  display: none;
-  position: absolute;
-  top: -80px;
-  left: 0;
-  right: 0;
-  background: white;
-  border-radius: 8px;
-  padding: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  z-index: 1000;
-}
-
-.kanban-column:hover .column-stats {
-  display: block;
+  margin-bottom: 15px;
+  padding: 8px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
 }
 
 .priority-stats {
@@ -74,95 +77,48 @@
 }
 
 .circle {
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
+  font-size: 12px;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 
 .circle.high {
-  background-color: #e53935;
+  background-color: #c41e3a;
 }
 
 .circle.medium {
-  background-color: #fb8c00;
+  background-color: #f0ad4e;
 }
 
 .circle.low {
-  background-color: #43a047;
+  background-color: #5cb85c;
 }
 
 .stat-label {
-  font-size: 12px;
-  color: #5e6c84;
+  font-size: 10px;
+  color: #666;
 }
 
 .task-cards {
   min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
 }
 
 .no-tasks {
-  color: #5e6c84;
   text-align: center;
-  padding: 20px;
+  color: #999;
+  padding: 20px 0;
   font-style: italic;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 6px;
-  margin-top: 10px;
-}
-
-.no-tasks-message {
-  text-align: center;
-  padding: 30px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-  color: #5e6c84;
-  font-size: 16px;
-}
-
-.project-description-card {
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.project-description-card h3 {
-  color: #172b4d;
-  margin-bottom: 10px;
-}
-
-/* Drag and drop styling */
-.cdk-drag-preview {
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-}
-
-.cdk-drag-placeholder {
-  opacity: 0.3;
-}
-
-.cdk-drag-animating {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.kanban-column.cdk-drop-list-dragging app-task-card:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 /* Responsive styles */
-@media (max-width: 992px) {
+@media (max-width: 768px) {
   .board-columns {
     grid-template-columns: 1fr;
     gap: 30px;

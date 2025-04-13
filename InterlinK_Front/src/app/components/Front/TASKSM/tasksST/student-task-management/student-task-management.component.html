@@ -46,11 +46,13 @@
   <!-- Task list -->
   <div class="row mt-4" *ngIf="!loading && !error && !noProjectAssigned && tasks.length > 0">
     <div class="col-12">
-      <app-task-list 
-  [tasks]="tasks"
-  [isManager]="false"
-  (statusChanged)="onStatusChanged($event)">
-</app-task-list>
+      <app-student-task-board 
+        [tasks]="tasks" 
+        [studentId]="selectedStudentId" 
+        [projectId]="selectedProjectId"
+        [managerId]="selectedManagerId"
+        (viewDetails)="onViewTaskDetails($event)">
+      </app-student-task-board>
     </div>
   </div>
 

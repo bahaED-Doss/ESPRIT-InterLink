@@ -14,19 +14,20 @@ public class Feedback {
     private Long feedbackId;
 
     private String message;
-    private String givinBy;
     private LocalDateTime createdAt = LocalDateTime.now();
-
+    private boolean seen = false;
     @Enumerated(EnumType.STRING)
-    private Sentiment sentiment ;
+    private Sentiment sentiment;
 
     @ManyToOne
     @JoinColumn(name = "taskId", nullable = false)
     private Task task;
 
-    //private Long studentId
-    //@ManyToOne
-    //@JoinColumn(name = "user_id", nullable = false)
-    //private User givenBy;
+    @ManyToOne
+    @JoinColumn(name = "manager_id")
+    private User projectManager;
 
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private User student;
 }

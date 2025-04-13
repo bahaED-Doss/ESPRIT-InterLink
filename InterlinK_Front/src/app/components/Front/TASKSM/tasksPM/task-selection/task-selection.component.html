@@ -1,8 +1,8 @@
 <div class="form-group">
   <label for="manager">Select Project Manager</label>
-  <select id="manager" class="form-control" [(ngModel)]="selectedManagerId" (change)="onManagerChange()">
+  <select id="manager" class="form-control" [(ngModel)]="selectedManagerId" (change)="onManagerChange()" style="color: black !important; background-color: white !important;">
     <option value="">Select a manager</option>
-    <option *ngFor="let manager of managers" [value]="manager.id">
+    <option *ngFor="let manager of managers" [value]="manager.id" style="color: black !important; background-color: white !important;">
       {{manager.firstName}} {{manager.lastName}}
     </option>
   </select>
@@ -10,9 +10,9 @@
 
 <div class="form-group">
   <label for="project">Select Project</label>
-  <select id="project" class="form-control" [(ngModel)]="selectedProjectId" (change)="onProjectChange()">
+  <select id="project" class="form-control" [(ngModel)]="selectedProjectId" (change)="onProjectChange()" style="color: black !important; background-color: white !important;">
     <option value="">Select a project</option>
-    <option *ngFor="let project of projects" [value]="project.projectId">
+    <option *ngFor="let project of projects" [value]="project.projectId" style="color: black !important; background-color: white !important;">
       {{project.title}}
     </option>
   </select>

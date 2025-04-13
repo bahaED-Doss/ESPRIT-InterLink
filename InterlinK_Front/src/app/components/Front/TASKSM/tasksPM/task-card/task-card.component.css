@@ -497,3 +497,220 @@
     margin-bottom: 8px;
   }
 }
+
+/* Feedback Button */
+.feedback-button {
+  position: relative;
+  margin-right: 5px;
+}
+
+.feedback-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #f44336;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Feedback Panel */
+.feedback-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  max-width: 90vw;
+  max-height: 80vh;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1050;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.feedback-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.feedback-panel-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.feedback-panel-body {
+  padding: 15px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Add Feedback Form */
+.add-feedback-form {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.add-feedback-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  font-family: inherit;
+  margin-bottom: 10px;
+}
+
+.feedback-form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sentiment-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sentiment-selector select {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Feedback List */
+.feedback-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.no-feedbacks {
+  text-align: center;
+  padding: 20px;
+  color: #757575;
+  font-style: italic;
+}
+
+.feedback-item {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #9e9e9e;
+}
+
+.feedback-item.positive {
+  border-left-color: #4caf50;
+}
+
+.feedback-item.negative {
+  border-left-color: #f44336;
+}
+
+.feedback-item.neutral {
+  border-left-color: #2196f3;
+}
+
+.feedback-content {
+  flex: 1;
+}
+
+.feedback-message {
+  margin: 0 0 8px 0;
+  color: #333;
+}
+
+.feedback-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #757575;
+}
+
+.feedback-actions {
+  display: flex;
+  align-items: flex-start;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #f44336;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.delete-btn:hover {
+  color: #d32f2f;
+}
+
+/* Add these styles to your existing CSS */
+.feedback-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 8px;
+}
+
+.feedback-meta {
+  display: flex;
+  align-items: center;
+}
+
+.feedback-author {
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.seen-status {
+  display: flex;
+  align-items: center;
+}
+
+/* Add this to your CSS */
+.seen-indicator {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.seen-indicator.seen {
+  color: #4CAF50;
+}
+
+.seen-indicator i {
+  margin-right: 4px;
+}
+
+.seen-status {
+  margin-left: auto;
+  margin-right: 10px;
+}

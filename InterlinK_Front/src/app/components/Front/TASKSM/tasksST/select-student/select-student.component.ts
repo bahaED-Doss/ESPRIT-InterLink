@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { TaskService } from '../../Services/task.service';
 import { UserService } from '../../Services/user.service';
+import { NotificationService } from '../../Services/notification.service';
 
 interface StudentSelection {
   studentId: number;
@@ -21,7 +22,8 @@ export class SelectStudentComponent implements OnInit {
 
   constructor(
     private taskService: TaskService,
-    private userService: UserService
+    private userService: UserService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -62,6 +64,13 @@ export class SelectStudentComponent implements OnInit {
   onStudentChange() {
     if (this.selectedStudentId) {
       const studentId = Number(this.selectedStudentId);
+      
+      // Set the selected user ID in the notification service
+      this.notificationService.setSelectedUser(studentId);
+      
+      // Start polling for notifications for this student
+      this.notificationService.startPolling(studentId);
+      
       const project = this.studentProjects[studentId];
       
       if (project) {

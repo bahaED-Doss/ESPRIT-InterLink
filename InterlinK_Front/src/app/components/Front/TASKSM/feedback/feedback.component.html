@@ -1,0 +1,80 @@
+<div class="feedback-container">
+  <div class="feedback-header">
+    <h3>Feedbacks</h3>
+    <button *ngIf="isManager" class="add-feedback-btn" (click)="toggleFeedbackForm()">
+      <i class="fas fa-plus"></i> Add Feedback
+    </button>
+  </div>
+  
+  <!-- Feedback Form -->
+  <div class="feedback-form-container" *ngIf="showFeedbackForm">
+    <form [formGroup]="feedbackForm" (ngSubmit)="submitFeedback()">
+      <div class="form-group">
+        <label for="message">Feedback Message</label>
+        <textarea 
+          id="message" 
+          formControlName="message" 
+          rows="3" 
+          placeholder="Enter your feedback here..."
+          (input)="onMessageChange()"
+        ></textarea>
+        <div class="error-message" *ngIf="feedbackForm.get('message')?.invalid && feedbackForm.get('message')?.touched">
+          Feedback message is required
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="sentiment">Sentiment</label>
+        <div class="sentiment-selector">
+          <select id="sentiment" formControlName="sentiment" [disabled]="isAnalyzingSentiment">
+            <option *ngFor="let option of sentimentOptions" [value]="option">
+              {{ option }}
+            </option>
+          </select>
+          <div *ngIf="isAnalyzingSentiment" class="sentiment-analyzing">
+            <span class="spinner"></span> Analyzing sentiment...
+          </div>
+          <div *ngIf="!isAnalyzingSentiment" class="sentiment-note">
+            <small>Sentiment will be analyzed automatically in the future</small>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button type="button" class="cancel-btn" (click)="toggleFeedbackForm()">Cancel</button>
+        <button type="submit" class="submit-btn" [disabled]="feedbackForm.invalid">Submit</button>
+      </div>
+    </form>
+  </div>
+  
+  <!-- Feedback List -->
+  <div class="feedback-list">
+    <div *ngIf="feedbacks.length === 0" class="no-feedbacks">
+      No feedbacks yet
+    </div>
+    
+    <div *ngFor="let feedback of feedbacks" class="feedback-item" [ngClass]="getSentimentClass(feedback.sentiment)">
+      <div class="feedback-content">
+        <p class="feedback-message">{{ feedback.message }}</p>
+        <div class="feedback-meta">
+          <span class="feedback-author">{{ feedback.givinBy }}</span>
+          <span class="feedback-date">{{ feedback.createdAt | date:'medium' }}</span>
+          <span class="feedback-sentiment" [ngClass]="getSentimentClass(feedback.sentiment)">
+            {{ feedback.sentiment }}
+          </span>
+          
+          <!-- Add seen indicator (only for manager's feedback) -->
+          <span *ngIf="!isManager && feedback.givinBy !== userName" class="seen-indicator" [ngClass]="{'seen': feedback.seen}">
+            <i class="fas fa-check-double"></i>
+            {{ feedback.seen ? 'Seen' : 'Delivered' }}
+          </span>
+        </div>
+      </div>
+      <div class="feedback-actions" *ngIf="isManager">
+        <button class="delete-btn" (click)="deleteFeedback(feedback.feedbackId || 0)">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

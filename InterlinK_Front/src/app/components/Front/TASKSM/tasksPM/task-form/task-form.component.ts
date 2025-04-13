@@ -110,7 +110,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
   onClose() {
     this.close.emit();
     this.taskForm.reset();
-  }
+  } 
   
   onSubmit() {
     if (this.taskForm.valid) {

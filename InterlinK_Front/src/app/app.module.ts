@@ -44,6 +44,8 @@ import { SelectStudentComponent } from './components/Front/TASKSM/tasksST/select
 import { TaskCardComponent as StudentTaskCardComponent } from './components/Front/TASKSM/tasksST/student-task-card/student-task-card.component';
 import { StudentNavbarComponent } from './components/Front/TASKSM/shared/student-navbar/student-navbar.component';
 import { ManagerNavbarComponent } from './components/Front/TASKSM/shared/manager-navbar/manager-navbar.component';
+import { NotificationComponent } from './components/Front/TASKSM/shared/notification/notification.component';
+import { NotificationService } from './components/Front/TASKSM/Services/notification.service';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -78,7 +80,8 @@ const routes: Routes = [
     SelectStudentComponent,
     StudentTaskCardComponent,
     StudentNavbarComponent,
-    ManagerNavbarComponent
+    ManagerNavbarComponent,
+    NotificationComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -100,7 +103,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     DragDropModule
   ],
-  providers: [TaskService, ProjectService],
+  providers: [TaskService, ProjectService, NotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

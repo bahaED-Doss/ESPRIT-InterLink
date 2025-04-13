@@ -1,1 +1,149 @@
-/* You can add global styles to this file, and also import other style files */
+/* Add these styles to the global styles.css file */
+
+/* Fix for overlapping elements */
+.dropdown-menu {
+  z-index: 9999 !important;
+}
+
+.modal-backdrop {
+  z-index: 1040 !important;
+}
+
+.modal {
+  z-index: 1050 !important;
+}
+
+/* Task status badges */
+.badge {
+  position: relative;
+  z-index: 5;
+}
+
+/* Ensure proper stacking for task cards */
+.card {
+  position: relative;
+  z-index: 1;
+}
+
+/* Fix for the task status indicator */
+.task-status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 5;
+}
+
+/* Ensure menu items are always clickable */
+.dropdown-toggle::after {
+  z-index: 10;
+  position: relative;
+}
+
+/* Fix for any elements that might be covering clickable items */
+.overlay-container {
+  position: relative;
+}
+
+.clickable-element {
+  position: relative;
+  z-index: 10;
+}
+
+/* Student Task View Specific Fixes */
+.student-task-board .task-column {
+  position: relative;
+  z-index: 1;
+}
+
+.student-task-board .column-header {
+  position: relative;
+  z-index: 2;
+}
+
+.student-task-board .task-cards {
+  position: relative;
+  z-index: 3;
+}
+
+.student-task-board .task-card {
+  position: relative;
+  z-index: 4;
+}
+
+/* Status badges for student view */
+.status-badge {
+  position: relative;
+  z-index: 5;
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.to_do {
+  background-color: #a51a30;
+  color: white;
+}
+
+.status-badge.in_progress {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.status-badge.done {
+  background-color: #198754;
+  color: white;
+}
+
+/* Fix for student task card actions */
+.student-task-card .task-actions {
+  position: relative;
+  z-index: 20;
+}
+
+/* Fix for student task details modal */
+.task-details-modal {
+  position: relative;
+  z-index: 1060 !important;
+}
+
+/* Fix for student select dropdown */
+.form-control {
+  position: relative;
+  z-index: 5;
+}
+
+/* Fix for student task management component */
+app-student-task-management .card {
+  overflow: visible;
+}
+
+/* Fix for student navbar */
+app-student-navbar {
+  position: relative;
+  z-index: 1000;
+}
+
+/* Fix for any popovers or tooltips */
+.popover, .tooltip {
+  z-index: 1070 !important;
+}
+
+/* Fix for any drag and drop elements */
+.cdk-drag-preview {
+  z-index: 1080 !important;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.3;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

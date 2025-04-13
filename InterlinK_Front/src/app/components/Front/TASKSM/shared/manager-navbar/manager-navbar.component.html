@@ -31,18 +31,10 @@
           </ul>
           
           <div class="notification-area">
-            <div class="create-button">
-              <button class="btn btn-create" (click)="onCreateTask()">
-                <i class="fas fa-plus"></i> Create Task
-              </button>
-            </div>
+            <!-- Removed create task button -->
             
-            <div class="notification-icon" [class.has-notifications]="notificationCount > 0">
-              <i class="fas fa-bell"></i>
-              <span class="notification-badge" *ngIf="notificationCount > 0">
-                {{ notificationCount > 9 ? '9+' : notificationCount }}
-              </span>
-            </div>
+            <!-- Notification component -->
+            <app-notification [userId]="managerId"></app-notification>
             
             <div class="user-profile">
               <img src="assets/images/avatar.jpg" alt="Profile" />

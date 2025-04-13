@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { TaskService } from '../../Services/task.service';
 import { ProjectService } from '../../Services/projectstatic.service';
+import { NotificationService } from '../../Services/notification.service';
 
 interface ProjectSelection {
   projectId: number;
@@ -21,7 +22,11 @@ export class TaskSelectionComponent implements OnInit {
 
   @Output() projectSelected = new EventEmitter<ProjectSelection>();
 
-  constructor(private taskService: TaskService, private projectService: ProjectService) {}
+  constructor(
+    private taskService: TaskService, 
+    private projectService: ProjectService,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit(): void {
     this.loadManagers();
@@ -72,12 +77,23 @@ export class TaskSelectionComponent implements OnInit {
 
   onManagerChange() {
     this.selectedProjectId = '';
-    this.loadProjects();
-    this.loadTasks();
-    this.projectSelected.emit({ 
-      projectId: 0, 
-      managerId: Number(this.selectedManagerId) 
-    });
+    
+    if (this.selectedManagerId) {
+      const managerId = Number(this.selectedManagerId);
+      
+      // Set the selected user ID in the notification service
+      this.notificationService.setSelectedUser(managerId);
+      
+      // Start polling for notifications for this manager
+      this.notificationService.startPolling(managerId);
+      
+      this.loadProjects();
+      this.loadTasks();
+      this.projectSelected.emit({ 
+        projectId: 0, 
+        managerId: managerId 
+      });
+    }
   }
 
   onProjectChange() {

@@ -1,5 +1,7 @@
 package tn.esprit.interlink_back.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,6 +19,8 @@ import java.util.List;
 @Getter
 @Setter
 
+// Add this annotation to your Task class
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "taskId")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2419,8 +2419,8 @@ progress {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    -webkit-print-color-adjust: exact;
-    color-adjust: exact;
+    -webkit-print-print-color-adjust: exact;
+    print-color-adjust: exact;
     transition: background-color .15s ease-in-out, background-position .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out
 }
 
@@ -3118,21 +3118,21 @@ fieldset:disabled .btn {
 
 .btn-primary {
     color: #fff;
-    background-color: #0d6efd;
+    background-color: #8a1628;
     border-color: #0d6efd
 }
 
 .btn-primary:hover {
     color: #fff;
-    background-color: #025ce2;
-    border-color: #0257d5
+    background-color: #8a1628;
+    border-color: #c41e3a
 }
 
 .btn-check:focus+.btn-primary,
 .btn-primary:focus {
     color: #fff;
-    background-color: #025ce2;
-    border-color: #0257d5;
+    background-color: #8a1628;
+    border-color: #c41e3a;
     box-shadow: 0 0 0 .25rem rgba(49, 132, 253, .5)
 }
 

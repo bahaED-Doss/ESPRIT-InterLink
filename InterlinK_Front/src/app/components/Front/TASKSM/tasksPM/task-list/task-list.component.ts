@@ -1,7 +1,7 @@
 import { Task } from '../../models/task.model';
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-
+import { TaskService } from '../../Services/task.service';
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
@@ -10,7 +10,6 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 export class TaskListComponent implements OnChanges {
   @Input() tasks: Task[] = [];
   @Input() isManager: boolean = false;
-  @Output() statusChanged = new EventEmitter<{task: Task, newStatus: string}>();
   @Output() editTask = new EventEmitter<Task>();
   @Output() deleteTask = new EventEmitter<number>();
 
@@ -18,84 +17,130 @@ export class TaskListComponent implements OnChanges {
   inProgressTasks: Task[] = [];
   doneTasks: Task[] = [];
 
-  constructor() {}
+  constructor(private taskService: TaskService) {}
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['tasks']) {
       this.filterTasks();
     }
   }
 
-  filterTasks() {
-    // Make sure tasks is defined before filtering
-    if (!this.tasks) {
-      this.todoTasks = [];
-      this.inProgressTasks = [];
-      this.doneTasks = [];
-      return;
-    }
-
-    this.todoTasks = this.getTasks('TO_DO');
-    this.inProgressTasks = this.getTasks('IN_PROGRESS');
-    this.doneTasks = this.getTasks('DONE');
+  filterTasks(): void {
+    this.todoTasks = this.tasks.filter(task => task.status === 'TO_DO');
+    this.inProgressTasks = this.tasks.filter(task => task.status === 'IN_PROGRESS');
+    this.doneTasks = this.tasks.filter(task => task.status === 'DONE');
   }
 
-  getTasks(status: string): Task[] {
-    if (!this.tasks) return [];
-    return this.tasks.filter(task => task && task.status === status);
-  }
-
-  getPriorityCount(status: string, priority: string): number {
-    const tasks = this.getTasks(status);
-    if (!tasks || tasks.length === 0) return 0;
-    
-    return tasks.filter(task => 
-      task && task.priority && task.priority.toUpperCase() === priority.toUpperCase()
-    ).length;
-  }
-
-  trackByTaskId(index: number, task: Task): number {
-    return task.taskId || index; // Use index as fallback if taskId is undefined
-  }
-
-  drop(event: CdkDragDrop<Task[]>) {
+  drop(event: CdkDragDrop<Task[]>): void {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
+      // Get the task being moved
       const task = event.previousContainer.data[event.previousIndex];
-      if (!task) return;
       
-      const newStatus = this.getStatusFromId(event.container.id);
+      // Determine the new status based on the container ID
+      let newStatus: 'TO_DO' | 'IN_PROGRESS' | 'DONE';
+      switch (event.container.id) {
+        case 'todoList':
+          newStatus = 'TO_DO';
+          break;
+        case 'inProgressList':
+          newStatus = 'IN_PROGRESS';
+          break;
+        case 'doneList':
+          newStatus = 'DONE';
+          break;
+        default:
+          newStatus = 'TO_DO';
+      }
       
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-      
-      // Emit the status change
-      this.statusChanged.emit({
-        task: task,
-        newStatus: newStatus
-      });
+      // Only students can change task status via drag and drop
+      if (!this.isManager) {
+        // Update the task status in the backend
+        this.taskService.updateTaskStatus(
+          task.project?.projectId || 0,
+          task.projectManager?.id || 0,
+          task.taskId || 0,
+          newStatus
+        ).subscribe({
+          next: (updatedTask) => {
+            console.log('Task status updated:', updatedTask);
+            
+            // Move the item in the UI
+            transferArrayItem(
+              event.previousContainer.data,
+              event.container.data,
+              event.previousIndex,
+              event.currentIndex
+            );
+            
+            // Update the task status in our local array
+            const index = event.container.data.findIndex(t => t.taskId === updatedTask.taskId);
+            if (index !== -1) {
+              event.container.data[index].status = newStatus;
+            }
+          },
+          error: (error) => {
+            console.error('Error updating task status:', error);
+          }
+        });
+      } else {
+        // If manager, just move the item visually but don't update status
+        transferArrayItem(
+          event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex
+        );
+      }
     }
   }
 
-  getStatusFromId(id: string): string {
-    switch (id) {
-      case 'todoList': return 'TO_DO';
-      case 'inProgressList': return 'IN_PROGRESS';
-      case 'doneList': return 'DONE';
-      default: return 'TO_DO';
-    }
-  }
-
-  onEditTask(task: Task) {
+  onEditTask(task: Task): void {
     this.editTask.emit(task);
   }
 
-  onDeleteTask(taskId: number) {
+  onDeleteTask(taskId: number): void {
     this.deleteTask.emit(taskId);
+  }
+
+  trackByTaskId(index: number, task: Task): number {
+    return task.taskId || index;
+  }
+
+  getPriorityCount(status: string, priority: string): number {
+    let tasksInStatus: Task[] = [];
+    
+    switch (status) {
+      case 'TO_DO':
+        tasksInStatus = this.todoTasks;
+        break;
+      case 'IN_PROGRESS':
+        tasksInStatus = this.inProgressTasks;
+        break;
+      case 'DONE':
+        tasksInStatus = this.doneTasks;
+        break;
+      default:
+        tasksInStatus = [];
+    }
+    
+    // Map the priority values to match what's in your data
+    let priorityValue: string;
+    switch (priority) {
+      case 'HIGH':
+        priorityValue = 'HIGH';
+        break;
+      case 'MEDIUM':
+        priorityValue = 'Second_Level';
+        break;
+      case 'LOW':
+        priorityValue = 'LOW';
+        break;
+      default:
+        priorityValue = '';
+    }
+    
+    return tasksInStatus.filter(task => task.priority === priorityValue).length;
   }
 }

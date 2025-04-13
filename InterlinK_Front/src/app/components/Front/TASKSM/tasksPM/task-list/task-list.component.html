@@ -31,14 +31,15 @@
         </div>
       </div>
       <div class="task-cards">
-        <app-task-card
-          *ngFor="let task of todoTasks; trackBy: trackByTaskId"
-          [task]="task"
-          [isManager]="isManager"
-          (edit)="onEditTask($event)"
-          (delete)="onDeleteTask($event)"
-          cdkDrag>
-        </app-task-card>
+        <app-task-card 
+        *ngFor="let task of todoTasks; trackBy: trackByTaskId"
+      [task]="task" 
+      userRole="manager" 
+      [isManager]="true"
+      (edit)="onEditTask($event)"
+      (delete)="onDeleteTask($event)">
+</app-task-card>
+
         <div *ngIf="todoTasks.length === 0" class="no-tasks">
           No tasks in this column
         </div>
@@ -70,14 +71,15 @@
         </div>
       </div>
       <div class="task-cards">
-        <app-task-card
-          *ngFor="let task of inProgressTasks; trackBy: trackByTaskId"
-          [task]="task"
-          [isManager]="isManager"
-          (edit)="onEditTask($event)"
-          (delete)="onDeleteTask($event)"
-          cdkDrag>
-        </app-task-card>
+        <app-task-card 
+        *ngFor="let task of inProgressTasks; trackBy: trackByTaskId"
+      [task]="task" 
+      userRole="manager" 
+      [isManager]="true"
+      (edit)="onEditTask($event)"
+      (delete)="onDeleteTask($event)">
+</app-task-card>
+        
         <div *ngIf="inProgressTasks.length === 0" class="no-tasks">
           No tasks in this column
         </div>
