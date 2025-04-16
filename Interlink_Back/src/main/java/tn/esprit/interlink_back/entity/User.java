@@ -1,8 +1,5 @@
 package tn.esprit.interlink_back.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.CollectionSerializer;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -85,6 +82,8 @@ public class User {
     private Boolean inactivityLogoutEnabled;  // New field for inactivity logout
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Skill> skills;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Documentt> documentts;
 
     // Convert the Set to a List when returning skills
     public List<Skill> getSkills() {

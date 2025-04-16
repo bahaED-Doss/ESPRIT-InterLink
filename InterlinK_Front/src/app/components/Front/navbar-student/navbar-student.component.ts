@@ -7,7 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar-student.component.css']
 })
 export class NavbarStudentComponent implements OnInit {
-  profileLink: string = '/profileStudent'; // default value
+  profileLink: string = '/profileStudent';
+  documentLink: string = '/documents'; // default value
 
   constructor(private router: Router) { }
 
@@ -17,6 +18,7 @@ export class NavbarStudentComponent implements OnInit {
     if (userId) {
       // Update the profile link with the user id
       this.profileLink = `/profileStudent/${userId}`;
+      this.documentLink = `/documents/${userId}`;
     }
   }
 }

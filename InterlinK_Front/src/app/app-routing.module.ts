@@ -31,6 +31,9 @@ import { SociallinkshrComponent } from './components/Front/hrSettings/sociallink
 import { ChangepasswordhrComponent } from './components/Front/hrSettings/changepasswordhr/changepasswordhr.component';
 import { UserStatisticsComponent } from './components/Back/user-statistics/user-statistics.component';
 import { authGuard } from './guards/auth.guard';
+import { EducationComponent } from './components/Front/studentSettings/education/education.component';
+import { DocumentsComponent } from './components/Front/documents/documents.component';
+import { DocumentssSTComponent } from './components/Front/studentSettings/documentss-st/documentss-st.component';
 
 
 
@@ -47,9 +50,12 @@ const routes: Routes = [
   { path: 'changePassHR/:id', component: ChangepasswordhrComponent },
   { path: 'changePassS/:id', component: ChangepasswordsComponent },
   { path: 'skillsS/:id', component: SkillssComponent },
+  { path: 'educationS/:id', component: EducationComponent },
   { path: 'socialLinksS/:id', component: SociallinkssComponent },
+  { path: 'documentss/:id', component: DocumentssSTComponent },
   { path: 'welcomeV', component: WelcomeViewComponent },
   { path: 'internships', component: InternshipsComponent },
+  { path: 'documents/:id', component: DocumentsComponent },
   { path: 'startProcess', component: StartProcessComponent },
   { path: 'homeBack/:id', component: HomeBackComponent },
   { path: 'HrDashboard', component: HomeHrComponent },

@@ -4,12 +4,15 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeReque
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import tn.esprit.interlink_back.dtos.GoogleUser;
 import tn.esprit.interlink_back.dtos.TokenDto;
 import tn.esprit.interlink_back.dtos.UrlDto;
@@ -99,41 +102,107 @@ public class AuthController {
     @GetMapping("/auth/google/callback")
     public ResponseEntity<?> handleGoogleCallback(
             @RequestParam String code,
-            @RequestParam(required = false) String state) {
+            HttpServletResponse response) {
         try {
-            // Exchange code for token
-            String accessToken = userService.exchangeCodeForToken(code);
+            // Step 1: Get the access token from the code
+            String accessToken = exchangeCodeForToken(code);
+            GoogleUser googleUser = fetchGoogleUserDetails(accessToken);
 
-            // Get user info from Google
-            GoogleUser googleUser = userService.fetchGoogleUserDetails(accessToken);
+            // Step 2: Check if the user exists, if not create a new user with STUDENT role
+            User user = userService.loginWithGoogle(googleUser);
 
-            // Create or update user and get JWT
-            User user = userService.processGoogleUser(googleUser);
-            String jwt = userService.generateJwtToken(user);
+            // Step 3: Generate the JWT token
+            String jwtToken = userService.generateToken(user);
 
-            // Return response with necessary info
-            return ResponseEntity.ok(Map.of(
-                    "token", jwt,
-                    "role", user.getRole(),
-                    "id", user.getId()
-            ));
+            // Step 4: Prepare the redirect URL to the student profile with token
+            String redirectUrl = String.format(
+                    "http://localhost:4200/student-profile/%s?token=%s&role=%s",
+                    user.getId(),
+                    jwtToken,
+                    user.getRole()
+            );
+
+            // Step 5: Redirect the user to their profile
+            response.sendRedirect(redirectUrl);
+
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error during Google authentication: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error during Google authentication: " + e.getMessage());
+        }
+    }
+    @GetMapping("/auth/google/init")
+    public String initiateGoogleLogin() {
+        // Generate the Google OAuth URL
+        String clientId = "340845014781-evjvvne83oqk7ia1fdg1oclcqto82snv.apps.googleusercontent.com";
+        String redirectUri = "http://localhost:8081/api/auth/google/callback";
+        String googleAuthUrl = "https://accounts.google.com/o/oauth2/auth?" +
+                "client_id=" + clientId + "&" +
+                "redirect_uri=" + redirectUri + "&" +
+                "response_type=code&" +
+                "scope=email profile&" +
+                "state=xyz";
+
+        return googleAuthUrl;
+    }
+
+    private String exchangeCodeForToken(String code) throws IOException {
+        // Google's token endpoint
+        String tokenUrl = "https://oauth2.googleapis.com/token";
+
+        // Prepare the request body
+        MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
+        requestBody.add("code", code);
+        requestBody.add("client_id", "340845014781-evjvvne83oqk7ia1fdg1oclcqto82snv.apps.googleusercontent.com");  // Replace with your actual Google client ID
+        requestBody.add("client_secret", "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");  // Replace with your actual Google client secret
+        requestBody.add("redirect_uri", "http://localhost:8081/api/auth/google/callback");  // This should be the same as the one in Google Developer Console
+        requestBody.add("grant_type", "authorization_code");
+
+        // Prepare the request headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        // Create the HTTP entity
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        // Send the request to Google's token endpoint
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Map> response = restTemplate.postForEntity(tokenUrl, requestEntity, Map.class);
+
+        // Extract the access token from the response
+        if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+            return (String) response.getBody().get("access_token");
+        } else {
+            throw new IOException("Failed to exchange code for token: " + response.getStatusCode());
         }
     }
 
-    @GetMapping("auth/google/init")
-    public ResponseEntity<String> initiateGoogleLogin() {
-        String authUrl = String.format("https://accounts.google.com/o/oauth2/v2/auth" +
-                        "?client_id=%s" +
-                        "&redirect_uri=%s" +
-                        "&response_type=code" +
-                        "&scope=email profile" +
-                        "&access_type=offline",
-                "340845014781-evjvvne83oqk7ia1fdg1oclcqto82snv.apps.googleusercontent.com",
-                "http://localhost:8081/api/auth/google/callback");
+    private GoogleUser fetchGoogleUserDetails(String accessToken) throws IOException {
+        String userInfoUrl = "https://www.googleapis.com/oauth2/v3/userinfo";
 
-        return ResponseEntity.ok(authUrl);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(accessToken);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Map> response = restTemplate.exchange(userInfoUrl, HttpMethod.GET, requestEntity, Map.class);
+
+        if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+            Map<String, Object> userInfo = response.getBody();
+            GoogleUser googleUser = new GoogleUser();
+            googleUser.setId((String) userInfo.get("sub"));
+            googleUser.setEmail((String) userInfo.get("email"));
+            googleUser.setFirstName((String) userInfo.get("given_name"));
+            googleUser.setLastName((String) userInfo.get("family_name"));
+            googleUser.setPhotoUrl((String) userInfo.get("picture"));
+            return googleUser;
+        } else {
+            throw new IOException("Failed to fetch user details: " + response.getStatusCode());
+        }
     }
+
+
+
 }
 

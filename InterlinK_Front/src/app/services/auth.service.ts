@@ -54,38 +54,30 @@ logout() {
 }
 */
 
-  initiateGoogleLogin() {
-    // First get the auth URL from backend
-    this.http.get(`${this.apiUrl}/auth/google/init`, { responseType: 'text' })
-      .subscribe(authUrl => {
-        // Redirect to Google login
-        window.location.href = authUrl;
-      });
-  }
+initiateGoogleLogin() {
+  this.http.get(`${this.apiUrl}/auth/google/init`, { responseType: 'text' }).subscribe(authUrl => {
+    // Redirect to Google OAuth
+    window.location.href = authUrl;
+  });
+}
 
-  handleGoogleCallback(code: string) {
-    return this.http.get(`${this.apiUrl}/auth/google/callback`, {
-      params: { code }
-    }).pipe(
-      tap((response: any) => {
-        if (response && response.token) {
-          // Store JWT token
-          localStorage.setItem('token', response.token);
-          
-          // Store user role and ID
-          localStorage.setItem('userRole', response.role);
-          localStorage.setItem('userId', response.id);
-  
-          // Redirect based on role
-          if (response.role === 'STUDENT') {
-            this.router.navigate(['/student-profile', response.id]);
-          } else {
-            this.router.navigate(['/']); // Redirect elsewhere if not a student
-          }
-        }
-      })
-    );
-  }
+handleGoogleCallback(code: string): Observable<any> {
+  return this.http.get(`${this.apiUrl}/auth/google/callback`, {
+    params: { code }
+  }).pipe(
+    tap((response: any) => {
+      if (response && response.token) {
+        // Store the JWT token in localStorage
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('userRole', response.role);
+        localStorage.setItem('userId', response.id);
+
+        // Redirect to student profile using the id and token from the response
+        this.router.navigate([`/student-profile/${response.id}`]);
+      }
+    })
+  );
+}
   
   loginWithGoogle(googleUser: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/google-login`, googleUser);

@@ -323,14 +323,15 @@ public class UserService {
         User user = userRepository.findByEmail(googleUser.getEmail());
         if (user == null) {
             user = new User();
+            user.setRole(Role.STUDENT); // Set role as STUDENT for new users
         }
 
-        // Update user info
+        // Update or create the user with Google details
         user.setEmail(googleUser.getEmail());
         user.setFirstName(googleUser.getFirstName());
+        user.setLastName(googleUser.getLastName());
         user.setPhotoUrl(googleUser.getPhotoUrl());
         user.setProvider(Provider.GOOGLE);
-        user.setRole(Role.STUDENT);
         user.setEnabled(true);
 
         return userRepository.save(user);
@@ -440,6 +441,24 @@ public class UserService {
                 "</div>\n" +
                 "</body>\n" +
                 "</html>";
+    }
+
+    public String exchangeAuthCodeForAccessToken(String code) {
+        String tokenUri = "https://oauth2.googleapis.com/token";
+        HttpHeaders headers = new HttpHeaders();
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("code", code);
+        body.add("client_id", "340845014781-evjvvne83oqk7ia1fdg1oclcqto82snv.apps.googleusercontent.com");
+        body.add("client_secret", "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");
+        body.add("redirect_uri", "http://localhost:8081/api/auth/google/callback"); // Ensure this matches the frontend redirect URI
+        body.add("grant_type", "authorization_code");
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Map> response = restTemplate.exchange(tokenUri, HttpMethod.POST, request, Map.class);
+
+        String accessToken = (String) response.getBody().get("access_token");
+        return accessToken;
     }
 
 /*

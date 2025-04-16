@@ -10,10 +10,11 @@ import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common'; //
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { NgxPaginationModule } from 'ngx-pagination';
 @Component({
   selector: 'app-tables',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule,AsideComponent, NavBackComponent, SettingsComponent, FooterBackComponent,ReactiveFormsModule , FormsModule],
+  imports: [RouterOutlet, NgxPaginationModule , RouterLink, RouterLinkActive, CommonModule,AsideComponent, NavBackComponent, SettingsComponent, FooterBackComponent,ReactiveFormsModule , FormsModule],
   templateUrl: './tables.component.html',
   styleUrls: ['./tables.component.css']
 })
@@ -27,6 +28,9 @@ export class TablesComponent implements OnInit {
   Role = Role;
   selectedUserType: Role | null = null;
   selectedUser: User | null = null;
+   // Pagination
+   page: number = 1;
+   itemsPerPage: number = 10;
 
   @ViewChild('chooseUserTypeModal', { read: TemplateRef }) chooseUserTypeModal!: TemplateRef<any>;
   @ViewChild('addUserModal', { read: TemplateRef }) addUserModal!: TemplateRef<any>;
@@ -85,6 +89,8 @@ export class TablesComponent implements OnInit {
       const roleMatch = this.selectedRoleFilter ? user.role === this.selectedRoleFilter : true;
       return searchMatch && roleMatch;
     });
+    // Réinitialiser à la première page après filtrage
+    this.page = 1;
   }
   toggleBlockUser(user: User): void {
     // If user.enabled is undefined, we treat it as true (unblocked state).
@@ -208,6 +214,7 @@ export class TablesComponent implements OnInit {
     this.AuthService.getUsers().subscribe(
       data => {
         this.users = data;
+        this.filteredUsers = data; // Initialisation
       },
       error => {
         console.error('Error loading users!', error);

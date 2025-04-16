@@ -1,0 +1,47 @@
+<app-navbar-student></app-navbar-student>
+
+<div class="container">
+  <h4 class="title">Documents</h4>
+  <div class="settings-card">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 sidebar">
+        <div class="list-group">
+          <a class="list-group-item" [routerLink]="['/profileStudent', userId]" routerLinkActive="active">General</a>
+          <a class="list-group-item" [routerLink]="['/changePassS', userId]" routerLinkActive="active">Change Password</a>
+          <a class="list-group-item" [routerLink]="['/skillsS', userId]" routerLinkActive="active">Skills</a>
+          <a class="list-group-item " [routerLink]="['/socialLinksS', userId]" routerLinkActive="active">Social Links</a>
+          <a class="list-group-item" [routerLink]="['/educationS', userId]" routerLinkActive="active">Education</a>
+          <a class="list-group-item active" [routerLink]="['/documentss', userId]" routerLinkActive="active">My documents</a>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-md-9 content">
+        <form (ngSubmit)="onSubmit()" [formGroup]="documentsForm">
+            <div class="form-group">
+              <label class="form-label">Upload Stage Documents</label>
+              <input type="file" class="form-control" (change)="onFileChange($event)" multiple />
+              <div *ngIf="uploadedFiles.length > 0" class="mt-3">
+                <h5>Uploaded Documents:</h5>
+                <ul>
+                  <li *ngFor="let file of uploadedFiles">
+                    {{ file.name }}
+                    <button type="button" (click)="deleteDocument(file)" class="btn btn-danger btn-sm ml-2">Delete</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          
+            <div class="action-buttons">
+              <button type="submit" class="btn btn-save" [disabled]="documentsForm.invalid">Upload Documents</button>
+              <button type="button" class="btn btn-cancel">Cancel</button>
+            </div>
+          </form>
+          
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

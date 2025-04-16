@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 export class InactivityService {
 
   private inactivityTimeout: any;
-  private readonly INACTIVITY_LIMIT = 30000;  // 30 seconds
+  private readonly INACTIVITY_LIMIT = 300000000;  // 30 seconds
   private userInactiveSubject: Subject<void> = new Subject<void>();
   inactivityLogoutEnabled: boolean = false;
   inactivityDetected$ = new BehaviorSubject<boolean>(false); // Correct type

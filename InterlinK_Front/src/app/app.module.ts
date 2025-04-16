@@ -47,11 +47,9 @@ import { ProfileHrComponent } from './components/Front/hrSettings/profile-hr/pro
 import { ChangepasswordhrComponent } from './components/Front/hrSettings/changepasswordhr/changepasswordhr.component';
 import { SociallinkshrComponent } from './components/Front/hrSettings/sociallinkshr/sociallinkshr.component';
 import { UserStatisticsComponent } from './components/Back/user-statistics/user-statistics.component';
-
-
-
-
-
+import { EducationComponent } from './components/Front/studentSettings/education/education.component';
+import { DocumentsComponent } from './components/Front/documents/documents.component';
+import { DocumentssSTComponent } from './components/Front/studentSettings/documentss-st/documentss-st.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +83,10 @@ import { UserStatisticsComponent } from './components/Back/user-statistics/user-
     ProfileHrComponent,
     ChangepasswordhrComponent,
     SociallinkshrComponent,
-    UserStatisticsComponent
+    UserStatisticsComponent,
+    EducationComponent,
+    DocumentsComponent,
+    DocumentssSTComponent
     
     
     
@@ -109,6 +110,7 @@ import { UserStatisticsComponent } from './components/Back/user-statistics/user-
     TablesComponent,
     NgbModule,
     OAuthModule.forRoot()
+    
   ],
   providers: [
     

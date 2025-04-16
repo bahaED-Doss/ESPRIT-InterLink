@@ -89,10 +89,9 @@ export class LoginComponent implements AfterViewInit {
   }
     */
  
-loginWithGoogle(): void {
-  // No subscribe needed here since we're doing a redirect
-  this.authService.initiateGoogleLogin();
-}
+  loginWithGoogle(): void {
+    this.authService.initiateGoogleLogin();
+  }
 loginWithGitHub() {
   const clientId = 'Ov23li3W3tktrxO5jxSn';
   const redirectUri = 'http://localhost:8081/api/auth/github/callback';
@@ -107,8 +106,12 @@ loginWithGitHub() {
       const code = params['code'];
       if (code) {
           this.authService.loginWithGitHub(code); // Assurez-vous que le code est bien envoyé ici
+          this.authService.handleGoogleCallback(code).subscribe(response => {
+            // Handle response (like storing token and redirecting)
+          });
       }
-  })
+  });
+  
 /*
     this.route.queryParams.subscribe(params => {
       const token = params['token'];

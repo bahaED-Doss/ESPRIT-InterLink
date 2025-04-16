@@ -284,91 +284,27 @@ public class UserController {
         }
     }
     /*
-    @GetMapping("/callback/google")
-    public ResponseEntity<?> handleGoogleCallback(
-            @RequestParam String code,
-            @RequestParam(required = false) String state,
-            HttpServletResponse response) {
+    @PostMapping("/auth/google/callback")
+    public ResponseEntity<?> handleGoogleCallback(@RequestParam("code") String code) {
         try {
-            // Process the authentication
-            String accessToken = exchangeCodeForToken(code);
-            GoogleUser googleUser = fetchGoogleUserDetails(accessToken);
-            User user = userService.loginWithGoogle(googleUser);
+            // Exchange the authorization code for an access token
+            String accessToken = userService.exchangeAuthCodeForAccessToken(code);
+            GoogleUser googleUser = userService.fetchGoogleUserDetails(accessToken);
 
-            // Generate JWT token
-            String jwtToken = userService.generateToken(user);
-
-            // Redirect to frontend with token
-            String redirectUrl = String.format(
-                    "http://localhost:4200/auth/callback?token=%s&role=%s&id=%s",
-                    jwtToken,
-                    user.getRole(),
-                    user.getId()
-            );
-
-            response.sendRedirect(redirectUrl);
-            return ResponseEntity.ok().build();
-
+            // Process user details and return response
+            User user = userService.processGoogleUser(googleUser);
+            Map<String, Object> response = new HashMap<>();
+            response.put("role", user.getRole().toString());
+            response.put("id", user.getId());
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error during Google authentication: " + e.getMessage());
-        }
-    }
-    private String exchangeCodeForToken(String code) throws IOException {
-        // Google's token endpoint
-        String tokenUrl = "https://oauth2.googleapis.com/token";
-
-        // Prepare the request body
-        MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
-        requestBody.add("code", code);
-        requestBody.add("client_id", "340845014781-evjvvne83oqk7ia1fdg1oclcqto82snv.apps.googleusercontent.com");
-        requestBody.add("client_secret", "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");
-        requestBody.add("redirect_uri", "http://localhost:8081/api/auth/google/callback");
-        requestBody.add("grant_type", "authorization_code");
-
-        // Prepare the request headers
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-        // Create the HTTP entity
-        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(requestBody, headers);
-
-        // Send the request
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Map> response = restTemplate.postForEntity(tokenUrl, requestEntity, Map.class);
-
-        // Extract the access token from the response
-        if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
-            return (String) response.getBody().get("access_token");
-        } else {
-            throw new IOException("Failed to exchange code for token: " + response.getStatusCode());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during Google login");
         }
     }
 
-    private GoogleUser fetchGoogleUserDetails(String accessToken) throws IOException {
-        String userInfoUrl = "https://www.googleapis.com/oauth2/v3/userinfo";
+     */
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(accessToken);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Map> response = restTemplate.exchange(userInfoUrl, HttpMethod.GET, requestEntity, Map.class);
-
-        if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
-            Map<String, Object> userInfo = response.getBody();
-            GoogleUser googleUser = new GoogleUser();
-            googleUser.setId((String) userInfo.get("sub"));
-            googleUser.setEmail((String) userInfo.get("email"));
-            googleUser.setFirstName((String) userInfo.get("given_name"));
-            googleUser.setLastName((String) userInfo.get("family_name"));
-            googleUser.setPhotoUrl((String) userInfo.get("picture"));
-            return googleUser;
-        } else {
-            throw new IOException("Failed to fetch user details: " + response.getStatusCode());
-        }
-    }
 
 
     @GetMapping("/oauth2/authorize/google")
@@ -387,6 +323,6 @@ public class UserController {
         // Redirect the user to Google's authorization page
         response.sendRedirect(googleAuthUrl);
     }
-    */
+
 
 }
