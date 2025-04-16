@@ -1,13 +1,15 @@
 import { Task } from '../../models/task.model';
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter,OnInit, OnChanges, SimpleChanges, Renderer2,OnDestroy } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { TaskService } from '../../Services/task.service';
+import { interval, Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css']
 })
-export class TaskListComponent implements OnChanges {
+export class TaskListComponent implements OnChanges, OnInit, OnDestroy {
   @Input() tasks: Task[] = [];
   @Input() isManager: boolean = false;
   @Output() editTask = new EventEmitter<Task>();
@@ -17,7 +19,15 @@ export class TaskListComponent implements OnChanges {
   inProgressTasks: Task[] = [];
   doneTasks: Task[] = [];
 
+  private refreshSubscription: Subscription | undefined;  // Fixed initialization issue
+
   constructor(private taskService: TaskService) {}
+
+  // Add this method
+  private loadTasks(): void {
+    // Since tasks are provided via @Input, we just need to filter them
+    this.filterTasks();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['tasks']) {
@@ -142,5 +152,21 @@ export class TaskListComponent implements OnChanges {
     }
     
     return tasksInStatus.filter(task => task.priority === priorityValue).length;
+  }
+
+  ngOnInit() {
+    // Initial load
+    this.loadTasks();
+    
+    // Set up automatic refresh every 1 second
+    this.refreshSubscription = interval(1000).subscribe(() => {
+      this.loadTasks();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.refreshSubscription) {
+      this.refreshSubscription.unsubscribe();
+    }
   }
 }

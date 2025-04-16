@@ -269,33 +269,7 @@ export class StudentTaskBoardComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   // Add method to mark feedbacks as seen
-  markFeedbacksAsSeen(task: Task): void {
-    // Check if there are any unseen feedbacks
-    const unseenFeedbacks = task.feedbacks?.filter(feedback => !feedback.seen);
-    
-    if (unseenFeedbacks && unseenFeedbacks.length > 0) {
-      console.log(`Marking ${unseenFeedbacks.length} feedbacks as seen`);
-      
-      // Update locally first for immediate UI feedback
-      unseenFeedbacks.forEach(feedback => {
-        feedback.seen = true;
-        
-        // Then update in the backend for each feedback
-        if (feedback.feedbackId) {
-          this.taskService.markFeedbackAsSeen(feedback.feedbackId).subscribe({
-            next: (updatedFeedback: any) => {
-              console.log('Feedback marked as seen:', updatedFeedback);
-            },
-            error: (error: any) => {
-              console.error(`Error marking feedback ${feedback.feedbackId} as seen:`, error);
-              // Revert the local change if the API call fails
-              feedback.seen = false;
-            }
-          });
-        }
-      });
-    }
-  }
+  
 
   trackByTaskId(index: number, task: Task): number {
     return task.taskId || index;
@@ -335,9 +309,44 @@ export class StudentTaskBoardComponent implements OnInit, OnChanges, OnDestroy {
     this.feedbackTask = task;
     this.showFeedbackPanel = true;
     
-    // Keep the feedback marking code here
-    if (task.feedbacks && task.feedbacks.length > 0) {
+    // Mark feedbacks as seen when opening the panel
+    if (task.feedbacks?.some(f => !f.seen)) {
       this.markFeedbacksAsSeen(task);
+    }
+  }
+
+  markFeedbacksAsSeen(task: Task): void {
+    const unseenFeedbacks = task.feedbacks?.filter(feedback => !feedback.seen);
+    
+    if (unseenFeedbacks && unseenFeedbacks.length > 0) {
+      unseenFeedbacks.forEach(feedback => {
+        if (feedback.feedbackId) {
+          this.taskService.markFeedbackAsSeen(feedback.feedbackId).subscribe({
+            next: (updatedFeedback) => {
+              const taskIndex = this.tasks.findIndex(t => t.taskId === task.taskId);
+              const currentTask = this.tasks[taskIndex];
+              
+              if (taskIndex !== -1 && currentTask?.feedbacks) {
+                const feedbackIndex = currentTask.feedbacks.findIndex(
+                  f => f.feedbackId === feedback.feedbackId
+                );
+                
+                if (feedbackIndex !== -1) {
+                  // Create a new feedbacks array to ensure change detection
+                  currentTask.feedbacks = [
+                    ...currentTask.feedbacks.slice(0, feedbackIndex),
+                    updatedFeedback,
+                    ...currentTask.feedbacks.slice(feedbackIndex + 1)
+                  ];
+                }
+              }
+            },
+            error: (error) => {
+              console.error('Error marking feedback as seen:', error);
+            }
+          });
+        }
+      });
     }
   }
   
@@ -345,5 +354,32 @@ export class StudentTaskBoardComponent implements OnInit, OnChanges, OnDestroy {
   closeFeedbackPanel(): void {
     this.showFeedbackPanel = false;
     this.feedbackTask = null;
+  }
+  
+  // Add these properties for hint functionality
+  activeHintId: number | null = null;
+  showHintContent = false;
+
+  // Add these methods for hint functionality
+  showHintTooltip(feedback: any) {
+    if (feedback.feedbackId) {
+      this.activeHintId = feedback.feedbackId;
+      this.showHintContent = false;
+    }
+  }
+
+  hideHintTooltip() {
+    setTimeout(() => {
+      if (!document.querySelector('.hint-tooltip:hover')) {
+        this.activeHintId = null;
+        this.showHintContent = false;
+      }
+    }, 100);
+  }
+
+  toggleHintContent(feedback: any) {
+    if (feedback.hint && feedback.feedbackId === this.activeHintId) {
+      this.showHintContent = !this.showHintContent;
+    }
   }
 }

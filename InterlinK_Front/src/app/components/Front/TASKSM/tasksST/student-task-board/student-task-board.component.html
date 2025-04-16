@@ -127,33 +127,46 @@
       <div class="detail-row" *ngIf="selectedTask.feedbacks && selectedTask.feedbacks.length > 0">
         <span class="detail-label">Feedback</span>
         <div class="detail-value">
-          <div *ngFor="let feedback of selectedTask.feedbacks" class="feedback-item">
-            <!-- Manager info header -->
-            <!-- Update the feedback section to match the actual Feedback model -->
-            <div class="feedback-header">
-              <div class="manager-info">
-                <div class="manager-avatar">
-                  <img src="assets/images/default-avatar.png" alt="Manager">
-                </div>
-                <div class="manager-name">
-                  {{ feedback.givinBy || 'Project Manager' }}
-                </div>
-              </div>
-              <div class="feedback-date">
-                <small *ngIf="feedback.createdAt">{{ feedback.createdAt | date:'medium' }}</small>
-              </div>
+          <!-- Inside the feedback panel -->
+          <div class="feedback-panel">
+            <div class="feedback-panel-header">
+              <h3>Task Feedbacks</h3>
+              <button class="close-btn" (click)="closeFeedbackPanel()">&times;</button>
             </div>
             
-            <!-- Feedback content -->
-            <div class="feedback-content">
-              <p>{{ feedback.message }}</p>
-            </div>
-            
-            <!-- Seen indicator -->
-            <div class="feedback-footer">
-              <div class="seen-indicator" [ngClass]="{'seen': feedback.seen}">
-                <i class="fas fa-check-double"></i>
-                <span>{{ feedback.seen ? 'Seen' : 'Delivered' }}</span>
+            <div class="feedback-panel-body">
+              <div *ngFor="let feedback of selectedTask?.feedbacks" 
+                   class="feedback-item"
+                   [ngClass]="feedback.sentiment?.toLowerCase()">
+                <div class="feedback-header">
+                  <div class="manager-info">
+                    <span class="manager-name">Manager</span>
+                    <span class="feedback-date">{{ feedback.createdAt | date:'medium' }}</span>
+                  </div>
+                  <!-- Add hint icon here -->
+                  <div class="hint-icon" 
+                       *ngIf="feedback.hint"
+                       (mouseenter)="showHintTooltip(feedback)"
+                       (mouseleave)="hideHintTooltip()"
+                       (click)="toggleHintContent(feedback)">
+                    <i class="fas fa-lightbulb"></i>
+                    <!-- Hint tooltip -->
+                    <div class="hint-tooltip" *ngIf="activeHintId === feedback.feedbackId">
+                      <p>{{ feedback.hint }}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="feedback-content">
+                  <p>{{ feedback.message }}</p>
+                </div>
+                
+                <div class="feedback-footer">
+                  <div class="seen-indicator" [ngClass]="{'seen': feedback.seen}">
+                    <i class="fas fa-check-double"></i>
+                    <span>{{ feedback.seen ? 'Seen' : 'Delivered' }}</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

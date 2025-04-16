@@ -3,7 +3,11 @@ export enum Sentiment {
   NEUTRAL = 'NEUTRAL',
   NEGATIVE = 'NEGATIVE'
 }
-
+export interface FeedbackRequest {
+  message: string;
+  taskId: number;
+  userId: number;
+}
 export interface Feedback {
   feedbackId?: number;
   message: string;
@@ -13,4 +17,5 @@ export interface Feedback {
   taskId?: number;
   task?: any;
   seen: boolean;
+  hint?: string
 }

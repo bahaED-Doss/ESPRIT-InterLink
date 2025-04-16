@@ -8,6 +8,7 @@
     
     <div class="task-actions">
       <!-- Feedback button with counter - for both views -->
+      <!-- Update these click handlers -->
       <button class="action-button feedback-button" 
               *ngIf="task.feedbacks && task.feedbacks.length > 0" 
               (click)="onFeedbackClick($event)" 
@@ -127,7 +128,7 @@
   </div>
 </div>
 
-<!-- Feedback Panel - For both views but with different capabilities -->
+<!-- Feedback Panel -->
 <div class="feedback-panel" *ngIf="showFeedbacks">
   <div class="feedback-panel-header">
     <h3>Task Feedbacks</h3>
@@ -141,9 +142,26 @@
         No feedbacks yet for this task.
       </div>
       
-      <!-- In the feedback list section of the manager's view -->
-      <div *ngFor="let feedback of task.feedbacks" class="feedback-item" [ngClass]="getSentimentClass(feedback.sentiment)">
+      <div *ngFor="let feedback of task.feedbacks" class="feedback-item">
         <div class="feedback-content">
+          <!-- Show hint icon only in student view for manager's feedback -->
+          <!-- Inside the feedback section -->
+          <div class="feedback-header">
+            <div class="manager-info">
+              <span class="manager-name">Manager</span>
+              <span class="feedback-date">{{ feedback.createdAt | date:'medium' }}</span>
+            </div>
+            <!-- Add hint icon with updated tooltip behavior -->
+            <!-- Update the hint icon section -->
+            <div class="hint-icon" 
+                 *ngIf="feedback.hint && isStudentView()"
+                 (mouseenter)="showHintTooltip(feedback)"
+                 (mouseleave)="hideHintTooltip()"
+                 (click)="onDetails($event)">
+              <i class="fas fa-lightbulb" title="Click to see details"></i>
+            </div>
+          </div>
+          
           <p class="feedback-message">{{ feedback.message }}</p>
           
           <div class="feedback-footer">
@@ -152,17 +170,17 @@
               <span class="feedback-date">{{ feedback.createdAt | date:'medium' }}</span>
             </div>
             
-            <!-- Add seen indicator for manager view -->
-            <div class="seen-status" *ngIf="!isStudentView() && feedback.givinBy === 'Manager'">
+            <!-- Show seen status in manager view for student feedbacks -->
+            <div class="seen-status" *ngIf="!isStudentView()">
               <span class="seen-indicator" [ngClass]="{'seen': feedback.seen}">
                 <i class="fas fa-check-double"></i>
                 <span>{{ feedback.seen ? 'Seen' : 'Delivered' }}</span>
               </span>
             </div>
             
-            <!-- Delete button - only for managers -->
-            <button *ngIf="!isStudentView() && canDeleteFeedback(feedback)" 
-                    class="delete-feedback-btn" 
+            <!-- Delete button for manager -->
+            <button *ngIf="!isStudentView()" 
+                    class="delete-btn" 
                     (click)="deleteFeedback(feedback.feedbackId)">
               <i class="fas fa-trash"></i>
             </button>
@@ -171,7 +189,7 @@
       </div>
     </div>
     
-    <!-- Add feedback form - only for managers -->
+    <!-- Add feedback form - only for manager -->
     <div class="add-feedback-form" *ngIf="!isStudentView()">
       <h4>Add Feedback</h4>
       <div class="form-group">
@@ -182,17 +200,11 @@
                   [(ngModel)]="newFeedbackMessage" 
                   placeholder="Enter your feedback..."></textarea>
       </div>
-      
-      <div class="form-group">
-        <label for="feedbackSentiment">Sentiment</label>
-        <select id="feedbackSentiment" class="form-control" [(ngModel)]="newFeedbackSentiment">
-          <option value="POSITIVE">Positive</option>
-          <option value="NEUTRAL">Neutral</option>
-          <option value="NEGATIVE">Negative</option>
-        </select>
-      </div>
-      
-      <button class="btn btn-primary" (click)="addFeedback()">Add Feedback</button>
+      <button class="btn btn-primary" 
+              [disabled]="!newFeedbackMessage.trim()"
+              (click)="addFeedback()">
+        Add Feedback
+      </button>
     </div>
   </div>
 </div>

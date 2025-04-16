@@ -2,6 +2,7 @@ package tn.esprit.interlink_back.services;
 
 import tn.esprit.interlink_back.entity.Feedback;
 import tn.esprit.interlink_back.entity.Task;
+import tn.esprit.interlink_back.DTO.FeedbackDTO;
 import tn.esprit.interlink_back.repository.FeedbackRepository;
 import tn.esprit.interlink_back.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,8 @@ public class FeedbackService implements IFeedbackService {
     @Autowired
     private TaskRepository taskRepository;
 
-    // Get all feedbacks for a task
-    public List<Feedback> getFeedbacksByTaskId(Long taskId) {
-        return feedbackRepository.findByTaskTaskId(taskId);
-    }
+    @Autowired
+    private AiAnalysisService aiAnalysisService;  // Change this line
 
     // Create a new feedback
     public Feedback createFeedback(Feedback feedback, Long taskId, Long userId) {
@@ -32,9 +31,26 @@ public class FeedbackService implements IFeedbackService {
             throw new RuntimeException("Task not found with id: " + taskId);
         }
 
-        feedback.setTask(taskOpt.get());
+        Task task = taskOpt.get();
+
+        // Analyze feedback using Gemini
+        AIAnalysisResponse analysis = aiAnalysisService.analyzeFeedback(
+                task.getDescription(),
+                feedback.getMessage()
+        );
+
+        // Set the analyzed sentiment and hint
+        feedback.setSentiment(analysis.getSentiment());
+        feedback.setHint(analysis.getHint());
+
+        feedback.setTask(task);
         feedback.setCreatedAt(LocalDateTime.now());
         return feedbackRepository.save(feedback);
+    }
+
+    // Get all feedbacks for a task
+    public List<Feedback> getFeedbacksByTaskId(Long taskId) {
+        return feedbackRepository.findByTaskTaskId(taskId);
     }
 
     // Update an existing feedback

@@ -14,13 +14,14 @@ public class FeedbackDTO {
     private Long projectManagerId; 
     private Long studentId;
     private boolean seen= false     ;
+    private String hint;
 
     // Constructors
     public FeedbackDTO() {}
 
     public FeedbackDTO(Long feedbackId, String message, String givenBy,
                        LocalDateTime createdAt, Sentiment sentiment, Long taskId,
-                       Long projectManagerId, Long studentId, boolean seen) {
+                       Long projectManagerId, Long studentId, boolean seen , String hint) {
         this.feedbackId = feedbackId;
         this.message = message;
         this.givenBy = givenBy;
@@ -30,6 +31,7 @@ public class FeedbackDTO {
         this.projectManagerId = projectManagerId;
         this.studentId = studentId;
         this.seen = seen;
+        this.hint = hint;
     }
 
     // Existing getters and setters
@@ -105,5 +107,13 @@ public class FeedbackDTO {
     
     public void setSeen(boolean seen) {
         this.seen = seen;
+    }
+
+    public String getHint() {
+        return hint;
+    }
+
+    public void setHint(String hint) {
+        this.hint = hint;
     }
 }

@@ -4,6 +4,7 @@ import { Observable, of ,throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Feedback } from '../models/feedback.model';
 import { TaskService, TaskNotification } from './task.service'; // Import TaskService and TaskNotification
+import { FeedbackRequest } from '../models/feedback.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,19 +28,17 @@ export class FeedbackService {
     );
   }
 
-  // Add feedback to a task
+  // Updated addFeedback method
   addFeedback(taskId: number, userId: number, feedback: Feedback): Observable<Feedback> {
     const url = `${this.baseUrl}/tasks/${taskId}/feedbacks/${userId}`;
     
-    // Create a DTO object to match the backend expectation
-    const feedbackDTO = {
+    const feedbackRequest: FeedbackRequest = {
       message: feedback.message,
-      sentiment: feedback.sentiment,
-      givinBy: feedback.givinBy,
-      seen: feedback.seen
+      taskId: taskId,
+      userId: userId
     };
     
-    return this.http.post<Feedback>(url, feedbackDTO).pipe(
+    return this.http.post<Feedback>(url, feedbackRequest).pipe(
       tap((createdFeedback: Feedback) => {
         console.log('Feedback created:', createdFeedback);
         
