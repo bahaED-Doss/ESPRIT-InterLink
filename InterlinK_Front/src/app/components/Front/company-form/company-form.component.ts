@@ -11,10 +11,8 @@ import { CompanyService, Company } from 'src/app/services/company.service';
 export class CompanyFormComponent implements OnInit, OnChanges {
   @Input() selectedCompany: Company | null = null;
   addCompany!: FormGroup;
-  countries: string[] = [];
-  cities: string[] = [];
-  selectedCountry: string = '';
-  selectedCity: string = ''; // This is the correct property for city
+
+
   searchKeyword: string = '';
   searchLocation: string = '';
   searchIndustrySector: string = '';
@@ -36,16 +34,10 @@ export class CompanyFormComponent implements OnInit, OnChanges {
       name: ['', [Validators.required, Validators.minLength(3)]],
       location: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      city: ['', [
-        Validators.required,
-        Validators.pattern('^[a-zA-Z\s]+$')
-      ]],
-      country: ['', [Validators.required]],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{8,15}$')]],
       industrySector: ['', [Validators.required]]
     });
 
-    this.loadCountries();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -57,35 +49,13 @@ export class CompanyFormComponent implements OnInit, OnChanges {
     }
   }
 
-  loadCountries(): void {
-    this.http.get<any[]>('https://restcountries.com/v3.1/all').subscribe(data => {
-      this.countries = data.map(country => country.name.common).sort();
-    });
-  }
+ 
 
-  loadCities(): void {
-    if (!this.selectedCountry) return;
-
-    this.http.get<any[]>(`https://api.teleport.org/api/countries/${this.selectedCountry}/cities/`).subscribe(
-      data => {
-        this.cities = data.map((city: { name: string }) => city.name);
-      },
-      error => {
-        console.error("Error loading cities", error);
-      }
-    );
-  }
-
-  onCountryChange(event: any): void {
-    this.selectedCountry = event.target.value;
-    this.loadCities(); // Trigger cities load on country change
-  }
+ 
 
   onSearch() {
     const params = {
       industrySector: this.searchIndustrySector,
-      country: this.selectedCountry,
-      city: this.selectedCity,
       keyword: this.searchKeyword
     };
 

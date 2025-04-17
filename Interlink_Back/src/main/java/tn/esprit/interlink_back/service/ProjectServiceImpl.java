@@ -40,14 +40,18 @@ public class ProjectServiceImpl implements IProjectService {
 
     @Override
     public Project addProject(Project project) {
+        // 🔁 Enhance the description
+        project.setDescription(enhanceDescription(project.getDescription()));
+
         // Save the project first
         Project savedProject = projectRepository.save(project);
 
-        // Create default milestones for the saved project
+        // Create default milestones
         createDefaultMilestones(savedProject);
 
         return savedProject;
     }
+
 
     private void createDefaultMilestones(Project project) {
         // List of predefined milestone names
@@ -71,6 +75,13 @@ public class ProjectServiceImpl implements IProjectService {
         }
     }
 
+    private String enhanceDescription(String original) {
+        if (original == null || original.isBlank()) return original;
+
+        // ✨ Fake AI enhancement (replace later with real API)
+        return "📌 [Enhanced] " + original.substring(0, 1).toUpperCase() + original.substring(1).trim()
+                + ". This project aims to deliver outstanding results aligned with modern standards.";
+    }
 
     @Override
     public Project modifyProject(Project project) {

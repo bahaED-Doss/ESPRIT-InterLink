@@ -59,8 +59,6 @@ public class CompanyController {
         if (company.getName() != null) existingCompany.setName(company.getName());
         if (company.getLocation() != null) existingCompany.setLocation(company.getLocation());
         if (company.getEmail() != null) existingCompany.setEmail(company.getEmail());
-        if (company.getCity() != null) existingCompany.setCity(company.getCity());
-        if (company.getCountry() != null) existingCompany.setCountry(company.getCountry());
         if (company.getPhone() != null) existingCompany.setPhone(company.getPhone());
         if (company.getIndustrySector() != null) existingCompany.setIndustrySector(company.getIndustrySector());
 
