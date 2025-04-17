@@ -42,6 +42,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ViewInterviewComponent } from './components/Front/interview/view-interview/view-interview.component';
 import { ListQuestionComponent } from './components/Front/interview/list-question/list-question.component';
 import { CheckTestComponent } from './components/Front/interview/check-test/check-test.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { AddInterviewComponent } from './components/Back/interview/add-interview/add-interview.component';
+import { CalendarComponent } from './components/Back/interview/calendar/calendar.component';
+import { ListQuestionBackComponent } from './components/Back/TestQuestion/Question/list-question/list-question.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +78,9 @@ import { CheckTestComponent } from './components/Front/interview/check-test/chec
     ViewInterviewComponent,
     ListQuestionComponent,
     CheckTestComponent,
+    ListQuestionBackComponent,
+    AddInterviewComponent,
+    CalendarComponent,
   ],
   imports: [
     NgxPaginationModule,
@@ -92,6 +99,7 @@ import { CheckTestComponent } from './components/Front/interview/check-test/chec
     SettingsComponent,
     TablesComponent,
     NgbModule,
+    FullCalendarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

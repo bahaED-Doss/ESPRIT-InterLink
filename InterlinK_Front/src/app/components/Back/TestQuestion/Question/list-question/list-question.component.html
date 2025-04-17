@@ -9,26 +9,7 @@
             <div
               class="card-header pb-0 d-flex justify-content-between align-items-center"
             >
-              <h6>Interview Table</h6>
-              <div class="search-container mb-3">
-                <input
-                  #searchInput
-                  type="text"
-                  (input)="onSearch(searchInput.value)"
-                  class="form-control"
-                  placeholder="Rechercher..."
-                />
-              </div>
-
-              <button class="btn btn-primary" (click)="addInterview()">
-                Add Interview
-              </button>
-              <a routerLink="/calendar">
-                <button class="btn btn-primary">
-                  Disponibility
-                </button>
-              </a>
-             
+              <h6>Question</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
@@ -38,38 +19,17 @@
                       <th
                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
                       >
-                        Title
+                        Test
                       </th>
                       <th
                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3"
                       >
-                        Inteview Type
+                        Contenu
                       </th>
-                      <th
-                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-                      >
-                        Student
-                      </th>
-                      <th
-                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-                      >
-                        Manger
-                      </th>
-
                       <th
                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
                       >
                         Grade
-                      </th>
-                      <th
-                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-                      >
-                        Lien
-                      </th>
-                      <th
-                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-                      >
-                        Status
                       </th>
                       <th
                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
@@ -82,7 +42,7 @@
                     <!-- Application du pipe 'paginate' sur la donnée -->
                     <tr
                       *ngFor="
-                        let interview of data
+                        let question of data
                           | paginate
                             : {
                                 itemsPerPage: itemsPerPage,
@@ -93,48 +53,33 @@
                       <td>
                         <div class="d-flex flex-column justify-content-center">
                           <p class="text-xs text-secondary mb-0">
-                            {{ interview.titre }}
+                            {{ question.testById?.titre }}
                           </p>
                         </div>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">
-                          {{ interview.interviewType }}
-                        </p>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">
-                          {{ interview.studentByUserId?.firstName }}
+                          {{ question.contenu }}
                         </p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        {{ interview.projectManager?.name }}
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        {{ interview.note }}
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        {{ interview.lienReunion }}
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        {{ interview.statusType }}
+                        {{ question.noteAttribuee }}
                       </td>
                       <td class="align-middle text-center">
                         <a
                           href="javascript:;"
                           class="text-secondary font-weight-bold text-xs tt"
-                          (click)="
-                            ouvrirFormulaireEditInterview(interview.interviewId)
-                          "
-                          >Edit</a
+                          (click)="openQuestionModal(question.questionId)"
                         >
+                          Edit
+                        </a>
                         <span class="text-secondary text-xs font-weight-bold"
                           >/</span
                         >
                         <a
                           href="javascript:;"
                           class="text-secondary font-weight-bold text-xs tt"
-                          (click)="supprimerInterview(interview.interviewId)"
+                          (click)="supprimerTest(question.questionId)"
                           >Delete</a
                         >
                       </td>
@@ -154,6 +99,69 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="questionModal"
+  tabindex="-1"
+  aria-labelledby="questionModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="questionModalLabel">
+          Modifier la question
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="modifierQuestion()">
+          <div class="mb-3">
+            <label for="contenu" class="form-label">Contenu</label>
+            <input
+              type="text"
+              class="form-control"
+              id="contenu"
+              [(ngModel)]="nouvelleQuestion.contenu"
+              name="contenu"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="noteAttribuee" class="form-label">Note</label>
+            <input
+              type="text"
+              class="form-control"
+              id="noteAttribuee"
+              [(ngModel)]="nouvelleQuestion.noteAttribuee"
+              name="noteAttribuee"
+              required
+            />
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-success">Mettre à jour</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

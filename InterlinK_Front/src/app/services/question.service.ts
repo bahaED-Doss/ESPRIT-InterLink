@@ -11,10 +11,21 @@ export class QuestionService {
   private baseUrl = 'http://localhost:8081/api/question/';
 
   public getAllByTest(id: any): Observable<Question> {
-    return this.httpClient.get<Question>(this.baseUrl + id);
+    return this.httpClient.get<Question>(this.baseUrl + 'getAllByTest/' + id);
   }
 
   public add(data: any): Observable<Question> {
     return this.httpClient.post<Question>(this.baseUrl + 'add', data);
+  }
+
+  public edit(id: number, data: any): Observable<Question> {
+    return this.httpClient.put<Question>(this.baseUrl + 'update/' + id, data);
+  }
+  public delete(id: any): Observable<Question> {
+    return this.httpClient.delete<Question>(this.baseUrl + 'delete/' + id);
+  }
+
+  public getById(id: any): Observable<Question> {
+    return this.httpClient.get<Question>(this.baseUrl + id);
   }
 }

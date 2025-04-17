@@ -3,8 +3,7 @@ package tn.esprit.interlink_back.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.interlink_back.entity.Interview;
-import tn.esprit.interlink_back.entity.Reponse;
+import tn.esprit.interlink_back.entity.*;
 import tn.esprit.interlink_back.service.InterviewService;
 
 import java.util.List;
@@ -13,16 +12,17 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/interviews")
 @CrossOrigin(origins = "http://localhost:4200")
-    public class InterviewController {
+public class InterviewController {
 
     final InterviewService interviewService;
+
     public InterviewController(InterviewService interviewService) {
         this.interviewService = interviewService;
     }
 
     // Ajouter un entretien
     @PostMapping("/add")
-    public ResponseEntity<Interview> addInterview(@RequestBody Interview interview) {
+    public ResponseEntity<Interview> addInterview(@RequestBody Interview interview) throws Exception {
         Interview savedInterview = interviewService.addInterview(interview);
         return ResponseEntity.ok(savedInterview);
     }
@@ -59,10 +59,38 @@ import java.util.Optional;
         interviewService.deleteInterview(id);
         return ResponseEntity.noContent().build();
     }
+
     @GetMapping("/getRang/{id}")
     public ResponseEntity<String> getRangAndPercent(@PathVariable int id) {
 
         return ResponseEntity.ok(interviewService.affichePercentAndRage(id));
     }
 
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Interview>> getAllByParam(@RequestParam String param) {
+        List<Interview> interviews = interviewService.getAllSearch(param);
+        return ResponseEntity.ok(interviews);
+    }
+
+
+    @GetMapping("/application")
+    public ResponseEntity<List<Application>> getAllApp() {
+        List<Application> applications = interviewService.getAllApplication();
+        return ResponseEntity.ok(applications);
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<List<User>> getAllUser() {
+        List<User> users = interviewService.getAllUser();
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/projectmanager")
+    public ResponseEntity<List<ProjectManager>> getAllProjectManager() {
+        List<ProjectManager> projectManagers = interviewService.getAllProjectManger();
+        return ResponseEntity.ok(projectManagers);
+    }
+
 }
+

@@ -95,6 +95,10 @@ export class ListTestComponent implements OnInit, OnDestroy {
     this.router.navigate(['/test/add']);
   }
 
+  afficherQuestion(id: number): void {
+    this.router.navigate(['/questionList/' + id]);
+  }
+
   ouvrirFormulaireEditTest(testId: number): void {
     this.router.navigate(['/test/edit', testId]);
   }

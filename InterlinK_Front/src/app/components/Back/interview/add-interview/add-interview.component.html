@@ -1,0 +1,167 @@
+<div class="flexx">
+  <app-aside></app-aside>
+  <div class="container">
+    <app-nav-back></app-nav-back>
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <div class="card-body">
+                  <h2>Interview</h2>
+
+                  <form
+                    [formGroup]="form"
+                    (ngSubmit)="
+                      editinginteview ? updateinteview() : addinteview()
+                    "
+                  >
+                    <!-- Titre -->
+                    <div class="form-group">
+                      <label>Titre:</label>
+                      <input
+                        type="text"
+                        formControlName="titre"
+                        class="form-control"
+                      />
+                      <div
+                        *ngIf="
+                          form.get('titre')?.invalid &&
+                          form.get('titre')?.touched
+                        "
+                        class="text-danger"
+                      >
+                        <small *ngIf="form.get('titre')?.hasError('required')"
+                          >Le titre est requis.</small
+                        >
+                        <small *ngIf="form.get('titre')?.hasError('minlength')"
+                          >Minimum 3 caractères.</small
+                        >
+                      </div>
+                    </div>
+
+                    <!-- Note -->
+                    <div class="form-group">
+                      <label>Note:</label>
+                      <input
+                        type="number"
+                        formControlName="note"
+                        class="form-control"
+                        [disabled]="true"
+                      />
+                    </div>
+
+                    <!-- Type d'entretien -->
+                    <div class="form-group">
+                      <label>Type d'entretien:</label>
+                      <select
+                        formControlName="interviewType"
+                        class="form-control"
+                      >
+                        <option
+                          *ngFor="let type of interviewType"
+                          [value]="type.key"
+                        >
+                          {{ type.value }}
+                        </option>
+                      </select>
+                      <div
+                        *ngIf="
+                          form.get('interviewType')?.invalid &&
+                          form.get('interviewType')?.touched
+                        "
+                        class="text-danger"
+                      >
+                        <small>Le type est requis.</small>
+                      </div>
+                    </div>
+
+                    <!-- Date entretien -->
+                    <div class="form-group">
+                      <label>Date d'entretien:</label>
+                      <input
+                        type="date"
+                        formControlName="interviewDate"
+                        class="form-control"
+                      />
+                      <div
+                        *ngIf="
+                          form.get('interviewDate')?.invalid &&
+                          form.get('interviewDate')?.touched
+                        "
+                        class="text-danger"
+                      >
+                        <small>La date est requise.</small>
+                      </div>
+                    </div>
+
+                    <!-- Lien réunion -->
+                    <div class="form-group">
+                      <label>Lien de réunion:</label>
+                      <input
+                        type="url"
+                        formControlName="lienReunion"
+                        class="form-control"
+                      />
+                    </div>
+
+                    <!-- Student ID -->
+                    <div class="form-group">
+                      <label>Étudiant:</label>
+                      <select formControlName="student" class="form-control">
+                        <option *ngFor="let s of students" [value]="s.id">
+                          {{ s.firstName }} {{ s.lastName }}
+                        </option>
+                      </select>
+                    </div>
+
+                    <!-- Manager ID -->
+                    <div class="form-group">
+                      <label>Manager:</label>
+                      <select formControlName="managerId" class="form-control">
+                        <option
+                          *ngFor="let m of managers"
+                          [value]="m.managerId"
+                        >
+                          {{ m.name }}
+                        </option>
+                      </select>
+                    </div>
+
+                    <!-- Test ID -->
+                    <div class="form-group">
+                      <label>Test:</label>
+                      <select formControlName="testId" class="form-control">
+                        <option *ngFor="let t of tests" [value]="t.testId">
+                          {{ t.titre }}
+                        </option>
+                      </select>
+                    </div>
+
+                    <!-- Buttons -->
+                    <button
+                      type="submit"
+                      class="btn btn-success"
+                      [disabled]="form.invalid"
+                    >
+                      {{ editinginteview ? "Modifier" : "Ajouter" }}
+                    </button>
+                    <button
+                      type="button"
+                      (click)="cancelEdit()"
+                      *ngIf="editinginteview"
+                      class="btn btn-secondary"
+                    >
+                      Annuler
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

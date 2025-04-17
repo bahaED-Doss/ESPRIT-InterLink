@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "bionic-harbor-457016-t8",
+  "private_key_id": "7e6460d3224f86f5406602a0888249072188764a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCc97dY1v+Q4juG\nMChqGzhcTkqAVe4rUWieCcu/lhugaHBK1yTIE7PmX/k5h2p4vSv+KgvsLsZe5FNZ\nrRqI0LGy3F7W3iV+17hpRXVmUbsVoO6gI6YaTXCZFAosX6MEMzeDNEbsKiNDKWVG\npaQeiQXh9UHWOPH1lozoQbrKidOjhJbQavGc5UUViUKXxWAAH1AwiJq2uncE1+t/\nE+ojoakObGSW4d/IW5CqDd+AeUmnBQ1lSQmCwqW4JaoFVgyxyqLy/MbQBkWLK9We\nvmB/8dFnhd+6qJcpDmso0ShB6khvLwqFRQcvf9daTzn9jwSQRyj2WKYvwDItgp6N\ntyNZRHK1AgMBAAECggEADkdEUNsB1WKW6o5v5rMCLfdbNJBcgWk+3H1koNFdQvqt\nGEm4yVBtgWvChnaoe0IuAck+W2Yn2lLnuBUUgFSHjY8ZO29qtr6VwlG0q7GMlJuW\niU+k2OipcOtPP5kVgZjNGGzFdM8idQYLdeE0bCintdWy/vMgI2hl+eycurbN3yZY\nfOMNhs0lp6XmYF0QdmQvOxCGXr4TxsJg+4zAoSgrr+PzqaysFzBSLSnPbeARr5C8\ntx0uztS8meqa+vdYWToJk07L2QEHPzcRG5fHLMYW1wP0MAGqm43J5Y0wOztSjhyv\n4+PRLrReKKNGj1RKheW+DgdCuq02rm0ZVWMqp91y4wKBgQDNOq+vH7ImmV60MFoL\n0cE3+YxlRVhmljhS+lwBxDdZ/jNMOxVTJtjyWI+hNs/Nnpo9WMq6G8oHY8hDzWHN\n4UBa+SzNhoVpHYbq33Q69S/vVNie+sGn4KrOogUMbtvuDXqCY5DHzV9P/nwWLZtm\nPswh2R28GnOa1PDL/XCdQrOr+wKBgQDDzJaiPCf/uck0iT0hZ2N1BhAjAlu1OtmU\nLzBaWGGep3WkMcmCshx29mRNX7wC7hjS7qyl7iE+pdE9hxqkxx6GsxeSv+v9uDMr\nsMIzmnZ+P9FhTTAwcCh17almNCrlteIM59oemJNcsgM6B8hsxr6OdNcVix0U7KpP\nVS/esrLtDwKBgERGsOn3BoK25X3W1C44cyqXF/EdF+LROR3J8tAXoj6LRi+nPFn0\ng5pkgiwlGw8SI8gjARbXZef9d0OvUUl4FbvuR8x8Y2fsDdWXz4hJx8+8j3Cchc6+\n/LRPzJQtUXep/kbgrur51Sq8xDVwqNFkNO9R1wWcWzd4fj+vKkb3SOT/AoGANria\n8MR3OVUnEnO4jfljJnWHVQF3t/K2lF+L1/QTdE/A5R60/r3gjq7V4Xn8BaWdcnYZ\n8lXXHLci/1se6yZrNaIf2Hei8MnmIzPHUry8mRQk5Fi6Ow9df3fofBPgWUq33nt9\nzkc+CA4IMNO0BBKXdyDYa8DxY8Ow5XMdadPvhakCgYBX0rGw+lOK4N8udpTLwjMR\nt68+yR3vOXbFaNmHBQW/otXn5TAxDTAn048PE5sfB+Qp3Unx2vrtFNRnis2xsQ4L\nXFoTmuk38g+cAs1dnQehV8yDddcorwdbyKkjTP0mKBnNB96sLbMOnkVBsaSV6lHG\nPWyc7F8eClhqxtuGaPOhJg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "meet-service-account@bionic-harbor-457016-t8.iam.gserviceaccount.com",
+  "client_id": "113566957833170621889",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/meet-service-account%40bionic-harbor-457016-t8.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

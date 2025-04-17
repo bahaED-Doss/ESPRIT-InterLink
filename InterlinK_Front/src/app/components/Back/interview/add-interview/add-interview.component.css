@@ -18,13 +18,3 @@ color: rgb(190, 21, 209) !important;
 .modal-title{
     color: #fff !important;
 }
-
-.pagination .current {
-    background-color: #0d6efd;
-    color: #fff;
-  }
-  
-  /* Modifier la couleur des liens de pagination */
-  .pagination a {
-    color: #0d6efd;
-  }

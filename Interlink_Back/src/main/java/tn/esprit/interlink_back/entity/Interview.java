@@ -45,7 +45,7 @@ public class Interview
     private Long testId ;
 
     @ManyToOne
-    @JoinColumn(name = "application_id", nullable = false)
+    @JoinColumn(name = "application_id")
     private Application application; // L'entretien est lié à une candidature
 
     @Column(nullable = false)

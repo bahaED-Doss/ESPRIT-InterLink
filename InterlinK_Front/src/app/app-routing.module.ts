@@ -27,6 +27,9 @@ import { AddTestComponent } from './components/Back/TestQuestion/Test/add-test/a
 import { ViewInterviewComponent } from './components/Front/interview/view-interview/view-interview.component';
 import { ListQuestionComponent } from './components/Front/interview/list-question/list-question.component';
 import { CheckTestComponent } from './components/Front/interview/check-test/check-test.component';
+import { ListQuestionBackComponent } from './components/Back/TestQuestion/Question/list-question/list-question.component';
+import { AddInterviewComponent } from './components/Back/interview/add-interview/add-interview.component';
+import { CalendarComponent } from './components/Back/interview/calendar/calendar.component';
 
 const routes: Routes = [
   { path: '', component: HomeFrontComponent },
@@ -57,6 +60,11 @@ const routes: Routes = [
   { path: 'viewinterview', component: ViewInterviewComponent },
   { path: 'viewinterview/:id', component: ListQuestionComponent },
   { path: 'checkresult/:id', component: CheckTestComponent },
+
+  { path: 'questionList/:id', component: ListQuestionBackComponent },
+  { path: 'inteview/add', component: AddInterviewComponent },
+  { path: 'inteview/edit/:id', component: AddInterviewComponent },
+  { path: 'calendar', component: CalendarComponent },
 ];
 
 @NgModule({

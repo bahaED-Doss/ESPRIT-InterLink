@@ -28,6 +28,7 @@ public class ReponseService {
     public List<Reponse> saveAll(List<Reponse> reponseList,Long idt) {
 
         int note =0;
+        System.err.println("iddd student "+reponseList.get(0).getStudent()+"iddd test"+idt);
         Interview interview = interviewService.getInterviewByIdTestAndIdStudent(reponseList.get(0).getStudent(),idt);
 
         List<Reponse> result = reponseReository.saveAll(reponseList);

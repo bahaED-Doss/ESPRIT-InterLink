@@ -11,32 +11,45 @@ export class InterviewService {
 
   constructor(private http: HttpClient) {}
 
-  getInterviews(): Observable<Interview[]> {
-    return this.http.get<Interview[]>(this.apiUrl + '/all');
+  getInterviews(): Observable<any> {
+    return this.http.get<Interview>(this.apiUrl + '/all');
   }
 
-  getInterviewsById(id: any): Observable<Interview[]> {
-    return this.http.get<Interview[]>(this.apiUrl + '/' + id);
+  getInterviewsById(id: any): Observable<Interview> {
+    return this.http.get<Interview>(this.apiUrl + '/' + id);
   }
 
-  addInterview(interview: Interview): Observable<Interview> {
-    return this.http.post<Interview>(this.apiUrl, interview);
+  addInterview(data: any): Observable<Interview> {
+    return this.http.post<Interview>(this.apiUrl + '/add', data);
   }
 
   deleteInterview(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
   }
 
-  updateInterview(interview: Interview): Observable<Interview> {
-    return this.http.put<Interview>(
-      `${this.apiUrl}/${interview.interviewId}`,
-      interview
-    );
+  updateInterview(id: number, interview: Interview): Observable<Interview> {
+    return this.http.post<Interview>(this.apiUrl + '/update/' + id, interview);
   }
 
   getRankAndPercent(id: number): Observable<string> {
     return this.http.get(`${this.apiUrl}/getRang/${id}`, {
       responseType: 'text',
     });
+  }
+
+  searchInterview(param: string): Observable<any> {
+    return this.http.get(this.apiUrl + '/search', { params: { param } });
+  }
+
+  getApplication(): Observable<any> {
+    return this.http.get<Interview>(this.apiUrl + '/application');
+  }
+
+  getProjectManger(): Observable<any> {
+    return this.http.get<Interview>(this.apiUrl + '/projectmanager');
+  }
+
+  getUser(): Observable<any> {
+    return this.http.get<Interview>(this.apiUrl + '/user');
   }
 }

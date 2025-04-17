@@ -1,13 +1,12 @@
 package tn.esprit.interlink_back.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import tn.esprit.interlink_back.entity.Application;
+import tn.esprit.interlink_back.entity.*;
 import tn.esprit.interlink_back.entity.Enums.InterviewType;
 import tn.esprit.interlink_back.entity.Enums.StatusType;
-import tn.esprit.interlink_back.entity.Interview;
-import tn.esprit.interlink_back.entity.ProjectManager;
-import tn.esprit.interlink_back.entity.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,5 +32,9 @@ public interface InterviewRepository extends JpaRepository<Interview, Integer>
     List<Interview> findByStatusType(StatusType statusType);
 
     Interview findByStudentAndTestId(Long student, Long testId);
+
+
+    @Query(value = "SELECT t.* FROM interview t WHERE t.titre LIKE CONCAT('%', :param, '%') OR t.lienReunion LIKE CONCAT('%', :param, '%') ORDER BY t.titre ASC", nativeQuery = true)
+    List<Interview> search(@Param("param") String param);
 
 }
