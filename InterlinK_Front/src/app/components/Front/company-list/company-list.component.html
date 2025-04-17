@@ -3,57 +3,50 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8">
-          <div class="inner-content">
+          <div class="inner-content mb-4">
             <h1 class="wow fadeInUp" data-wow-delay=".3s">
-              <span class="text-primary">Search for your favorite company here</span>
+              <span class="text-primary">Search for your favorite company</span>
             </h1>
           </div>
 
-          <!-- Search Form Section -->
-          <div class="job-search-wrap-two mt-4 p-4 shadow rounded bg-white wow fadeInUp" data-wow-delay=".7s">
-            <form (ngSubmit)="onSearch()">
-              <div class="row g-3">
-                <div class="col-md-4">
-                  <label for="industrySector" class="form-label">Industry Sector</label>
-                  <select class="form-select" id="industrySector" [(ngModel)]="searchIndustrySector" name="industrySector" (change)="onSearch()">
-                    <option value="Industry Sector" disabled selected>Select Industry Sector</option>
-                    <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
-                  </select>
-                </div>
-
-                <div class="col-md-4">
-                  <label for="country" class="form-label">Country</label>
-                  <select class="form-select" id="country" [(ngModel)]="selectedCountry" name="country" (change)="onCountryChange($event); onSearch()">
-                    <option value="" disabled selected>Select Country</option>
-                    <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
-                  </select>
-                </div>
-
-                <div class="col-md-4">
-                  <label for="city" class="form-label">City</label>
-                  <select class="form-select" id="city" [(ngModel)]="selectedCity" name="city" (change)="onSearch()">
-                    <option value="" disabled selected>Select City</option>
-                    <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
-                  </select>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
+          <!-- Search Form -->
+<div class="job-search-wrap-two p-4 shadow rounded bg-white wow fadeInUp" data-wow-delay=".7s">
+  <form>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label for="industrySector" class="form-label">Industry Sector</label>
+        <select class="form-select" id="industrySector" [(ngModel)]="searchIndustrySector" name="industrySector" (ngModelChange)="onSearch()">
+          <option value="" disabled selected>Select Industry Sector</option>
+          <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
+        </select>
       </div>
 
-      <!-- Search Results Section -->
-      <div *ngIf="searchResults.length > 0" class="row mt-4">
+      <div class="col-md-6">
+        <label for="location" class="form-label">Location</label>
+        <select class="form-select" id="location" [(ngModel)]="selectedLocation" name="location" (ngModelChange)="onSearch()">
+          <option value="" disabled selected>Select Location</option>
+          <option *ngFor="let loc of locations" [value]="loc">{{ loc }}</option>
+        </select>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+      <!-- Search Results -->
+      <div *ngIf="searchResults.length > 0" class="row mt-5">
         <div class="col-12">
           <h3 class="text-center text-success">Search Results</h3>
           <div class="row g-4 mt-3">
             <div *ngFor="let company of searchResults" class="col-md-4">
-              <div class="card shadow-sm">
+              <div class="card shadow-sm h-100">
+                <img *ngIf="company.logoUrl" [src]="company.logoUrl" class="card-img-top p-3" alt="Company Logo" />
                 <div class="card-body">
                   <h5 class="card-title">{{ company.name }}</h5>
                   <p class="card-text">
-                    <strong>{{ company.industrySector }}</strong> <br>
-                    {{ company.city }}, {{ company.country }}
+                    <strong>{{ company.industrySector }}</strong><br />
+                    {{ company.location }}<br />
+                    <a *ngIf="company.website" [href]="company.website" target="_blank">Visit Website</a>
                   </p>
                 </div>
               </div>
@@ -63,70 +56,84 @@
       </div>
     </div>
   </div>
+</div>
+</div>
 </section>
 
-<!-- Full Company List Section -->
-<div class="container mt-4">
-  <h2 class="text-center">Company List</h2>
-  <table class="table table-striped table-hover">
-    <thead class="table-dark">
-      <tr>
-        <th>Name</th>
-        <th>Location</th>
-        <th>Email</th>
-        <th>City</th>
-        <th>Country</th>
-        <th>Phone</th>
-        <th>Industry Sector</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let company of companies">
-        <td>{{ company.name }}</td>
-        <td>{{ company.location }}</td>
-        <td>{{ company.email }}</td>
-        <td>{{ company.city }}</td>
-        <td>{{ company.country }}</td>
-        <td>{{ company.phone }}</td>
-        <td>{{ company.industrySector }}</td>
-        <td>
-          <button class="btn btn-outline-primary btn-sm" [routerLink]="['/company-details', company.companyId]">
-            <i class="bi bi-pencil-square"></i> Edit
-          </button>
-          <button class="btn btn-danger btn-sm" (click)="deleteCompany(company)">Delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+
+        <!-- Full Company List Section -->
+        <div class="container mt-4">
+          <h2 class="text-center mb-4">Company Directory</h2>
+        
+          <div class="text-end mb-3">
+            <button class="btn btn-success" [routerLink]="['/add-company']">
+              <i class="bi bi-plus-circle"></i> Add Company
+            </button>
+          </div>
+        
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead class="table-primary text-center">
+                <tr>
+                  <th>Logo</th>
+                  <th>Name</th>
+                  <th>Location</th>
+                  <th>Website</th>
+                  <th>Sector</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let company of companies">
+                  <td class="text-center">
+                    <img *ngIf="company.logoUrl" [src]="company.logoUrl" alt="Logo" style="height: 40px;" />
+                  </td>
+                  <td>{{ company.name }}</td>
+                  <td>{{ company.location }}</td>
+                  <td>
+                    <a *ngIf="company.website" [href]="company.website" target="_blank">
+                      {{ company.website }}
+                    </a>
+                  </td>
+                  <td>{{ company.industrySector }}</td>
+                  <td class="text-center">
+                    <button class="btn btn-outline-info btn-sm" [routerLink]="['/company-details', company.companyId]">
+                      <i class="bi bi-eye"></i> View
+                    </button>
+                    <button class="btn btn-danger btn-sm ms-2" (click)="deleteCompany(company)">
+                      <i class="bi bi-trash"></i> Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+
 
 <!-- Google Map Container -->
-<h3 class="text-center">Companies locations</h3>
-<google-map width="80%" height="400px" [center]="mapCenter" [zoom]="zoomLevel">
-  <map-marker *ngFor="let company of companies" [position]="{ lat: company.latitude, lng: company.longitude }"
-    [label]="company.name">
-  </map-marker>
-</google-map>
-
-
-
-
-
+<div class="container mt-5">
+  <h3 class="text-center mb-3">Companies Locations</h3>
+  <div class="d-flex justify-content-center">
+    <google-map width="100%" height="400px" [center]="mapCenter" [zoom]="zoomLevel">
+      <map-marker *ngFor="let company of companies" [position]="{ lat: company.latitude, lng: company.longitude }"
+        [label]="company.name">
+      </map-marker>
+    </google-map>
+  </div>
+</div>
 
 
 <!-- Companies Statistics Section -->
 <div class="container mt-4">
   <h3 class="text-center">Companies Statistics</h3>
   <div class="row">
-    <!-- Projects per Company Chart -->
     <div class="col-md-6">
       <div echarts [options]="projectsChartOption" class="chart-container"></div>
     </div>
-
-    <!-- Companies by Industry Chart -->
     <div class="col-md-6">
       <div echarts [options]="industryChartOption" class="chart-container"></div>
     </div>
   </div>
-</div>  
+</div>

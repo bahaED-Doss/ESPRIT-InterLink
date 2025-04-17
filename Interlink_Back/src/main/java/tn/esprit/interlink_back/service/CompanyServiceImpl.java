@@ -1,10 +1,17 @@
 package tn.esprit.interlink_back.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import tn.esprit.interlink_back.entity.Company;
 import tn.esprit.interlink_back.repository.CompanyRepository;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,35 +39,37 @@ public class CompanyServiceImpl implements ICompanyService {
 
     @Override
     public Company addCompany(Company company) {
-        // Geocode the location before saving
         geocodingService.geocodeCompanyLocation(company);
+        enrichCompanyInfo(company); // ✅ Add this
         return companyRepository.save(company);
     }
+
+    @Override
+    public Company modifyCompany(Company company) {
+        geocodingService.geocodeCompanyLocation(company);
+        enrichCompanyInfo(company); // ✅ Add this
+        return companyRepository.save(company);
+    }
+
 
     @Override
     public void removeCompany(Long id) {
         companyRepository.deleteById(id);
     }
 
-    @Override
-    public Company modifyCompany(Company company) {
-        // Geocode the location before saving
-        geocodingService.geocodeCompanyLocation(company);
-        return companyRepository.save(company);
-    }
 
     // Modified method to search by Industry Sector, Country, and City with Sorting
     @Override
-    public List<Company> searchCompanies(String industrySector, String country, String city, String sortField, boolean ascending) {
+    public List<Company> searchCompanies(String industrySector, String location, String sortField, boolean ascending) {
         Sort sort = ascending ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
 
-        // Ensure null values are replaced with empty strings
+        // Default empty strings to avoid null issues
         if (industrySector == null) industrySector = "";
-        if (country == null) country = "";
-        if (city == null) city = "";
+        if (location == null) location = "";
 
-        return companyRepository.searchCompanies(industrySector, country, city, sort);
+        return companyRepository.searchCompanies(industrySector, location, sort);
     }
+
 
     @Override
     public Map<String, Integer> getProjectsPerCompany() {
@@ -81,4 +90,42 @@ public class CompanyServiceImpl implements ICompanyService {
         }
         return result; // ✅ Returns a simple object
     }
+
+    @Override
+    public void enrichCompanyInfo(Company company) {
+        if (company.getWebsite() == null || company.getWebsite().isEmpty()) {
+            company.setWebsite("https://www." + company.getName().toLowerCase().replaceAll("\\s+", "") + ".com");
+        }
+
+        company.setLogoUrl("https://logo.clearbit.com/" + company.getWebsite().replace("https://", ""));
+
+        // 👇 This line makes it truly dynamic
+        company.setDescription(fetchCompanyDescription(company.getName()));
+    }
+
+    @Override
+    public String fetchCompanyDescription(String companyName) {
+        try {
+            String url = "https://api.duckduckgo.com/?q=" + URLEncoder.encode(companyName, "UTF-8") + "&format=json";
+            HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                response.append(line);
+            }
+            br.close();
+
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode jsonNode = mapper.readTree(response.toString());
+            return jsonNode.get("Abstract").asText();
+        } catch (Exception e) {
+            return "No description available.";
+        }
+    }
+
+
 }

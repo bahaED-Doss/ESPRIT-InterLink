@@ -33,30 +33,7 @@
             <span *ngIf="f['email'].errors?.['email']">Invalid email format.</span>
           </small>
         </div>
-  
-        <div class="mb-3">
-          <label class="form-label fw-bold">Country:</label>
-          <select class="form-control" formControlName="country" (change)="onCountryChange($event)">
-            <option value="" disabled selected>Select Country</option>
-            <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
-          </select>
-          <small class="text-danger" *ngIf="f['country'].touched && f['country'].invalid">
-            Country selection is required.
-          </small>
-        </div>
-        
-        <div class="mb-3">
-          <label class="form-label fw-bold">City:</label>
-          <input type="text" class="form-control" formControlName="city" placeholder="Enter city" />
-          <small class="text-danger" *ngIf="f['city'].touched && f['city'].invalid">
-            <span *ngIf="f['city'].errors?.['required']">City is required.</span>
-            <span *ngIf="f['city'].errors?.['pattern']">City must only contain letters and spaces.</span>
-          </small>
-        </div>
-        
        
-        
-  
         <div class="mb-3">
           <label class="form-label fw-bold">Phone:</label>
           <input type="text" class="form-control" formControlName="phone" placeholder="Enter phone number" />

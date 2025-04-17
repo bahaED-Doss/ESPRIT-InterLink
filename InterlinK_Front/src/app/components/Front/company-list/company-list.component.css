@@ -72,6 +72,22 @@ google-map {
   height: 400px; /* Adjust as needed */
 }
 
+.card-img-top {
+  max-height: 100px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.table img {
+  max-width: 50px;
+  border-radius: 5px;
+}
+
+.table a {
+  color: #007bff;
+}
+
+
 /* Map Element */
 #map {
   width: 100%;

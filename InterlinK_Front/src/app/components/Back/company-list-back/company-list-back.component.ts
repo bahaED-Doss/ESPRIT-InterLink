@@ -10,6 +10,8 @@ export class CompanyListBackComponent implements OnInit {
   companies: Company[] = []; // Full company list
   searchResults: Company[] = []; // Only for search results
   searchIndustrySector: string = '';
+  selectedLocation: string = '';
+  locations: string[] = [];
   selectedCountry: string = '';
   selectedCity: string = '';
   industrySectors: string[] = [];
@@ -122,13 +124,12 @@ export class CompanyListBackComponent implements OnInit {
     this.companyService
       .searchCompanies({
         industrySector: this.searchIndustrySector,
-        country: this.selectedCountry,
-        city: this.selectedCity,
+        location: this.selectedLocation,
         sortField: 'name',
         ascending: true,
       })
       .subscribe((data) => {
-        this.searchResults = data; // Store search results
+        this.searchResults = data;
       });
   }
 

@@ -15,33 +15,20 @@
   
             <!-- Search Form Section -->
             <div class="job-search-wrap-two mt-4 p-4 shadow rounded bg-white wow fadeInUp" data-wow-delay=".7s">
-              <form (ngSubmit)="onSearch()">
                 <div class="row g-3">
                   <div class="col-md-4">
                     <label for="industrySector" class="form-label">Industry Sector</label>
-                    <select class="form-select" id="industrySector" [(ngModel)]="searchIndustrySector" name="industrySector" (change)="onSearch()">
-                      <option value="Industry Sector" disabled selected>Select Industry Sector</option>
-                      <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
-                    </select>
+                    <select [(ngModel)]="searchIndustrySector" (ngModelChange)="onSearch()">
+                        <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
+                      </select>
+                      
+                      <select [(ngModel)]="selectedLocation" (ngModelChange)="onSearch()">
+                        <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
+                      </select>
+                      
                   </div>
   
-                  <div class="col-md-4">
-                    <label for="country" class="form-label">Country</label>
-                    <select class="form-select" id="country" [(ngModel)]="selectedCountry" name="country" (change)="onCountryChange($event); onSearch()">
-                      <option value="" disabled selected>Select Country</option>
-                      <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
-                    </select>
-                  </div>
-  
-                  <div class="col-md-4">
-                    <label for="city" class="form-label">City</label>
-                    <select class="form-select" id="city" [(ngModel)]="selectedCity" name="city" (change)="onSearch()">
-                      <option value="" disabled selected>Select City</option>
-                      <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
-                    </select>
-                  </div>
                 </div>
-              </form>
             </div>
           </div>
         </div>

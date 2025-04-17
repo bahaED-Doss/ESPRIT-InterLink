@@ -47,6 +47,17 @@ public class Company {
     @JsonProperty("longitude")
     private Double longitude;
 
+    @JsonProperty("logoUrl")
+    private String logoUrl;
+
+    @JsonProperty("description")
+    @Lob
+    private String description;
+
+    @JsonProperty("website")
+    private String website;
+
+
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Project> projects;
@@ -58,6 +69,32 @@ public class Company {
 
 
     // Getters and Setters
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public String getDescription() {
+    return description;
+    }
+
+    public void setDescription(String description) {
+    this.description = description;
+    }
+
+
+
     public Double getLatitude() {
         return latitude;
     }

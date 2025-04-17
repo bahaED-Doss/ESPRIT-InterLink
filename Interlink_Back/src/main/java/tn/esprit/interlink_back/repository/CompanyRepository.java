@@ -13,15 +13,12 @@ import java.util.List;
 public interface CompanyRepository extends JpaRepository<Company, Long> {
 
     // Search for companies based on criteria and support sorting
-    @Query("SELECT c FROM Company c " +
-            "WHERE (:industrySector IS NULL OR c.industrySector LIKE %:industrySector%) " +
-            "AND (:country IS NULL OR c.country LIKE %:country%) " +
-            "AND (:city IS NULL OR c.city LIKE %:city%)")
-    List<Company> searchCompanies(
-            @Param("industrySector") String industrySector,
-            @Param("country") String country,
-            @Param("city") String city,
-            Sort sort
-    );
+    @Query("SELECT c FROM Company c WHERE " +
+            "(:industrySector = '' OR c.industrySector = :industrySector) AND " +
+            "(:location = '' OR c.location = :location)")
+    List<Company> searchCompanies(@Param("industrySector") String industrySector,
+                                  @Param("location") String location,
+                                  Sort sort);
+
 }
 

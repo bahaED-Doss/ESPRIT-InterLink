@@ -68,18 +68,16 @@ public class CompanyController {
         geocodingService.geocodeCompanyLocation(company);
         return ResponseEntity.ok(updatedCompany);
     }
-
-    // New method to handle advanced search functionality
     @GetMapping("/search-companies")
     public List<Company> searchCompanies(
             @RequestParam(required = false) String industrySector,
-            @RequestParam(required = false) String country,
-            @RequestParam(required = false) String city,
+            @RequestParam(required = false) String location,
             @RequestParam(defaultValue = "name") String sortField,
             @RequestParam(defaultValue = "true") boolean ascending
     ) {
-        return companyService.searchCompanies(industrySector, country, city, sortField, ascending);
+        return companyService.searchCompanies(industrySector, location, sortField, ascending);
     }
+
     @GetMapping("/projects-per-company")
     public Map<String, Integer> getProjectsPerCompany() {
         return companyService.getProjectsPerCompany();

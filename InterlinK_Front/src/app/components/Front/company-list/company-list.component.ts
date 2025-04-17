@@ -11,11 +11,9 @@ export class CompanyListComponent implements OnInit {
   companies: Company[] = []; // Full company list
   searchResults: Company[] = []; // Only for search results
   searchIndustrySector: string = '';
-  selectedCountry: string = '';
-  selectedCity: string = '';
+  selectedLocation: string = '';
+  locations: string[] = [];
   industrySectors: string[] = [];
-  countries: string[] = [];
-  cities: string[] = [];
   projectsPerCompany: { [key: string]: number } = {};
   companiesByIndustry: { [key: string]: number } = {};
 
@@ -96,42 +94,25 @@ export class CompanyListComponent implements OnInit {
 
   extractFilterOptions(): void {
     this.industrySectors = [...new Set(this.companies.map(c => c.industrySector))];
-    this.countries = [...new Set(this.companies.map(c => c.country))];
-    this.cities = [...new Set(this.companies.map(c => c.city))];
+    this.locations = [...new Set(this.companies.map(c => c.location))]; // 👈 Add this line
   }
+  
 
-  onCountryChange(event: Event): void {
-    const selectedCountry = (event.target as HTMLSelectElement).value;
-    this.selectedCountry = selectedCountry;
-
-    this.cities = [
-      ...new Set(
-        this.companies
-          .filter((company) => company.country === selectedCountry)
-          .map((company) => company.city)
-      ),
-    ];
-
-    if (!this.cities.includes(this.selectedCity)) {
-      this.selectedCity = '';
-    }
-
-    this.onSearch(); // 🔥 Automatically trigger search
-  }
+  
 
   onSearch(): void {
     this.companyService
       .searchCompanies({
         industrySector: this.searchIndustrySector,
-        country: this.selectedCountry,
-        city: this.selectedCity,
+        location: this.selectedLocation,
         sortField: 'name',
         ascending: true,
       })
       .subscribe((data) => {
-        this.searchResults = data; // Store search results
+        this.searchResults = data;
       });
   }
+  
 
   deleteCompany(company: any): void {
     console.log('Deleting Company:', company);

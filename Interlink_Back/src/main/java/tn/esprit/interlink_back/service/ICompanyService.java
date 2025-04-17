@@ -10,10 +10,15 @@ public interface ICompanyService {
     public Company addCompany(Company company);
     public void removeCompany(Long id);
     public Company modifyCompany(Company company);
-    List<Company> searchCompanies(String industrySector, String country, String city, String sortField, boolean ascending);
+    // Modified method to search by Industry Sector, Country, and City with Sorting
+    List<Company> searchCompanies(String industrySector, String location, String sortField, boolean ascending);
 
     Map<String, Integer> getProjectsPerCompany();
 
     // Get the distribution of companies by industry sector
     Map<String, Long> getCompaniesByIndustrySector();
+
+    void enrichCompanyInfo(Company company);
+
+    String fetchCompanyDescription(String companyName);
 }

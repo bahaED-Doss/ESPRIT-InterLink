@@ -13,13 +13,16 @@ export interface Company {
   industrySector: string;
   latitude: number;
   longitude: number;
+  website?: string;  
+  logoUrl?: string;  
+  description?: string; 
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompanyService {
-  private apiUrl = 'http://localhost:8081/Interlink/company'; // Adjust the URL if needed
+  private apiUrl = 'http://localhost:8081/Interlink/company'; // Adjust if needed
 
   constructor(private http: HttpClient) {}
 
@@ -44,30 +47,32 @@ export class CompanyService {
   }
 
   deleteCompany(companyId: number): Observable<void> {
-    console.log("Sending DELETE request for Company ID:", companyId); // 🔥 Log request
+    console.log("Sending DELETE request for Company ID:", companyId);
     return this.http.delete<void>(`${this.apiUrl}/remove-company/${companyId}`);
   }
 
-  // New searchCompanies method
-  searchCompanies(params: { industrySector?: string, country?: string, city?: string, sortField?: string, ascending?: boolean }): Observable<Company[]> {
+  // ✅ Fixed: Now uses `location` instead of `country` and `city`
+  searchCompanies(params: { 
+    industrySector?: string, 
+    location?: string, 
+    sortField?: string, 
+    ascending?: boolean 
+  }): Observable<Company[]> {
     let httpParams = new HttpParams();
 
     if (params.industrySector) httpParams = httpParams.set('industrySector', params.industrySector);
-    if (params.country) httpParams = httpParams.set('country', params.country);
-    if (params.city) httpParams = httpParams.set('city', params.city);
+    if (params.location) httpParams = httpParams.set('location', params.location);
     if (params.sortField) httpParams = httpParams.set('sortField', params.sortField);
     if (params.ascending !== undefined) httpParams = httpParams.set('ascending', params.ascending.toString());
 
     return this.http.get<Company[]>(`${this.apiUrl}/search-companies`, { params: httpParams });
-}
-    // Fetch Projects Per Company
-    getProjectsPerCompany(): Observable<Map<string, number>> {
-      return this.http.get<Map<string, number>>(`${this.apiUrl}/projects-per-company`);
-    }
+  }
 
-    // Fetch Companies By Industry Sector
-    getCompaniesByIndustrySector(): Observable<Map<string, number>> {
-      return this.http.get<Map<string, number>>(`${this.apiUrl}/companies-by-industry-sector`);
-    }
+  getProjectsPerCompany(): Observable<Map<string, number>> {
+    return this.http.get<Map<string, number>>(`${this.apiUrl}/projects-per-company`);
+  }
 
+  getCompaniesByIndustrySector(): Observable<Map<string, number>> {
+    return this.http.get<Map<string, number>>(`${this.apiUrl}/companies-by-industry-sector`);
+  }
 }
