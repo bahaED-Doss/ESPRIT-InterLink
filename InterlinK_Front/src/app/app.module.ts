@@ -36,6 +36,8 @@ import { CompanyDetailsComponent } from './components/Front/company-details/comp
 
 // Import GoogleMapsModule
 import { GoogleMapsModule } from '@angular/google-maps';
+import { CompanyListBackComponent } from './components/Back/company-list-back/company-list-back.component';
+import { ProjectListBackComponent } from './components/Back/project-list-back/project-list-back.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { GoogleMapsModule } from '@angular/google-maps';
     ProjectFormComponent,
     ProjectListComponent,
     ProjectDetailsComponent,
-    CompanyDetailsComponent
+    CompanyDetailsComponent,
+    CompanyListBackComponent,
+    ProjectListBackComponent
   ],
   imports: [
     ReactiveFormsModule,

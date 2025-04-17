@@ -18,6 +18,10 @@ import { ProjectFormComponent } from './components/Front/project-form/project-fo
 import { ProjectListComponent } from './components/Front/project-list/project-list.component';
 import { ProjectDetailsComponent } from './components/Front/project-details/project-details.component';
 import { CompanyDetailsComponent } from './components/Front/company-details/company-details.component';
+import { CompanyListBackComponent } from './components/Back/company-list-back/company-list-back.component';
+import { ProjectListBackComponent } from './components/Back/project-list-back/project-list-back.component';
+
+
 
 
 const routes: Routes = [
@@ -39,7 +43,11 @@ const routes: Routes = [
   { path: 'projectList', component: ProjectListComponent },
   { path: 'projectDetails/:id', component: ProjectDetailsComponent },
   { path: 'editProject/:id', component: ProjectFormComponent }, // ✅ For Editing
-  { path: 'company-details/:id', component: CompanyDetailsComponent } // ✅ New Route
+  { path: 'company-details/:id', component: CompanyDetailsComponent } ,// ✅ New Route
+  { path: 'companyListBack', component:   CompanyListBackComponent} ,// ✅ New Route
+  { path: 'projectListBack', component: ProjectListBackComponent }
+
+  
 
 
 

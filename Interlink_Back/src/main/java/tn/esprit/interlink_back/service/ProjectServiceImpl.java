@@ -100,11 +100,19 @@ public class ProjectServiceImpl implements IProjectService {
             return 0; // No progress if no milestones exist
         }
 
-        long completedMilestones = project.getMilestones().stream()
-                .filter(milestone -> milestone.getStatus() == MilestoneStatus.COMPLETED)
-                .count();
+        int totalMilestones = project.getMilestones().size();
+        double progressPoints = 0.0;
 
-        return (int) ((completedMilestones * 100) / project.getMilestones().size());
+        for (Milestone milestone : project.getMilestones()) {
+            if (milestone.getStatus() == MilestoneStatus.COMPLETED) {
+                progressPoints += 1.0; // Full weight for completed
+            } else if (milestone.getStatus() == MilestoneStatus.IN_PROGRESS) {
+                progressPoints += 0.5; // Half weight for in progress
+            }
+            // PENDING gets 0 points
+        }
+
+        return (int) ((progressPoints / totalMilestones) * 100);
     }
     @Override
     public Milestone updateMilestoneStatus(Long projectId, Long milestoneId, MilestoneStatus status) {
@@ -126,14 +134,36 @@ public class ProjectServiceImpl implements IProjectService {
         milestoneRepository.save(milestone);  // Save the updated milestone
 
         // Check if the milestone status has changed
-        if (!oldStatus.equals(status)) {
-            // Send an email to the static recipient when the status changes
-            sendStatusUpdateEmail(project, oldStatus, status);
-        }
+        // if (!oldStatus.equals(status)) {
+        // Send an email to the static recipient when the status changes
+        sendStatusUpdateEmail(project, milestone, oldStatus, status);
+        //}
 
         // Recalculate the progress after updating milestone status
         int progress = calculateProjectProgress(projectId);
         return milestone;
+    }
+    @Override
+    public boolean sendStatusUpdateEmail(Project project, Milestone milestone, MilestoneStatus oldStatus, MilestoneStatus newStatus) {
+        // Calculate the project progress after the milestone status update
+        int progress = calculateProjectProgress(project.getProjectId());
+
+        // Compose the subject and body of the email
+        String subject = "Milestone Status Update for Project: " + project.getTitle();
+        String body = String.format("Hello, \n\n" +
+                        "The status of the milestone '%s' for the project '%s' has been updated from '%s' to '%s'.\n\n" +
+                        "Current project progress: %d%%.\n\n" +
+                        "Best regards, \nYour Project Management Team",
+                milestone.getName(), project.getTitle(), oldStatus, newStatus, progress);
+
+        // Send the email using the email service
+        boolean emailSent = emailService.sendEmail(subject, body);
+
+        if (!emailSent) {
+            System.out.println("Failed to send milestone status update email.");
+        }
+
+        return emailSent;
     }
     @Override
     public void sendStatusUpdateEmail(Project project, MilestoneStatus oldStatus, MilestoneStatus newStatus) {

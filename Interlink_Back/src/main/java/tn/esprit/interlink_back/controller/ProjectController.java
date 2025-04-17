@@ -19,7 +19,9 @@ import tn.esprit.interlink_back.service.ExcelService;
 import tn.esprit.interlink_back.service.IProjectService;
 import tn.esprit.interlink_back.service.PdfService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/projects")
@@ -95,14 +97,20 @@ public class ProjectController {
     }
 
     @PutMapping("/{projectId}/milestone/{milestoneId}/update-status")
-    public ResponseEntity<Milestone> updateMilestoneStatus(
+    public ResponseEntity<Map<String, Object>> updateMilestoneStatus(
             @PathVariable Long projectId,
             @PathVariable Long milestoneId,
             @RequestBody String status) {
         try {
             MilestoneStatus milestoneStatus = MilestoneStatus.valueOf(status.toUpperCase());
             Milestone updatedMilestone = projectService.updateMilestoneStatus(projectId, milestoneId, milestoneStatus);
-            return ResponseEntity.ok(updatedMilestone);
+            int progress = projectService.calculateProjectProgress(projectId);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("milestone", updatedMilestone);
+            response.put("progress", progress);
+
+            return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
         }
