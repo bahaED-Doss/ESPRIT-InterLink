@@ -37,6 +37,7 @@ public class ReponseService {
             Question question = questionService.getQuestionById(reponse.getQuestionId()).get();
             note+=question.getNoteAttribuee();
         }
+        
         interview.setStatusType(StatusType.REALISE);
         interview.setNote(note);
         return result;
