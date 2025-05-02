@@ -23,6 +23,7 @@
     "@angular/router": "^16.2.0",
     "@auth0/angular-jwt": "^5.2.0",
     "@ng-bootstrap/ng-bootstrap": "^14.2.0",
+    "@popperjs/core": "^2.11.8",
     "angular-oauth2-oidc": "^19.0.0",
     "jquery": "^3.7.1",
     "ngx-pagination": "^6.0.3",
