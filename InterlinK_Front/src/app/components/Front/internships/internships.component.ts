@@ -75,9 +75,11 @@ internships: Internship[] = [];
   ratingComment = '';
   selectedInternshipForRating: Internship | null = null;
   chatbot = {
-    isOpen: true,
+    isOpen: false, // Fermé par défaut
     userMessage: '',
-    messages: [] as {sender: string, text: string}[],
+    messages: [
+      { sender: 'bot', text: 'Bonjour ! Je suis votre assistant pour les stages. Comment puis-je vous aider ?' }
+    ],
     isLoading: false,
     suggestions: [
       "Comment rédiger un bon CV ?",
@@ -131,36 +133,45 @@ internships: Internship[] = [];
     });
   }
 
-// Ajoutez ces méthodes
-toggleChatbot() {
+toggleChatbot(): void {
   this.chatbot.isOpen = !this.chatbot.isOpen;
+  if (this.chatbot.isOpen && this.chatbot.messages.length === 0) {
+    this.chatbot.messages.push({ 
+      sender: 'bot', 
+      text: 'Bonjour ! Je suis votre assistant pour les stages. Comment puis-je vous aider ?' 
+    });
+  }
 }
+sendChatbotMessage(): void {
+  const message = this.chatbot.userMessage.trim();
+  if (!message) return;
 
-sendChatbotMessage() {
-  if (!this.chatbot.userMessage.trim()) return;
-
-  this.chatbot.messages.push({ sender: 'user', text: this.chatbot.userMessage });
+  // Ajouter le message de l'utilisateur
+  this.chatbot.messages.push({ sender: 'user', text: message });
+  this.chatbot.userMessage = '';
   this.chatbot.isLoading = true;
 
-  this.ChatbotService.askQuestion(this.chatbot.userMessage).subscribe({  // Changé ici
-    next: (response: string) => {  // Type ajouté
+  // Envoyer la question au service
+  this.ChatbotService.askQuestion(message).subscribe({
+    next: (response: string) => {
       this.chatbot.messages.push({ sender: 'bot', text: response });
       this.chatbot.isLoading = false;
     },
-    error: (error: any) => {  // Type ajouté
-      this.chatbot.messages.push({ sender: 'bot', text: 'Désolé, je ne peux pas répondre maintenant.' });
+    error: (error) => {
+      this.chatbot.messages.push({ 
+        sender: 'bot', 
+        text: 'Désolé, une erreur est survenue. Veuillez réessayer plus tard.' 
+      });
       this.chatbot.isLoading = false;
+      console.error('Chatbot error:', error);
     }
   });
-
-  this.chatbot.userMessage = '';
 }
 
-selectSuggestion(suggestion: string) {
+selectSuggestion(suggestion: string): void {
   this.chatbot.userMessage = suggestion;
   this.sendChatbotMessage();
 }
-
   ngOnInit(): void {
     this.getInternships();
     this.loadDraft();

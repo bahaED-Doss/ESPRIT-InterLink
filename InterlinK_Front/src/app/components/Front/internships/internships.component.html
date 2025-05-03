@@ -44,108 +44,108 @@
         </select>
       </div>
       <!-- Bouton pour ouvrir le formulaire de CV -->
-    <button class="generate-cv-btn" (click)="showCVForm = true">Générer mon CV Automatique</button>
+    <button class="generate-cv-btn" (click)="showCVForm = true">Generate My Automatic CV</button>
     </div>
- <!-- CV Modal -->
- <div *ngIf="showCVForm" class="modal-overlay">
+<!-- CV Modal -->
+<div *ngIf="showCVForm" class="modal-overlay">
   <div class="cv-modal">
     <button class="close-btn" (click)="showCVForm = false">&times;</button>
     
-    <h2 class="modal-title">Création de CV</h2>
+    <h2 class="modal-title">CV Creation</h2>
     
     <form [formGroup]="cvForm" class="cv-form">
-      <!-- Informations Personnelles -->
+      <!-- Personal Information -->
       <div class="form-section">
-        <h3 class="section-title">Informations Personnelles</h3>
+        <h3 class="section-title">Personal Information</h3>
         <div class="form-row">
           <div class="form-group">
-            <label>Nom Complet</label>
-            <input type="text" formControlName="fullName" placeholder="Votre nom complet">
+            <label>Full Name</label>
+            <input type="text" formControlName="fullName" placeholder="Your full name">
           </div>
           <div class="form-group">
             <label>Email</label>
-            <input type="email" formControlName="email" placeholder="exemple@email.com">
+            <input type="email" formControlName="email" placeholder="example@email.com">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label>Téléphone</label>
-            <input type="text" formControlName="phone" placeholder="Numéro de téléphone">
+            <label>Phone</label>
+            <input type="text" formControlName="phone" placeholder="Phone number">
           </div>
           <div class="form-group">
-            <label>Adresse</label>
-            <input type="text" formControlName="address" placeholder="Votre adresse">
+            <label>Address</label>
+            <input type="text" formControlName="address" placeholder="Your address">
           </div>
         </div>
         <div class="form-group">
-          <label>Profil Professionnel</label>
-          <textarea formControlName="profile" placeholder="Résumé professionnel (50-100 mots)"></textarea>
+          <label>Professional Profile</label>
+          <textarea formControlName="profile" placeholder="Professional summary (50-100 words)"></textarea>
         </div>
       </div>
 
-      <!-- Formation -->
+      <!-- Education -->
       <div formArrayName="education">
         <div class="section-header">
-          <h3 class="section-title">Formation</h3>
-          <button type="button" class="add-btn" (click)="addEducation()">+ Ajouter</button>
+          <h3 class="section-title">Education</h3>
+          <button type="button" class="add-btn" (click)="addEducation()">+ Add</button>
         </div>
         
         <div *ngFor="let edu of getEducationControls(); let i=index" [formGroupName]="i" class="form-section">
           <div class="form-row">
             <div class="form-group">
-              <label>Diplôme</label>
-              <input formControlName="degree" placeholder="Ex: Licence en Informatique">
+              <label>Degree</label>
+              <input formControlName="degree" placeholder="Ex: Bachelor's in Computer Science">
             </div>
             <div class="form-group">
-              <label>Établissement</label>
-              <input formControlName="institution" placeholder="Ex: Université ESPRIT">
+              <label>Institution</label>
+              <input formControlName="institution" placeholder="Ex: ESPRIT University">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Année</label>
+              <label>Year</label>
               <input formControlName="year" placeholder="Ex: 2020-2023">
             </div>
-            <button type="button" class="remove-btn" (click)="removeEducation(i)">Supprimer</button>
+            <button type="button" class="remove-btn" (click)="removeEducation(i)">Remove</button>
           </div>
         </div>
       </div>
 
-      <!-- Expérience Professionnelle -->
+      <!-- Professional Experience -->
       <div formArrayName="experiences">
         <div class="section-header">
-          <h3 class="section-title">Expérience Professionnelle</h3>
-          <button type="button" class="add-btn" (click)="addExperience()">+ Ajouter</button>
+          <h3 class="section-title">Professional Experience</h3>
+          <button type="button" class="add-btn" (click)="addExperience()">+ Add</button>
         </div>
         
         <div *ngFor="let exp of getExperienceControls(); let i=index" [formGroupName]="i" class="form-section">
           <div class="form-row">
             <div class="form-group">
-              <label>Poste</label>
-              <input formControlName="title" placeholder="Ex: Développeur Full Stack">
+              <label>Position</label>
+              <input formControlName="title" placeholder="Ex: Full Stack Developer">
             </div>
             <div class="form-group">
-              <label>Entreprise</label>
-              <input formControlName="company" placeholder="Ex: Société XYZ">
+              <label>Company</label>
+              <input formControlName="company" placeholder="Ex: XYZ Company">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Période</label>
-              <input formControlName="period" placeholder="Ex: Juin 2022 - Août 2022">
+              <label>Period</label>
+              <input formControlName="period" placeholder="Ex: June 2022 - August 2022">
             </div>
           </div>
           <div class="form-group">
             <label>Description</label>
-            <textarea formControlName="description" placeholder="Vos responsabilités et réalisations"></textarea>
+            <textarea formControlName="description" placeholder="Your responsibilities and achievements"></textarea>
           </div>
-          <button type="button" class="remove-btn" (click)="removeExperience(i)">Supprimer</button>
+          <button type="button" class="remove-btn" (click)="removeExperience(i)">Remove</button>
         </div>
       </div>
 
-      <!-- Compétences -->
+      <!-- Skills -->
       <div class="form-section">
-        <h3 class="section-title">Compétences</h3>
+        <h3 class="section-title">Skills</h3>
         <div class="skills-container">
           <div class="skill-tags">
             <span *ngFor="let tag of availableSkills" 
@@ -156,57 +156,57 @@
             </span>
           </div>
           <div class="skill-input-container">
-            <input type="text" class="skill-input" placeholder="Ajouter une compétence" 
+            <input type="text" class="skill-input" placeholder="Add a skill" 
                    (keyup.enter)="addCustomSkill($event)">
             <button type="button" class="add-skill-btn" (click)="addCustomSkillFromInput()">+</button>
           </div>
         </div>
       </div>
 
-      <!-- Langues -->
+      <!-- Languages -->
       <div formArrayName="languages">
         <div class="section-header">
-          <h3 class="section-title">Langues</h3>
-          <button type="button" class="add-btn" (click)="addLanguage()">+ Ajouter</button>
+          <h3 class="section-title">Languages</h3>
+          <button type="button" class="add-btn" (click)="addLanguage()">+ Add</button>
         </div>
         
         <div *ngFor="let lang of getLanguageControls(); let i=index" [formGroupName]="i" class="form-section">
           <div class="form-row">
             <div class="form-group">
-              <label>Langue</label>
-              <input formControlName="name" placeholder="Ex: Français">
+              <label>Language</label>
+              <input formControlName="name" placeholder="Ex: French">
             </div>
             <div class="form-group">
-              <label>Niveau</label>
+              <label>Level</label>
               <select formControlName="level">
-                <option value="Débutant">Débutant</option>
-                <option value="Intermédiaire">Intermédiaire</option>
-                <option value="Avancé">Avancé</option>
-                <option value="Bilingue">Bilingue</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+                <option value="Fluent">Fluent</option>
               </select>
             </div>
           </div>
-          <button type="button" class="remove-btn" (click)="removeLanguage(i)">Supprimer</button>
+          <button type="button" class="remove-btn" (click)="removeLanguage(i)">Remove</button>
         </div>
       </div>
 
-      <!-- Boutons d'action -->
+      <!-- Action Buttons -->
       <div class="form-actions">
-        <button type="button" class="btn btn-preview" (click)="previewCV()">Aperçu</button>
-        <button type="button" class="btn btn-download" (click)="generatePDF()">Générer PDF</button>
-        <button type="button" class="btn btn-save" (click)="saveDraft()">Enregistrer brouillon</button>
-        <button type="button" class="btn btn-cancel" (click)="showCVForm = false">Annuler</button>
+        <button type="button" class="btn btn-preview" (click)="previewCV()">Preview</button>
+        <button type="button" class="btn btn-download" (click)="generatePDF()">Generate PDF</button>
+        <button type="button" class="btn btn-save" (click)="saveDraft()">Save draft</button>
+        <button type="button" class="btn btn-cancel" (click)="showCVForm = false">Cancel</button>
       </div>
     </form>
   </div>
-    <!-- Aperçu du CV -->
+    <!-- CV Preview -->
     <div *ngIf="previewMode" class="cv-preview-container">
       <div id="cv-preview" class="cv-preview">
-        <!-- Le contenu du CV sera généré ici -->
+        <!-- CV content will be generated here -->
       </div>
       <div class="preview-actions">
-        <button (click)="previewMode = false">Retour à l'édition</button>
-        <button (click)="generatePDF()">Télécharger PDF</button>
+        <button (click)="previewMode = false">Back to editing</button>
+        <button (click)="generatePDF()">Download PDF</button>
       </div>
     </div>
 </div>
@@ -312,38 +312,54 @@
     </div>
   </div>
  <!-- Chatbot intégré -->
- <div class="chatbot-container" [class.open]="chatbot.isOpen">
+<!-- Chatbot intégré -->
+<div class="chatbot-container" [class.open]="chatbot.isOpen">
   <div class="chatbot-header" (click)="toggleChatbot()">
-    <h3>Assistant Stages</h3>
-    <span>{{ chatbot.isOpen ? '−' : '+' }}</span>
+    <div class="chatbot-title">
+      <i class="fas fa-robot"></i>
+      <h3>Assistant Stages</h3>
+    </div>
+    <span class="toggle-icon">{{ chatbot.isOpen ? '−' : '+' }}</span>
   </div>
 
   <div class="chatbot-body" *ngIf="chatbot.isOpen">
-    <div class="messages">
-      <div *ngFor="let msg of chatbot.messages" 
-           [class.user-message]="msg.sender === 'user'" 
-           [class.bot-message]="msg.sender === 'bot'">
-        {{ msg.text }}
-      </div>
-      
-      <div *ngIf="chatbot.isLoading" class="typing-indicator">
-        <span>●</span><span>●</span><span>●</span>
+    <div class="messages-container">
+      <div class="messages">
+        <div *ngFor="let msg of chatbot.messages" 
+             [class.user-message]="msg.sender === 'user'" 
+             [class.bot-message]="msg.sender === 'bot'">
+          <div class="message-content">
+            <span *ngIf="msg.sender === 'bot'" class="bot-avatar">
+              <i class="fas fa-robot"></i>
+            </span>
+            {{ msg.text }}
+          </div>
+        </div>
+        
+        <div *ngIf="chatbot.isLoading" class="typing-indicator">
+          <span>●</span><span>●</span><span>●</span>
+        </div>
       </div>
     </div>
 
-    <div class="suggestions" *ngIf="chatbot.messages.length === 0">
+    <div class="suggestions" *ngIf="chatbot.messages.length <= 1">
       <p>Essayez de demander :</p>
-      <button *ngFor="let suggestion of chatbot.suggestions" 
-              (click)="selectSuggestion(suggestion)">
-        {{ suggestion }}
-      </button>
+      <div class="suggestion-buttons">
+        <button *ngFor="let suggestion of chatbot.suggestions" 
+                (click)="selectSuggestion(suggestion)">
+          {{ suggestion }}
+        </button>
+      </div>
     </div>
 
     <div class="input-area">
       <input [(ngModel)]="chatbot.userMessage" 
              placeholder="Posez votre question..." 
-             (keyup.enter)="sendChatbotMessage()">
-      <button (click)="sendChatbotMessage()">Envoyer</button>
+             (keyup.enter)="sendChatbotMessage()"
+             [disabled]="chatbot.isLoading">
+      <button (click)="sendChatbotMessage()" [disabled]="!chatbot.userMessage.trim() || chatbot.isLoading">
+        <i class="fas fa-paper-plane"></i>
+      </button>
     </div>
   </div>
 </div>
