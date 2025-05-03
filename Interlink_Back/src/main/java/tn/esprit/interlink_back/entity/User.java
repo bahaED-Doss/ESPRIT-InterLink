@@ -1,5 +1,6 @@
 package tn.esprit.interlink_back.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -63,6 +64,11 @@ public class User {
     private String city;
     @Column(nullable = true)
     private String country;
+    // Company (For HR Users)
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    @JsonBackReference
+    private Company company;
 
     @Column(nullable = true)
     private String contactNumber;
@@ -74,7 +80,7 @@ public class User {
     private int yearsOfExperience;
     //@Lob
     //@Column(nullable = true)
-   // private byte[] faceDescriptor;  // To store the face embedding (binary data)
+    // private byte[] faceDescriptor;  // To store the face embedding (binary data)
     // New field for Face Descriptor
     @Column(nullable = true)
     private String faceDescriptor;
