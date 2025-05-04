@@ -46,6 +46,8 @@ import { StudentNavbarComponent } from './components/Front/TASKSM/shared/student
 import { ManagerNavbarComponent } from './components/Front/TASKSM/shared/manager-navbar/manager-navbar.component';
 import { NotificationComponent } from './components/Front/TASKSM/shared/notification/notification.component';
 import { NotificationService } from './components/Front/TASKSM/Services/notification.service';
+import { SentimentChartComponent } from './components/Front/TASKSM/tasksST/sentiment-chart/sentiment-chart.component';
+import { FeedbackChartModalComponent } from './components/Front/TASKSM/tasksST/feedback-chart-modal/feedback-chart-modal.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -81,7 +83,9 @@ const routes: Routes = [
     StudentTaskCardComponent,
     StudentNavbarComponent,
     ManagerNavbarComponent,
-    NotificationComponent
+    NotificationComponent,
+    SentimentChartComponent,
+    FeedbackChartModalComponent
   ],
   imports: [
     ReactiveFormsModule,

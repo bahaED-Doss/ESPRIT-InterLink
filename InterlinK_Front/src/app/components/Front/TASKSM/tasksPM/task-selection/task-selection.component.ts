@@ -90,7 +90,7 @@ export class TaskSelectionComponent implements OnInit {
       this.loadProjects();
       this.loadTasks();
       this.projectSelected.emit({ 
-        projectId: 0, 
+        projectId: 1, 
         managerId: managerId 
       });
     }
