@@ -15,6 +15,18 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  /* suggestions-h.component.scss */
+.dropdown-box {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+  .step-item:hover {
+    background-color: #f1f1f1;
+    transition: 0.3s;
+  }
   
   .steps-wrapper::-webkit-scrollbar {
     display: none;

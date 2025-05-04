@@ -1,10 +1,13 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # ✅ Import CORS
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 app = Flask(__name__)
+CORS(app)  # ✅ Allow cross-origin requests from any domain
+# You can also use: CORS(app, origins=["http://localhost:4200"]) if you want to be strict
 
-# Sample internships data (can be replaced with real DB data later)
+# Sample internships data
 internships = [
     {"id": 1, "title": "Java Developer", "requirements": "Java SpringBoot"},
     {"id": 2, "title": "Web Developer", "requirements": "HTML CSS JavaScript"},
