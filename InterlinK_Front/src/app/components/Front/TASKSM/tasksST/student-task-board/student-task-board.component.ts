@@ -382,4 +382,8 @@ export class StudentTaskBoardComponent implements OnInit, OnChanges, OnDestroy {
       this.showHintContent = !this.showHintContent;
     }
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cf28fa5 (integration front)

@@ -1,4 +1,5 @@
 .card {
+<<<<<<< HEAD
   box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
   border-radius: 1rem;
 }
@@ -965,3 +966,971 @@ app-task-card:hover {
   border-top: 6px solid transparent;
   border-bottom: 6px solid transparent;
 }
+=======
+    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+    border-radius: 1rem;
+  }
+  
+  .card-header {
+    background-color: transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  
+  .table > :not(caption) > * > * {
+    padding: 1rem 1rem;
+    background-color: transparent;
+    border-bottom-width: 1px;
+    box-shadow: inset 0 0 0 9999px transparent;
+  }
+  
+  .table td {
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  
+  .icon-shape {
+    width: 48px;
+    height: 48px;
+    background-position: center;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .bg-gradient-primary {
+    background-image: linear-gradient(310deg, #5e72e4 0%, #825ee4 100%);
+  }
+  
+  .bg-gradient-success {
+    background: linear-gradient(310deg, #2dce89, #2dcecc);
+    color: white;
+  }
+  
+  .bg-gradient-info {
+    background-image: linear-gradient(310deg, #1171ef 0%, #11cdef 100%);
+  }
+  
+  .bg-gradient-warning {
+    background: linear-gradient(310deg, #fb6340, #fbb140);
+    color: white;
+  }
+  
+  .bg-gradient-danger {
+    background: linear-gradient(310deg, #f5365c, #f56036);
+    color: white;
+  }
+  
+  .bg-gradient-secondary {
+    background: linear-gradient(310deg, #627594, #a8b8d8);
+    color: white;
+  }
+  
+  .text-sm {
+    font-size: 0.875rem !important;
+  }
+  
+  .text-xs {
+    font-size: 0.75rem !important;
+  }
+  
+  .font-weight-bolder {
+    font-weight: 700 !important;
+  }
+  
+  select.form-control {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #d2d6da;
+    font-size: 0.875rem;
+  }
+  
+  select.form-control:focus {
+    border-color: #5e72e4;
+    box-shadow: 0 0 0 0.2rem rgba(94, 114, 228, 0.25);
+  }
+  
+  .badge {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 0.5rem;
+  }
+  
+  .task-board {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .task-columns {
+    display: flex;
+    gap: 20px;
+    min-height: 400px;
+  }
+  
+  .task-column {
+    flex: 1;
+    min-width: 300px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .column-header {
+    padding: 15px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .column-header::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .column-header:hover::after {
+    opacity: 1;
+  }
+  
+  .column-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .task-count {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .task-cards {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    min-height: 200px;
+    max-height: 500px;
+  }
+  
+  .task-cards::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .task-cards::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+  
+  .task-cards::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+  }
+  
+  .task-cards::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+  
+  .todo-column .column-header {
+    background: #3f51b5;
+  }
+  
+  .in-progress-column .column-header {
+    background: #ff9800;
+  }
+  
+  .done-column .column-header {
+    background: #4caf50;
+  }
+  
+  .empty-list-message {
+    text-align: center;
+    padding: 20px;
+    color: #6c757d;
+    font-style: italic;
+  }
+  
+  /* Column Statistics Tooltip */
+  .column-header {
+    position: relative;
+  }
+  
+  .column-header .column-stats {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    z-index: 10;
+    width: 220px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .column-header:hover .column-stats {
+    opacity: 1;
+    visibility: visible;
+    top: calc(100% + 5px);
+  }
+  
+  .column-stats::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid rgba(0, 0, 0, 0.8);
+  }
+  
+  .stats-divider {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 8px 0;
+  }
+  
+  .stats-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 992px) {
+    .task-columns {
+      flex-direction: column;
+    }
+    
+    .task-column {
+      min-width: 100%;
+      margin-bottom: 20px;
+    }
+  }
+  
+  /* Animation for drag and drop */
+  .cdk-drag-preview {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    opacity: 0.8;
+  }
+  
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+  
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .task-cards.cdk-drop-list-dragging app-task-card:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  /* Drag and drop styling */
+  .cdk-drag-preview {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    opacity: 0.8;
+  }
+  
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+  
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .task-cards.cdk-drop-list-dragging app-task-card:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .empty-list-message {
+    text-align: center;
+    padding: 20px;
+    color: #9e9e9e;
+    font-style: italic;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  /* Task card hover effect */
+  /* Enhance task card appearance */
+  app-task-card {
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 12px;
+    background-color: #ffffff;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  app-task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Improve close button interaction */
+  .close-btn {
+    transition: transform 0.2s, color 0.2s;
+  }
+  
+  .close-btn:hover {
+    color: #000;
+    transform: scale(1.1);
+  }
+  
+  /* Add responsive feedback panel */
+  @media (max-width: 600px) {
+    .feedback-panel {
+      width: 95vw;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+  }
+  
+  app-task-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Custom scrollbar for task cards */
+  .task-cards::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .task-cards::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .task-cards::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+  }
+  
+  .task-cards::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+  
+  /* Add these styles to match the manager's task details modal */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(9, 30, 66, 0.54);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease;
+  }
+  
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999; /* Extremely high z-index to ensure it's above everything */
+    animation: fadeIn 0.2s ease;
+  }
+  
+  .task-details-modal {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    z-index: 10000; /* Even higher than the backdrop */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    position: relative; /* Ensure it's positioned relative for z-index to work */
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .modal-body {
+    margin-bottom: 20px;
+  }
+  
+  .detail-row {
+    margin-bottom: 15px;
+  }
+  
+  .detail-label {
+    font-weight: 600;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .detail-value {
+    color: #333;
+  }
+  
+  .priority-badge, .status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  
+  .priority-badge.high, .status-badge.high {
+    background-color: #ffebee;
+    color: #d32f2f;
+  }
+  
+  .priority-badge.medium, .status-badge.medium, 
+  .priority-badge.second_level, .status-badge.second_level {
+    background-color: #fff8e1;
+    color: #ff8f00;
+  }
+  
+  .priority-badge.low, .status-badge.low {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+  }
+  
+  .status-badge.to_do {
+    background-color: #e3f2fd;
+    color: #1976d2;
+  }
+  
+  .status-badge.in_progress {
+    background-color: #fff8e1;
+    color: #ff8f00;
+  }
+  
+  .status-badge.done {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 15px;
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+  }
+  
+  .close-btn:hover {
+    color: #333;
+  }
+  
+  .btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+  }
+  
+  .btn-secondary {
+    background: #f4f5f7;
+    color: #42526e;
+  }
+  
+  .btn-secondary:hover {
+    background: #ebecf0;
+  }
+  
+  /* Add these styles for the error message */
+  .error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .retry-button {
+    margin-left: auto;
+    background-color: #c62828;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Improve the modal styling to make it pop out better */
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+    backdrop-filter: blur(3px);
+  }
+  
+  .task-details-modal {
+    background-color: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: modal-pop 0.3s ease-out;
+    position: relative;
+  }
+  
+  @keyframes modal-pop {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .modal-footer {
+    padding: 16px 20px;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+  }
+  
+  /* Improve the detail rows */
+  .detail-row {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .detail-label {
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 6px;
+  }
+  
+  .detail-value {
+    color: #333;
+  }
+  
+  /* Improve feedback items */
+  /* Feedback styling */
+  .feedback-item {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid;
+  }
+  
+  .feedback-item.positive {
+    border-left-color: #4caf50;
+  }
+  
+  .feedback-item.negative {
+    border-left-color: #f44336;
+  }
+  
+  .feedback-item.neutral {
+    border-left-color: #9e9e9e;
+  }
+  
+  .feedback-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .manager-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .manager-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 12px;
+    border: 2px solid #3f51b5;
+  }
+  
+  .manager-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .manager-name {
+    font-weight: 600;
+    color: #3f51b5;
+  }
+  
+  .feedback-date {
+    color: #6c757d;
+    font-size: 0.85rem;
+  }
+  
+  .feedback-content {
+    margin-bottom: 12px;
+  }
+  
+  .feedback-content p {
+    margin: 0;
+    line-height: 1.5;
+  }
+  
+  .feedback-footer {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 0.85rem;
+  }
+  
+  .seen-indicator {
+    display: flex;
+    align-items: center;
+    color: #adb5bd;
+    transition: color 0.3s ease;
+  }
+  
+  .seen-indicator.seen {
+    color: #4caf50;
+  }
+  
+  .seen-indicator i {
+    margin-right: 4px;
+  }
+  
+  .feedback-item p {
+    margin: 0 0 8px 0;
+  }
+  
+  .feedback-item small {
+    color: #6c757d;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .task-board {
+    padding: 20px;
+    background: #f8f9fa;
+    min-height: calc(100vh - 200px);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .task-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .task-column {
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    min-height: 300px;
+    position: relative;
+    z-index: 3;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-top: 3px solid #ddd;
+  }
+  
+  .column-header {
+    position: relative;
+    z-index: 4;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    color: white;
+    font-weight: 600;
+  }
+  
+  .task-cards {
+    min-height: 200px;
+    position: relative;
+    z-index: 5;
+  }
+  
+  .empty-list-message {
+    text-align: center;
+    color: #999;
+    padding: 20px 0;
+    font-style: italic;
+  }
+  
+  /* Modal styles with proper z-index */
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .task-details-modal {
+    background: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1060;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #777;
+  }
+  
+  .close-btn:hover {
+    color: #333;
+  }
+  
+  /* Status and priority badges */
+  .status-badge, .priority-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  .status-badge.to_do {
+    background-color: #a51a30;
+    color: white;
+  }
+  
+  .status-badge.in_progress {
+    background-color: #ffc107;
+    color: #212529;
+  }
+  
+  .status-badge.done {
+    background-color: #198754;
+    color: white;
+  }
+  
+  /* Feedback styles */
+  .feedback-item {
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-left: 3px solid #a51a30;
+  }
+  
+  .feedback-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  
+  .manager-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .manager-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+  }
+  
+  .manager-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .feedback-content {
+    color: #555;
+    line-height: 1.5;
+  }
+  
+  .feedback-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #777;
+  }
+  
+  .seen-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .seen-indicator.seen {
+    color: #a51a30;
+  }
+  
+  /* Add hint icon styles */
+  .hint-icon {
+    cursor: pointer;
+    color: #ffc107;
+    position: relative;
+    padding: 5px;
+  }
+  
+  .hint-icon:hover {
+    color: #ffab00;
+  }
+  
+  .hint-tooltip {
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #333;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    width: max-content;
+    max-width: 200px;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  
+  .hint-tooltip::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-left: 6px solid #333;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+  }
+>>>>>>> cf28fa5 (integration front)

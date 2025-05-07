@@ -94,4 +94,8 @@ export class SelectStudentComponent implements OnInit {
       }
     }
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cf28fa5 (integration front)

@@ -529,4 +529,8 @@ setupTaskPolling(studentId: number, interval: number = 5000): Observable<Task[]>
       return of([]);
     })
   );
+<<<<<<< HEAD
 }}
+=======
+}}
+>>>>>>> cf28fa5 (integration front)

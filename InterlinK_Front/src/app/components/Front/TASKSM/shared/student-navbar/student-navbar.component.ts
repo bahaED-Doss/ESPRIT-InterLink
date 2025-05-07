@@ -27,4 +27,8 @@ export class StudentNavbarComponent implements OnInit, OnDestroy {
     // If you're using the notification service polling, stop it
     this.notificationService.stopPolling();
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cf28fa5 (integration front)

@@ -1,0 +1,94 @@
+<div class="flexx">
+    <app-aside></app-aside>
+    <div class="container">
+      <app-nav-back></app-nav-back>
+      <div class="container-fluid py-4">
+        <div class="row">
+          <div class="col-12">
+            <div class="card mb-4">
+              <div class="card-body px-0 pt-0 pb-2">
+                <div class="table-responsive p-0">
+                  <div class="card-body">
+                    <h2>Test</h2>
+                    <form
+                      [formGroup]="form"
+                      (ngSubmit)="editingTest ? updateTest() : addTest()"
+                    >
+                      <div class="form-group">
+                        <label>Titre:</label>
+                        <input
+                          type="text"
+                          formControlName="titre"
+                          class="form-control"
+                        />
+                        <div
+                          *ngIf="
+                            form.get('titre')?.invalid &&
+                            form.get('titre')?.touched
+                          "
+                          class="text-danger"
+                        >
+                          <small *ngIf="form.get('titre')?.hasError('required')"
+                            >Le titre est requis.</small
+                          >
+                          <small *ngIf="form.get('titre')?.hasError('minlength')"
+                            >Minimum 3 caractères.</small
+                          >
+                        </div>
+                      </div>
+  
+                      <div class="form-group">
+                        <label>Note:</label>
+                        <input
+                          type="text"
+                          formControlName="note"
+                          class="form-control"
+                        />
+                      </div>
+  
+                      <div class="form-group">
+                        <label>Type:</label>
+                        <select formControlName="typeTest" class="form-control">
+                          <option
+                            *ngFor="let test of testTypes"
+                            [value]="test.key"
+                          >
+                            {{ test.value }}
+                          </option>
+                        </select>
+                        <div
+                          *ngIf="
+                            form.get('typeTest')?.invalid &&
+                            form.get('typeTest')?.touched
+                          "
+                          class="text-danger"
+                        >
+                          <small>Le type est requis.</small>
+                        </div>
+                      </div>
+  
+                      <button
+                        type="submit"
+                        class="btn btn-success"
+                        [disabled]="form.invalid"
+                      >
+                        {{ editingTest ? "Edit" : "Add" }}
+                      </button>
+                      <button
+                        type="button"
+                        (click)="cancelEdit()"
+                        *ngIf="editingTest"
+                        class="btn btn-secondary"
+                      >
+                        Cancel
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

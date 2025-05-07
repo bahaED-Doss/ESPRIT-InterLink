@@ -330,4 +330,8 @@ export class NotificationService {
       observer.complete();
     });
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cf28fa5 (integration front)

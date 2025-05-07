@@ -1,0 +1,113 @@
+<app-navbar></app-navbar>
+
+<!-- Start Hero Area -->
+<section class="hero-area">
+  <div class="hero-inner">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="hero-text text-center">
+            <h1 class="wow fadeInUp" data-wow-delay=".3s">
+              Your Interview List
+            </h1>
+          </div>
+
+          <!-- Container des cartes -->
+          <div class="row mt-4">
+            <div class="col-lg-6 col-md-6" *ngFor="let interview of data">
+              <div class="card shadow-sm p-3 mb-4">
+                <div class="card-body">
+                  <h5 class="card-title text-primary">{{ interview.titre }}</h5>
+                  <p class="card-text">
+                    <strong>Date:</strong>
+                    {{ interview.interviewDate | date : "dd/MM/yyyy" }}
+                  </p>
+                  <p class="card-text">
+                    <strong>Type:</strong> {{ interview.interviewType }}
+                  </p>
+                  <p class="card-text">
+                    <strong>Student:</strong>
+
+                    {{ interview.studentByUserId.firstName }}
+                  </p>
+                  <p class="card-text">
+                    <strong>Status:</strong>
+
+                    {{ interview.statusType }}
+                  </p>
+                  <div *ngIf="interview.statusType === 'réalisé'">
+                    <p class="card-text">
+                      <strong>Note:</strong>
+
+                      {{ interview.note }}
+                    </p>
+                  </div>
+
+                  <button
+                    class="btn btn-primary btn-sm"
+                    (click)="
+                      interview.statusType === 'réalisé'
+                        ? checkResult(interview.testId)
+                        : viewTest(interview.testId)
+                    "
+                  >
+                    {{
+                      interview.statusType === "réalisé"
+                        ? "check result"
+                        : "View Test"
+                    }}
+                  </button>
+                  <div *ngIf="interview.statusType === 'réalisé'">
+                    <button
+                      class="btn btn-info btn-sm"
+                      (click)="getRankAndPercent(interview.interviewId)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#resultModal"
+                    >
+                      <i class="bi bi-bar-chart"></i> Résultat
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Hero Area -->
+
+<app-start-process></app-start-process>
+
+<!-- Modal Bootstrap -->
+<div
+  class="modal fade"
+  id="resultModal"
+  tabindex="-1"
+  aria-labelledby="resultModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="resultModalLabel">Résultat du Test</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p *ngIf="result">{{ result }}</p>
+        <p *ngIf="!result">Chargement en cours...</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

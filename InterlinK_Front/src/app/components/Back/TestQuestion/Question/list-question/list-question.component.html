@@ -1,0 +1,168 @@
+<div class="flexx">
+    <app-aside></app-aside>
+    <div class="container">
+      <app-nav-back></app-nav-back>
+      <div class="container-fluid py-4">
+        <div class="row">
+          <div class="col-12">
+            <div class="card mb-4">
+              <div
+                class="card-header pb-0 d-flex justify-content-between align-items-center"
+              >
+                <h6>Question</h6>
+              </div>
+              <div class="card-body px-0 pt-0 pb-2">
+                <div class="table-responsive p-0">
+                  <table class="table align-items-center mb-0">
+                    <thead>
+                      <tr>
+                        <th
+                          class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Test
+                        </th>
+                        <th
+                          class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3"
+                        >
+                          Contenu
+                        </th>
+                        <th
+                          class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Grade
+                        </th>
+                        <th
+                          class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- Application du pipe 'paginate' sur la donnée -->
+                      <tr
+                        *ngFor="
+                          let question of data
+                            | paginate
+                              : {
+                                  itemsPerPage: itemsPerPage,
+                                  currentPage: currentPage
+                                }
+                        "
+                      >
+                        <td>
+                          <div class="d-flex flex-column justify-content-center">
+                            <p class="text-xs text-secondary mb-0">
+                              {{ question.testById?.titre }}
+                            </p>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">
+                            {{ question.contenu }}
+                          </p>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                          {{ question.noteAttribuee }}
+                        </td>
+                        <td class="align-middle text-center">
+                          <a
+                            href="javascript:;"
+                            class="text-secondary font-weight-bold text-xs tt"
+                            (click)="openQuestionModal(question.questionId)"
+                          >
+                            Edit
+                          </a>
+                          <span class="text-secondary text-xs font-weight-bold"
+                            >/</span
+                          >
+                          <a
+                            href="javascript:;"
+                            class="text-secondary font-weight-bold text-xs tt"
+                            (click)="supprimerTest(question.questionId)"
+                            >Delete</a
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- Contrôles de pagination avec un design Bootstrap -->
+              <div class="d-flex justify-content-center mt-3">
+                <pagination-controls
+                  (pageChange)="currentPage = $event"
+                  [directionLinks]="true"
+                  [autoHide]="true"
+                >
+                </pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div
+    class="modal fade"
+    id="questionModal"
+    tabindex="-1"
+    aria-labelledby="questionModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="questionModalLabel">
+            Modifier la question
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+  
+        <div class="modal-body">
+          <form (ngSubmit)="modifierQuestion()">
+            <div class="mb-3">
+              <label for="contenu" class="form-label">Contenu</label>
+              <input
+                type="text"
+                class="form-control"
+                id="contenu"
+                [(ngModel)]="nouvelleQuestion.contenu"
+                name="contenu"
+                required
+              />
+            </div>
+  
+            <div class="mb-3">
+              <label for="noteAttribuee" class="form-label">Note</label>
+              <input
+                type="text"
+                class="form-control"
+                id="noteAttribuee"
+                [(ngModel)]="nouvelleQuestion.noteAttribuee"
+                name="noteAttribuee"
+                required
+              />
+            </div>
+  
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Annuler
+              </button>
+              <button type="submit" class="btn btn-success">Mettre à jour</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

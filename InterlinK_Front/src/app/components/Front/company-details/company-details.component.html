@@ -1,0 +1,105 @@
+<app-navbar></app-navbar>
+
+<!-- Start Hero Area -->
+<section class="hero-area">
+    <div class="hero-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                    <div class="inner-content">
+                        <div class="hero-text">
+                            <h1 class="wow fadeInUp" data-wow-delay=".3s">Help your company attract talented employees <br>by completing your company profile below</h1>
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <div class="hero-video-head wow fadeInRight" data-wow-delay=".5s">
+                        <div class="video-inner">
+                            <img src="assets/frontA/images/hero/hero-image.png" alt="#">
+                            <div class="promo-video">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ End Hero Area -->
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Company Profile</h2>
+  
+    <div class="card p-4 shadow-lg rounded-3 border-primary" style="max-width: 600px; margin: auto;">
+      <form (ngSubmit)="updateCompany()" [formGroup]="companyForm">
+        <div class="mb-3">
+          <label class="form-label fw-bold">Name:</label>
+          <input type="text" class="form-control" formControlName="name" placeholder="Enter company name" />
+          <small class="text-danger" *ngIf="f['name'].touched && f['name'].invalid">
+            <span *ngIf="f['name'].errors?.['required']">Name is required.</span>
+            <span *ngIf="f['name'].errors?.['minlength']">At least 3 characters required.</span>
+          </small>
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label fw-bold">Location:</label>
+          <input type="text" class="form-control" formControlName="location" placeholder="Enter location" />
+          <small class="text-danger" *ngIf="f['location'].touched && f['location'].invalid">
+            Location is required.
+          </small>
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label fw-bold">Email:</label>
+          <input type="email" class="form-control" formControlName="email" placeholder="Enter email" />
+          <small class="text-danger" *ngIf="f['email'].touched && f['email'].invalid">
+            <span *ngIf="f['email'].errors?.['required']">Email is required.</span>
+            <span *ngIf="f['email'].errors?.['email']">Invalid email format.</span>
+          </small>
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label fw-bold">Country:</label>
+          <select class="form-control" formControlName="country" (change)="onCountryChange($event)">
+            <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+          </select>
+          <small class="text-danger" *ngIf="f['country'].touched && f['country'].invalid">
+            Country selection is required.
+          </small>
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label fw-bold">City:</label>
+          <input type="text" class="form-control" formControlName="city" placeholder="Enter city" />
+          <small class="text-danger" *ngIf="f['city'].touched && f['city'].invalid">
+            <span *ngIf="f['city'].errors?.['required']">City is required.</span>
+            <span *ngIf="f['city'].errors?.['pattern']">City must only contain letters and spaces.</span>
+          </small>
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label fw-bold">Phone:</label>
+          <input type="text" class="form-control" formControlName="phone" placeholder="Enter phone number" />
+          <small class="text-danger" *ngIf="f['phone'].touched && f['phone'].invalid">
+            <span *ngIf="f['phone'].errors?.['required']">Phone number is required.</span>
+            <span *ngIf="f['phone'].errors?.['pattern']">Phone must be 8-15 digits.</span>
+          </small>
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label fw-bold">Industry Sector:</label>
+          <select class="form-control" formControlName="industrySector">
+            <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
+          </select>
+          <small class="text-danger" *ngIf="f['industrySector'].touched && f['industrySector'].invalid">
+            Industry sector is required.
+          </small>
+        </div>
+  
+        <button type="submit" class="btn btn-success w-100" [disabled]="companyForm.invalid">Update Company</button>
+      </form>
+    </div>
+  </div>
+  
+
+<app-footer></app-footer>

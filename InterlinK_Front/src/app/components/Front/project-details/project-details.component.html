@@ -1,0 +1,183 @@
+<app-navbar class="sticky bg-white"></app-navbar>
+
+<!-- Project Details & Edit Section -->
+<div class="container mt-5 pt-5">
+  <h2 class="text-center fw-bold mb-5 text-primary">Project Details</h2>
+
+  <div class="row">
+    <!-- Project Info Card -->
+    <div class="col-md-6">
+      <div class="card p-4 shadow rounded">
+        <h4 class="text-primary mb-3">{{ project.title }}</h4>
+        <p><strong>Description:</strong> {{ project.description }}</p>
+        <p><strong>Start Date:</strong> {{ project.startDate | date }}</p>
+        <p><strong>End Date:</strong> {{ project.endDate | date }}</p>
+
+        <!-- Display Progress -->
+        <p><strong>Project Progress :</strong>
+        <div class="progress mt-4">
+          <div class="progress-bar" 
+               role="progressbar" 
+               [style.width.%]="progress" 
+               [attr.aria-valuenow]="progress" 
+               aria-valuemin="0" 
+               aria-valuemax="100">
+            {{ progress }}%
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+        
+
+    <!-- Edit Project Form -->
+    <div class="col-md-6">
+      <div class="card p-4 shadow rounded">
+        <h4 class="text-primary">Edit Project</h4>
+        <form (ngSubmit)="updateProject()" #projectForm="ngForm">
+          <div class="mb-3">
+            <label class="form-label">Title:</label>
+            <input type="text" class="form-control" [(ngModel)]="project.title" name="title" required #title="ngModel" />
+            <div *ngIf="title.invalid && title.touched" class="text-danger">
+              Title is required.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Description:</label>
+            <textarea class="form-control" [(ngModel)]="project.description" name="description" required #description="ngModel"></textarea>
+            <div *ngIf="description.invalid && description.touched" class="text-danger">
+              Description is required.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Start Date:</label>
+            <input type="date" class="form-control" [(ngModel)]="project.startDate" name="startDate" required #startDate="ngModel" />
+            <div *ngIf="startDate.invalid && startDate.touched" class="text-danger">
+              Start Date is required.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">End Date:</label>
+            <input type="date" class="form-control" [(ngModel)]="project.endDate" name="endDate" required #endDate="ngModel" />
+            <div *ngIf="endDate.invalid && endDate.touched" class="text-danger">
+              End Date is required.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Status:</label>
+            <select class="form-select" [(ngModel)]="project.status" name="status">
+              <option value="Open">Open</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+
+          <!-- Technologies Used -->
+          <div class="mb-3">
+            <label class="form-label">Technologies Used:</label>
+            <div class="technologies-list">
+              <div *ngFor="let tech of technologies" class="tech-item">
+                <input 
+                  type="checkbox" 
+                  [checked]="isTechnologySelected(tech)" 
+                  (change)="toggleTechnologySelection(tech)" 
+                  [value]="tech" 
+                  name="technologiesUsed" 
+                />
+                <span>{{ tech }}</span>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-success w-100" [disabled]="projectForm.invalid">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Milestones Section -->
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <div class="card p-4 shadow rounded">
+        <h4 class="text-primary">Milestones</h4>
+        <div *ngFor="let milestone of project['milestones']" class="d-flex justify-content-between align-items-center">
+          <span>{{ milestone.name }}</span>
+          <select [(ngModel)]="milestone.status" (change)="updateMilestoneStatus(milestone)" class="form-select w-25">
+            <option value="PENDING">Pending</option>
+            <option value="IN_PROGRESS">In Progress</option>
+            <option value="COMPLETED">Completed</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kanban Board for Tasks -->
+  
+ 
+
+<app-footer></app-footer>
+
+<!-- Add Custom CSS Styles for Better Visuals -->
+<style>
+  .card {
+    border-radius: 15px;
+    background-color: #f8f9fa;
+  }
+  .progress {
+  height: 12px; /* Adjust height */
+  border-radius: 6px; /* Rounded corners */
+  background-color: #e0e0e0; /* Light background */
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%; /* Ensures full height */
+  background-color: #007bff !important; /* Primary blue color */
+  transition: width 0.6s ease-in-out;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  line-height: 12px; /* Centers text */
+}
+
+
+  .task-card {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .task-card.bg-danger {
+    background-color: #dc3545;
+  }
+  .task-card.bg-warning {
+    background-color: #ffc107;
+  }
+  .task-card.bg-success {
+    background-color: #28a745;
+  }
+  .form-select, .form-control {
+    border-radius: 8px;
+  }
+  .technologies-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  .tech-item {
+    display: flex;
+    align-items: center;
+  }
+  .tech-item input {
+    margin-right: 10px;
+  }
+  .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+</style>

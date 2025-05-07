@@ -78,4 +78,8 @@ export class UserService {
       })
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cf28fa5 (integration front)

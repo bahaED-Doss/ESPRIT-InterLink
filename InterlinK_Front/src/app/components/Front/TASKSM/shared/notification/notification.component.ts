@@ -163,4 +163,8 @@ export class NotificationComponent implements OnInit, OnDestroy {
       });
     }
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cf28fa5 (integration front)

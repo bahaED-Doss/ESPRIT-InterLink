@@ -169,4 +169,8 @@ export class StudentTaskManagementComponent implements OnInit , OnDestroy {
     // Implement your task details view logic here
     // For example, you could open a modal or navigate to a details page
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cf28fa5 (integration front)

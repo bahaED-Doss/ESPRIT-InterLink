@@ -129,4 +129,8 @@ export class TaskCardComponent {
       default: return '';
     }
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cf28fa5 (integration front)

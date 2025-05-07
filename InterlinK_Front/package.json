@@ -23,6 +23,8 @@
     "@popperjs/core": "^2.11.8",
     "@types/qrcode": "^1.5.5",
     "chart.js": "^4.4.8",
+    "echarts": "^5.6.0",
+    "file-saver": "^2.0.5",
     "install": "^0.13.0",
     "jspdf": "^3.0.1",
     "ng2-charts": "^8.0.0",
@@ -35,6 +37,8 @@
   "devDependencies": {
     "@angular/cli": "^16.2.16",
     "@angular/compiler-cli": "^16.2.0",
+    "@types/echarts": "^5.0.0",
+    "@types/file-saver": "^2.0.7",
     "@types/jasmine": "~4.3.0",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",

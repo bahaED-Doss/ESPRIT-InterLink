@@ -1,0 +1,128 @@
+<div class="flexx">
+    <app-aside></app-aside>
+    <div class="container">
+        <app-nav-back></app-nav-back>
+<section class="hero-area py-5 bg-light">
+    <div class="hero-inner text-center">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="inner-content">
+              <h1 class="wow fadeInUp" data-wow-delay=".3s">
+                <span class="text-primary">Search for your favorite company here</span>
+              </h1>
+            </div>
+  
+            <!-- Search Form Section -->
+            <div class="job-search-wrap-two mt-4 p-4 shadow rounded bg-white wow fadeInUp" data-wow-delay=".7s">
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <label for="industrySector" class="form-label">Industry Sector</label>
+                    <select [(ngModel)]="searchIndustrySector" (ngModelChange)="onSearch()">
+                        <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
+                      </select>
+                      
+                      <select [(ngModel)]="selectedLocation" (ngModelChange)="onSearch()">
+                        <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
+                      </select>
+                      
+                  </div>
+  
+                </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Search Results Section -->
+        <div *ngIf="searchResults.length > 0" class="row mt-4">
+          <div class="col-12">
+            <h3 class="text-center text-success">Search Results</h3>
+            <div class="row g-4 mt-3">
+              <div *ngFor="let company of searchResults" class="col-md-4">
+                <div class="card shadow-sm">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ company.name }}</h5>
+                    <p class="card-text">
+                      <strong>{{ company.industrySector }}</strong> <br>
+                      {{ company.city }}, {{ company.country }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Full Company List Section -->
+  <div class="container mt-4">
+    <h2 class="text-center">Company List</h2>
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Email</th>
+          <th>City</th>
+          <th>Country</th>
+          <th>Phone</th>
+          <th>Industry Sector</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let company of companies">
+          <td>{{ company.name }}</td>
+          <td>{{ company.location }}</td>
+          <td>{{ company.email }}</td>
+          <td>{{ company.city }}</td>
+          <td>{{ company.country }}</td>
+          <td>{{ company.phone }}</td>
+          <td>{{ company.industrySector }}</td>
+          <td>
+            <button class="btn btn-outline-primary btn-sm" [routerLink]="['/company-details', company.companyId]">
+              <i class="bi bi-pencil-square"></i> Edit
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="deleteCompany(company)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Google Map Container -->
+  <h3 class="text-center">Companies locations</h3>
+  <google-map width="80%" height="400px" [center]="mapCenter" [zoom]="zoomLevel">
+    <map-marker *ngFor="let company of companies" [position]="{ lat: company.latitude, lng: company.longitude }"
+      [label]="company.name">
+    </map-marker>
+  </google-map>
+  
+  
+  
+  
+  
+  
+  
+  <!-- Companies Statistics Section -->
+  <div class="container mt-4">
+    <h3 class="text-center">Companies Statistics</h3>
+    <div class="row">
+      <!-- Projects per Company Chart -->
+      <div class="col-md-6">
+        <div echarts [options]="projectsChartOption" class="chart-container"></div>
+      </div>
+  
+      <!-- Companies by Industry Chart -->
+      <div class="col-md-6">
+        <div echarts [options]="industryChartOption" class="chart-container"></div>
+      </div>
+    </div>
+     </div>  
+     <app-footer-back></app-footer-back>
+   <app-settings></app-settings>
+ </div>
+
+</div>

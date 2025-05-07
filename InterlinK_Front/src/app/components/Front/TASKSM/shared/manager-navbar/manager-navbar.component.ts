@@ -39,4 +39,8 @@ export class ManagerNavbarComponent implements OnInit, OnDestroy {
   onCreateTask(): void {
     this.createTask.emit();
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cf28fa5 (integration front)
