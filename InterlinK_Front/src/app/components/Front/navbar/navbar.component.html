@@ -19,24 +19,23 @@
                   <li class="nav-item">
                     <a class="active" href="index.html">Home</a>
                   </li>
-                  <li class="nav-item"><a href="#">Pages</a>
-                    <ul class="sub-menu">
-                      <li><a href="about-us.html">About Us</a></li>
-                    </ul>
-                  </li>
+                  
                   <li class="nav-item"><a routerLink="/internships"
                           routerLinkActive="active"
                           ariaCurrentWhenActive="page">internships</a></li>
                   <li class="nav-item"><a href="#">Employers </a></li>
                   <li class="nav-item"><a href="#">Blog</a></li>
+                  <li class="nav-item"><a href="contact.html">About Us</a></li>
                   <li class="nav-item"><a href="contact.html">Contact</a></li>
                 </ul>
               </div>
               <!-- navbar collapse -->
               <div class="button">
-                <a href="javacript:" data-toggle="modal" data-target="#login" class="login"><i
+                
+                <a href="javacript:" data-toggle="modal" data-target="#login" class="login" routerLink="/login"
+                routerLinkActive="active"
+                ariaCurrentWhenActive="page" ><i
                     class="lni lni-lock-alt"></i> Login</a>
-                <a href="javacript:" data-toggle="modal" data-target="#signup" class="btn">Sign Up</a>
               </div>
             </nav>
             <!-- navbar -->

@@ -1,0 +1,70 @@
+<app-navbar-student></app-navbar-student>
+<div class="container mt-4">
+  <h2 class="text-center">Stage Documents</h2>
+
+  <!-- Document Type Selection -->
+  <div class="card mb-3">
+    <div class="card-body">
+      <label for="docType">Select Document Type:</label>
+      <select id="docType" class="form-control" [(ngModel)]="selectedDocumentType">
+        <option value="stageRequest">Demande de Stage</option>
+        <option value="letterOfAssignment">Lettre d'affectation</option>
+        <option value="stageJournal">Journal de Stage</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- If Lettre d'affectation is selected, display the additional form -->
+ <!-- If Lettre d'affectation is selected, display the additional form -->
+<!-- If Lettre d'affectation is selected, display the additional form -->
+<!-- If Lettre d'affectation is selected, display the additional form -->
+<div *ngIf="selectedDocumentType === 'letterOfAssignment'" class="card mb-3">
+  <div class="card-body">
+    <h5>Enter Company Details</h5>
+    <div class="form-group">
+      <label>Company Name:</label>
+      <input type="text" class="form-control" [(ngModel)]="letterForm.companyName" name="companyName">
+    </div>
+    <div class="form-group">
+      <label>Company Address:</label>
+      <input type="text" class="form-control" [(ngModel)]="letterForm.companyAddress" name="companyAddress">
+    </div>
+    <div class="form-group">
+      <label>Company Email:</label>
+      <input type="email" class="form-control" [(ngModel)]="letterForm.companyEmail" name="companyEmail">
+    </div>
+    <div class="form-group">
+      <label>Company Phone:</label>
+      <input type="text" class="form-control" [(ngModel)]="letterForm.companyPhone" name="companyPhone">
+    </div>
+
+    <!-- Stage Period with date pickers -->
+    <div class="form-group">
+      <label>Stage Period (From - To):</label>
+      <div class="d-flex">
+        <input type="date" class="form-control" [(ngModel)]="letterForm.stageStartDate" name="stageStartDate" placeholder="From">
+        <span class="mx-2">to</span>
+        <input type="date" class="form-control" [(ngModel)]="letterForm.stageEndDate" name="stageEndDate" placeholder="To">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Class/Program:</label>
+      <input type="text" class="form-control" [(ngModel)]="letterForm.className" name="className">
+    </div>
+  </div>
+</div>
+
+
+
+  <!-- Button to Generate Document -->
+  <button class="btn btn-primary" (click)="generateDocument()">Generate Document</button>
+  
+  <!-- Display Download Link if document has been generated -->
+  <div *ngIf="downloadUrl" class="mt-3">
+    <a [href]="downloadUrl" download="{{ selectedDocumentType }}.pdf" class="btn btn-success">
+      Download Document
+    </a>
+  </div>
+</div>
+<app-footer></app-footer>

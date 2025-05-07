@@ -1,0 +1,90 @@
+<app-navbar-student></app-navbar-student>
+
+<div class="container">
+  <h4 class="title">Account Settings</h4>
+
+  <div class="settings-card">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 sidebar">
+        <div class="list-group">
+          <a class="list-group-item active" [routerLink]="['/profileHr', userId]" routerLinkActive="active">General</a>
+          <a class="list-group-item" [routerLink]="['/changePassHR', userId]" routerLinkActive="active">Change Password</a>
+          <a class="list-group-item" [routerLink]="['/socialLinksHR', userId]" routerLinkActive="active">Social Links</a>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-md-9 content">
+        <div class="profile-header">
+          <!-- Use getPhotoUrl() to get the correct image URL -->
+          <img [src]="getPhotoUrl()" class="profile-img" alt="Profile Picture">
+          <div class="upload-section">
+            <label class="btn btn-upload">
+              Upload New Photo
+              <input type="file" (change)="onFileSelected($event)" hidden>
+            </label>
+            <button class="btn btn-reset" (click)="resetPhoto()">Reset</button>
+          </div>
+          
+          
+          <!-- Social Links Section (if applicable) -->
+          <div class="social-links">
+            <a *ngIf="user?.facebook" [href]="user.facebook" target="_blank" class="social-icon">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a *ngIf="user?.githubLink" [href]="user.githubLink" target="_blank" class="social-icon github">
+              <i class="fab fa-github"></i>
+            </a>
+            <a *ngIf="user?.linkedin" [href]="user.linkedin" target="_blank" class="social-icon linked">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a *ngIf="user?.instagram" [href]="user.instagram" target="_blank" class="social-icon insta">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Profile Form – attach ngSubmit on form -->
+        <form [formGroup]="userForm" (ngSubmit)="saveChanges()">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" class="form-control" formControlName="firstName">
+            <!-- You can add error messages here if needed -->
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" class="form-control" formControlName="lastName">
+          </div>
+          <div class="form-group">
+            <label>E-mail</label>
+            <input type="email" class="form-control" formControlName="email">
+            <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid" class="error-message text-danger small">
+              Email must be valid.
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" class="form-control" formControlName="phoneNumber">
+            <div *ngIf="userForm.get('phoneNumber')?.hasError('exactDigits')" class="error-message text-danger small">
+              Phone number must contain exactly 8 digits.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inactivityLogout">Enable Inactivity Logout (after 30 seconds)</label>
+            <input type="checkbox" id="inactivityLogout" formControlName="inactivityLogout">
+          </div>
+          <div class="action-buttons">
+            <button type="submit" class="btn btn-save">Save Changes</button>
+            <button type="button" class="btn btn-cancel">Cancel</button>
+           
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

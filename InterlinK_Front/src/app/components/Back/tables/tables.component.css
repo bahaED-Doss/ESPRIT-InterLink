@@ -9,3 +9,39 @@
 .font-weight-bold{
     font-family:cursive;
 }
+.tt:hover{
+color: rgb(190, 21, 209) !important;
+}
+.table th{
+    font-size:13px !important;
+}
+.modal-title{
+    color: #fff !important;
+}
+.badge{
+    border:none !important;
+}
+.text-sm{
+    font-size: 16px !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+.text-xs{
+    font-size: 14px !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+.avatar{
+    width: 55px !important;
+    height: 55px !important;
+    object-fit: cover; 
+}
+.text-uppercase{
+    font-size: 39px !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+.btn-primary{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+.card-header h6{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-size: 25px !important;
+}

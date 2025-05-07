@@ -1,0 +1,106 @@
+<app-navbar-student></app-navbar-student>
+
+<div class="container mt-7">
+  <h4 class="title text-center">Education</h4>
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3">
+      <div class="list-group sidebar">
+        <a class="list-group-item" [routerLink]="['/profileStudent', userId]" routerLinkActive="active">General</a>
+        <a class="list-group-item" [routerLink]="['/changePassS', userId]" routerLinkActive="active">Change Password</a>
+        <a class="list-group-item" [routerLink]="['/skillsS', userId]" routerLinkActive="active">Skills</a>
+        <a class="list-group-item" [routerLink]="['/socialLinksS', userId]" routerLinkActive="active">Social Links</a>
+        <a class="list-group-item active">Education</a>
+        <a class="list-group-item" [routerLink]="['/documentss', userId]" routerLinkActive="active">My documents</a>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9 content">
+      <div class="education-section">
+        <h5>My Education</h5>
+        <ul class="list-group mb-3">
+          <li class="list-group-item" *ngFor="let edu of educations">
+            <strong>{{ edu.school }}</strong>
+            <span class="text-muted"> ({{ edu.educationLevel }})</span><br>
+            <small *ngIf="edu.currentlyAttending; else ended">
+              {{ edu.startDate }} - Present
+            </small>
+            <ng-template #ended>
+              <small>{{ edu.startDate }} - {{ edu.endDate }}</small>
+            </ng-template>
+            <br>
+            <span *ngIf="edu.areaOfStudy">Area: {{ edu.areaOfStudy }}</span><br>
+            <span *ngIf="edu.description">{{ edu.description }}</span>
+          </li>
+        </ul>
+
+        <!-- Button to open "Add Education" modal -->
+        <button class="btn btn-save" (click)="openAddEducationModal(addEducationModal)">Add Education</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Education Modal Template -->
+<ng-template #addEducationModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Add Education</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group mb-2">
+        <label>School</label>
+        <!-- Add template reference to the first input -->
+        <input type="text" class="form-control" [(ngModel)]="newEducation.school" name="school" #firstInput placeholder="Enter school name">
+      </div>
+
+      <div class="form-group mb-2">
+        <label>Education Level</label>
+        <select class="form-control" [(ngModel)]="newEducation.educationLevel" name="educationLevel">
+          <option value="">-</option>
+          <option value="High School">High School</option>
+          <option value="Bachelor">Bachelor</option>
+          <option value="Master">Master</option>
+          <option value="PhD">PhD</option>
+        </select>
+      </div>
+
+      <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="newEducation.currentlyAttending" name="currentlyAttending" id="attendingCheck">
+        <label class="form-check-label" for="attendingCheck">
+          Currently attending
+        </label>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-2">
+          <label>Start Date (optional)</label>
+          <input type="month" class="form-control" [(ngModel)]="newEducation.startDate" name="startDate">
+        </div>
+        <div class="col-md-6 mb-2">
+          <label>End Date (optional)</label>
+          <input type="month" class="form-control" [(ngModel)]="newEducation.endDate" name="endDate" [disabled]="newEducation.currentlyAttending">
+        </div>
+      </div>
+
+      <div class="form-group mb-2">
+        <label>Area of Study (optional)</label>
+        <input type="text" class="form-control" [(ngModel)]="newEducation.areaOfStudy" name="areaOfStudy" placeholder="e.g., Computer Science">
+      </div>
+
+      <div class="form-group mb-2">
+        <label>Description (optional)</label>
+        <textarea class="form-control" [(ngModel)]="newEducation.description" name="description" rows="3" maxlength="500"></textarea>
+        <small class="text-muted">{{newEducation.description?.length || 0}} / 500</small>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-cancel" (click)="modal.dismiss('cancel')">Cancel</button>
+    <button type="button" class="btn btn-save" (click)="saveEducation(modal)">Save</button>
+  </div>
+</ng-template>
+
+<app-footer></app-footer>

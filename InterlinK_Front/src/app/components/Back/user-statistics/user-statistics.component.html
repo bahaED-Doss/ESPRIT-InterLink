@@ -1,0 +1,17 @@
+<div class="flexx">
+    <app-aside></app-aside>
+    <div class="container">
+      <app-nav-back></app-nav-back>
+      <div class="container-fluid py-4">
+<div class="statistics-container">
+    <div class="stat-card" *ngFor="let stat of statistics">
+      <div class="icon">
+        <i [class]="stat.iconClass"></i>
+      </div>
+      <div class="count">{{ stat.currentCount }}</div>
+      <div class="label">{{ stat.label }}</div>
+    </div>
+  </div>
+      </div>
+    </div>
+  

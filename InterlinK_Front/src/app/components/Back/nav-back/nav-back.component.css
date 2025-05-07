@@ -6,3 +6,8 @@ h6{
     
     font-size: 20px !important;
 }
+.form-control:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: #ccc !important; /* Set to your desired color */
+}
