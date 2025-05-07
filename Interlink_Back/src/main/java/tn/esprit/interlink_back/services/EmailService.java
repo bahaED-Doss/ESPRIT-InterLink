@@ -1,4 +1,4 @@
-package tn.esprit.interlink_back.service;
+package tn.esprit.interlink_back.services;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

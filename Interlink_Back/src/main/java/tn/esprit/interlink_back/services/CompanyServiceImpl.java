@@ -1,4 +1,4 @@
-package tn.esprit.interlink_back.service;
+package tn.esprit.interlink_back.services;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,6 +6,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import tn.esprit.interlink_back.entity.Company;
 import tn.esprit.interlink_back.repository.CompanyRepository;
+import tn.esprit.interlink_back.services.GeocodingService;
+import tn.esprit.interlink_back.services.ICompanyService;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

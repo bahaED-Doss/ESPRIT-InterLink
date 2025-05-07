@@ -1,10 +1,12 @@
-package tn.esprit.interlink_back.controller;
+package tn.esprit.interlink_back.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.interlink_back.entity.Company;
-import tn.esprit.interlink_back.service.GeocodingService;
-import tn.esprit.interlink_back.service.ICompanyService;
+import tn.esprit.interlink_back.services.GeocodingService;
+import tn.esprit.interlink_back.services.ICompanyService;
+import tn.esprit.interlink_back.services.GeocodingService;
+import tn.esprit.interlink_back.services.ICompanyService;
 
 import java.util.LinkedHashMap;
 import java.util.List;

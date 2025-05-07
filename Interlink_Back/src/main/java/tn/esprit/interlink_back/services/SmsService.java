@@ -1,4 +1,4 @@
-/*package tn.esprit.interlink_back.service;
+/*package tn.esprit.interlink_back.services;
 
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;

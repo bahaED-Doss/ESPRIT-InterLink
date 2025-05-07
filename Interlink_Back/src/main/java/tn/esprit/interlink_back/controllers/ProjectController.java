@@ -1,6 +1,8 @@
-package tn.esprit.interlink_back.controller;
+package tn.esprit.interlink_back.controllers;
 
 
+import com.itextpdf.text.log.Logger;
+import com.itextpdf.text.log.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -13,9 +15,12 @@ import tn.esprit.interlink_back.entity.Enums.MilestoneStatus;
 import tn.esprit.interlink_back.entity.Milestone;
 import tn.esprit.interlink_back.entity.Project;
 import tn.esprit.interlink_back.repository.CompanyRepository;
-import tn.esprit.interlink_back.service.ExcelService;
-import tn.esprit.interlink_back.service.IProjectService;
-import tn.esprit.interlink_back.service.PdfService;
+import tn.esprit.interlink_back.services.ExcelService;
+import tn.esprit.interlink_back.services.IProjectService;
+import tn.esprit.interlink_back.services.PdfService;
+import tn.esprit.interlink_back.services.ExcelService;
+import tn.esprit.interlink_back.services.IProjectService;
+import tn.esprit.interlink_back.services.PdfService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +29,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/projects")
 public class ProjectController {
+    private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 
     @Autowired
     private final IProjectService projectService;

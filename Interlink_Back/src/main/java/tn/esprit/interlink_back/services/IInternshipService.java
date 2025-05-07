@@ -1,7 +1,6 @@
-package tn.esprit.interlink_back.service;
+package tn.esprit.interlink_back.services;
 
 import tn.esprit.interlink_back.entity.Internship;
-import tn.esprit.interlink_back.repository.InternshipRepository;
 
 import java.util.List;
 import java.util.Optional;

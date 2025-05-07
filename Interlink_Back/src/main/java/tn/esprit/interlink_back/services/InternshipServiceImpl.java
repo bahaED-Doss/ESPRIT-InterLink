@@ -1,4 +1,4 @@
-package tn.esprit.interlink_back.service;
+package tn.esprit.interlink_back.services;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

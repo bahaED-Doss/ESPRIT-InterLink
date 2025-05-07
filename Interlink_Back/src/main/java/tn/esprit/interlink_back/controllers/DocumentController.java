@@ -22,7 +22,7 @@ public class DocumentController {
     // Récupérer les documents d'un utilisateur
     @GetMapping("/user/{userId}")
     public List<Documentt> getDocumentsByUser(@PathVariable Long userId) {
-        return documentService.getDocumentsByUser(userId);
+        return (List<Documentt>) documentService.getDocumentsByUser(userId);
     }
 
     // Ajouter un nouveau documentt

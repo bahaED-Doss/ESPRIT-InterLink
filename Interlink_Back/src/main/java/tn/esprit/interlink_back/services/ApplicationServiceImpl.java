@@ -1,4 +1,4 @@
-package tn.esprit.interlink_back.service;
+package tn.esprit.interlink_back.services;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.interlink_back.entity.Application;
 import tn.esprit.interlink_back.repository.ApplicationRepository;
+import tn.esprit.interlink_back.services.IApplicationService;
 
 import java.util.List;
 @AllArgsConstructor

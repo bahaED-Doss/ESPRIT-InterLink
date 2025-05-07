@@ -3,13 +3,10 @@ package tn.esprit.interlink_back.configs;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -17,18 +14,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 //import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import tn.esprit.interlink_back.entity.CustomOAuth2User;
-import tn.esprit.interlink_back.services.CustomOAuth2UserService;
-import tn.esprit.interlink_back.services.UserService;
+import tn.esprit.interlink_back.repository.UserRepository;
 
 import java.util.List;
 
@@ -36,10 +29,10 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final CustomOAuth2UserService oauth2UserService;
+    private final UserRepository.CustomOAuth2UserService oauth2UserService;
 
     @Autowired
-    public SecurityConfig(CustomOAuth2UserService oauth2UserService) {
+    public SecurityConfig(UserRepository.CustomOAuth2UserService oauth2UserService) {
         this.oauth2UserService = oauth2UserService;
     }
     @Bean

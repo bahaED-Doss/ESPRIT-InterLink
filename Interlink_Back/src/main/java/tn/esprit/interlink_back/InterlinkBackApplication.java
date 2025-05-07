@@ -10,7 +10,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class InterlinkBackApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(InterlinkBackApplication.class, args);
+
+        SpringApplication app = new SpringApplication(InterlinkBackApplication.class);
+        app.run(args);
     }
+
 
 }

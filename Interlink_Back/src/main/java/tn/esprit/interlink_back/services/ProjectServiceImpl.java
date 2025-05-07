@@ -1,4 +1,4 @@
-package tn.esprit.interlink_back.service;
+package tn.esprit.interlink_back.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +8,8 @@ import tn.esprit.interlink_back.entity.Milestone;
 import tn.esprit.interlink_back.entity.Project;
 import tn.esprit.interlink_back.repository.MilestoneRepository;
 import tn.esprit.interlink_back.repository.ProjectRepository;
+import tn.esprit.interlink_back.services.EmailService;
+import tn.esprit.interlink_back.services.IProjectService;
 
 import java.util.List;
 import java.util.stream.Collectors;

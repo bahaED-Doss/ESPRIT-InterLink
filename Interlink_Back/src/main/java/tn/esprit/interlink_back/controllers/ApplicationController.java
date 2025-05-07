@@ -1,13 +1,13 @@
-package tn.esprit.interlink_back.controller;
+package tn.esprit.interlink_back.controllers;
 
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.interlink_back.entity.Application;
-import tn.esprit.interlink_back.service.ApplicationServiceImpl;
-import tn.esprit.interlink_back.service.IApplicationService;
-import tn.esprit.interlink_back.service.InternshipServiceImpl;
+import tn.esprit.interlink_back.services.ApplicationServiceImpl;
+import tn.esprit.interlink_back.services.IApplicationService;
+import tn.esprit.interlink_back.services.ApplicationServiceImpl;
+import tn.esprit.interlink_back.services.IApplicationService;
 
 import java.util.List;
 

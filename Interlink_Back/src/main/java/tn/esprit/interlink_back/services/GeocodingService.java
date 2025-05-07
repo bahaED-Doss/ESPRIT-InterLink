@@ -1,4 +1,4 @@
-package tn.esprit.interlink_back.service;
+package tn.esprit.interlink_back.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

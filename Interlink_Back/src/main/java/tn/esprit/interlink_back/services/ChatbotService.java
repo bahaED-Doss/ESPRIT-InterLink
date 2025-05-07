@@ -1,5 +1,4 @@
-package tn.esprit.interlink_back.service;
-
+package tn.esprit.interlink_back.services;
 import org.springframework.stereotype.Service;
 
 // ChatbotService.java (RAG)

@@ -1,11 +1,11 @@
-package tn.esprit.interlink_back.controller;
+package tn.esprit.interlink_back.controllers;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.interlink_back.entity.Internship;
-import tn.esprit.interlink_back.service.InternshipServiceImpl;
+import tn.esprit.interlink_back.services.InternshipServiceImpl;
+import tn.esprit.interlink_back.services.InternshipServiceImpl;
 
 import java.util.List;
 @RestController
