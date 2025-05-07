@@ -1,0 +1,82 @@
+<app-navbar-student></app-navbar-student>
+
+<div class="container ">
+  <h4 class="title text-center">Manage Skills</h4>
+  <div class="settings-card">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 sidebar">
+      <div class="list-group">
+        <a class="list-group-item" [routerLink]="['/profileStudent', userId]" routerLinkActive="active">General</a>
+        <a class="list-group-item" [routerLink]="['/changePassS', userId]" routerLinkActive="active">Change Password</a>
+        <a class="list-group-item active" [routerLink]="['/skillsS', userId]" routerLinkActive="active">Skills</a>
+        <a class="list-group-item" [routerLink]="['/socialLinksS', userId]" routerLinkActive="active">Social Links</a>
+        <a class="list-group-item" [routerLink]="['/educationS', userId]" routerLinkActive="active">Education</a>
+        <a class="list-group-item" [routerLink]="['/documentss', userId]" routerLinkActive="active">My documents</a>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9 content">
+      <div class="row">
+        <!-- Soft Skills Card -->
+        <div class="col-md-6">
+          <div class="card settings-card">
+            <div class="card-body">
+              <h5 class="card-title">Soft Skills</h5>
+              <ul class="list-group">
+                <li class="list-group-item" *ngFor="let skill of softSkills">
+                  {{ skill.name }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hard Skills Card -->
+        <div class="col-md-6">
+          <div class="card settings-card">
+            <div class="card-body">
+              <h5 class="card-title">Hard Skills</h5>
+              <ul class="list-group">
+                <li class="list-group-item" *ngFor="let skill of hardSkills">
+                  {{ skill.name }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Skill Button -->
+      <button class="btn btn-upload mt-4" (click)="openAddSkillModal()">Add Skill</button>
+
+      <!-- Add Skill Modal -->
+      <ng-template #addSkillModal let-modal>
+        <div class="modal-header">
+          <h5 class="modal-title" id="addSkillModalLabel">Add a New Skill</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="skillName">Skill Name</label>
+            <input type="text" class="form-control" id="skillName" [(ngModel)]="newSkill.name" placeholder="Enter skill name">
+          </div>
+          <div class="form-group mt-3">
+            <label for="skillType">Skill Type</label>
+            <select class="form-control" id="skillType" [(ngModel)]="newSkill.type">
+              <option value="SOFT">Soft Skill</option>
+              <option value="HARD">Hard Skill</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-upload mt-4" (click)="modal.dismiss('cancel click')">Cancel</button>
+          <button type="button" class="btn btn-upload mt-4" (click)="addSkill(); modal.close()">Add Skill</button>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
