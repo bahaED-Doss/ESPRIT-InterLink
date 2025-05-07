@@ -17,7 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 import tn.esprit.interlink_back.dtos.GoogleUser;
 import tn.esprit.interlink_back.entity.PasswordResetToken;
 import tn.esprit.interlink_back.entity.Provider;
-import tn.esprit.interlink_back.entity.Role;
+import tn.esprit.interlink_back.entity.Enums.Role;
 import tn.esprit.interlink_back.entity.User;
 import tn.esprit.interlink_back.repository.TokenRepository;
 import tn.esprit.interlink_back.repository.UserRepository;

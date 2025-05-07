@@ -2,6 +2,7 @@ package tn.esprit.interlink_back.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import tn.esprit.interlink_back.entity.Enums.Role;
 
 import java.time.LocalDate;
 

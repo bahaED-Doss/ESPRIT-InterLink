@@ -11,7 +11,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import tn.esprit.interlink_back.entity.Role;
+import tn.esprit.interlink_back.entity.Enums.Role;
 import tn.esprit.interlink_back.entity.User;
 
 import java.util.List;
