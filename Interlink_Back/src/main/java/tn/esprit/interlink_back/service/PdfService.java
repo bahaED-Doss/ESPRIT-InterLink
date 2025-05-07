@@ -1,9 +1,19 @@
 package tn.esprit.interlink_back.service;
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.pdf.*;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.colors.DeviceRgb;
+import com.itextpdf.kernel.events.IEventHandler;
+import com.itextpdf.kernel.events.PdfDocumentEvent;
+import com.itextpdf.kernel.events.Event;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.*;
+import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.UnitValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -21,164 +31,133 @@ public class PdfService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    // Custom colors
-    private static final BaseColor TITLE_COLOR = new BaseColor(0, 102, 204); // Blue
-    private static final BaseColor HEADER_COLOR = new BaseColor(255, 153, 0); // Orange
-    private static final BaseColor TABLE_HEADER_COLOR = new BaseColor(230, 230, 230); // Light gray
+    private static final DeviceRgb TITLE_COLOR = new DeviceRgb(0, 102, 204);
+    private static final DeviceRgb HEADER_COLOR = new DeviceRgb(255, 153, 0);
+    private static final DeviceRgb TABLE_HEADER_COLOR = new DeviceRgb(230, 230, 230);
 
-    public byte[] generateAllProjectsPdf() throws DocumentException, IOException {
-        Document document = new Document();
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        PdfWriter writer = PdfWriter.getInstance(document, byteArrayOutputStream);
+    public byte[] generateAllProjectsPdf() throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PdfWriter writer = new PdfWriter(baos);
+        PdfDocument pdfDoc = new PdfDocument(writer);
+        Document document = new Document(pdfDoc);
 
-        // Add footer with page numbers
-        writer.setPageEvent(new PdfPageEventHelper() {
-            public void onEndPage(PdfWriter writer, Document document) {
-                ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER,
-                        new Phrase("Page " + document.getPageNumber(),
-                                FontFactory.getFont(FontFactory.HELVETICA, 10)),
-                        300, 30, 0);
-            }
-        });
+        // Footer event handler
+        pdfDoc.addEventHandler(PdfDocumentEvent.END_PAGE, new FooterHandler());
 
-        document.open();
-
-        // Add header logo
+        // Logo
         try {
-            Image logo = Image.getInstance(new ClassPathResource("static/logo.png").getURL());
+            Image logo = new Image(ImageDataFactory.create(new ClassPathResource("static/logo.png").getURL()));
             logo.scaleToFit(100, 50);
-            logo.setAbsolutePosition(40, 750); // Position (x,y)
-            writer.getDirectContent().addImage(logo);
+            document.add(logo);
         } catch (Exception e) {
-            // Handle missing logo silently
+            // Logo missing
         }
 
         // Title
-        Paragraph title = new Paragraph("All Projects Report",
-                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, TITLE_COLOR));
-        title.setAlignment(Element.ALIGN_CENTER);
-        title.setSpacingAfter(20);
+        Paragraph title = new Paragraph("All Projects Report")
+                .setFontSize(18)
+                .setFontColor(TITLE_COLOR)
+                .setTextAlignment(TextAlignment.CENTER)
+                .setBold()
+                .setMarginBottom(20);
         document.add(title);
 
-        // Project list
         List<Project> projects = projectRepository.findAll();
         for (Project project : projects) {
             addProjectSection(document, project);
         }
 
-        // Signature
         addSignature(document);
 
         document.close();
-        return byteArrayOutputStream.toByteArray();
+        return baos.toByteArray();
     }
 
-    private void addProjectSection(Document document, Project project) throws DocumentException {
-        // Project title
-        Paragraph projectTitle = new Paragraph(project.getTitle(),
-                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
-        projectTitle.setSpacingBefore(15);
-        document.add(projectTitle);
+    private void addProjectSection(Document document, Project project) {
+        document.add(new Paragraph(project.getTitle())
+                .setFontSize(14)
+                .setBold()
+                .setMarginTop(20));
 
-        // Details
-        document.add(createDetailRow("Description:", project.getDescription()));
-        document.add(createDetailRow("Dates:", project.getStartDate() + " - " + project.getEndDate()));
-        document.add(createDetailRow("Status:", String.valueOf(project.getStatus()), getStatusColor(String.valueOf(project.getStatus()))));
-        document.add(createDetailRow("Technologies:", project.getTechnologiesUsed()));
+        document.add(createDetail("Description: ", project.getDescription()));
+        document.add(createDetail("Dates: ", project.getStartDate() + " - " + project.getEndDate()));
+        document.add(createDetail("Status: ", String.valueOf(project.getStatus()), getStatusColor(project.getStatus())));
+        document.add(createDetail("Technologies: ", project.getTechnologiesUsed()));
 
-        // Milestones table
-        document.add(new Paragraph("Milestones:",
-                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, HEADER_COLOR)));
+        document.add(new Paragraph("Milestones:")
+                .setFontSize(12)
+                .setBold()
+                .setFontColor(HEADER_COLOR)
+                .setMarginTop(10));
 
-        PdfPTable table = new PdfPTable(2);
-        table.setWidthPercentage(100);
-        table.setSpacingBefore(5);
+        Table table = new Table(UnitValue.createPercentArray(new float[]{1, 1})).useAllAvailableWidth();
 
-        // Table header
+        // Header
         addTableHeader(table, "Milestone Name", "Status");
 
-        // Table rows
+        // Rows
         for (Milestone milestone : project.getMilestones()) {
             String status = (milestone.getStatus() != null) ? milestone.getStatus().toString() : "N/A";
-            addTableRow(table, milestone.getName(), status);
+            table.addCell(new Cell().add(new Paragraph(milestone.getName())));
+            table.addCell(new Cell().add(new Paragraph(status)));
         }
 
         document.add(table);
     }
 
-    private void addSignature(Document document) throws DocumentException {
-        try {
-            document.add(new Chunk("\n\n"));
-            Paragraph signatureTitle = new Paragraph("Project Manager Signature:",
-                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12));
-            document.add(signatureTitle);
+    private void addSignature(Document document) {
+        document.add(new Paragraph("\n\n"));
+        document.add(new Paragraph("Project Manager Signature:").setBold());
 
-            Image signature = Image.getInstance(new ClassPathResource("static/signature.png").getFile().getAbsolutePath());
-            signature.scaleToFit(300, 200);
-            signature.setAlignment(Element.ALIGN_LEFT);
+        try {
+            Image signature = new Image(ImageDataFactory.create(new ClassPathResource("static/signature.png").getURL()));
+            signature.scaleToFit(200, 100);
             document.add(signature);
         } catch (Exception e) {
-            document.add(new Paragraph("Signature: [Image not found]"));
+            document.add(new Paragraph("[Signature image not found]"));
         }
     }
 
-    // Helper methods
-    private Paragraph createDetailRow(String label, String value) {
-        return createDetailRow(label, value, BaseColor.BLACK);
+    private Paragraph createDetail(String label, String value) {
+        return createDetail(label, value, ColorConstants.BLACK);
     }
 
-    private Paragraph createDetailRow(String label, String value, BaseColor color) {
-        Paragraph p = new Paragraph();
-        p.add(new Chunk(label, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.DARK_GRAY)));
-        p.add(new Chunk(value, FontFactory.getFont(FontFactory.HELVETICA, 10, color)));
-        return p;
+    private Paragraph createDetail(String label, String value, DeviceRgb color) {
+        return new Paragraph()
+                .add(new Text(label).setBold().setFontColor(ColorConstants.DARK_GRAY))
+                .add(new Text(value).setFontColor(color))
+                .setFontSize(10);
     }
 
-    private void addTableHeader(PdfPTable table, String... headers) {
+    private void addTableHeader(Table table, String... headers) {
         for (String header : headers) {
-            PdfPCell cell = new PdfPCell(new Phrase(header,
-                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10)));
-            cell.setBackgroundColor(TABLE_HEADER_COLOR);
-            cell.setPadding(5);
-            table.addCell(cell);
+            Cell cell = new Cell()
+                    .add(new Paragraph(header).setBold())
+                    .setBackgroundColor(TABLE_HEADER_COLOR)
+                    .setPadding(5);
+            table.addHeaderCell(cell);
         }
     }
 
-    private void addTableRow(PdfPTable table, String... values) {
-        for (String value : values) {
-            table.addCell(new Phrase(value,
-                    FontFactory.getFont(FontFactory.HELVETICA, 10)));
-        }
-    }
-
-    private BaseColor getStatusColor(String status) {
-        if (status == null) return BaseColor.BLACK;
-
-        // Convert status to lowercase safely
-        String statusLower = status.toLowerCase();
-
-        return switch (statusLower) {
-            case "completed" -> new BaseColor(0, 128, 0); // Green
-            case "in progress" -> new BaseColor(255, 165, 0); // Orange
-            default -> BaseColor.BLACK;
+    private DeviceRgb getStatusColor(String status) {
+        if (status == null) return ColorConstants.BLACK;
+        return switch (status.toLowerCase()) {
+            case "completed" -> new DeviceRgb(0, 128, 0);        // Green
+            case "in progress" -> new DeviceRgb(255, 165, 0);    // Orange
+            default -> ColorConstants.BLACK;
         };
     }
 
-    // Inner class for footer
-    // Inside PdfService.java
-
-// ...
-
-    private static class FooterPageEventHelper extends PdfPageEventHelper { // Renamed inner class
+    private static class FooterHandler implements IEventHandler {
         @Override
-        public void onEndPage(PdfWriter writer, Document document) {
-            ColumnText.showTextAligned(
-                    writer.getDirectContent(),
-                    Element.ALIGN_CENTER,
-                    new Phrase("Page " + document.getPageNumber(),
-                            FontFactory.getFont(FontFactory.HELVETICA, 10)),
-                    300, 30, 0
-            );
+        public void handleEvent(Event event) {
+            PdfDocumentEvent docEvent = (PdfDocumentEvent) event;
+            PdfCanvas canvas = new PdfCanvas(docEvent.getPage());
+            canvas.beginText()
+                    .setFontAndSize(PdfFontFactory.createFont(), 10)
+                    .moveText(300, 30)
+                    .showText("Page " + docEvent.getDocument().getPageNumber(docEvent.getPage()))
+                    .endText();
         }
     }
 }

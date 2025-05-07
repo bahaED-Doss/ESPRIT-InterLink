@@ -1,7 +1,6 @@
 package tn.esprit.interlink_back.service;
 
-import com.itextpdf.text.log.Logger;
-import com.itextpdf.text.log.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailService {
-    private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
     @Autowired
     private JavaMailSender emailSender;

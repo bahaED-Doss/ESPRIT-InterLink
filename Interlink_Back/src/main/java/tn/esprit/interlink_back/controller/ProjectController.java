@@ -1,7 +1,6 @@
 package tn.esprit.interlink_back.controller;
 
-import com.itextpdf.text.log.Logger;
-import com.itextpdf.text.log.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -25,7 +24,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/projects")
 public class ProjectController {
-    private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 
     @Autowired
     private final IProjectService projectService;
