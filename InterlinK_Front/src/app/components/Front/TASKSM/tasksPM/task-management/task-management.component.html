@@ -1,0 +1,45 @@
+<app-manager-navbar (createTask)="openCreateTaskDrawer()"></app-manager-navbar>
+
+<div class="container mt-5 pt-5">
+  <div class="row">
+    <div class="col-12">
+      <app-task-selection (projectSelected)="onProjectSelected($event)"></app-task-selection>
+    </div>
+  </div>
+
+  <div class="row mt-4" *ngIf="selectedProjectId > 0">
+    <div class="col-12">
+      <div class="project-description-card">
+        <h3>Project Description</h3>
+        <p>This project includes multiple tasks that need to be managed and tracked. You can add new tasks, edit existing ones, and track their progress across different status columns.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-12">
+      <button class="btn btn-success mb-4" 
+              (click)="openCreateTaskDrawer()" 
+              [disabled]="selectedProjectId === 0">
+        <i class="lni lni-plus"></i> Add New Task
+      </button>
+
+      <app-task-list 
+        [tasks]="tasks"
+        [isManager]="true"
+        (editTask)="openEditTaskDrawer($event)"
+        (deleteTask)="deleteTask($event)">
+      </app-task-list>
+    </div>
+  </div>
+
+  <app-task-form 
+    [taskModel]="newTask"
+    [isEditing]="isEditing"
+    [isOpen]="isDrawerOpen"
+    [selectedProjectId]="selectedProjectId"
+    [selectedManagerId]="selectedManagerId"
+    (close)="closeTaskDrawer()"
+    (save)="saveTask($event)">
+  </app-task-form>
+</div>

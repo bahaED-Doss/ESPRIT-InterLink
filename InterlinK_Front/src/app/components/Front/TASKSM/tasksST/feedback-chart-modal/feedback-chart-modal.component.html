@@ -1,0 +1,12 @@
+<div class="modal-overlay" *ngIf="isOpen" (click)="close()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Feedback Sentiment Analysis</h3>
+        <button class="close-btn" (click)="close()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- Using your existing chart component -->
+        <app-sentiment-chart [feedbacks]="feedbacks"></app-sentiment-chart>
+      </div>
+    </div>
+  </div>

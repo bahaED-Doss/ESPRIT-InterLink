@@ -1,0 +1,15 @@
+<div class="form-group">
+  <label for="student">Select Student</label>
+  <select id="student" class="form-control" [(ngModel)]="selectedStudentId" (change)="onStudentChange()">
+    <option value="">Select a student</option>
+    <option *ngFor="let student of students" [value]="student.id">
+      {{student.firstName}} {{student.lastName}}
+    </option>
+  </select>
+</div>
+
+<div *ngIf="selectedStudentId && studentProjects[selectedStudentId]" class="project-info">
+  <p><strong>Project:</strong> {{studentProjects[selectedStudentId]?.title}}</p>
+</div>
+
+

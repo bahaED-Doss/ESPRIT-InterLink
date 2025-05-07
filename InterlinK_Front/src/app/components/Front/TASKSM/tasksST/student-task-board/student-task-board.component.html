@@ -1,0 +1,181 @@
+<div class="task-board">
+  <div class="task-columns">
+    <!-- TO DO Column -->
+    <div class="task-column todo-column" (mousemove)="onColumnHeaderMouseMove($event, 0)">
+      <!-- Column header content remains unchanged -->
+      <div class="column-header" 
+           [style.background]="'radial-gradient(circle at ' + columnHoverPositions[0].x + '% ' + columnHoverPositions[0].y + '%, #5c6bc0, #3f51b5)'">
+        <h3>TO DO</h3>
+        <!-- Task count and statistics remain unchanged -->
+      </div>
+      <!-- TO DO Column task cards section -->
+      <div class="task-cards"
+           cdkDropList
+           id="TO_DO"
+           [cdkDropListData]="todoTasks"
+           [cdkDropListConnectedTo]="['IN_PROGRESS', 'DONE']"
+           (cdkDropListDropped)="drop($event)">
+        <div *ngIf="todoTasks.length === 0" class="empty-list-message">
+          No tasks in this column
+        </div>
+        <div *ngFor="let task of todoTasks; trackBy: trackByTaskId" cdkDrag>
+          <app-task-card 
+          [task]="task" 
+           userRole="student" 
+          [isManager]="false"
+          (viewDetails)="onViewDetails($event)"
+          (feedbackClick)="onFeedbackClick($event)">
+</app-task-card>
+        </div>
+      </div>
+      
+      <!-- Similar changes needed for IN_PROGRESS and DONE columns -->
+    </div>
+
+    <!-- IN PROGRESS Column -->
+    <div class="task-column in-progress-column" (mousemove)="onColumnHeaderMouseMove($event, 1)">
+      <!-- Column header content remains unchanged -->
+      <div class="column-header" 
+           [style.background]="'radial-gradient(circle at ' + columnHoverPositions[1].x + '% ' + columnHoverPositions[1].y + '%, #ffb74d, #ff9800)'">
+        <h3>IN PROGRESS</h3>
+        <!-- Task count and statistics remain unchanged -->
+      </div>
+      <div class="task-cards"
+           cdkDropList
+           id="IN_PROGRESS"
+           [cdkDropListData]="inProgressTasks"
+           [cdkDropListConnectedTo]="['TO_DO', 'DONE']"
+           (cdkDropListDropped)="drop($event)">
+        <div *ngIf="inProgressTasks.length === 0" class="empty-list-message">
+          No tasks in this column
+        </div>
+        <div *ngFor="let task of inProgressTasks; trackBy: trackByTaskId" cdkDrag>
+          <app-task-card [task]="task" (viewDetails)="onViewDetails(task)"></app-task-card>
+        </div>
+      </div>
+    </div>
+
+    <!-- DONE Column -->
+    <div class="task-column done-column" (mousemove)="onColumnHeaderMouseMove($event, 2)">
+      <!-- Column header content remains unchanged -->
+      <div class="column-header" 
+           [style.background]="'radial-gradient(circle at ' + columnHoverPositions[2].x + '% ' + columnHoverPositions[2].y + '%, #81c784, #4caf50)'">
+        <h3>DONE</h3>
+        <!-- Task count and statistics remain unchanged -->
+      </div>
+      <div class="task-cards"
+           cdkDropList
+           id="DONE"
+           [cdkDropListData]="doneTasks"
+           [cdkDropListConnectedTo]="['TO_DO', 'IN_PROGRESS']"
+           (cdkDropListDropped)="drop($event)">
+        <div *ngIf="doneTasks.length === 0" class="empty-list-message">
+          No tasks in this column
+        </div>
+        <div *ngFor="let task of doneTasks; trackBy: trackByTaskId" cdkDrag>
+          <app-task-card 
+            [task]="task" 
+            userRole="student" 
+          [isManager]="false"
+          (viewDetails)="onViewDetails($event)"
+          (feedbackClick)="onFeedbackClick($event)">
+          </app-task-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Task Details Modal with backdrop -->
+<!-- Replace the existing modal with this -->
+<div class="modal-backdrop" *ngIf="showTaskDetails && selectedTask" (click)="closeTaskDetails()">
+  <div class="task-details-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ selectedTask.title }}</h2>
+      <button class="close-btn" (click)="closeTaskDetails()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="detail-row">
+        <span class="detail-label">Status</span>
+        <span class="detail-value">
+          <span class="status-badge" [ngClass]="selectedTask.status?.toLowerCase()">
+            {{ selectedTask.status }}
+          </span>
+        </span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Priority</span>
+        <span class="detail-value">
+          <span class="priority-badge" [ngClass]="selectedTask.priority.toLowerCase()">
+            {{ selectedTask.priority }}
+          </span>
+        </span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Deadline</span>
+        <span class="detail-value">{{ selectedTask.deadline | date:'medium' }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Description</span>
+        <div class="detail-value">{{ selectedTask.description }}</div>
+      </div>
+      
+      <!-- Add feedback section if available -->
+      <div class="detail-row" *ngIf="selectedTask.feedbacks && selectedTask.feedbacks.length > 0">
+        <span class="detail-label">Feedback</span>
+        <div class="detail-value">
+          <!-- Inside the feedback panel -->
+          <div class="feedback-panel">
+            <div class="feedback-panel-header">
+              <h3>Task Feedbacks</h3>
+              <button class="close-btn" (click)="closeFeedbackPanel()">&times;</button>
+            </div>
+            
+            <div class="feedback-panel-body">
+              <div *ngFor="let feedback of selectedTask?.feedbacks" 
+                   class="feedback-item"
+                   [ngClass]="feedback.sentiment?.toLowerCase()">
+                <div class="feedback-header">
+                  <div class="manager-info">
+                    <span class="manager-name">Manager</span>
+                    <span class="feedback-date">{{ feedback.createdAt | date:'medium' }}</span>
+                  </div>
+                  <!-- Add hint icon here -->
+                  <div class="hint-icon" 
+                       *ngIf="feedback.hint"
+                       (mouseenter)="showHintTooltip(feedback)"
+                       (mouseleave)="hideHintTooltip()"
+                       (click)="toggleHintContent(feedback)">
+                    <i class="fas fa-lightbulb"></i>
+                    <!-- Hint tooltip -->
+                    <div class="hint-tooltip" *ngIf="activeHintId === feedback.feedbackId">
+                      <p>{{ feedback.hint }}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="feedback-content">
+                  <p>{{ feedback.message }}</p>
+                </div>
+                
+                <div class="feedback-footer">
+                  <div class="seen-indicator" [ngClass]="{'seen': feedback.seen}">
+                    <i class="fas fa-check-double"></i>
+                    <span>{{ feedback.seen ? 'Seen' : 'Delivered' }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="closeTaskDetails()">Close</button>
+    </div>
+  </div>
+</div>

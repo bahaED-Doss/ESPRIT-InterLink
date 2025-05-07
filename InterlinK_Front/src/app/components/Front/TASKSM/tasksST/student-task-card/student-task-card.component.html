@@ -1,0 +1,17 @@
+<div class="task-card" cdkDrag [ngClass]="'priority-' + task.priority.toLowerCase()">
+  <!-- Card content here -->
+  
+  <!-- Make sure there's NO conditional rendering of details like this: -->
+  <!-- <div *ngIf="showDetails" class="task-details">...</div> -->
+  
+  <!-- Only buttons to trigger events -->
+  <div class="task-actions">
+    <button class="action-button" (click)="onDetails($event)">View Details</button>
+    <!-- Other buttons -->
+  </div>
+</div>
+
+<!-- Feedback panel can stay if it's meant to be part of the card -->
+<div class="feedback-panel" *ngIf="showFeedbacks">
+  <!-- Feedback content -->
+</div>
