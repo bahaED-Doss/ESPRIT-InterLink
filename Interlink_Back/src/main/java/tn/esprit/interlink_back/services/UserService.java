@@ -67,6 +67,15 @@ public class UserService {
     private final String jwtSecret = "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"; // Replace with a secure secret key
     private final long jwtExpirationMs = 86400000; // 24 hours
 
+
+    public List<User> getProjectManagers() {
+        return userRepository.findByRole(Role.PROJECT_MANAGER);
+    }
+    public List<User> getStudents() {
+        return userRepository.findByRole(Role.STUDENT);
+    }
+
+
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
 

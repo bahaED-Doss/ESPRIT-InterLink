@@ -54,14 +54,14 @@ public class Project {
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "manager_id")
-    private User projectManager;
+    private User manager;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
     private User student;
 
     public User getProjectManager() {
-        return projectManager;
+        return manager;
     }
 
     public Long getProjectId() {

@@ -12,12 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.interlink_back.dtos.ProjectStatisticsDTO;
 import tn.esprit.interlink_back.entity.Enums.MilestoneStatus;
+import tn.esprit.interlink_back.entity.Enums.Role;
 import tn.esprit.interlink_back.entity.Milestone;
 import tn.esprit.interlink_back.entity.Project;
 import tn.esprit.interlink_back.repository.CompanyRepository;
-import tn.esprit.interlink_back.services.ExcelService;
-import tn.esprit.interlink_back.services.IProjectService;
-import tn.esprit.interlink_back.services.PdfService;
 import tn.esprit.interlink_back.services.ExcelService;
 import tn.esprit.interlink_back.services.IProjectService;
 import tn.esprit.interlink_back.services.PdfService;
@@ -65,7 +63,26 @@ public class ProjectController {
         return ResponseEntity.ok(savedProject);
     }
 
-
+    @GetMapping("/users/{userId}/projects")
+    public List<Project> getProjectsByUserIdAndRole(@PathVariable Long userId) {
+        return projectService.getProjectsByUserIdAndRole(userId, Role.PROJECT_MANAGER);
+    }
+    @GetMapping("/users/{userId}/project")
+    public ResponseEntity<Project> getProjectByStudentId(@PathVariable Long userId) {
+        try {
+            Project project = projectService.getProjectByStudentId(userId, Role.STUDENT);
+            if (project.getProjectId() == null) {
+                // Return empty project with 200 OK status instead of null
+                return ResponseEntity.ok(new Project());
+            }
+            return ResponseEntity.ok(project);
+        } catch (Exception e) {
+            // Log the error
+            System.err.println("Error getting project for student " + userId + ": " + e.getMessage());
+            // Return an empty project with 200 OK status instead of throwing an error
+            return ResponseEntity.ok(new Project());
+        }
+    }
 
     @PutMapping("/modify-project/{projectId}")
     public ResponseEntity<Project> updateProject(@PathVariable Long projectId, @RequestBody Project projectDetails) {

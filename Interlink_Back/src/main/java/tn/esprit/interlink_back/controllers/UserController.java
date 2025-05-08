@@ -45,6 +45,15 @@ public class UserController {
         User registeredUser = userService.registerUser(user);
         return ResponseEntity.ok(registeredUser);
     }
+    @GetMapping("/project-managers")
+    public List<User> getAllProjectManagers() {
+        return userService.getProjectManagers();
+    }
+
+    @GetMapping("/students")
+    public List<User> getAllStudents() {
+        return userService.getStudents();
+    }
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody Map<String, String> credentials) {
         String email = credentials.get("email");

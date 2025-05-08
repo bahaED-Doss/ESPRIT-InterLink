@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.interlink_back.dtos.ProjectStatisticsDTO;
 import tn.esprit.interlink_back.entity.Enums.MilestoneStatus;
+import tn.esprit.interlink_back.entity.Enums.Role;
 import tn.esprit.interlink_back.entity.Milestone;
 import tn.esprit.interlink_back.entity.Project;
 import tn.esprit.interlink_back.repository.MilestoneRepository;
@@ -84,7 +85,18 @@ public class ProjectServiceImpl implements IProjectService {
         return "📌 [Enhanced] " + original.substring(0, 1).toUpperCase() + original.substring(1).trim()
                 + ". This project aims to deliver outstanding results aligned with modern standards.";
     }
+    public List<Project> getProjectsByUserIdAndRole(Long userId, Role role) {
+        return projectRepository.findByUserIdAndRole(userId, role);
+    }
 
+    public Project getProjectByStudentId(Long userId, Role role) {
+        List<Project> projects = projectRepository.findPByStudentId(userId, role);
+        if (projects.isEmpty()) {
+            return new Project();
+        }
+        // Return the first project if there are multiple
+        return projects.get(0);
+    }
     @Override
     public Project modifyProject(Project project) {
         return projectRepository.save(project);
