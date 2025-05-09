@@ -10,6 +10,9 @@ import { ChatbotService } from 'src/app/services/chatbot.service';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import * as QRCode from 'qrcode';
+import { HttpClient } from '@angular/common/http';
+import { RecommendationService } from '../../../services/recommendation.service';
+
 
 
 @Component({
@@ -22,13 +25,69 @@ export class InternshipsComponent implements OnInit {
 // Add these properties
 availableSkills: string[] = [
   'JavaScript', 'TypeScript', 'Angular', 'React', 'Vue.js',
-  'Node.js', 'Python', 'Java', 'C#', 'PHP',
-  'HTML', 'CSS', 'SQL', 'Git', 'Docker'
+  'Node.js', 'Python', 'Java', 'C#', 'PHP',' DATA_SCIENCE',
+  'HTML', 'CSS', 'SQL', 'Git', 'Docker', 'BI'
 ];
+showRecommendationsModal = false;
+recommendedInternships: any[] = [];
 selectedSkills: string[] = [];
-customSkillInput: string = '';
+newSkill: string = '';
 
 // Add these methods
+showRecommendations() {
+  this.showRecommendationsModal = true;
+}
+
+closeRecommendations() {
+  this.showRecommendationsModal = false;
+}
+
+toggleSkillr(skill: string) {
+  const index = this.selectedSkills.indexOf(skill);
+  if (index === -1) {
+    this.selectedSkills.push(skill);
+  } else {
+    this.selectedSkills.splice(index, 1);
+  }
+}
+
+addSkillr() {
+  if (this.newSkill.trim()) {
+    this.selectedSkills.push(this.newSkill.trim());
+    this.newSkill = '';
+  }
+}
+
+findRecommendedInternships() {
+  if (this.selectedSkills.length === 0) {
+    alert('Please select at least one skill');
+    return;
+  }
+
+  // Add error handling and logging
+  console.log('Sending skills:', this.selectedSkills); // Debug log
+
+  this.recommendationService.getRecommendations(this.selectedSkills).subscribe({
+    next: (response) => {
+      console.log('Received response:', response); // Debug log
+      if (response && response.recommendations) {
+        this.recommendedInternships = response.recommendations;
+        this.recommendedInternships.sort((a, b) => b.score - a.score);
+      } else {
+        console.error('Invalid response format:', response);
+        alert('Error: Invalid response format from server');
+      }
+    },
+    error: (error) => {
+      console.error('Error details:', error); // More detailed error logging
+      if (error.error && error.error.message) {
+        alert(`Error: ${error.error.message}`);
+      } else {
+        alert('Error getting recommendations. Please try again.');
+      }
+    }
+  });
+}
 isSkillSelected(skill: string): boolean {
   return this.selectedSkills.includes(skill);
 }
@@ -102,7 +161,9 @@ internships: Internship[] = [];
     private internshipService: InternshipService,
     private applicationService: ApplicationService,
     private ratingService: RatingService,
-    private ChatbotService: ChatbotService
+    private ChatbotService: ChatbotService,
+    private http: HttpClient,
+    private recommendationService: RecommendationService  // Add this
   ) {
     this.addApplicationForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],

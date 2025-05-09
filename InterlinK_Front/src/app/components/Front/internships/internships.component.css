@@ -1025,3 +1025,89 @@ body {
 .input-area button:hover:not(:disabled) {
   background: #6a1a1a;
 }
+
+.recommend-btn {
+  background-color: #377c3e;
+  color: white;
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.recommend-btn:hover {
+  background-color: #4cae4c;
+}
+
+.recommendations-modal {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.match-score {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-weight: bold;
+}
+
+.high-match {
+  background-color: #28a745;
+  color: white;
+}
+
+.medium-match {
+  background-color: #ffc107;
+  color: black;
+}
+
+.low-match {
+  background-color: #dc3545;
+  color: white;
+}
+
+.no-matches {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.skills-input-section {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.find-matches-btn {
+  background-color: #802020;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s;
+}
+
+.find-matches-btn:hover {
+  background-color: #a03030;
+}
+
+.recommended-internships {
+  margin-top: 20px;
+}

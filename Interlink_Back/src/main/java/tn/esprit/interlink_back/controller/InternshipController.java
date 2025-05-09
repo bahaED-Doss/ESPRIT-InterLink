@@ -1,5 +1,6 @@
 package tn.esprit.interlink_back.controller;
 
+
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import java.util.List;
 @RequestMapping("/internships")
 public class InternshipController {
 
-     InternshipServiceImpl internshipService;
+    InternshipServiceImpl internshipService;
 
     @Autowired
     public InternshipController(InternshipServiceImpl internshipService) {
@@ -35,15 +36,15 @@ public class InternshipController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
- @PutMapping("/modify-internship")
+    @PutMapping("/modify-internship")
     public Internship modifyInternship(@RequestBody Internship i) {
         Internship internship = internshipService.updateInternship(i);
         return internship;
     }
 
     @DeleteMapping("/remove-internship/{internship-id}")
-        public void deleteInternship(@PathVariable("internship-id") Long intId) {//@requestbody a5ater fma variable fi parametre
-       internshipService.deleteInternship(intId);
-    
+    public void deleteInternship(@PathVariable("internship-id") Long intId) {//@requestbody a5ater fma variable fi parametre
+        internshipService.deleteInternship(intId);
+
     }
 }

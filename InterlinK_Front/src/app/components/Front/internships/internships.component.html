@@ -11,7 +11,7 @@
           type="text"
           id="location"
           [(ngModel)]="locationFilter"
-          (ngModelChange)="applyFilters()"
+          (ngModelChange)="applyFilters()"s
           placeholder="Enter a city"
         />
       </div>
@@ -45,6 +45,7 @@
       </div>
       <!-- Bouton pour ouvrir le formulaire de CV -->
     <button class="generate-cv-btn" (click)="showCVForm = true">Generate My Automatic CV</button>
+    <button class="recommend-btn" (click)="showRecommendations()">🎯 Recommended for Me</button>
     </div>
 <!-- CV Modal -->
 <div *ngIf="showCVForm" class="modal-overlay">
@@ -363,4 +364,61 @@
     </div>
   </div>
 </div>
+</div>
+<!-- Add this new modal for recommendations -->
+<div *ngIf="showRecommendationsModal" class="modal-overlay">
+  <div class="recommendations-modal">
+    <div class="modal-header">
+      <h2>Recommended Internships</h2>
+      <button class="close-btn" (click)="closeRecommendations()">&times;</button>
+    </div>
+    
+    <div class="skills-selection">
+      <h3>Select Your Skills</h3>
+      <div class="skill-tags">
+        <span *ngFor="let skill of availableSkills" 
+              class="skill-tag"
+              [class.selected]="isSkillSelected(skill)"
+              (click)="toggleSkill(skill)">
+          {{skill}}
+        </span>
+      </div>
+      <div class="skill-input-wrapper">
+        <input type="text" 
+               class="skill-input" 
+               placeholder="Add a custom skill"
+               [(ngModel)]="newSkill"
+               (keyup.enter)="addCustomSkillFromInput()">
+        <button (click)="addCustomSkillFromInput()" class="add-skill-btn">+</button>
+      </div>
+      <button class="find-matches-btn" (click)="findRecommendedInternships()">Find Matches</button>
+    </div>
+
+    <!-- Only show this section when there are recommendations -->
+    <div class="recommendations-list" *ngIf="recommendedInternships && recommendedInternships.length > 0">
+      <!-- Only show internships with a score greater than 0 -->
+      <div *ngFor="let rec of recommendedInternships" class="recommendation-card" [style.display]="rec.score > 0 ? 'block' : 'none'">
+        <div class="match-score" [ngClass]="{
+          'high-match': rec.score >= 0.7,
+          'medium-match': rec.score >= 0.4 && rec.score < 0.7,
+          'low-match': rec.score < 0.4
+        }">
+          {{ (rec.score * 100).toFixed(0) }}% Match
+        </div>
+        <h3>{{rec.internship.title}}</h3>
+        <p class="company">{{rec.internship.companyName}}</p>
+        <p class="location">📍 {{rec.internship.location}}</p>
+        <p class="duration">⏳ {{rec.internship.duration}}</p>
+        <p class="type">📌 {{rec.internship.type}}</p>
+        <p class="start-date">📅 Start: {{rec.internship.startDate | date}}</p>
+        <p class="spots">👥 Available spots: {{rec.internship.availableSpots}}</p>
+        <button class="apply-btn" (click)="applyForInternship(rec.internship)">Apply Now</button>
+      </div>
+    </div>
+
+    <!-- Show this when no matches are found -->
+    <div class="no-matches" *ngIf="recommendedInternships && recommendedInternships.length === 0">
+      <p>No matching internships found. Try selecting different skills.</p>
+    </div>
+  </div>
 </div>

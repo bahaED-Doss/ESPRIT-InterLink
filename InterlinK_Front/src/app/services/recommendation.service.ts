@@ -29,12 +29,14 @@ export interface RecommendationResponse {
   providedIn: 'root'
 })
 export class RecommendationService {
-  private apiUrl = 'http://127.0.0.1:5000/recommend';
+  // Update the API URL to match your backend endpoint
+  private apiUrl = 'http://localhost:8081/api/recommendations';
 
   constructor(private http: HttpClient) {}
 
   getRecommendations(skills: string[]): Observable<RecommendationResponse> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<RecommendationResponse>(this.apiUrl, { skills }, { headers });
+    // Send the skills array directly instead of wrapping it in an object
+    return this.http.post<RecommendationResponse>(this.apiUrl, skills, { headers });
   }
 }
