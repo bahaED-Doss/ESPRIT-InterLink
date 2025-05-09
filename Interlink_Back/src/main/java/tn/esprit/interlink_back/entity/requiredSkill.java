@@ -1,6 +1,45 @@
 package tn.esprit.interlink_back.entity;
 
 public enum requiredSkill {
-    GENIELOGICIEL, DATASCIENCE, BI
+    // Technical skills
+    JAVA,
+    PYTHON,
+    CSHARP,
+    CPLUSPLUS,
+    JAVASCRIPT,
+    TYPESCRIPT,
+    SPRING,
+    ANGULAR,
+    REACT,
+    NODEJS,
+    FLASK,
+    DJANGO,
+    SQL,
+    NOSQL,
+    MONGODB,
+    POSTGRESQL,
+    AWS,
+    AZURE,
+    DOCKER,
+    KUBERNETES,
+    LINUX,
+    GIT,
+    JENKINS,
+    MACHINE_LEARNING,
+    DEEP_LEARNING,
+    COMPUTER_VISION,
+    NLP,
+    DATA_ANALYSIS,
+    DATA_SCIENCE,
+    BUSINESS_INTELLIGENCE,
+    GENIELOGICIEL,
 
+    // Soft skills
+    COMMUNICATION,
+    TEAMWORK,
+    LEADERSHIP,
+    PROBLEM_SOLVING,
+    TIME_MANAGEMENT,
+    CREATIVITY,
+    ADAPTABILITY
 }

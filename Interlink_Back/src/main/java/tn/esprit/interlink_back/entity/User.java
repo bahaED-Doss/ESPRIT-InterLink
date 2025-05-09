@@ -3,6 +3,7 @@ package tn.esprit.interlink_back.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -51,6 +52,9 @@ public class User {
     private String department;
     @Column(nullable = true)
     private int yearsOfExperience;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Skill> skills;
 
 
     // Constructors
@@ -225,7 +229,26 @@ public class User {
     }
 
 
+// Add these methods to your User class
 
+    public List<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
+    }
+
+    // Optional: Helper methods for managing skills
+    public void addSkill(Skill skill) {
+        skills.add(skill);
+        skill.setUser(this);
+    }
+
+    public void removeSkill(Skill skill) {
+        skills.remove(skill);
+        skill.setUser(null);
+    }
     // ToString method
     @Override
     public String toString() {
