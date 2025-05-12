@@ -1,52 +1,47 @@
+<!-- Hero Section -->
 <section class="hero-area py-5 bg-light">
-  <div class="hero-inner text-center">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8">
-          <div class="inner-content mb-4">
-            <h1 class="wow fadeInUp" data-wow-delay=".3s">
-              <span class="text-primary">Search for your favorite company</span>
-            </h1>
-          </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        <h1 class="mb-4 wow fadeInUp" data-wow-delay=".3s">
+          <span class="text-primary">Search for your favorite company</span>
+        </h1>
 
-          <!-- Search Form -->
-<div class="job-search-wrap-two p-4 shadow rounded bg-white wow fadeInUp" data-wow-delay=".7s">
-  <form>
-    <div class="row g-3">
-      <div class="col-md-6">
-        <label for="industrySector" class="form-label">Industry Sector</label>
-        <select class="form-select" id="industrySector" [(ngModel)]="searchIndustrySector" name="industrySector" (ngModelChange)="onSearch()">
-          <option value="" disabled selected>Select Industry Sector</option>
-          <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
-        </select>
-      </div>
+        <!-- Search Form -->
+        <div class="search-container p-4 shadow rounded bg-white wow fadeInUp" data-wow-delay=".7s">
+          <form>
+            <div class="row g-5">
+              <div class="col-md-6">
+                <label for="industrySector" class="form-label">Industry Sector</label>
+                <select class="form-select" id="industrySector" [(ngModel)]="searchIndustrySector" name="industrySector" (ngModelChange)="onSearch()">
+                  <option value="" disabled selected>Select Industry Sector</option>
+                  <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="location" class="form-label">Location</label>
+                <select class="form-select" id="location" [(ngModel)]="selectedLocation" name="location" (ngModelChange)="onSearch()">
+                  <option value="" disabled selected>Select Location</option>
+                  <option *ngFor="let loc of locations" [value]="loc">{{ loc }}</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
 
-      <div class="col-md-6">
-        <label for="location" class="form-label">Location</label>
-        <select class="form-select" id="location" [(ngModel)]="selectedLocation" name="location" (ngModelChange)="onSearch()">
-          <option value="" disabled selected>Select Location</option>
-          <option *ngFor="let loc of locations" [value]="loc">{{ loc }}</option>
-        </select>
-      </div>
-    </div>
-  </form>
-</div>
-
-
-      <!-- Search Results -->
-      <div *ngIf="searchResults.length > 0" class="row mt-5">
-        <div class="col-12">
-          <h3 class="text-center text-success">Search Results</h3>
-          <div class="row g-4 mt-3">
+        <!-- Search Results -->
+        <div *ngIf="searchResults.length > 0" class="search-results mt-5">
+          <h3 class="text-success mb-4">Search Results</h3>
+          <div class="row g-4">
             <div *ngFor="let company of searchResults" class="col-md-4">
-              <div class="card shadow-sm h-100">
-                <img *ngIf="company.logoUrl" [src]="company.logoUrl" class="card-img-top p-3" alt="Company Logo" />
-                <div class="card-body">
-                  <h5 class="card-title">{{ company.name }}</h5>
-                  <p class="card-text">
+              <div class="company-card h-100">
+                <img *ngIf="company.logoUrl" [src]="company.logoUrl" class="company-logo" alt="Company Logo" />
+                <div class="company-info">
+                  <h5>{{ company.name }}</h5>
+                  <p>
                     <strong>{{ company.industrySector }}</strong><br />
                     {{ company.location }}<br />
-                    <a *ngIf="company.website" [href]="company.website" target="_blank">Visit Website</a>
+                    <a *ngIf="company.website" [href]="company.website" target="_blank" class="website-link">Visit Website</a>
                   </p>
                 </div>
               </div>
@@ -56,56 +51,49 @@
       </div>
     </div>
   </div>
-</div>
-</div>
 </section>
 
-
-        <!-- Full Company List Section -->
-        <div class="container mt-4">
-          <h2 class="text-center mb-4">Company Directory</h2>
-        
-       
-          <div class="table-responsive">
-            <table class="table table-hover align-middle">
-              <thead class="table-primary text-center">
-                <tr>
-                  <th>Logo</th>
-                  <th>Name</th>
-                  <th>Location</th>
-                  <th>Website</th>
-                  <th>Sector</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let company of companies">
-                  <td class="text-center">
-                    <img *ngIf="company.logoUrl" [src]="company.logoUrl" alt="Logo" style="height: 40px;" />
-                  </td>
-                  <td>{{ company.name }}</td>
-                  <td>{{ company.location }}</td>
-                  <td>
-                    <a *ngIf="company.website" [href]="company.website" target="_blank">
-                      {{ company.website }}
-                    </a>
-                  </td>
-                  <td>{{ company.industrySector }}</td>
-                  <td class="text-center">
-                    <button class="btn btn-outline-info btn-sm" [routerLink]="['/company-details', company.companyId]">
-                      <i class="bi bi-eye"></i> View
-                    </button>
-                    <button class="btn btn-danger btn-sm ms-2" (click)="deleteCompany(company)">
-                      <i class="bi bi-trash"></i> Delete
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        
-
+<!-- Company Directory -->
+<section class="directory-section py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Discover other companies that woks with us</h2>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-primary text-center">
+          <tr>
+            <th>Logo</th>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Website</th>
+            <th>Sector</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let company of companies">
+            <td class="text-center">
+              <img *ngIf="company.logoUrl" [src]="company.logoUrl" alt="Logo" class="company-table-logo" />
+            </td>
+            <td>{{ company.name }}</td>
+            <td>{{ company.location }}</td>
+            <td>
+              <a *ngIf="company.website" [href]="company.website" target="_blank" class="website-link">
+                {{ company.website }}
+              </a>
+            </td>
+            <td>{{ company.industrySector }}</td>
+            <td class="text-center">
+              <button class="btn btn-outline-info btn-sm me-2" [routerLink]="['/company-details', company.companyId]">
+                <i class="bi bi-eye"></i> View
+              </button>
+            
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
 
 <!-- Google Map Container -->
 <div class="container mt-5">
@@ -119,16 +107,17 @@
   </div>
 </div>
 
-
-<!-- Companies Statistics Section -->
-<div class="container mt-4">
-  <h3 class="text-center">Companies Statistics</h3>
-  <div class="row">
-    <div class="col-md-6">
-      <div echarts [options]="projectsChartOption" class="chart-container"></div>
-    </div>
-    <div class="col-md-6">
-      <div echarts [options]="industryChartOption" class="chart-container"></div>
+<!-- Statistics Section -->
+<section class="statistics-section py-5">
+  <div class="container">
+    <h3 class="text-center mb-4">Companies Statistics</h3>
+    <div class="row">
+      <div class="col-md-6">
+        <div echarts [options]="projectsChartOption" class="chart-container"></div>
+      </div>
+      <div class="col-md-6">
+        <div echarts [options]="industryChartOption" class="chart-container"></div>
+      </div>
     </div>
   </div>
-</div>
+</section>

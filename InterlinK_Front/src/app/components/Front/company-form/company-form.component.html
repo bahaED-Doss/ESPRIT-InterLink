@@ -1,68 +1,75 @@
 
 <app-navbar class="sticky bg-white"></app-navbar>
-<!-- Main content section -->
-<div class="main-content">
-<div class="container mt-4">
-    <h2 class="text-center mb-4">Company Profile</h2>
-  
-    <div id="addCompanySection" class="card p-4 shadow-lg rounded-3 border-primary" style="max-width: 600px; margin: auto;" #companyForm>
-      <form (ngSubmit)="submitForm()" [formGroup]="addCompany">
+
+<main class="main-content py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="text-center mb-4">Company Profile</h2>
         
-        <div class="mb-3">
-          <label class="form-label fw-bold">Name:</label>
-          <input type="text" class="form-control" formControlName="name" placeholder="Enter company name" />
-          <small class="text-danger" *ngIf="f['name'].touched && f['name'].invalid">
-            <span *ngIf="f['name'].errors?.['required']">Name is required.</span>
-            <span *ngIf="f['name'].errors?.['minlength']">At least 3 characters required.</span>
-          </small>
+        <div class="form-card">
+          <form (ngSubmit)="submitForm()" [formGroup]="addCompany">
+            <!-- Name Field -->
+            <div class="form-group mb-4">
+              <label class="form-label">Company Name</label>
+              <input type="text" class="form-control" formControlName="name" placeholder="Enter company name" />
+              <div class="error-message" *ngIf="f['name'].touched && f['name'].invalid">
+                <span *ngIf="f['name'].errors?.['required']">Name is required</span>
+                <span *ngIf="f['name'].errors?.['minlength']">Minimum 3 characters required</span>
+              </div>
+            </div>
+
+            <!-- Location Field -->
+            <div class="form-group mb-4">
+              <label class="form-label">Location</label>
+              <input type="text" class="form-control" formControlName="location" placeholder="Enter location" />
+              <div class="error-message" *ngIf="f['location'].touched && f['location'].invalid">
+                Location is required
+              </div>
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group mb-4">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-control" formControlName="email" placeholder="Enter email" />
+              <div class="error-message" *ngIf="f['email'].touched && f['email'].invalid">
+                <span *ngIf="f['email'].errors?.['required']">Email is required</span>
+                <span *ngIf="f['email'].errors?.['email']">Invalid email format</span>
+              </div>
+            </div>
+
+            <!-- Phone Field -->
+            <div class="form-group mb-4">
+              <label class="form-label">Phone Number</label>
+              <input type="text" class="form-control" formControlName="phone" placeholder="Enter phone number" />
+              <div class="error-message" *ngIf="f['phone'].touched && f['phone'].invalid">
+                <span *ngIf="f['phone'].errors?.['required']">Phone number is required</span>
+                <span *ngIf="f['phone'].errors?.['pattern']">Phone must be 8-15 digits</span>
+              </div>
+            </div>
+
+            <!-- Industry Sector Field -->
+            <div class="form-group mb-4">
+              <label class="form-label">Industry Sector</label>
+              <select class="form-select" formControlName="industrySector">
+                <option value="" disabled selected>Select Industry Sector</option>
+                <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
+              </select>
+              <div class="error-message" *ngIf="f['industrySector'].touched && f['industrySector'].invalid">
+                Industry sector is required
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary w-100" [disabled]="addCompany.invalid">
+              Update Company profile
+            </button>
+          </form>
         </div>
-  
-        <div class="mb-3">
-          <label class="form-label fw-bold">Location:</label>
-          <input type="text" class="form-control" formControlName="location" placeholder="Enter location" />
-          <small class="text-danger" *ngIf="f['location'].touched && f['location'].invalid">
-            Location is required.
-          </small>
-        </div>
-  
-        <div class="mb-3">
-          <label class="form-label fw-bold">Email:</label>
-          <input type="email" class="form-control" formControlName="email" placeholder="Enter email" />
-          <small class="text-danger" *ngIf="f['email'].touched && f['email'].invalid">
-            <span *ngIf="f['email'].errors?.['required']">Email is required.</span>
-            <span *ngIf="f['email'].errors?.['email']">Invalid email format.</span>
-          </small>
-        </div>
-       
-        <div class="mb-3">
-          <label class="form-label fw-bold">Phone:</label>
-          <input type="text" class="form-control" formControlName="phone" placeholder="Enter phone number" />
-          <small class="text-danger" *ngIf="f['phone'].touched && f['phone'].invalid">
-            <span *ngIf="f['phone'].errors?.['required']">Phone number is required.</span>
-            <span *ngIf="f['phone'].errors?.['pattern']">Phone must be 8-15 digits.</span>
-          </small>
-        </div>
-  
-        <div class="mb-3">
-          <label class="form-label fw-bold">Industry Sector:</label>
-          <select class="form-control" formControlName="industrySector">
-            <option value="" disabled selected>Select Industry Sector</option>
-            <option *ngFor="let sector of industrySectors" [value]="sector">{{ sector }}</option>
-          </select>
-          <small class="text-danger" *ngIf="f['industrySector'].touched && f['industrySector'].invalid">
-            Industry sector is required.
-          </small>
-        </div>
-  
-        <button type="submit" class="btn btn-success w-100" [disabled]="addCompany.invalid">Add Company</button>
-      </form>
+      </div>
     </div>
   </div>
-  
-  
-  
-  <app-company-list></app-company-list>
-</div>
-
+</main>
+<app-company-list></app-company-list>
 
 <app-footer></app-footer>

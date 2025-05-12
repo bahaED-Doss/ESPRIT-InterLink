@@ -3118,8 +3118,8 @@ fieldset:disabled .btn {
 
 .btn-primary {
     color: #fff;
-    background-color: #0d6efd;
-    border-color: #0d6efd
+    background-color: #802020;
+    border-color: #802020
 }
 
 .btn-primary:hover {
@@ -3512,7 +3512,7 @@ fieldset:disabled .btn {
 
 .btn-outline-primary.disabled,
 .btn-outline-primary:disabled {
-    color: #0d6efd;
+    color: #802020;
     background-color: transparent
 }
 
@@ -7064,7 +7064,7 @@ fieldset:disabled .btn {
 }
 
 .border-primary {
-    border-color: #0d6efd !important
+    border-color: #802020 !important
 }
 
 .border-secondary {
@@ -7794,7 +7794,7 @@ fieldset:disabled .btn {
 }
 
 .text-primary {
-    color: #0d6efd !important
+    color: #802020 !important
 }
 
 .text-secondary {
